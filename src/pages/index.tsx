@@ -31,13 +31,23 @@ export default function Home(): ReactNode {
   return (
     <Layout title="Make 3D games on your phone" description="Documentation for Tiny Game Engine, the mobile-first 3D game engine and editor.">
       <header className={styles.hero}>
-        <img src={useBaseUrl('/img/logo.png')} alt="" className={styles.logo} />
-        <h1 className={styles.title}>Tiny Game Engine</h1>
+        <h1 className={styles.title}>
+          <img src={useBaseUrl('/img/logo.png')} alt="" className={styles.logo} />
+          Tiny Game Engine
+        </h1>
         <p className={styles.tagline}>Make 3D games on your phone.</p>
         <p className={styles.sub}>No PC. No code required. This is the complete guide — from your first game to every setting in the editor.</p>
         <div className={styles.buttons}>
           <Link className="button button--primary button--lg" to="/docs/getting-started/first-game">Make your first game</Link>
           <Link className="button button--secondary button--lg" to="/docs/intro">Read the guide</Link>
+        </div>
+        <div className={styles.art}>
+          <img
+            src={useBaseUrl('/img/hero.webp')}
+            alt="A little robot holding a game controller above a 3D island on a tablet, surrounded by the editor's scene list, tools and event blocks"
+            width={1796}
+            height={876}
+          />
         </div>
       </header>
 
