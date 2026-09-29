@@ -1,0 +1,148 @@
+/* Tiny Game Engine docs theme — matches the editor's blue accent. */
+:root {
+  --ifm-color-primary: #2f6fe0;
+  --ifm-color-primary-dark: #2963ca;
+  --ifm-color-primary-darker: #275ebf;
+  --ifm-color-primary-darkest: #204d9d;
+  --ifm-color-primary-light: #467fe4;
+  --ifm-color-primary-lighter: #5287e5;
+  --ifm-color-primary-lightest: #739eea;
+  --ifm-code-font-size: 92%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --tge-accent: #ff5a36;
+  --tge-frame: #1c1d21;
+  --tge-card: #f5f7fb;
+  --tge-card-border: #e2e6ee;
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #6a9cff;
+  --ifm-color-primary-dark: #4f8aff;
+  --ifm-color-primary-darker: #4181ff;
+  --ifm-color-primary-darkest: #1966ff;
+  --ifm-color-primary-light: #85aeff;
+  --ifm-color-primary-lighter: #93b7ff;
+  --ifm-color-primary-lightest: #bcd2ff;
+  --ifm-background-color: #141518;
+  --ifm-background-surface-color: #1b1c20;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --tge-frame: #0b0b0d;
+  --tge-card: #1e2025;
+  --tge-card-border: #2c2f36;
+}
+
+/* ---- phone screenshots ------------------------------------------------- */
+.tge-phone { margin: 0 auto 1.5rem; max-width: 300px; text-align: center; }
+.tge-phone.small { max-width: 240px; }
+.tge-phone.large { max-width: 360px; }
+.tge-phone-frame {
+  background: var(--tge-frame);
+  border-radius: 30px;
+  padding: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+.tge-phone-frame img { display: block; width: 100%; border-radius: 20px; cursor: zoom-in; }
+.tge-caption { margin-top: 0.6rem; font-size: 0.85rem; color: var(--ifm-color-emphasis-700); line-height: 1.4; }
+
+/* Cropped screenshots (a card, a toolbar) */
+.tge-crop { margin: 0 auto 1.5rem; text-align: center; }
+.tge-crop img {
+  border-radius: 12px;
+  border: 1px solid var(--tge-card-border);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  max-width: 100%;
+  cursor: zoom-in;
+}
+
+/* Several phones side by side (step sequences) */
+.tge-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 220px));
+  justify-content: center;
+  gap: 1.2rem;
+  margin: 1rem 0 1.8rem;
+  align-items: start;
+}
+.tge-row .tge-phone { max-width: 100%; margin: 0; }
+.tge-row .tge-phone-frame { border-radius: 24px; padding: 7px; }
+.tge-row .tge-phone-frame img { border-radius: 17px; }
+.tge-row .tge-crop { margin: 0; }
+
+/* Screenshot next to text */
+.tge-side {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 2rem;
+  align-items: start;
+  margin-bottom: 1.5rem;
+}
+.tge-side > .tge-phone, .tge-side > .tge-crop { margin: 0; }
+@media (max-width: 900px) {
+  .tge-side { grid-template-columns: 1fr; }
+  .tge-side > .tge-phone { margin: 0 auto; max-width: 280px; }
+}
+
+/* Numbered legend matching the red badges on screenshots */
+.tge-legend { list-style: none; padding-left: 0; }
+.tge-legend li { display: flex; gap: 0.6rem; margin-bottom: 0.55rem; align-items: baseline; }
+.tge-badge {
+  flex: 0 0 auto;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 1.6rem; height: 1.6rem; padding: 0 0.4rem;
+  border-radius: 0.8rem; background: var(--tge-accent); color: #fff;
+  font-weight: 700; font-size: 0.85rem;
+}
+
+/* Tutorial-style steps */
+.tge-step {
+  border: 1px solid var(--tge-card-border);
+  background: var(--tge-card);
+  border-radius: 16px;
+  padding: 1.2rem 1.4rem;
+  margin-bottom: 1.4rem;
+}
+.tge-step-head { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 0.6rem; }
+.tge-step-num {
+  flex: 0 0 auto; width: 2rem; height: 2rem; border-radius: 50%;
+  background: var(--ifm-color-primary); color: #fff; font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.tge-step-title { font-weight: 700; font-size: 1.1rem; }
+.tge-step > p:last-child { margin-bottom: 0; }
+.tge-step .tge-row { margin-bottom: 0.4rem; }
+
+/* Reference entries */
+.tge-ace-display {
+  display: inline-block; font-family: var(--ifm-font-family-monospace); font-size: 0.85rem;
+  background: var(--tge-card); border: 1px solid var(--tge-card-border); border-radius: 8px; padding: 0.2rem 0.6rem;
+}
+.tge-pill {
+  display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.02em;
+  padding: 0.1rem 0.5rem; border-radius: 999px; margin-left: 0.4rem; vertical-align: middle;
+  background: var(--ifm-color-emphasis-200); color: var(--ifm-color-emphasis-800);
+}
+.tge-pill.trigger { background: #ffe8a3; color: #6b4b00; }
+.tge-pill.loop { background: #d6e8ff; color: #0c3d7a; }
+[data-theme='dark'] .tge-pill.trigger { background: #4b3a08; color: #ffd76a; }
+[data-theme='dark'] .tge-pill.loop { background: #13335c; color: #a9ccff; }
+
+/* Cards on landing / index pages */
+.tge-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin: 1rem 0 2rem; }
+.tge-card {
+  display: block; border: 1px solid var(--tge-card-border); background: var(--tge-card);
+  border-radius: 16px; padding: 1rem 1.2rem; color: inherit; transition: transform 0.15s, border-color 0.15s;
+}
+.tge-card:hover { text-decoration: none; transform: translateY(-2px); border-color: var(--ifm-color-primary); color: inherit; }
+.tge-card-icon { font-size: 1.6rem; }
+.tge-card-title { font-weight: 700; margin: 0.3rem 0; }
+.tge-card-text { font-size: 0.9rem; color: var(--ifm-color-emphasis-700); }
+.tge-card img { border-radius: 10px; margin-bottom: 0.5rem; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+
+/* Zoomed screenshot overlay */
+.tge-zoom {
+  position: fixed; inset: 0; z-index: 1000; background: rgba(0, 0, 0, 0.82);
+  display: flex; align-items: center; justify-content: center; cursor: zoom-out; padding: 2vh;
+}
+.tge-zoom img { max-height: 96vh; max-width: 96vw; border-radius: 16px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); }
+
+.markdown table { display: table; width: 100%; }

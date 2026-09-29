@@ -1,0 +1,44 @@
+[
+  {
+    "id": "empty",
+    "name": "Empty 3D scene",
+    "description": "Camera, light and ground. Start from scratch.",
+    "icon": "⬜"
+  },
+  {
+    "id": "physics",
+    "name": "Physics playground",
+    "description": "Boxes and balls falling onto the ground.",
+    "icon": "🧱"
+  },
+  {
+    "id": "coins",
+    "name": "Roll-a-ball: Coin collector",
+    "description": "Roll the ball around and collect spinning coins.",
+    "icon": "🪙"
+  },
+  {
+    "id": "platformer",
+    "name": "3D Platformer",
+    "description": "Run and jump with an animated hero, grab the coins, reach the flag.",
+    "icon": "🏃"
+  },
+  {
+    "id": "runner",
+    "name": "Endless runner",
+    "description": "Swipe between lanes, jump over crates, grab coins. How far can you get?",
+    "icon": "🏁"
+  },
+  {
+    "id": "shooter",
+    "name": "Arena shooter",
+    "description": "Dodge waves of slimes while your hero shoots the nearest one. Survive as long as you can!",
+    "icon": "🎯"
+  },
+  {
+    "id": "racing",
+    "name": "Kart racing",
+    "description": "Race 3 laps around an oval against the clock. Beat your best lap!",
+    "icon": "🏎️"
+  }
+]

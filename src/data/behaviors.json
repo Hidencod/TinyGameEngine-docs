@@ -1,0 +1,116 @@
+{
+  "defaults": {
+    "platformer": {
+      "speed": 5,
+      "jumpStrength": 7,
+      "jumpButton": "jump",
+      "turnToDirection": true,
+      "cameraRelative": true,
+      "animate": true
+    },
+    "topdown": {
+      "speed": 5,
+      "turnToDirection": true,
+      "cameraRelative": true,
+      "animate": true
+    },
+    "car": {
+      "speed": 15,
+      "acceleration": 10,
+      "steering": 30,
+      "grip": 1,
+      "brake": 1,
+      "wheels": "",
+      "frontWheels": ""
+    },
+    "cameraFollow": {
+      "target": "Player",
+      "offsetX": 0,
+      "offsetY": 6,
+      "offsetZ": 10,
+      "smoothing": 5,
+      "lookAtTarget": true,
+      "stayBehind": false
+    },
+    "rotate": {
+      "speedX": 0,
+      "speedY": 90,
+      "speedZ": 0
+    },
+    "bullet": {
+      "speed": 10,
+      "gravity": false
+    },
+    "sine": {
+      "property": "y",
+      "magnitude": 0.5,
+      "period": 2
+    },
+    "follow": {
+      "target": "Player",
+      "speed": 2,
+      "stopDistance": 1,
+      "lookAt": true,
+      "animate": true
+    },
+    "destroyOffscreen": {
+      "killY": -20,
+      "maxDistance": 200
+    },
+    "draggable": {
+      "axis": "xz"
+    }
+  },
+  "info": {
+    "platformer": {
+      "icon": "🏃",
+      "title": "Platformer",
+      "desc": "Walk with the joystick and jump (needs a Physics body)"
+    },
+    "topdown": {
+      "icon": "🕹️",
+      "title": "Top-down movement",
+      "desc": "Move in 8 directions on the ground"
+    },
+    "car": {
+      "icon": "🏎️",
+      "title": "Car",
+      "desc": "Drive with the joystick: gas, brake, steer (needs a Physics body)"
+    },
+    "cameraFollow": {
+      "icon": "🎥",
+      "title": "Camera follow",
+      "desc": "Put on the camera to follow a target"
+    },
+    "rotate": {
+      "icon": "🔄",
+      "title": "Rotate",
+      "desc": "Spins constantly"
+    },
+    "bullet": {
+      "icon": "➤",
+      "title": "Bullet",
+      "desc": "Keeps moving forward"
+    },
+    "sine": {
+      "icon": "〰️",
+      "title": "Wave (sine)",
+      "desc": "Smoothly moves back and forth"
+    },
+    "follow": {
+      "icon": "🎯",
+      "title": "Follow target",
+      "desc": "Moves toward another object"
+    },
+    "destroyOffscreen": {
+      "icon": "🗑️",
+      "title": "Destroy when far",
+      "desc": "Removes the object when it falls or goes too far"
+    },
+    "draggable": {
+      "icon": "✋",
+      "title": "Draggable",
+      "desc": "Player can drag it with a finger"
+    }
+  }
+}

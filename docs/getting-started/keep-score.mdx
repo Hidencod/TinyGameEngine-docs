@@ -1,0 +1,121 @@
+---
+title: "Tutorial 2: Keep score and win"
+sidebar_label: "Tutorial 2: Score & win"
+description: More coins, a Score variable shown on a label, and a win rule — about 10 minutes.
+---
+
+# Tutorial 2: Keep score and win
+
+Your game has one coin. Now you will add more, **count them with a Score variable**, show the score on a **label**, and show **“You win!”** when all are collected.
+
+:::tip[Do it in the app]
+At the end of Tutorial 1 tap **Continue to part 2**, or on the home screen tap **New here? Make your first game → Part 2** (it starts from a finished Part 1).
+:::
+
+<Phone name="tut2-01-intro" size="small" caption="Part 2 starts" />
+
+<Step n={1} title="More coins">
+
+In the **Objects** tab tap **⋮** next to the coin and choose **Duplicate**. Do it until you have **3 coins**.
+
+<Row>
+  <Phone name="tut2-02-more-coins" caption="Tap ⋮ next to the coin" />
+  <Phone name="tut2-03-duplicate-menu" caption="Duplicate" />
+</Row>
+
+Copies share the same name, so they are all instances of the same **object type** — one event works for all of them.
+
+</Step>
+
+<Step n={2} title="Spread them out">
+
+The copies sit on top of each other. Tap each coin (in the 3D view or in the Objects list) and drag its arrows so the coins are spread around the arena. You can also type a **Position** in the Inspect tab.
+
+<Phone name="tut2-04-spread" size="small" />
+
+</Step>
+
+<Step n={3} title="A label for the score">
+
+Labels show text on the screen. In **Objects** tap **＋ Add** and choose **Label** (under *UI (on screen)*). Then, in **Inspect**, change its **Text** to `Score: 0`.
+
+<Row>
+  <Phone name="tut2-05-label" caption="＋ Add → Label" />
+  <Phone name="tut2-06-label-text" caption="Text: Score: 0" />
+</Row>
+
+When a UI element is selected, the 3D view switches to **UI mode** and shows the game screen as a frame. See [Game UI](../world/ui).
+
+</Step>
+
+<Step n={4} title="Count the coins">
+
+Open **Logic → Main events**. Under your collision event tap **Add action → System → Add to variable**. Variables remember numbers while the game runs. Choose **Score** (if it isn’t there, pick **＋ New variable…** and name it `Score`), keep **Value** at `1`, and tap **✓ Add action**.
+
+<Row>
+  <Phone name="tut2-07-count" caption="Add action" />
+  <Phone name="tut2-08-system-actions" caption="System actions" />
+  <Phone name="tut2-10-new-variable" caption="New variable: Score" />
+  <Phone name="tut2-11-add-to-var-filled" caption="Add 1 to Score" />
+</Row>
+
+</Step>
+
+<Step n={5} title="Show the score">
+
+Tap **Add action** again, pick **Label**, then **Set label**. As the text type
+
+```
+"Score: " + Score
+```
+
+with the quotes around `Score: `. Text in quotes is shown as it is; `Score` without quotes is the variable’s value. Tap **✓ Add action**.
+
+<Row>
+  <Phone name="tut2-12-show-score" caption="Add action → Label" />
+  <Phone name="tut2-13-set-label" caption="Set label to the score" />
+</Row>
+
+</Step>
+
+<Step n={6} title="WHEN all coins are collected…">
+
+Tap **＋ Add event → System → Compare variable**. Choose **Score**, keep **=**, set **Value** to `3` (your number of coins) and tap **✓ Add condition**.
+
+<Row>
+  <Phone name="tut2-14-win-event" caption="＋ Add event" />
+  <Phone name="tut2-15-compare" caption="Score = 3" />
+</Row>
+
+</Step>
+
+<Step n={7} title="…DO show “You win!”">
+
+Under that new event tap **Add action**, pick **Label**, **Set label**, type `"You win!"` (with the quotes) and tap **✓ Add action**. Your sheet now has two events:
+
+<Phone name="tut2-16-sheet-done" size="large" caption="The finished event sheet" />
+
+1. *WHEN Player collides with Cylinder* → destroy **that** coin, add 1 to Score, show the score.
+2. *WHEN Score = 3* → show “You win!”.
+
+Only the coin the ball touched is destroyed, not all of them: the collision condition **picks** that coin, and actions only apply to picked instances. See [How events work](../logic/event-sheets).
+
+</Step>
+
+<Step n={8} title="Collect them all">
+
+Go back, tap **▶ Play** and collect all the coins. Watch the score go up, then “You win!”.
+
+<Row>
+  <Phone name="tut2-17-playing" caption="Playing" />
+  <Phone name="tut2-18-finished" caption="🎉 You finished the tutorials!" />
+</Row>
+
+</Step>
+
+## What next?
+
+- Add a **sound** when a coin is collected: *Audio → Play sound* (see [Sound](../world/sound)).
+- Add a **timer**: *Time → Start timer* and *On timer finished* (see [Advanced events](../logic/advanced-events)).
+- Add a **second level**: a new scene and *Go to scene* (see [Scenes](../editor/scenes)).
+- Open the **Roll-a-ball: Coin collector** template: it has a start menu, a coin bar, a pause button and a win screen (see [Templates](../templates)).

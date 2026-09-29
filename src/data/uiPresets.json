@@ -1,0 +1,32 @@
+[
+  {
+    "id": "label",
+    "name": "Label",
+    "kind": "text"
+  },
+  {
+    "id": "button",
+    "name": "Button",
+    "kind": "button"
+  },
+  {
+    "id": "image",
+    "name": "Image",
+    "kind": "image"
+  },
+  {
+    "id": "panel",
+    "name": "Panel",
+    "kind": "panel"
+  },
+  {
+    "id": "progress",
+    "name": "ProgressBar",
+    "kind": "progress"
+  },
+  {
+    "id": "screen",
+    "name": "Screen",
+    "kind": "panel"
+  }
+]

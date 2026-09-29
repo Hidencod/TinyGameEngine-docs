@@ -1,0 +1,82 @@
+[
+  {
+    "id": "joystick",
+    "title": "Move with joystick",
+    "icon": "🕹️",
+    "scope": "entity",
+    "description": "Walk around with the on-screen joystick (or WASD / arrow keys).",
+    "code": "// Move with the joystick and face the walking direction.\nfunction update(dt) {\n  const speed = props.speed ?? 5;\n  const x = input.axis.x;\n  const y = input.axis.y;\n  entity.translate(x * speed * dt, 0, -y * speed * dt);\n  if (x !== 0 || y !== 0) {\n    entity.rotation.y = Math.atan2(-x, y) * 180 / Math.PI;\n  }\n}\n"
+  },
+  {
+    "id": "jump",
+    "title": "Jump on button",
+    "icon": "⬆️",
+    "scope": "entity",
+    "description": "Press the \"jump\" button to jump. Needs a RigidBody + Collider.",
+    "code": "// Jump when the \"jump\" button is pressed (needs a RigidBody).\nfunction update(dt) {\n  if (input.wasPressed('jump') && entity.isOnGround()) {\n    const v = entity.getVelocity();\n    entity.setVelocity(v.x, props.jumpStrength ?? 7, v.z);\n  }\n}\n"
+  },
+  {
+    "id": "spin",
+    "title": "Spin",
+    "icon": "🔄",
+    "scope": "entity",
+    "description": "Rotate constantly around the up axis.",
+    "code": "// Spin around the Y axis.\nfunction update(dt) {\n  entity.rotate(0, (props.speed ?? 90) * dt, 0);\n}\n"
+  },
+  {
+    "id": "follow",
+    "title": "Follow the player",
+    "icon": "👣",
+    "scope": "entity",
+    "description": "Chase the entity named \"Player\" and stop when close.",
+    "code": "// Chase the Player.\nfunction update(dt) {\n  const player = game.find('Player');\n  if (!player) return;\n  const target = player.getWorldPosition();\n  entity.lookAt(target.x, entity.position.y, target.z);\n  if (entity.distanceTo(player) > 1.5) {\n    entity.moveToward(target.x, entity.position.y, target.z, (props.speed ?? 2) * dt);\n  }\n}\n"
+  },
+  {
+    "id": "spawner",
+    "title": "Spawn every second",
+    "icon": "⏱️",
+    "scope": "entity",
+    "description": "Create a \"Coin\" (prefab or object name) near this entity every second.",
+    "code": "// Spawn a Coin every second somewhere around this entity.\nlet timer = 0;\n\nfunction update(dt) {\n  timer += dt;\n  if (timer >= 1) {\n    timer -= 1;\n    const p = entity.getWorldPosition();\n    game.spawn('Coin', { x: p.x + random(-4, 4), y: p.y + 5, z: p.z + random(-4, 4) });\n  }\n}\n"
+  },
+  {
+    "id": "coin",
+    "title": "Collect coin on collision",
+    "icon": "🪙",
+    "scope": "entity",
+    "description": "Put on the Player: touching a Coin destroys it and adds 1 to Score.",
+    "code": "// Put this on the Player.\nfunction onCollision(other) {\n  if (other.name === 'Coin' || other.hasTag('coin')) {\n    other.destroy();\n    game.setVar('Score', Number(game.getVar('Score') ?? 0) + 1);\n    audio.play('coin');\n  }\n}\n"
+  },
+  {
+    "id": "tapcolor",
+    "title": "Change color on tap",
+    "icon": "🎨",
+    "scope": "entity",
+    "description": "Tap the object to cycle through colors.",
+    "code": "// Tap this object to change its color.\nconst colors = ['#ff5c6c', '#ffb547', '#3ecf8e', '#4f8cff', '#a855f7'];\nlet index = 0;\n\nfunction onTap() {\n  index = (index + 1) % colors.length;\n  entity.setColor(colors[index]);\n}\n"
+  },
+  {
+    "id": "fall",
+    "title": "Restart when falling",
+    "icon": "💀",
+    "scope": "entity",
+    "description": "Restart the scene if this entity falls below the world.",
+    "code": "// Restart the level when falling off the map.\nfunction update(dt) {\n  if (entity.position.y < -10) {\n    game.restartScene();\n  }\n}\n"
+  },
+  {
+    "id": "scorehud",
+    "title": "Show score (global)",
+    "icon": "🏆",
+    "scope": "global",
+    "description": "Global script: keeps a Text entity named \"ScoreText\" updated.",
+    "code": "// Global script: show the Score in a Text entity named \"ScoreText\".\nfunction update(dt) {\n  const label = game.find('ScoreText');\n  if (label) label.setText('Score: ' + game.getVar('Score'));\n}\n"
+  },
+  {
+    "id": "swipe",
+    "title": "Swipe lanes (runner)",
+    "icon": "👆",
+    "scope": "entity",
+    "description": "Swipe left/right to switch between 3 lanes, swipe up to jump.",
+    "code": "// Endless-runner style lane switching.\nlet lane = 0; // -1, 0, 1\n\nfunction update(dt) {\n  if (input.swipe === 'left') lane = clamp(lane - 1, -1, 1);\n  if (input.swipe === 'right') lane = clamp(lane + 1, -1, 1);\n  if (input.swipe === 'up' && entity.isOnGround()) entity.applyImpulse(0, 6, 0);\n  entity.position.x = lerp(entity.position.x, lane * 2, 10 * dt);\n}\n"
+  }
+]

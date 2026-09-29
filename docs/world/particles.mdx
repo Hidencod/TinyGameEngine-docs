@@ -1,0 +1,74 @@
+---
+title: Particles
+description: Fire, smoke, sparks, explosions, rain and confetti with the Particles component.
+---
+
+# Particles
+
+Particles are many tiny sprites that make effects: fire, smoke, sparkles, explosions, dust, rain, confetti, magic.
+
+## Add an effect
+
+**Objects → ＋ Add → Particles** and pick a preset. It starts previewing in the 3D view right away.
+
+<Row>
+  <Phone name="add-menu-3" caption="Particle presets in the Add menu" />
+  <Phone name="particles-presets" caption="Or: Preset → Start from a preset…" />
+</Row>
+
+| Preset | Look |
+| --- | --- |
+| ✨ **Sparkles** | Twinkling glitter around the object |
+| 🔥 **Fire** | Flickering flames rising up |
+| 💨 **Smoke** | Slow grey puffs that grow and fade |
+| 💥 **Explosion** | One big burst (plays once) |
+| 🌫️ **Dust puff** | Small puff for landings and footsteps (plays once) |
+| 🌧️ **Rain** | Falling drops over a big area (place it high up) |
+| 🎉 **Confetti** | Colorful party burst (plays once) |
+| 🔮 **Magic** | Glowing orbs drifting upward |
+
+## Particles settings
+
+<Side shot="card-particles-fire" crop>
+
+**▶ Preview / ⏹ Stop preview** plays the effect in the editor; **↻** restarts it.
+
+**Emission**
+
+| Field | What it does |
+| --- | --- |
+| **Per second** | Particles made every second (0 = bursts only). |
+| **Burst** | Particles shot at once when it starts. |
+| **Play on start** | Starts with the scene. Off = wait for *Start particles*. |
+| **Loop / Duration** | Keep going, or stop after Duration seconds. |
+| **Shape** | Fountain (cone), Ball (sphere), Point, Box (area). |
+| **Radius / Area size / Spread** | Size of the emitter; cone angle. |
+
+**Motion**
+
+| Field | What it does |
+| --- | --- |
+| **Lifetime (s)** | Min–max seconds each particle lives. |
+| **Speed** | Min–max start speed. |
+| **Gravity** | 1 = falls like objects, 0 = floats, negative = rises. |
+| **Air drag** | Slows particles down. |
+| **Leave behind** | On: particles stay where they were made (trails, smoke). Off: they move with the object. |
+
+**Look**
+
+| Field | What it does |
+| --- | --- |
+| **Size over lifetime** | A curve from birth (left) to death (right). |
+| **Color over lifetime** | A gradient: keys above the bar set transparency, below set color. |
+| **Glow** | Additive, light-adding look (fire, sparks). Off for smoke and confetti. |
+| **Texture** | An image per particle; none = a soft round dot. |
+| **Max particles** | Limit for this effect. Lower is faster on old phones. |
+
+</Side>
+
+## Particles from events and scripts
+
+- Actions: **Start particles**, **Stop particles**, **Burst particles** (N at once), **Set particle rate**, **Spawn particles here** (a one-off effect at the object) and **Spawn particles** (a preset at any position — great for an explosion where something was destroyed). Condition: **Is emitting particles**.
+- Scripts: `entity.emitParticles(30)`, `game.spawnParticles('Explosion', x, y, z, { burst: 50 })`.
+
+The project’s **Max particles** setting caps all effects together. See [Performance](../help/performance).

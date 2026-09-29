@@ -1,0 +1,7 @@
+node_modules
+/build
+.docusaurus
+.cache-loader
+.capture-errors
+.DS_Store
+npm-debug.log*

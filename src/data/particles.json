@@ -1,0 +1,50 @@
+[
+  {
+    "id": "sparkle",
+    "name": "Sparkles",
+    "icon": "✨",
+    "description": "Twinkling glitter around the object"
+  },
+  {
+    "id": "fire",
+    "name": "Fire",
+    "icon": "🔥",
+    "description": "Flickering flames rising up"
+  },
+  {
+    "id": "smoke",
+    "name": "Smoke",
+    "icon": "💨",
+    "description": "Slow grey puffs that grow and fade"
+  },
+  {
+    "id": "explosion",
+    "name": "Explosion",
+    "icon": "💥",
+    "description": "One big burst (plays once)"
+  },
+  {
+    "id": "dust",
+    "name": "Dust puff",
+    "icon": "🌫️",
+    "description": "Small puff for landings and footsteps (plays once)"
+  },
+  {
+    "id": "rain",
+    "name": "Rain",
+    "icon": "🌧️",
+    "description": "Falling drops over a big area (place it high up)"
+  },
+  {
+    "id": "confetti",
+    "name": "Confetti",
+    "icon": "🎉",
+    "description": "Colorful party burst (plays once)"
+  },
+  {
+    "id": "magic",
+    "name": "Magic",
+    "icon": "🔮",
+    "description": "Glowing orbs drifting upward"
+  }
+]

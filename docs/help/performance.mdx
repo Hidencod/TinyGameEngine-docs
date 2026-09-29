@@ -1,0 +1,31 @@
+---
+title: Performance tips
+description: Keep your game smooth on cheap phones.
+---
+
+# Performance tips
+
+Your players may have much cheaper phones than yours. Check the **fps** counter in [Play mode](../editor/play-mode): 60 is smooth, under 30 feels slow.
+
+## Biggest wins first
+
+1. **Shadows** — the most expensive thing to draw. Keep one shadow-casting light (the sun); turn *Casts shadows* off on lamps and on small objects; or turn all **Shadows** off in [Project settings](../editor/project-settings).
+2. **Max pixel ratio** — `1` to `1.5` is plenty on phones (Project settings). Higher values draw many more pixels for little visible gain.
+3. **Materials** — **Matte (fast)** and **Unlit** are cheapest; use **Realistic** only where it shows.
+4. **Antialias** — leave it off for low-end phones.
+5. **Particles** — lower *Max particles* per effect and for the whole project; use fewer, bigger particles.
+6. **Models** — low-poly models and small textures (1024 px or less). Reusing the same model many times is cheap.
+7. **Fog** — hides far-away things and lets you keep worlds small.
+8. **Remove what’s gone** — use *Destroy when far* on bullets and spawned objects, and destroy things behind the player in runners.
+
+## Physics
+
+- Use **static** bodies for everything that never moves.
+- Prefer **Box / Sphere / Capsule** colliders over *Exact mesh* for moving objects.
+- Don’t leave hundreds of dynamic objects piled up — destroy old ones.
+
+## Events and scripts
+
+- Prefer **triggers** (⚡) and *Every X seconds* over checking every frame when you can.
+- Pick objects with conditions instead of looping over everything.
+- In scripts, multiply by `dt`, and avoid `game.select()` inside `update()` for many objects every frame — keep references.

@@ -1,0 +1,98 @@
+---
+title: Home screen
+description: Create, open, rename, duplicate, back up, import and delete projects.
+---
+
+# Home screen
+
+The home screen lists your projects and is where you start new ones.
+
+<Side shot="home-empty-annotated">
+
+<Legend items={[
+  <><b>＋ New project</b> — start from a template.</>,
+  <><b>⬇ Import .tge</b> — open a project backup file.</>,
+  <><b>New here? Make your first game</b> — the guided tutorials.</>,
+  <><b>?</b> — Help & feedback.</>,
+]} />
+
+</Side>
+
+## Create a project
+
+<Step n={1} title="Tap ＋ New project">
+
+The template picker opens. Every template is a complete, playable game (except *Empty 3D scene*). Scroll to see all seven.
+
+<Row>
+  <Phone name="templates-picker" caption="Choose a template" />
+  <Phone name="templates-picker-end" caption="…scroll for more" />
+</Row>
+
+</Step>
+
+<Step n={2} title="Name it">
+
+Type a name and tap **OK**. You can rename it later.
+
+<Phone name="new-project-name" size="small" />
+
+</Step>
+
+<Step n={3} title="Start building">
+
+The [editor](../editor/overview) opens with your new project. Tap **←** at the top left to come back to the home screen.
+
+</Step>
+
+See [Templates](../templates) for what each template contains and how it works.
+
+## Your projects
+
+<Side shot="home-project-card">
+
+Each card shows the project name, when it was last changed, how many scenes and objects it has.
+
+<Legend items={[
+  <>Tap the card to <b>open</b> the project.</>,
+  <>Tap <b>⋮</b> for the project menu.</>,
+]} />
+
+The most recently changed project is at the top.
+
+</Side>
+
+### Project menu
+
+<Side shot="project-menu">
+
+| Item | What it does |
+| --- | --- |
+| **Open** | Opens the project in the editor. |
+| **Rename** | Changes the project name. |
+| **Duplicate** | Makes a full copy (scenes, assets, events). Great before trying something risky. |
+| **Backup (.tge)** | Saves the whole project as one `.tge` file you can keep or share. See [Backup](../publish/backup). |
+| **Delete** | Deletes the project from this phone **forever** (asks first). |
+
+</Side>
+
+## Import a project
+
+Tap **⬇ Import .tge** and choose a `.tge` file (a backup made on this or another phone). It is added as a **new** project — it never overwrites one you already have.
+
+## Help & feedback
+
+<Side shot="help-menu">
+
+Tap **?** at the top right (also in the editor’s **⋮** menu).
+
+| Item | What it does |
+| --- | --- |
+| **Send feedback** | Opens your email app with a message to the developer. Ideas and things that confused you are very welcome. |
+| **Report a problem** | Same, and attaches the app’s recent error log to help fix the bug. |
+| **Usage statistics** | Turns anonymous statistics on or off (Android app only). |
+| **Privacy policy** | What the app keeps and sends. |
+| **Open-source licences** | The libraries and free assets inside the app. |
+| **Tiny Game Engine 1.x** | The version you have and the contact address. |
+
+</Side>

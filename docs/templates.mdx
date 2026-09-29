@@ -1,0 +1,64 @@
+---
+title: Templates
+description: The seven ready-made starting projects, how to play them and what each one teaches.
+---
+
+# Templates
+
+Start a project from a template with **＋ New project** on the home screen. Every template (except Empty) is a complete, playable game: play it, then open its **Logic** tab to see how it works and change anything you like.
+
+<Phone name="templates-picker" size="small" caption="Choose a template" />
+
+<Cards>
+  <Card to="#empty" img="/img/templates/empty.webp" title="⬜ Empty 3D scene">Camera, light and ground.</Card>
+  <Card to="#physics" img="/img/templates/physics.webp" title="🧱 Physics playground">Boxes and balls falling.</Card>
+  <Card to="#coins" img="/img/templates/coins.webp" title="🪙 Roll-a-ball: Coin collector">Menus, HUD, win screen.</Card>
+  <Card to="#platformer" img="/img/templates/platformer.webp" title="🏃 3D Platformer">Animated hero, jump, flag.</Card>
+  <Card to="#runner" img="/img/templates/runner.webp" title="🏁 Endless runner">Swipe lanes, jump, high score.</Card>
+  <Card to="#shooter" img="/img/templates/shooter.webp" title="🎯 Arena shooter">Waves, health, auto-aim.</Card>
+  <Card to="#racing" img="/img/templates/racing.webp" title="🏎️ Kart racing">3 laps, checkpoints, best lap.</Card>
+</Cards>
+
+## ⬜ Empty 3D scene {/* #empty */}
+
+A **Camera**, a **Sun** and a **Ground** (with a static physics body), plus an empty *Main events* sheet and a `Score` variable. Start from scratch.
+
+## 🧱 Physics playground {/* #physics */}
+
+Boxes and balls fall onto the ground and bounce. **Tap** an object to kick it into the air; **tap the ground** to drop a new one.
+
+**Learn:** dynamic physics bodies, bounciness and friction, *On tapped*, *Push (impulse)*, *Create object*.
+
+## 🪙 Roll-a-ball: Coin collector {/* #coins */}
+
+Roll the ball with the joystick and collect the spinning coins. It has a **start screen** (the game is paused until you tap *Play*), a **coin bar** that fills up, a **pause button** with a pause screen, and a **win screen** with *Play again*.
+
+**Learn:** UI screens and buttons (*On clicked*, *Show*, *Hide*), *Pause game* / *Resume game*, progress bars, the Rotate behavior, particles at a position, camera shake, *Restart scene*.
+
+## 🏃 3D Platformer {/* #platformer */}
+
+Run and jump with an animated hero (joystick + **A** button), grab the coins and reach the flag. Falling off restarts the level.
+
+**Learn:** the Platformer and Camera follow behaviors, automatic character animation (idle / walk / sprint / jump), models from the Kenney Platformer Kit, *Is on ground*, *Compare property* (falling below a height), *Wait*.
+
+## 🏁 Endless runner {/* #runner */}
+
+The hero runs forward by itself. **Swipe** left/right (or ←/→) to change lane, **tap** (or Space/↑) to jump over crates, grab coins. The world is created ahead of you from prefabs and removed behind you, and the speed goes up over time. How far can you get? Your best distance is saved.
+
+**Learn:** prefabs and *Create object*, *Every X seconds*, *Random chance*, *On swipe*, *On screen tapped*, *Jump*, *Save value* / *Load value*, groups switched on and off (*Set group active*), game-over screen.
+
+## 🎯 Arena shooter {/* #shooter */}
+
+Dodge waves of slimes with the joystick while your hero automatically shoots the **nearest** one. Slimes take 2 hits and brutes 5; each enemy keeps its own health in an **instance variable**. Waves grow over time — survive as long as you can.
+
+**Learn:** *Pick nearest*, *Look at*, *Spawn object* (bullets), instance variables (*Compare / Subtract from instance variable*), *Repeat*, the Follow target behavior, health bar, best-score saving.
+
+## 🏎️ Kart racing {/* #racing */}
+
+Drive the kart with the joystick (**up = gas**, **down = brake / reverse**, left/right to steer), 3 laps around an oval against the clock. **Checkpoints** must be passed in order, so a lap only counts when you really drove around. Your best lap is saved.
+
+**Learn:** the Car behavior on a model from the Kenney Car Kit, a chase camera (*Camera follow* with *Stay behind*), trigger colliders as checkpoints, a lap timer with *Every tick*, *Set behavior setting*, engine sound.
+
+:::tip[Learning from templates]
+Open a template, then its **Logic → Main events**. Long-press any event → **Disable event** and play again to see what that event does.
+:::

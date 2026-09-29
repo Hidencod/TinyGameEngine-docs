@@ -1,0 +1,50 @@
+---
+title: Sound
+description: Free sounds, the Sound component, 3D sound, and playing sounds from events and scripts.
+---
+
+# Sound
+
+## Get sounds
+
+- **Free sounds** — **Assets → 🔊 Free sounds** lists 27 game sounds by Kenney (CC0, free for any game). Tap one to add it to your project:
+
+| Kind | Sounds |
+| --- | --- |
+| Rewards | Coin, PowerUp, Bonus, Win, Lose |
+| Action | Jump, Laser, BigLaser, Zap, Explosion, BigBoom |
+| Hits | Punch, HeavyPunch, MetalBump, PlasticBump, GlassBreak, Footstep |
+| Menus | Click, Select, Confirm, Back, Error, Tick, Go |
+| Hums | Engine, SpaceEngine, ForceField (good with Loop on) |
+
+- **Your own** — **Assets → ⬆ Import** an MP3, OGG, WAV or M4A.
+
+Preview any sound from its menu in the Assets tab (**Preview sound**).
+
+## Play a sound from an event
+
+The simplest way: **Add action → Audio → Play sound**, choose the sound, a **volume** and whether it **loops**. **Stop sound** stops it, **Set master volume** changes the volume of everything.
+
+Example — a coin sound: *WHEN Player collides with Coin → Audio: Play sound `coin`*.
+
+## The Sound component
+
+For a sound that belongs to an object — an engine hum on a car, a waterfall, background music — add the **Sound** component:
+
+<Side shot="card-audio" crop>
+
+| Field | What it does |
+| --- | --- |
+| **Sound file** | The sound asset (or pick a free one). |
+| **Play on start** | Starts when the scene starts. |
+| **Loop** | Repeats forever. |
+| **Volume** | 0–1. |
+| **3D sound** | Quieter when the object is far from the camera. |
+
+Actions **Play its sound** / **Stop its sound** control it.
+
+</Side>
+
+:::info[Sound on phones]
+Browsers only allow sound after the player touches the screen. Exported games show a *Tap to play* screen that unlocks sound; in the editor the ▶ Play tap does it.
+:::

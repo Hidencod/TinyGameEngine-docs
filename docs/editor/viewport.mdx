@@ -1,0 +1,97 @@
+---
+title: The 3D view
+description: Look around, select objects, and move, rotate and scale them with the gizmo.
+---
+
+# The 3D view
+
+The 3D view shows your scene. It is where you place things.
+
+## Look around
+
+| Gesture | What it does |
+| --- | --- |
+| **Drag** with one finger (on empty space) | Orbit around the scene |
+| **Pinch** with two fingers | Zoom in and out |
+| **Drag** with two fingers | Pan (slide the view) |
+| **Double-tap** an object | Focus on it (the view centers on it) |
+| Mouse: right/middle drag, wheel | Pan, zoom (when using the editor with a mouse) |
+
+The grid shows the ground plane. One grid square is 1 meter.
+
+## Select objects
+
+- **Tap** an object to select it. Its name is highlighted in the Objects list and the [Inspector](./inspector) shows it.
+- **Tap empty space** to deselect.
+- **Long-press** an object to open its [object menu](./objects#object-menu) (rename, duplicate, delete…).
+
+## The toolbar
+
+<Side shot="editor-viewport-toolbar-annotated" crop>
+
+<Legend items={[
+  <><b>Move</b> — arrows to slide the object.</>,
+  <><b>Rotate</b> — rings to turn it.</>,
+  <><b>Scale</b> — handles to resize it.</>,
+  <><b>Snap</b> — moves in 0.5 m steps and turns in 15° steps (8 px in UI mode).</>,
+  <><b>Multi</b> — select several objects: each tap adds or removes one.</>,
+  <><b>Focus</b> — center the view on the selection.</>,
+  <><b>Colliders</b> — show the invisible physics shapes (green outlines).</>,
+  <><b>UI</b> — UI mode: edit on-screen buttons and labels. See <a href="../world/ui">Game UI</a>.</>,
+]} />
+
+With several objects selected an extra **Pivot** button appears (see below).
+
+</Side>
+
+## Move, rotate and scale (the gizmo)
+
+The selected object shows a **gizmo**. Drag its handles:
+
+<Row>
+  <Phone name="viewport-selected-move" caption="Move: drag an arrow" />
+  <Phone name="viewport-rotate" caption="Rotate: drag a ring" />
+  <Phone name="viewport-scale" caption="Scale: drag a handle" />
+</Row>
+
+The colors are the axes: **red = X** (left/right), **green = Y** (up/down), **blue = Z** (forward/back).
+
+- In **Move** mode you can also drag the **object itself** to slide it along the ground.
+- Every drag is one undo step.
+- For exact values, type them in the Inspector’s **Transform** card.
+
+### Snap
+
+<Side shot="viewport-snap-on">
+
+Turn on **Snap** to move in 0.5 m steps and rotate in 15° steps — handy for lining up walls and floors. A short message confirms it. Tap it again to turn it off.
+
+</Side>
+
+## Show colliders
+
+<Side shot="viewport-colliders">
+
+Physics uses **collider** shapes that can differ from what you see. Turn on **Colliders** to draw them as outlines. Useful when something falls through the floor or bumps into air. See [Physics](../world/physics).
+
+</Side>
+
+## Select several objects
+
+<Side shot="viewport-multi">
+
+<Legend items={[
+  <>Tap <b>Multi</b>, then tap objects (in the view or the Objects list) to add or remove them.</>,
+  <><b>Pivot</b> — turn and scale around the <b>middle</b> of the group, or each object around <b>its own</b> center.</>,
+  <>The Objects tab shows how many are selected; tap it (<b>Done</b>) to finish.</>,
+]} />
+
+With a keyboard, hold **Shift** or **Ctrl** while tapping.
+
+</Side>
+
+<Side shot="inspector-multi">
+
+The gizmo now moves, rotates and scales them **together**. The Inspector shows the group: tap a name to edit just that one, or **Duplicate all**, **Delete all**, **Clear selection**.
+
+</Side>

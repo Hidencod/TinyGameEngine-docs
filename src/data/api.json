@@ -1,0 +1,966 @@
+{
+  "groups": [
+    {
+      "name": "entity",
+      "title": "entity",
+      "doc": "The entity the script is attached to (also `other` in collisions, and results of game.find()).",
+      "members": [
+        {
+          "name": "id",
+          "kind": "property",
+          "type": "string",
+          "doc": "Unique id of this entity."
+        },
+        {
+          "name": "name",
+          "kind": "property",
+          "type": "string",
+          "doc": "Object type name (clones share it), e.g. \"Coin\"."
+        },
+        {
+          "name": "tags",
+          "kind": "property",
+          "type": "Set",
+          "doc": "Tags of this entity (read-only set). Use hasTag/addTag."
+        },
+        {
+          "name": "destroyed",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "True once the entity has been destroyed."
+        },
+        {
+          "name": "position",
+          "kind": "property",
+          "type": "{x,y,z}",
+          "doc": "Local position in meters. Writable: entity.position.y += 1"
+        },
+        {
+          "name": "rotation",
+          "kind": "property",
+          "type": "{x,y,z}",
+          "doc": "Local rotation in DEGREES. Writable: entity.rotation.y += 90 * dt"
+        },
+        {
+          "name": "scale",
+          "kind": "property",
+          "type": "{x,y,z}",
+          "doc": "Local scale. Writable: entity.scale.x = 2"
+        },
+        {
+          "name": "visible",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "Show / hide the entity."
+        },
+        {
+          "name": "enabled",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "Disabled entities are not updated or drawn."
+        },
+        {
+          "name": "getVar",
+          "kind": "method",
+          "sig": "(name)",
+          "type": "value",
+          "doc": "Read an instance variable."
+        },
+        {
+          "name": "setVar",
+          "kind": "method",
+          "sig": "(name, value)",
+          "type": "void",
+          "doc": "Write an instance variable."
+        },
+        {
+          "name": "hasTag",
+          "kind": "method",
+          "sig": "(tag)",
+          "type": "boolean",
+          "doc": "Does this entity have the tag? e.g. other.hasTag(\"enemy\")"
+        },
+        {
+          "name": "addTag",
+          "kind": "method",
+          "sig": "(tag)",
+          "type": "void",
+          "doc": "Add a tag."
+        },
+        {
+          "name": "removeTag",
+          "kind": "method",
+          "sig": "(tag)",
+          "type": "void",
+          "doc": "Remove a tag."
+        },
+        {
+          "name": "getWorldPosition",
+          "kind": "method",
+          "sig": "()",
+          "type": "{x,y,z}",
+          "doc": "Position in world space (includes parents)."
+        },
+        {
+          "name": "getForward",
+          "kind": "method",
+          "sig": "()",
+          "type": "{x,y,z}",
+          "doc": "Unit vector the entity faces (world space)."
+        },
+        {
+          "name": "setPosition",
+          "kind": "method",
+          "sig": "(x, y, z)",
+          "type": "void",
+          "doc": "Teleport to a position."
+        },
+        {
+          "name": "translate",
+          "kind": "method",
+          "sig": "(x, y, z)",
+          "type": "void",
+          "doc": "Move by an offset in world axes."
+        },
+        {
+          "name": "moveLocal",
+          "kind": "method",
+          "sig": "(x, y, z)",
+          "type": "void",
+          "doc": "Move along its own axes (x right, y up, z forward)."
+        },
+        {
+          "name": "setRotation",
+          "kind": "method",
+          "sig": "(x, y, z)",
+          "type": "void",
+          "doc": "Set rotation in degrees."
+        },
+        {
+          "name": "rotate",
+          "kind": "method",
+          "sig": "(x, y, z)",
+          "type": "void",
+          "doc": "Rotate by degrees, e.g. entity.rotate(0, 90 * dt, 0)"
+        },
+        {
+          "name": "lookAt",
+          "kind": "method",
+          "sig": "(x, y, z)",
+          "type": "void",
+          "doc": "Turn to face a world point."
+        },
+        {
+          "name": "moveToward",
+          "kind": "method",
+          "sig": "(x, y, z, distance)",
+          "type": "void",
+          "doc": "Move up to `distance` meters toward a point."
+        },
+        {
+          "name": "distanceTo",
+          "kind": "method",
+          "sig": "(otherOrPoint)",
+          "type": "number",
+          "doc": "Distance to another entity or {x,y,z}."
+        },
+        {
+          "name": "hasBody",
+          "kind": "method",
+          "sig": "()",
+          "type": "boolean",
+          "doc": "Has a RigidBody component?"
+        },
+        {
+          "name": "getVelocity",
+          "kind": "method",
+          "sig": "()",
+          "type": "{x,y,z}",
+          "doc": "Physics velocity (m/s)."
+        },
+        {
+          "name": "setVelocity",
+          "kind": "method",
+          "sig": "(x, y, z)",
+          "type": "void",
+          "doc": "Set physics velocity."
+        },
+        {
+          "name": "applyImpulse",
+          "kind": "method",
+          "sig": "(x, y, z)",
+          "type": "void",
+          "doc": "Instant push, e.g. a jump: applyImpulse(0, 5, 0)"
+        },
+        {
+          "name": "applyForce",
+          "kind": "method",
+          "sig": "(x, y, z)",
+          "type": "void",
+          "doc": "Continuous push (call every frame)."
+        },
+        {
+          "name": "isOnGround",
+          "kind": "method",
+          "sig": "()",
+          "type": "boolean",
+          "doc": "True if a dynamic body rests on something."
+        },
+        {
+          "name": "setColor",
+          "kind": "method",
+          "sig": "(hex)",
+          "type": "void",
+          "doc": "Change material color, e.g. setColor(\"#ff0000\")"
+        },
+        {
+          "name": "setOpacity",
+          "kind": "method",
+          "sig": "(0..1)",
+          "type": "void",
+          "doc": "Change material opacity."
+        },
+        {
+          "name": "setText",
+          "kind": "method",
+          "sig": "(text)",
+          "type": "void",
+          "doc": "Set the text of a Text component."
+        },
+        {
+          "name": "getText",
+          "kind": "method",
+          "sig": "()",
+          "type": "string",
+          "doc": "Get the text of a Text component."
+        },
+        {
+          "name": "getUIValue",
+          "kind": "method",
+          "sig": "()",
+          "type": "number",
+          "doc": "Progress bar value (UI component)."
+        },
+        {
+          "name": "setUIValue",
+          "kind": "method",
+          "sig": "(value)",
+          "type": "void",
+          "doc": "Set the progress bar value, e.g. health."
+        },
+        {
+          "name": "getUIMax",
+          "kind": "method",
+          "sig": "()",
+          "type": "number",
+          "doc": "Progress bar maximum."
+        },
+        {
+          "name": "setUIMax",
+          "kind": "method",
+          "sig": "(max)",
+          "type": "void",
+          "doc": "Set the progress bar maximum."
+        },
+        {
+          "name": "setUIImage",
+          "kind": "method",
+          "sig": "(assetName)",
+          "type": "void",
+          "doc": "Change the image of a UI element."
+        },
+        {
+          "name": "setUIColors",
+          "kind": "method",
+          "sig": "({ background, text, fill })",
+          "type": "void",
+          "doc": "Change UI colors, e.g. { background: \"#ff0000\" }."
+        },
+        {
+          "name": "isPressed",
+          "kind": "method",
+          "sig": "()",
+          "type": "boolean",
+          "doc": "True while this UI button is held down."
+        },
+        {
+          "name": "playAnimation",
+          "kind": "method",
+          "sig": "(name: string, loop = true)",
+          "type": "void",
+          "doc": "Play a clip of the 3D model, e.g. \"walk\" or \"jump\". loop=false plays once and holds the last frame."
+        },
+        {
+          "name": "stopAnimation",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Stop the playing model animation."
+        },
+        {
+          "name": "getAnimation",
+          "kind": "method",
+          "sig": "()",
+          "type": "string",
+          "doc": "Name of the playing clip (empty if none)."
+        },
+        {
+          "name": "getAnimationNames",
+          "kind": "method",
+          "sig": "()",
+          "type": "string[]",
+          "doc": "All clip names of the model."
+        },
+        {
+          "name": "hasAnimation",
+          "kind": "method",
+          "sig": "(name: string)",
+          "type": "boolean",
+          "doc": "True if the model has this clip."
+        },
+        {
+          "name": "setAnimationSpeed",
+          "kind": "method",
+          "sig": "(speed: number)",
+          "type": "void",
+          "doc": "1 = normal, 0.5 = half, 2 = double."
+        },
+        {
+          "name": "tween",
+          "kind": "method",
+          "sig": "(property, to, seconds, ease?)",
+          "type": "void",
+          "doc": "Animate 'x' | 'y' | 'z' | 'angle' | 'size' | 'opacity' to a value, e.g. tween('size', 1.5, 0.3, 'back'). Eases: linear, easeIn, easeOut, easeInOut, back, elastic, bounce."
+        },
+        {
+          "name": "isTweening",
+          "kind": "method",
+          "sig": "(property?)",
+          "type": "boolean",
+          "doc": "A tween is running (of that property, or any)."
+        },
+        {
+          "name": "stopTweens",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Stop all tweens where they are."
+        },
+        {
+          "name": "attachTo",
+          "kind": "method",
+          "sig": "(parent)",
+          "type": "void",
+          "doc": "Carry this object along with another (keeps its place in the world), e.g. a picked-up key."
+        },
+        {
+          "name": "detach",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Let go: back to the top level where it is now."
+        },
+        {
+          "name": "emitParticles",
+          "kind": "method",
+          "sig": "(count: number)",
+          "type": "void",
+          "doc": "Shoot particles at once from the Particles component, e.g. emitParticles(30) on a hit."
+        },
+        {
+          "name": "startParticles",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Start (or restart) the Particles component; also fires its Burst."
+        },
+        {
+          "name": "stopParticles",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Stop making new particles (the ones out fade normally)."
+        },
+        {
+          "name": "setParticleRate",
+          "kind": "method",
+          "sig": "(rate: number)",
+          "type": "void",
+          "doc": "Particles per second while emitting."
+        },
+        {
+          "name": "isEmittingParticles",
+          "kind": "method",
+          "sig": "()",
+          "type": "boolean",
+          "doc": "True while the Particles component makes new particles."
+        },
+        {
+          "name": "getParticleCount",
+          "kind": "method",
+          "sig": "()",
+          "type": "number",
+          "doc": "Particles currently alive."
+        },
+        {
+          "name": "playSound",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Play this entity's Audio component."
+        },
+        {
+          "name": "stopSound",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Stop this entity's Audio component."
+        },
+        {
+          "name": "setBehaviorEnabled",
+          "kind": "method",
+          "sig": "(type, on)",
+          "type": "void",
+          "doc": "Enable/disable a behavior, e.g. (\"platformer\", false)"
+        },
+        {
+          "name": "getBehaviorParam",
+          "kind": "method",
+          "sig": "(type, param)",
+          "type": "value",
+          "doc": "Read a behavior parameter."
+        },
+        {
+          "name": "setBehaviorParam",
+          "kind": "method",
+          "sig": "(type, param, value)",
+          "type": "void",
+          "doc": "Change a behavior parameter, e.g. (\"platformer\", \"speed\", 8)"
+        },
+        {
+          "name": "getParent",
+          "kind": "method",
+          "sig": "()",
+          "type": "entity|null",
+          "doc": "Parent entity."
+        },
+        {
+          "name": "getChildren",
+          "kind": "method",
+          "sig": "()",
+          "type": "entity[]",
+          "doc": "Child entities."
+        },
+        {
+          "name": "destroy",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Remove the entity (at end of frame)."
+        },
+        {
+          "name": "object3d",
+          "kind": "property",
+          "type": "THREE.Object3D",
+          "doc": "Advanced: the underlying three.js object."
+        }
+      ]
+    },
+    {
+      "name": "game",
+      "title": "game",
+      "doc": "The running game.",
+      "members": [
+        {
+          "name": "project",
+          "kind": "property",
+          "type": "ProjectData",
+          "doc": "The whole project data (read-only)."
+        },
+        {
+          "name": "scene",
+          "kind": "property",
+          "type": "SceneData",
+          "doc": "Current scene data (read-only)."
+        },
+        {
+          "name": "time",
+          "kind": "property",
+          "type": "number",
+          "doc": "Seconds since the scene started."
+        },
+        {
+          "name": "dt",
+          "kind": "property",
+          "type": "number",
+          "doc": "Last frame time in seconds."
+        },
+        {
+          "name": "timeScale",
+          "kind": "property",
+          "type": "number",
+          "doc": "Game speed: 1 normal, 0.5 slow motion."
+        },
+        {
+          "name": "paused",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "Is the game paused?"
+        },
+        {
+          "name": "input",
+          "kind": "property",
+          "type": "input",
+          "doc": "Same as `input`."
+        },
+        {
+          "name": "audio",
+          "kind": "property",
+          "type": "audio",
+          "doc": "Same as `audio`."
+        },
+        {
+          "name": "screen",
+          "kind": "property",
+          "type": "{width,height}",
+          "doc": "Screen size in pixels."
+        },
+        {
+          "name": "select",
+          "kind": "method",
+          "sig": "(selector)",
+          "type": "entity[]",
+          "doc": "All entities by name or #tag: game.select(\"#enemy\")"
+        },
+        {
+          "name": "find",
+          "kind": "method",
+          "sig": "(nameOrId)",
+          "type": "entity|null",
+          "doc": "First entity with that name/id: game.find(\"Player\")"
+        },
+        {
+          "name": "getAllEntities",
+          "kind": "method",
+          "sig": "()",
+          "type": "entity[]",
+          "doc": "Every live entity."
+        },
+        {
+          "name": "spawn",
+          "kind": "method",
+          "sig": "(name, position?, rotation?)",
+          "type": "entity|null",
+          "doc": "Create a prefab / clone: game.spawn(\"Coin\", {x:0,y:5,z:0})"
+        },
+        {
+          "name": "destroy",
+          "kind": "method",
+          "sig": "(entity)",
+          "type": "void",
+          "doc": "Destroy an entity."
+        },
+        {
+          "name": "pick",
+          "kind": "method",
+          "sig": "(screenX, screenY)",
+          "type": "entity|null",
+          "doc": "Entity at a screen point."
+        },
+        {
+          "name": "hasLineOfSight",
+          "kind": "method",
+          "sig": "(a, b)",
+          "type": "boolean",
+          "doc": "True when nothing solid is between the two objects, e.g. an enemy can see the player."
+        },
+        {
+          "name": "raycast",
+          "kind": "method",
+          "sig": "(from, to)",
+          "type": "{entity,point,distance}|null",
+          "doc": "Physics ray between two world points."
+        },
+        {
+          "name": "isTouching",
+          "kind": "method",
+          "sig": "(a, b)",
+          "type": "boolean",
+          "doc": "Are two entities touching?"
+        },
+        {
+          "name": "getVar",
+          "kind": "method",
+          "sig": "(name)",
+          "type": "value",
+          "doc": "Read a global/scene variable: game.getVar(\"Score\")"
+        },
+        {
+          "name": "setVar",
+          "kind": "method",
+          "sig": "(name, value)",
+          "type": "void",
+          "doc": "Write a global/scene variable."
+        },
+        {
+          "name": "hasVar",
+          "kind": "method",
+          "sig": "(name)",
+          "type": "boolean",
+          "doc": "Does the variable exist?"
+        },
+        {
+          "name": "goToScene",
+          "kind": "method",
+          "sig": "(nameOrId)",
+          "type": "void",
+          "doc": "Switch scene."
+        },
+        {
+          "name": "restartScene",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Restart the current scene."
+        },
+        {
+          "name": "pause",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Pause the game."
+        },
+        {
+          "name": "resume",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Resume the game."
+        },
+        {
+          "name": "save",
+          "kind": "method",
+          "sig": "(key, value)",
+          "type": "void",
+          "doc": "Save a value on the device (high scores...)."
+        },
+        {
+          "name": "load",
+          "kind": "method",
+          "sig": "(key)",
+          "type": "value",
+          "doc": "Load a saved value."
+        },
+        {
+          "name": "getCamera",
+          "kind": "method",
+          "sig": "()",
+          "type": "entity|null",
+          "doc": "The active camera entity."
+        },
+        {
+          "name": "spawnParticles",
+          "kind": "method",
+          "sig": "(effect, x, y, z, overrides?)",
+          "type": "void",
+          "doc": "Play an effect once at a position: \"Sparkles\", \"Fire\", \"Smoke\", \"Explosion\", \"Dust puff\", \"Rain\", \"Confetti\", \"Magic\". overrides e.g. { burst: 50, color: [\"#f00\", \"#ff0\"] }"
+        },
+        {
+          "name": "shakeCamera",
+          "kind": "method",
+          "sig": "(intensity, duration)",
+          "type": "void",
+          "doc": "Shake the camera."
+        },
+        {
+          "name": "vibrate",
+          "kind": "method",
+          "sig": "(ms)",
+          "type": "void",
+          "doc": "Vibrate the phone, e.g. vibrate(40) on a hit (Android; ignored elsewhere)."
+        },
+        {
+          "name": "on",
+          "kind": "method",
+          "sig": "(event, fn)",
+          "type": "unsubscribe",
+          "doc": "Listen: \"sceneStart\", \"collisionStart\", \"entityCreated\", ..."
+        },
+        {
+          "name": "log",
+          "kind": "method",
+          "sig": "(...values)",
+          "type": "void",
+          "doc": "Show a message on screen (debugging)."
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "title": "input",
+      "doc": "Touch controls and keyboard.",
+      "members": [
+        {
+          "name": "axis",
+          "kind": "property",
+          "type": "{x,y}",
+          "doc": "Joystick / WASD / arrows, each in -1..1. y = forward."
+        },
+        {
+          "name": "isDown",
+          "kind": "method",
+          "sig": "(name)",
+          "type": "boolean",
+          "doc": "Button or key held, e.g. input.isDown(\"jump\"), input.isDown(\"Space\")"
+        },
+        {
+          "name": "wasPressed",
+          "kind": "method",
+          "sig": "(name)",
+          "type": "boolean",
+          "doc": "Button or key pressed this frame."
+        },
+        {
+          "name": "wasReleased",
+          "kind": "method",
+          "sig": "(name)",
+          "type": "boolean",
+          "doc": "Button or key released this frame."
+        },
+        {
+          "name": "pointer",
+          "kind": "property",
+          "type": "{x,y,down}",
+          "doc": "Finger / mouse position in pixels."
+        },
+        {
+          "name": "tapped",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "A tap happened this frame."
+        },
+        {
+          "name": "swipe",
+          "kind": "property",
+          "type": "\"left\"|\"right\"|\"up\"|\"down\"|null",
+          "doc": "Swipe direction this frame."
+        },
+        {
+          "name": "tappedEntity",
+          "kind": "property",
+          "type": "entity|null",
+          "doc": "Entity under the finger when tapped this frame."
+        }
+      ]
+    },
+    {
+      "name": "audio",
+      "title": "audio",
+      "doc": "Sound playback.",
+      "members": [
+        {
+          "name": "play",
+          "kind": "method",
+          "sig": "(nameOrId, {volume, loop, tag}?)",
+          "type": "void",
+          "doc": "Play an audio asset, e.g. audio.play(\"coin\")"
+        },
+        {
+          "name": "stop",
+          "kind": "method",
+          "sig": "(tag?)",
+          "type": "void",
+          "doc": "Stop sounds with a tag (or all)."
+        },
+        {
+          "name": "setMasterVolume",
+          "kind": "method",
+          "sig": "(0..1)",
+          "type": "void",
+          "doc": "Global volume."
+        }
+      ]
+    },
+    {
+      "name": "helpers",
+      "title": "Helpers",
+      "doc": "Handy math functions available everywhere.",
+      "members": [
+        {
+          "name": "lerp",
+          "kind": "method",
+          "sig": "(a, b, t)",
+          "type": "number",
+          "doc": "Blend from a to b by t (0..1)."
+        },
+        {
+          "name": "clamp",
+          "kind": "method",
+          "sig": "(v, min, max)",
+          "type": "number",
+          "doc": "Keep v between min and max."
+        },
+        {
+          "name": "random",
+          "kind": "method",
+          "sig": "(min, max)",
+          "type": "number",
+          "doc": "Random decimal number between min and max."
+        },
+        {
+          "name": "randomInt",
+          "kind": "method",
+          "sig": "(min, max)",
+          "type": "number",
+          "doc": "Random whole number between min and max (inclusive)."
+        },
+        {
+          "name": "deg2rad",
+          "kind": "method",
+          "sig": "(degrees)",
+          "type": "number",
+          "doc": "Degrees to radians (for Math.sin etc.)."
+        }
+      ]
+    }
+  ],
+  "lifecycle": [
+    {
+      "name": "start",
+      "args": "",
+      "doc": "Called once when the scene starts.",
+      "global": true
+    },
+    {
+      "name": "update",
+      "args": "dt",
+      "doc": "Called every frame. dt = seconds since last frame.",
+      "global": true
+    },
+    {
+      "name": "lateUpdate",
+      "args": "dt",
+      "doc": "Called every frame after physics."
+    },
+    {
+      "name": "onCollision",
+      "args": "other",
+      "doc": "This entity started touching `other`."
+    },
+    {
+      "name": "onCollisionEnd",
+      "args": "other",
+      "doc": "This entity stopped touching `other`."
+    },
+    {
+      "name": "onTap",
+      "args": "",
+      "doc": "The player tapped this entity."
+    },
+    {
+      "name": "onClick",
+      "args": "",
+      "doc": "This UI button was clicked."
+    },
+    {
+      "name": "onDestroy",
+      "args": "",
+      "doc": "This entity is about to be destroyed."
+    }
+  ],
+  "helpers": [
+    {
+      "name": "lerp",
+      "kind": "method",
+      "sig": "(a, b, t)",
+      "type": "number",
+      "doc": "Blend from a to b by t (0..1)."
+    },
+    {
+      "name": "clamp",
+      "kind": "method",
+      "sig": "(v, min, max)",
+      "type": "number",
+      "doc": "Keep v between min and max."
+    },
+    {
+      "name": "random",
+      "kind": "method",
+      "sig": "(min, max)",
+      "type": "number",
+      "doc": "Random decimal number between min and max."
+    },
+    {
+      "name": "randomInt",
+      "kind": "method",
+      "sig": "(min, max)",
+      "type": "number",
+      "doc": "Random whole number between min and max (inclusive)."
+    },
+    {
+      "name": "deg2rad",
+      "kind": "method",
+      "sig": "(degrees)",
+      "type": "number",
+      "doc": "Degrees to radians (for Math.sin etc.)."
+    }
+  ],
+  "globals": [
+    {
+      "name": "entity",
+      "kind": "property",
+      "type": "entity",
+      "doc": "The entity this script is attached to."
+    },
+    {
+      "name": "game",
+      "kind": "property",
+      "type": "game",
+      "doc": "The game: find/spawn entities, variables, scenes..."
+    },
+    {
+      "name": "input",
+      "kind": "property",
+      "type": "input",
+      "doc": "Joystick, buttons, taps and swipes."
+    },
+    {
+      "name": "audio",
+      "kind": "property",
+      "type": "audio",
+      "doc": "Play sounds."
+    },
+    {
+      "name": "props",
+      "kind": "property",
+      "type": "object",
+      "doc": "Values set in the Inspector for this script, e.g. props.speed"
+    },
+    {
+      "name": "vars",
+      "kind": "property",
+      "type": "object",
+      "doc": "Variables storage for this script."
+    }
+  ],
+  "vec3": [
+    {
+      "name": "x",
+      "kind": "property",
+      "type": "number",
+      "doc": "X (right)"
+    },
+    {
+      "name": "y",
+      "kind": "property",
+      "type": "number",
+      "doc": "Y (up)"
+    },
+    {
+      "name": "z",
+      "kind": "property",
+      "type": "number",
+      "doc": "Z (towards the camera; forward is -Z)"
+    }
+  ]
+}

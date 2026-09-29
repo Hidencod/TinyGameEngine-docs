@@ -1,0 +1,462 @@
+{
+  "functions": [
+    {
+      "name": "random",
+      "signature": "random(min, max)",
+      "description": "Random decimal number between min and max",
+      "category": "Random",
+      "insert": "random(1, 10)"
+    },
+    {
+      "name": "loopindex",
+      "signature": "loopindex(\"i\")",
+      "description": "Current number of the loop called \"i\" (For loop), or of the innermost loop without a name",
+      "category": "Game",
+      "insert": "loopindex(\"i\")"
+    },
+    {
+      "name": "randomInt",
+      "signature": "randomInt(min, max)",
+      "description": "Random whole number from min to max (inclusive)",
+      "category": "Random",
+      "insert": "randomInt(1, 6)"
+    },
+    {
+      "name": "choose",
+      "signature": "choose(a, b, ...)",
+      "description": "Picks one of the values at random",
+      "category": "Random",
+      "insert": "choose(1, 2, 3)"
+    },
+    {
+      "name": "abs",
+      "signature": "abs(x)",
+      "description": "Absolute value (removes the minus sign)",
+      "category": "Math",
+      "insert": "abs("
+    },
+    {
+      "name": "min",
+      "signature": "min(a, b, ...)",
+      "description": "Smallest value",
+      "category": "Math",
+      "insert": "min("
+    },
+    {
+      "name": "max",
+      "signature": "max(a, b, ...)",
+      "description": "Largest value",
+      "category": "Math",
+      "insert": "max("
+    },
+    {
+      "name": "floor",
+      "signature": "floor(x)",
+      "description": "Round down",
+      "category": "Math",
+      "insert": "floor("
+    },
+    {
+      "name": "ceil",
+      "signature": "ceil(x)",
+      "description": "Round up",
+      "category": "Math",
+      "insert": "ceil("
+    },
+    {
+      "name": "round",
+      "signature": "round(x, digits?)",
+      "description": "Round to nearest (optionally to N decimals)",
+      "category": "Math",
+      "insert": "round("
+    },
+    {
+      "name": "sqrt",
+      "signature": "sqrt(x)",
+      "description": "Square root",
+      "category": "Math",
+      "insert": "sqrt("
+    },
+    {
+      "name": "pow",
+      "signature": "pow(x, y)",
+      "description": "x to the power of y (same as x ^ y)",
+      "category": "Math",
+      "insert": "pow("
+    },
+    {
+      "name": "sign",
+      "signature": "sign(x)",
+      "description": "-1, 0 or 1",
+      "category": "Math",
+      "insert": "sign("
+    },
+    {
+      "name": "sin",
+      "signature": "sin(degrees)",
+      "description": "Sine (angle in degrees)",
+      "category": "Math",
+      "insert": "sin("
+    },
+    {
+      "name": "cos",
+      "signature": "cos(degrees)",
+      "description": "Cosine (angle in degrees)",
+      "category": "Math",
+      "insert": "cos("
+    },
+    {
+      "name": "tan",
+      "signature": "tan(degrees)",
+      "description": "Tangent (angle in degrees)",
+      "category": "Math",
+      "insert": "tan("
+    },
+    {
+      "name": "atan2",
+      "signature": "atan2(y, x)",
+      "description": "Angle in degrees of the vector (x, y)",
+      "category": "Math",
+      "insert": "atan2("
+    },
+    {
+      "name": "angle",
+      "signature": "angle(x1, z1, x2, z2)",
+      "description": "Angle (degrees, around Y) from point 1 to point 2",
+      "category": "Math",
+      "insert": "angle("
+    },
+    {
+      "name": "lerp",
+      "signature": "lerp(a, b, t)",
+      "description": "Blend from a to b (t from 0 to 1)",
+      "category": "Math",
+      "insert": "lerp("
+    },
+    {
+      "name": "clamp",
+      "signature": "clamp(x, min, max)",
+      "description": "Keep x between min and max",
+      "category": "Math",
+      "insert": "clamp("
+    },
+    {
+      "name": "distance",
+      "signature": "distance(x1, z1, x2, z2)",
+      "description": "Distance on the ground (X/Z) between two points",
+      "category": "Math",
+      "insert": "distance("
+    },
+    {
+      "name": "distance3",
+      "signature": "distance3(x1, y1, z1, x2, y2, z2)",
+      "description": "3D distance between two points",
+      "category": "Math",
+      "insert": "distance3("
+    },
+    {
+      "name": "int",
+      "signature": "int(x)",
+      "description": "Whole number part (drops decimals)",
+      "category": "Convert",
+      "insert": "int("
+    },
+    {
+      "name": "float",
+      "signature": "float(x)",
+      "description": "Convert text to a number",
+      "category": "Convert",
+      "insert": "float("
+    },
+    {
+      "name": "str",
+      "signature": "str(x)",
+      "description": "Convert a number to text",
+      "category": "Convert",
+      "insert": "str("
+    },
+    {
+      "name": "len",
+      "signature": "len(text)",
+      "description": "Number of characters in a text",
+      "category": "Text",
+      "insert": "len("
+    },
+    {
+      "name": "upper",
+      "signature": "upper(text)",
+      "description": "UPPERCASE text",
+      "category": "Text",
+      "insert": "upper("
+    },
+    {
+      "name": "lower",
+      "signature": "lower(text)",
+      "description": "lowercase text",
+      "category": "Text",
+      "insert": "lower("
+    },
+    {
+      "name": "left",
+      "signature": "left(text, count)",
+      "description": "First characters of a text",
+      "category": "Text",
+      "insert": "left("
+    },
+    {
+      "name": "right",
+      "signature": "right(text, count)",
+      "description": "Last characters of a text",
+      "category": "Text",
+      "insert": "right("
+    },
+    {
+      "name": "mid",
+      "signature": "mid(text, start, count)",
+      "description": "Part of a text",
+      "category": "Text",
+      "insert": "mid("
+    },
+    {
+      "name": "contains",
+      "signature": "contains(text, part)",
+      "description": "true if text contains part",
+      "category": "Text",
+      "insert": "contains("
+    },
+    {
+      "name": "replace",
+      "signature": "replace(text, find, with)",
+      "description": "Replace every occurrence",
+      "category": "Text",
+      "insert": "replace("
+    },
+    {
+      "name": "pad",
+      "signature": "pad(value, length, char?)",
+      "description": "Pad with leading zeros, e.g. 007",
+      "category": "Text",
+      "insert": "pad("
+    },
+    {
+      "name": "time",
+      "signature": "time",
+      "description": "Seconds since the scene started",
+      "category": "Game",
+      "insert": "time"
+    },
+    {
+      "name": "dt",
+      "signature": "dt",
+      "description": "Seconds since the last frame (multiply speeds by dt)",
+      "category": "Game",
+      "insert": "dt"
+    },
+    {
+      "name": "fps",
+      "signature": "fps",
+      "description": "Frames per second",
+      "category": "Game",
+      "insert": "fps"
+    },
+    {
+      "name": "loopIndex",
+      "signature": "loopIndex",
+      "description": "Current number of the innermost loop (Repeat, For, For each, While)",
+      "category": "Game",
+      "insert": "loopIndex"
+    },
+    {
+      "name": "screenWidth",
+      "signature": "screenWidth",
+      "description": "Screen width in pixels",
+      "category": "Game",
+      "insert": "screenWidth"
+    },
+    {
+      "name": "screenHeight",
+      "signature": "screenHeight",
+      "description": "Screen height in pixels",
+      "category": "Game",
+      "insert": "screenHeight"
+    },
+    {
+      "name": "touchX",
+      "signature": "touchX",
+      "description": "Finger X position on screen",
+      "category": "Input",
+      "insert": "touchX"
+    },
+    {
+      "name": "touchY",
+      "signature": "touchY",
+      "description": "Finger Y position on screen",
+      "category": "Input",
+      "insert": "touchY"
+    },
+    {
+      "name": "joystickX",
+      "signature": "joystickX",
+      "description": "Joystick left/right (-1 to 1)",
+      "category": "Input",
+      "insert": "joystickX"
+    },
+    {
+      "name": "joystickY",
+      "signature": "joystickY",
+      "description": "Joystick down/up (-1 to 1)",
+      "category": "Input",
+      "insert": "joystickY"
+    }
+  ],
+  "objectProps": [
+    {
+      "name": "x",
+      "description": "X position"
+    },
+    {
+      "name": "y",
+      "description": "Y position (height)"
+    },
+    {
+      "name": "z",
+      "description": "Z position"
+    },
+    {
+      "name": "angle",
+      "description": "Turn angle around Y (degrees)"
+    },
+    {
+      "name": "rotX",
+      "description": "Rotation X (degrees)"
+    },
+    {
+      "name": "rotY",
+      "description": "Rotation Y (degrees)"
+    },
+    {
+      "name": "rotZ",
+      "description": "Rotation Z (degrees)"
+    },
+    {
+      "name": "scaleX",
+      "description": "Scale X"
+    },
+    {
+      "name": "scaleY",
+      "description": "Scale Y"
+    },
+    {
+      "name": "scaleZ",
+      "description": "Scale Z"
+    },
+    {
+      "name": "vx",
+      "description": "Velocity X"
+    },
+    {
+      "name": "vy",
+      "description": "Velocity Y"
+    },
+    {
+      "name": "vz",
+      "description": "Velocity Z"
+    },
+    {
+      "name": "speed",
+      "description": "Speed (length of velocity)"
+    },
+    {
+      "name": "count",
+      "description": "Number of these objects in the scene"
+    },
+    {
+      "name": "pickedCount",
+      "description": "Number of picked instances in this event"
+    },
+    {
+      "name": "worldX",
+      "description": "World X position"
+    },
+    {
+      "name": "worldY",
+      "description": "World Y position"
+    },
+    {
+      "name": "worldZ",
+      "description": "World Z position"
+    },
+    {
+      "name": "text",
+      "description": "Text shown (text objects)"
+    },
+    {
+      "name": "visible",
+      "description": "true if visible"
+    },
+    {
+      "name": "name",
+      "description": "Object name"
+    },
+    {
+      "name": "id",
+      "description": "Unique id of the instance"
+    },
+    {
+      "name": "value",
+      "description": "Progress bar value (UI)"
+    },
+    {
+      "name": "max",
+      "description": "Progress bar maximum (UI)"
+    },
+    {
+      "name": "pressed",
+      "description": "UI button is held down"
+    }
+  ],
+  "builtins": [
+    "time",
+    "dt",
+    "fps",
+    "screenWidth",
+    "screenHeight",
+    "touchX",
+    "touchY",
+    "touching",
+    "joystickX",
+    "joystickY",
+    "loopIndex",
+    "timeScale"
+  ],
+  "compareOps": [
+    "=",
+    "≠",
+    "<",
+    "≤",
+    ">",
+    "≥"
+  ],
+  "comparableProps": [
+    "x",
+    "y",
+    "z",
+    "angle",
+    "rotX",
+    "rotY",
+    "rotZ",
+    "scaleX",
+    "scaleY",
+    "scaleZ",
+    "vx",
+    "vy",
+    "vz",
+    "speed",
+    "worldX",
+    "worldY",
+    "worldZ",
+    "text",
+    "value",
+    "max"
+  ]
+}

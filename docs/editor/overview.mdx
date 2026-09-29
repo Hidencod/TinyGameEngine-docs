@@ -1,0 +1,88 @@
+---
+title: Editor overview
+description: The parts of the editor screen — top bar, 3D view, dock tabs — and the project menu.
+---
+
+# Editor overview
+
+When you open a project you see the editor. It has three areas: the **top bar**, the **3D view** of your scene, and the **dock** with five tabs at the bottom.
+
+<Side shot="editor-overview-annotated">
+
+<Legend items={[
+  <><b>Top bar</b> — back, project name, undo/redo, Play and the project menu.</>,
+  <><b>Viewport tools</b> — move/rotate/scale, snap, multi-select, focus, colliders, UI mode. See <a href="./viewport">The 3D view</a>.</>,
+  <><b>3D view</b> — your scene as it looks in the game. Tap to select, drag to look around.</>,
+  <><b>Split handle</b> — drag to resize the two areas; tap to hide the dock and get a big 3D view.</>,
+  <><b>Dock tabs</b> — Objects, Inspect, Assets, Logic, Scene.</>,
+  <><b>Tab content</b> — the open tab.</>,
+]} />
+
+</Side>
+
+## Top bar
+
+<Crop name="editor-topbar-annotated" width={420} />
+
+<Legend items={[
+  <><b>←</b> Back to the home screen. Your work is already saved.</>,
+  <><b>Project name</b> — tap to rename the project.</>,
+  <><b>↶ Undo</b> — undo the last change (every change can be undone).</>,
+  <><b>↷ Redo</b> — redo what you undid.</>,
+  <><b>▶ Play</b> — play the game from its start scene. See <a href="./play-mode">Play mode</a>.</>,
+  <><b>⋮</b> — the project menu.</>,
+]} />
+
+:::info[Saving]
+There is no Save button: every change is saved on the phone automatically a moment after you make it.
+:::
+
+## The dock tabs
+
+<Crop name="editor-tabbar" width={420} />
+
+| Tab | What it’s for |
+| --- | --- |
+| 🗂 **Objects** | The list of objects in the current scene, the ＋ Add menu, parenting and prefabs. [More](./objects) |
+| 🛠 **Inspect** | Everything about the selected object: name, tags, position, components, behaviors, variables. [More](./inspector) |
+| 📁 **Assets** | Your images, 3D models, sounds and fonts; the free model and sound libraries. [More](./assets) |
+| 🧩 **Logic** | Event sheets and code scripts — the rules of your game. [More](../logic/event-sheets) |
+| 🌤 **Scene** | Background, sky, fog, lights, variables and touch controls. [More](./scene-tab) |
+
+<Row>
+  <Phone name="dock-objects" caption="Objects" />
+  <Phone name="dock-inspector-empty" caption="Inspect (nothing selected)" />
+  <Phone name="dock-assets" caption="Assets" />
+  <Phone name="dock-logic" caption="Logic" />
+  <Phone name="dock-scene" caption="Scene" />
+</Row>
+
+## Resize or hide the dock
+
+Drag the **split handle** (the small bar between the 3D view and the tabs) up or down to give more room to either side. **Tap** it to hide the dock and use the whole screen for the 3D view; tap it again (or any tab) to bring the dock back. The editor remembers your layout.
+
+<Row>
+  <Phone name="editor-overview" caption="Normal" />
+  <Phone name="editor-dock-collapsed" caption="Dock hidden: big 3D view" />
+</Row>
+
+**Landscape:** turn the phone sideways and the 3D view goes on the left with the dock on the right.
+
+## The project menu (⋮)
+
+<Side shot="editor-project-menu">
+
+| Item | What it does |
+| --- | --- |
+| **Project settings** | Orientation, graphics, controls, gravity. [More](./project-settings) |
+| **Scenes** | Add, rename, switch levels. [More](./scenes) |
+| **Play this scene** | Play starting from the scene you are editing (▶ Play always starts from the start scene). |
+| **Export game (HTML)** | One file that runs in any browser. [More](../publish/export-html) |
+| **Export game (APK)** | An Android app you can install and share. [More](../publish/export-apk) |
+| **Backup project (.tge)** | Save a copy you can import later. [More](../publish/backup) |
+| **APK signing key** | Back up or restore the key your APKs are signed with. [More](../publish/export-apk#signing-key) |
+| **Rename project** | Same as tapping the name. |
+| **Help & feedback** | Send an idea, report a problem. [More](../help/feedback) |
+| **Back to projects** | The home screen. |
+
+</Side>

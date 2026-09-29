@@ -1,0 +1,120 @@
+---
+title: The event sheet editor
+description: Add events, conditions and actions; edit parameters; select, move, copy, disable and find events.
+---
+
+# The event sheet editor
+
+Open **Logic** and tap an event sheet. The editor fills the screen; **←** goes back.
+
+<Phone name="es-overview-annotated" caption="The event sheet editor" />
+
+<Legend items={[
+  <><b>Sheet</b> — which sheet is open. Tap to switch sheets, create one, rename it, choose which scene uses it, include other sheets, or delete it.</>,
+  <><b>🔍 Find</b>, <b>↶ Undo</b>, <b>↷ Redo</b>, <b>＋ Add</b>.</>,
+  <><b>Event number</b> — tap to select the event, long-press for its menu.</>,
+  <><b>Conditions</b> (left, blue edge) — the WHEN part. The object column shows what each is about.</>,
+  <><b>Actions</b> (green edge) — the DO part. <b>Add action</b> is at the bottom.</>,
+  <><b>＋ Add event</b> and <b>＋ More…</b> (group, comment, variable, function, script).</>,
+]} />
+
+## Add an event
+
+<Step n={1} title="＋ Add event">
+
+Tap **＋ Add event** at the bottom (or **＋** at the top).
+
+</Step>
+
+<Step n={2} title="Pick what it’s about">
+
+Choose **System** or **Input** for general conditions, or an **object** from the scene (or a **#tag**).
+
+<Phone name="tut1-12-pick-object" size="small" />
+
+</Step>
+
+<Step n={3} title="Pick the condition">
+
+Conditions are grouped by category, with a short hint on each. Type in **Search** to find one. ⚡ marks triggers.
+
+<Row>
+  <Phone name="tut1-13-pick-condition" caption="Conditions for an object" />
+  <Phone name="tut2-08-system-actions" caption="System actions" />
+</Row>
+
+</Step>
+
+<Step n={4} title="Fill in the parameters">
+
+The top line previews the event as it will read. Fill in each field, then tap **✓ Add condition** (or **✓ Add action**). **‹** goes back to choose a different one.
+
+<Phone name="tut1-14-condition-params" size="small" />
+
+</Step>
+
+Add actions the same way with **Add action** under the event.
+
+## Parameter fields
+
+| Field | How to fill it |
+| --- | --- |
+| **Object** | Choose from the list, or type a name or `#tag`. |
+| **Variable** | Choose from the list, or **＋ New variable…**. |
+| **Choice** | Tap one of the options. |
+| **Expression** (numbers, text) | Type it. **“ ”** turns what you typed into text (adds or removes quotes). **ƒx** opens a panel of everything you can insert: variables, objects and their properties, functions, operators. Suggestions appear as you type. |
+| **Sound / Image / Scene / Button / Key** | Choose from the list. |
+
+A red message under a field explains a problem (for example *Unknown variable: Scor. Text needs "quotes".*).
+
+<Phone name="es-param-fx" size="small" caption="The ƒx insert panel" />
+
+## Select, edit and the menu
+
+Rows work like this:
+
+| Gesture | Does |
+| --- | --- |
+| **Tap** | Select (event, condition, action, group, comment…). |
+| **Tap again** (or double-click) | Edit it. |
+| **Long-press** (or right-click) | Its menu. |
+| **Long-press and move** without lifting | Drag it somewhere else (a line shows where it will go). |
+| **Tap empty space** | Clear the selection. |
+
+When something is selected, a **selection bar** appears at the bottom:
+
+<Crop name="es-selbar" width={420} />
+
+**Edit**, **Copy**, **Cut**, **Paste**, **Delete**, **Duplicate**, **Disable/Enable**, **Invert** (conditions), **Select** (tap more rows to add them to the selection), **More** (the full menu), **✕** clear.
+
+Copy and paste work between sheets and projects.
+
+### Event menu
+
+<Phone name="es-event-menu" size="small" caption="Long-press an event number" />
+
+| Group | Items |
+| --- | --- |
+| **Add** | Add action · Add condition · Add sub-event · Add event below · Add “Else” below · Add local variable · Add comment above · Add script inside |
+| **Change** | Make OR block / AND block · Make “Else” event · Disable / Enable event · Duplicate · Put in a new group |
+| **Move** | Move up · Move down · Make sub-event of the one above · Move out of parent |
+| **Danger** | Delete event |
+
+### Condition and action menus
+
+Conditions: **Edit**, **Invert (NOT)**, **Add another condition**, **Disable**, **Replace with…**, **Duplicate**, **Move up/down**, **Delete**.
+Actions: **Edit**, **Add action below**, **Disable**, **Replace with…**, **Duplicate**, **Move up/down**, **Delete**.
+
+An **inverted** condition shows ✖ and means the opposite: *NOT Player is on ground* = in the air. Triggers can’t be inverted. **Disabled** rows are faded and skipped.
+
+## Find
+
+Tap **🔍** (Ctrl+F) and type: matching events light up; **▲ ▼** step through the results (folded events open to show them).
+
+## Errors
+
+If something in an event can’t work — an unknown object, variable or a typo in an expression — the event number gets a **red badge**. Tap it to see what’s wrong. While playing, the first problem shows as a message and the game keeps running.
+
+## Keyboard
+
+With a keyboard: **Enter** edit, **Del** delete, **Ctrl+C / X / V / D** copy / cut / paste / duplicate, **D** disable, **I** invert, **Esc** clear, **Ctrl+F** find, **Ctrl+Z / Y** undo / redo.

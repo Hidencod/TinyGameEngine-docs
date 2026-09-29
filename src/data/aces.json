@@ -1,0 +1,5076 @@
+{
+  "categories": [
+    "System",
+    "Variables",
+    "Functions",
+    "Time",
+    "Scene",
+    "Loops",
+    "Input",
+    "Object",
+    "Physics",
+    "Text",
+    "UI",
+    "Behaviors",
+    "Particles",
+    "Audio",
+    "Camera"
+  ],
+  "icons": {
+    "System": "⚙️",
+    "Variables": "🔢",
+    "Functions": "ƒ",
+    "Time": "⏱️",
+    "Scene": "🎬",
+    "Loops": "🔄",
+    "Input": "🎮",
+    "Object": "📦",
+    "Physics": "🧱",
+    "Text": "🔤",
+    "UI": "🖼️",
+    "Behaviors": "🧩",
+    "Particles": "✨",
+    "Audio": "🔊",
+    "Camera": "🎥"
+  },
+  "list": [
+    {
+      "id": "system.onStart",
+      "kind": "condition",
+      "category": "System",
+      "label": "On start of scene",
+      "hint": "When the scene starts",
+      "display": "On start of scene",
+      "displayNoObject": null,
+      "icon": "🚀",
+      "description": "Runs once when the scene starts.",
+      "isTrigger": true,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "scene.onEnd",
+      "kind": "condition",
+      "category": "Scene",
+      "label": "On end of scene",
+      "hint": "When the scene ends",
+      "display": "On end of scene",
+      "displayNoObject": null,
+      "icon": "🏁",
+      "description": "Runs once when the scene ends (changing or restarting scene).",
+      "isTrigger": true,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "system.everyTick",
+      "kind": "condition",
+      "category": "System",
+      "label": "Every tick",
+      "hint": "Every frame",
+      "display": "Every tick",
+      "displayNoObject": null,
+      "icon": "🔁",
+      "description": "True every frame (about 60 times per second).",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "system.every",
+      "kind": "condition",
+      "category": "Time",
+      "label": "Every X seconds",
+      "hint": "Every few seconds",
+      "display": "Every {seconds} seconds",
+      "displayNoObject": null,
+      "icon": "⏱️",
+      "description": "True once every few seconds.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": true,
+      "isWait": false,
+      "params": [
+        {
+          "id": "seconds",
+          "label": "Seconds",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.compareVar",
+      "kind": "condition",
+      "category": "Variables",
+      "label": "Compare variable",
+      "hint": "Check a variable",
+      "display": "{var} {op} {value}",
+      "displayNoObject": null,
+      "icon": "🔢",
+      "description": "Compare a global or scene variable with a value.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "var",
+          "label": "Variable",
+          "type": "variable",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "op",
+          "label": "Comparison",
+          "type": "choice",
+          "options": [
+            {
+              "value": "=",
+              "label": "="
+            },
+            {
+              "value": "≠",
+              "label": "≠"
+            },
+            {
+              "value": "<",
+              "label": "<"
+            },
+            {
+              "value": "≤",
+              "label": "≤"
+            },
+            {
+              "value": ">",
+              "label": ">"
+            },
+            {
+              "value": "≥",
+              "label": "≥"
+            }
+          ],
+          "default": "=",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "expression",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.compare",
+      "kind": "condition",
+      "category": "System",
+      "label": "Compare two values",
+      "hint": "e.g. Score > 10",
+      "display": "{a} {op} {b}",
+      "displayNoObject": null,
+      "icon": "⚖️",
+      "description": "Compare any two expressions, e.g. Player.x > 10.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "a",
+          "label": "First value",
+          "type": "expression",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "op",
+          "label": "Comparison",
+          "type": "choice",
+          "options": [
+            {
+              "value": "=",
+              "label": "="
+            },
+            {
+              "value": "≠",
+              "label": "≠"
+            },
+            {
+              "value": "<",
+              "label": "<"
+            },
+            {
+              "value": "≤",
+              "label": "≤"
+            },
+            {
+              "value": ">",
+              "label": ">"
+            },
+            {
+              "value": "≥",
+              "label": "≥"
+            }
+          ],
+          "default": "=",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "b",
+          "label": "Second value",
+          "type": "expression",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.isTrue",
+      "kind": "condition",
+      "category": "System",
+      "label": "Is true",
+      "hint": "Any true/false expression",
+      "display": "{value} is true",
+      "displayNoObject": null,
+      "icon": "✅",
+      "description": "True when the expression is true (or not 0).",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "value",
+          "label": "Expression",
+          "type": "expression",
+          "options": null,
+          "default": "true",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.isBetween",
+      "kind": "condition",
+      "category": "System",
+      "label": "Is between",
+      "hint": "Value is in a range",
+      "display": "{value} is between {min} and {max}",
+      "displayNoObject": null,
+      "icon": "↔️",
+      "description": "True when a value is between min and max (inclusive).",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "expression",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "min",
+          "label": "Min",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "max",
+          "label": "Max",
+          "type": "number",
+          "options": null,
+          "default": "10",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.chance",
+      "kind": "condition",
+      "category": "System",
+      "label": "Random chance",
+      "hint": "True X% of the time",
+      "display": "{percent}% chance",
+      "displayNoObject": null,
+      "icon": "🎲",
+      "description": "True randomly, e.g. 25 = one time in four.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "percent",
+          "label": "Percent",
+          "type": "number",
+          "options": null,
+          "default": "50",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.once",
+      "kind": "condition",
+      "category": "System",
+      "label": "Trigger once while true",
+      "hint": "Only once while true",
+      "display": "Trigger once while true",
+      "displayNoObject": null,
+      "icon": "1️⃣",
+      "description": "Put last: the event runs only once each time the other conditions become true.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": true,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "system.isGroupActive",
+      "kind": "condition",
+      "category": "System",
+      "label": "Group is active",
+      "hint": "Group is on",
+      "display": "Group {group} is active",
+      "displayNoObject": null,
+      "icon": "📂",
+      "description": "True if the event group is active.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "group",
+          "label": "Group",
+          "type": "group",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.repeat",
+      "kind": "condition",
+      "category": "Loops",
+      "label": "Repeat",
+      "hint": "Do it N times",
+      "display": "Repeat {count} times",
+      "displayNoObject": null,
+      "icon": "🔄",
+      "description": "Runs the actions and sub-events several times. Use loopIndex for the current number.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": "repeat",
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "count",
+          "label": "Times",
+          "type": "number",
+          "options": null,
+          "default": "3",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.for",
+      "kind": "condition",
+      "category": "Loops",
+      "label": "For",
+      "hint": "Count from start to end",
+      "display": "For {name} from {start} to {end}",
+      "displayNoObject": null,
+      "icon": "🔢",
+      "description": "Repeats the rest of the event, counting from start to end (both included). Use loopindex(\"name\") for the current number.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": "for",
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "name",
+          "label": "Loop name",
+          "type": "string",
+          "options": null,
+          "default": "i",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "start",
+          "label": "From",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "end",
+          "label": "To",
+          "type": "number",
+          "options": null,
+          "default": "9",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.while",
+      "kind": "condition",
+      "category": "Loops",
+      "label": "While",
+      "hint": "Loop while conditions hold",
+      "display": "While",
+      "displayNoObject": null,
+      "icon": "🔁",
+      "description": "Repeats the rest of the event as long as the conditions after it are true (or until \"Stop loop\").",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": "while",
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "time.timerFinished",
+      "kind": "condition",
+      "category": "Time",
+      "label": "On timer finished",
+      "hint": "A timer ran out",
+      "display": "Timer {name} finished",
+      "displayNoObject": null,
+      "icon": "⏰",
+      "description": "True at the moment a timer started with \"Start timer\" runs out.",
+      "isTrigger": true,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "name",
+          "label": "Timer name",
+          "type": "string",
+          "options": null,
+          "default": "timer",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "time.isTimerRunning",
+      "kind": "condition",
+      "category": "Time",
+      "label": "Timer is running",
+      "hint": "A timer is counting",
+      "display": "Timer {name} is running",
+      "displayNoObject": null,
+      "icon": "⏳",
+      "description": "True while a timer is counting down.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "name",
+          "label": "Timer name",
+          "type": "string",
+          "options": null,
+          "default": "timer",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "time.compareTime",
+      "kind": "condition",
+      "category": "Time",
+      "label": "Compare scene time",
+      "hint": "Seconds since start",
+      "display": "Scene time {op} {seconds} s",
+      "displayNoObject": null,
+      "icon": "🕒",
+      "description": "Compare the seconds since the scene started.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "op",
+          "label": "Comparison",
+          "type": "choice",
+          "options": [
+            {
+              "value": "=",
+              "label": "="
+            },
+            {
+              "value": "≠",
+              "label": "≠"
+            },
+            {
+              "value": "<",
+              "label": "<"
+            },
+            {
+              "value": "≤",
+              "label": "≤"
+            },
+            {
+              "value": ">",
+              "label": ">"
+            },
+            {
+              "value": "≥",
+              "label": "≥"
+            }
+          ],
+          "default": "=",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "seconds",
+          "label": "Seconds",
+          "type": "number",
+          "options": null,
+          "default": "10",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.setVar",
+      "kind": "action",
+      "category": "Variables",
+      "label": "Set variable",
+      "hint": "e.g. Score = 0",
+      "display": "Set {var} to {value}",
+      "displayNoObject": null,
+      "icon": "📝",
+      "description": "Change the value of a global or scene variable.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "var",
+          "label": "Variable",
+          "type": "variable",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "expression",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.addToVar",
+      "kind": "action",
+      "category": "Variables",
+      "label": "Add to variable",
+      "hint": "e.g. Score + 1",
+      "display": "Add {value} to {var}",
+      "displayNoObject": null,
+      "icon": "➕",
+      "description": "Increase a variable (text variables get the value appended).",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "var",
+          "label": "Variable",
+          "type": "variable",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "expression",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.subtractFromVar",
+      "kind": "action",
+      "category": "Variables",
+      "label": "Subtract from variable",
+      "hint": "e.g. Lives − 1",
+      "display": "Subtract {value} from {var}",
+      "displayNoObject": null,
+      "icon": "➖",
+      "description": "Decrease a number variable.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "var",
+          "label": "Variable",
+          "type": "variable",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "expression",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.toggleVar",
+      "kind": "action",
+      "category": "Variables",
+      "label": "Toggle variable",
+      "hint": "Flip true/false",
+      "display": "Toggle {var}",
+      "displayNoObject": null,
+      "icon": "🔀",
+      "description": "Flip a true/false variable.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "var",
+          "label": "Variable",
+          "type": "variable",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.goToScene",
+      "kind": "action",
+      "category": "Scene",
+      "label": "Go to scene",
+      "hint": "Switch scene",
+      "display": "Go to scene {scene}",
+      "displayNoObject": null,
+      "icon": "🎬",
+      "description": "Switch to another scene.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "scene",
+          "label": "Scene",
+          "type": "scene",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.restartScene",
+      "kind": "action",
+      "category": "Scene",
+      "label": "Restart scene",
+      "hint": "Start the scene over",
+      "display": "Restart scene",
+      "displayNoObject": null,
+      "icon": "🔃",
+      "description": "Start the current scene again from the beginning.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "system.wait",
+      "kind": "action",
+      "category": "Time",
+      "label": "Wait",
+      "hint": "Pause this event",
+      "display": "Wait {seconds} seconds",
+      "displayNoObject": null,
+      "icon": "⌛",
+      "description": "Pause the rest of this event (next actions and sub-events) for a while.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": true,
+      "params": [
+        {
+          "id": "seconds",
+          "label": "Seconds",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.log",
+      "kind": "action",
+      "category": "System",
+      "label": "Show message",
+      "hint": "Quick message on screen",
+      "display": "Show message {message}",
+      "displayNoObject": null,
+      "icon": "💬",
+      "description": "Show a short message on screen (handy for testing).",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "message",
+          "label": "Message",
+          "type": "expression",
+          "options": null,
+          "default": "\"Hello!\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.consoleLog",
+      "kind": "action",
+      "category": "System",
+      "label": "Log to console",
+      "hint": "Line in the debug console",
+      "display": "Log {message}",
+      "displayNoObject": null,
+      "icon": "🐞",
+      "description": "Write a line to the debug console (🐞 button while playing) without showing it in the game. Great for checking that an event runs, e.g. \"Clicked! score = \" + Score.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "message",
+          "label": "Message",
+          "type": "expression",
+          "options": null,
+          "default": "\"Event ran\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.alert",
+      "kind": "action",
+      "category": "System",
+      "label": "Show alert",
+      "hint": "Popup message",
+      "display": "Alert {message}",
+      "displayNoObject": null,
+      "icon": "⚠️",
+      "description": "Pop up a message box and pause until it is closed. Use it for one-off checks, not every tick.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "message",
+          "label": "Message",
+          "type": "expression",
+          "options": null,
+          "default": "\"Hello!\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.callFunction",
+      "kind": "action",
+      "category": "Functions",
+      "label": "Call function",
+      "hint": "Run a function",
+      "display": "Call {function}",
+      "displayNoObject": null,
+      "icon": "ƒ",
+      "description": "Run a function block (made with Add → Function) with values for its parameters.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "function",
+          "label": "Function",
+          "type": "function",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.setReturnValue",
+      "kind": "action",
+      "category": "Functions",
+      "label": "Set return value",
+      "hint": "Function result",
+      "display": "Set return value to {value}",
+      "displayNoObject": null,
+      "icon": "↩️",
+      "description": "Inside a function: the value that Functions.Name(...) gives back.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "expression",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.stopLoop",
+      "kind": "action",
+      "category": "Loops",
+      "label": "Stop loop",
+      "hint": "Leave the loop",
+      "display": "Stop loop",
+      "displayNoObject": null,
+      "icon": "⏹️",
+      "description": "End the loop this event is in (Repeat, For, For each, While) after the current repeat.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "system.setTimeScale",
+      "kind": "action",
+      "category": "Time",
+      "label": "Set time scale",
+      "hint": "Slow motion or speed up",
+      "display": "Set time scale to {scale}",
+      "displayNoObject": null,
+      "icon": "🐢",
+      "description": "1 = normal speed, 0.5 = slow motion, 2 = double speed.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "scale",
+          "label": "Time scale",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.vibrate",
+      "kind": "action",
+      "category": "System",
+      "label": "Vibrate phone",
+      "hint": "Buzz for hits, pickups, crashes",
+      "display": "Vibrate phone ({strength})",
+      "displayNoObject": null,
+      "icon": "📳",
+      "description": "A short buzz you can feel, great with Shake camera. Works on Android phones; ignored on desktop and iPhone.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "strength",
+          "label": "Strength",
+          "type": "choice",
+          "options": [
+            {
+              "value": "tap",
+              "label": "Tap (very light)"
+            },
+            {
+              "value": "bump",
+              "label": "Bump"
+            },
+            {
+              "value": "hit",
+              "label": "Hit (strong)"
+            },
+            {
+              "value": "buzz",
+              "label": "Long buzz"
+            }
+          ],
+          "default": "bump",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.pause",
+      "kind": "action",
+      "category": "System",
+      "label": "Pause game",
+      "hint": "Freeze the game",
+      "display": "Pause game",
+      "displayNoObject": null,
+      "icon": "⏸️",
+      "description": "Freeze the game.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "system.resume",
+      "kind": "action",
+      "category": "System",
+      "label": "Resume game",
+      "hint": "Unfreeze the game",
+      "display": "Resume game",
+      "displayNoObject": null,
+      "icon": "▶️",
+      "description": "Unfreeze the game.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "system.save",
+      "kind": "action",
+      "category": "Variables",
+      "label": "Save value",
+      "hint": "Keep a value on the device",
+      "display": "Save {value} as {key}",
+      "displayNoObject": null,
+      "icon": "💾",
+      "description": "Store a value on the device (kept after closing the game). Empty value = the variable with the same name as the key.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "key",
+          "label": "Save name",
+          "type": "string",
+          "options": null,
+          "default": "Highscore",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "expression",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.load",
+      "kind": "action",
+      "category": "Variables",
+      "label": "Load value",
+      "hint": "Read a saved value",
+      "display": "Load {key} into {var}",
+      "displayNoObject": null,
+      "icon": "📂",
+      "description": "Read a saved value into a variable (nothing happens if it was never saved). Empty variable = same name as the key.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "key",
+          "label": "Save name",
+          "type": "string",
+          "options": null,
+          "default": "Highscore",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "var",
+          "label": "Variable",
+          "type": "variable",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.setGroupActive",
+      "kind": "action",
+      "category": "System",
+      "label": "Set group active",
+      "hint": "Turn a group on/off",
+      "display": "Set group {group} active: {active}",
+      "displayNoObject": null,
+      "icon": "📂",
+      "description": "Turn a group of events on or off.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "group",
+          "label": "Group",
+          "type": "group",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "active",
+          "label": "Active",
+          "type": "boolean",
+          "options": null,
+          "default": "true",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.create",
+      "kind": "action",
+      "category": "Object",
+      "label": "Create object",
+      "hint": "New object from a prefab",
+      "display": "Create {what} at ({x}, {y}, {z})",
+      "displayNoObject": null,
+      "icon": "📦",
+      "description": "Create a new object from a prefab (or copy of an object) at a position. It becomes picked for the next actions.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "what",
+          "label": "Object / prefab",
+          "type": "prefab",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "x",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Z",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "time.startTimer",
+      "kind": "action",
+      "category": "Time",
+      "label": "Start timer",
+      "hint": "Start a countdown",
+      "display": "Start timer {name} for {seconds} s (repeat: {repeat})",
+      "displayNoObject": null,
+      "icon": "⏰",
+      "description": "Start a countdown. Use \"On timer finished\" to react when it ends.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "name",
+          "label": "Timer name",
+          "type": "string",
+          "options": null,
+          "default": "timer",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "seconds",
+          "label": "Seconds",
+          "type": "number",
+          "options": null,
+          "default": "3",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "repeat",
+          "label": "Repeat",
+          "type": "boolean",
+          "options": null,
+          "default": "false",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "time.stopTimer",
+      "kind": "action",
+      "category": "Time",
+      "label": "Stop timer",
+      "hint": "Cancel a timer",
+      "display": "Stop timer {name}",
+      "displayNoObject": null,
+      "icon": "⏹️",
+      "description": "Cancel a running timer.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "name",
+          "label": "Timer name",
+          "type": "string",
+          "options": null,
+          "default": "timer",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "input.buttonDown",
+      "kind": "condition",
+      "category": "Input",
+      "label": "Button is held",
+      "hint": "Button held",
+      "display": "Button {button} is held",
+      "displayNoObject": null,
+      "icon": "🔘",
+      "description": "True while an on-screen button (or key) is held down.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "input",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "button",
+          "label": "Button",
+          "type": "button",
+          "options": null,
+          "default": "jump",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "input.buttonPressed",
+      "kind": "condition",
+      "category": "Input",
+      "label": "On button pressed",
+      "hint": "The moment it goes down",
+      "display": "On button {button} pressed",
+      "displayNoObject": null,
+      "icon": "🔘",
+      "description": "True at the moment a button is pressed.",
+      "isTrigger": true,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "input",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "button",
+          "label": "Button",
+          "type": "button",
+          "options": null,
+          "default": "jump",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "input.buttonReleased",
+      "kind": "condition",
+      "category": "Input",
+      "label": "On button released",
+      "hint": "Button let go",
+      "display": "On button {button} released",
+      "displayNoObject": null,
+      "icon": "🔘",
+      "description": "True at the moment a button is released.",
+      "isTrigger": true,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "input",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "button",
+          "label": "Button",
+          "type": "button",
+          "options": null,
+          "default": "jump",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "input.onTap",
+      "kind": "condition",
+      "category": "Input",
+      "label": "On screen tapped",
+      "hint": "Tap anywhere",
+      "display": "On screen tapped",
+      "displayNoObject": null,
+      "icon": "👆",
+      "description": "True when the player taps anywhere on the screen.",
+      "isTrigger": true,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "input",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "input.screenTouched",
+      "kind": "condition",
+      "category": "Input",
+      "label": "Screen is touched",
+      "hint": "Finger on the screen",
+      "display": "Screen is touched",
+      "displayNoObject": null,
+      "icon": "✋",
+      "description": "True while a finger is on the screen.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "input",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "input.onSwipe",
+      "kind": "condition",
+      "category": "Input",
+      "label": "On swipe",
+      "hint": "Swipe a direction",
+      "display": "On swipe {direction}",
+      "displayNoObject": null,
+      "icon": "👉",
+      "description": "True when the player swipes in a direction.",
+      "isTrigger": true,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "input",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "direction",
+          "label": "Direction",
+          "type": "choice",
+          "options": [
+            {
+              "value": "any",
+              "label": "any"
+            },
+            {
+              "value": "left",
+              "label": "left"
+            },
+            {
+              "value": "right",
+              "label": "right"
+            },
+            {
+              "value": "up",
+              "label": "up"
+            },
+            {
+              "value": "down",
+              "label": "down"
+            }
+          ],
+          "default": "any",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "input.joystickMoving",
+      "kind": "condition",
+      "category": "Input",
+      "label": "Joystick is moving",
+      "hint": "Joystick pushed",
+      "display": "Joystick is moving",
+      "displayNoObject": null,
+      "icon": "🕹️",
+      "description": "True while the joystick (or WASD / arrows) is pushed.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "input",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "input.joystickDirection",
+      "kind": "condition",
+      "category": "Input",
+      "label": "Joystick direction",
+      "hint": "Up, down, left or right",
+      "display": "Joystick pushed {direction}",
+      "displayNoObject": null,
+      "icon": "🕹️",
+      "description": "True while the joystick is pushed in a direction.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "input",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "direction",
+          "label": "Direction",
+          "type": "choice",
+          "options": [
+            {
+              "value": "left",
+              "label": "left"
+            },
+            {
+              "value": "right",
+              "label": "right"
+            },
+            {
+              "value": "up",
+              "label": "up"
+            },
+            {
+              "value": "down",
+              "label": "down"
+            }
+          ],
+          "default": "up",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "input.keyDown",
+      "kind": "condition",
+      "category": "Input",
+      "label": "Key is held",
+      "hint": "Key held",
+      "display": "Key {key} is held",
+      "displayNoObject": null,
+      "icon": "⌨️",
+      "description": "True while a keyboard key is held (for testing on a computer).",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "input",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "key",
+          "label": "Key",
+          "type": "key",
+          "options": null,
+          "default": "Space",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "input.keyPressed",
+      "kind": "condition",
+      "category": "Input",
+      "label": "On key pressed",
+      "hint": "The moment it goes down",
+      "display": "On key {key} pressed",
+      "displayNoObject": null,
+      "icon": "⌨️",
+      "description": "True at the moment a keyboard key is pressed.",
+      "isTrigger": true,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "input",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "key",
+          "label": "Key",
+          "type": "key",
+          "options": null,
+          "default": "Space",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.collidesWith",
+      "kind": "condition",
+      "category": "Physics",
+      "label": "On collision with",
+      "hint": "Starts touching",
+      "display": "{object} collides with {other}",
+      "displayNoObject": null,
+      "icon": "🤝",
+      "description": "Runs at the moment the object starts touching another object.",
+      "isTrigger": true,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "other",
+          "label": "Other object",
+          "type": "object",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.collisionEnded",
+      "kind": "condition",
+      "category": "Physics",
+      "label": "On collision ended",
+      "hint": "Stops touching",
+      "display": "{object} stops touching {other}",
+      "displayNoObject": null,
+      "icon": "↔️",
+      "description": "Runs at the moment two objects stop touching.",
+      "isTrigger": true,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "other",
+          "label": "Other object",
+          "type": "object",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.isTouching",
+      "kind": "condition",
+      "category": "Physics",
+      "label": "Is touching",
+      "hint": "Touching now",
+      "display": "{object} is touching {other}",
+      "displayNoObject": null,
+      "icon": "🤝",
+      "description": "True while the object touches (overlaps) another object.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "other",
+          "label": "Other object",
+          "type": "object",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.compareVar",
+      "kind": "condition",
+      "category": "Variables",
+      "label": "Compare instance variable",
+      "hint": "e.g. health < 1",
+      "display": "{object}.{var} {op} {value}",
+      "displayNoObject": null,
+      "icon": "🔢",
+      "description": "Compare one of the object's own variables (e.g. hp).",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "var",
+          "label": "Instance variable",
+          "type": "variable",
+          "options": null,
+          "default": "",
+          "optional": false,
+          "hint": null,
+          "varScope": "instance"
+        },
+        {
+          "id": "op",
+          "label": "Comparison",
+          "type": "choice",
+          "options": [
+            {
+              "value": "=",
+              "label": "="
+            },
+            {
+              "value": "≠",
+              "label": "≠"
+            },
+            {
+              "value": "<",
+              "label": "<"
+            },
+            {
+              "value": "≤",
+              "label": "≤"
+            },
+            {
+              "value": ">",
+              "label": ">"
+            },
+            {
+              "value": "≥",
+              "label": "≥"
+            }
+          ],
+          "default": "=",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "expression",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.compareProp",
+      "kind": "condition",
+      "category": "Object",
+      "label": "Compare property",
+      "hint": "Check x, y, angle, size…",
+      "display": "{object} {prop} {op} {value}",
+      "displayNoObject": null,
+      "icon": "📏",
+      "description": "Compare position, angle, size or speed, e.g. Player y < -5.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "prop",
+          "label": "Property",
+          "type": "choice",
+          "options": [
+            {
+              "value": "x",
+              "label": "x"
+            },
+            {
+              "value": "y",
+              "label": "y"
+            },
+            {
+              "value": "z",
+              "label": "z"
+            },
+            {
+              "value": "angle",
+              "label": "angle"
+            },
+            {
+              "value": "rotX",
+              "label": "rotX"
+            },
+            {
+              "value": "rotY",
+              "label": "rotY"
+            },
+            {
+              "value": "rotZ",
+              "label": "rotZ"
+            },
+            {
+              "value": "scaleX",
+              "label": "scaleX"
+            },
+            {
+              "value": "scaleY",
+              "label": "scaleY"
+            },
+            {
+              "value": "scaleZ",
+              "label": "scaleZ"
+            },
+            {
+              "value": "vx",
+              "label": "vx"
+            },
+            {
+              "value": "vy",
+              "label": "vy"
+            },
+            {
+              "value": "vz",
+              "label": "vz"
+            },
+            {
+              "value": "speed",
+              "label": "speed"
+            },
+            {
+              "value": "worldX",
+              "label": "worldX"
+            },
+            {
+              "value": "worldY",
+              "label": "worldY"
+            },
+            {
+              "value": "worldZ",
+              "label": "worldZ"
+            },
+            {
+              "value": "text",
+              "label": "text"
+            },
+            {
+              "value": "value",
+              "label": "value"
+            },
+            {
+              "value": "max",
+              "label": "max"
+            }
+          ],
+          "default": "y",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "op",
+          "label": "Comparison",
+          "type": "choice",
+          "options": [
+            {
+              "value": "=",
+              "label": "="
+            },
+            {
+              "value": "≠",
+              "label": "≠"
+            },
+            {
+              "value": "<",
+              "label": "<"
+            },
+            {
+              "value": "≤",
+              "label": "≤"
+            },
+            {
+              "value": ">",
+              "label": ">"
+            },
+            {
+              "value": "≥",
+              "label": "≥"
+            }
+          ],
+          "default": "=",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "expression",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.isOnGround",
+      "kind": "condition",
+      "category": "Physics",
+      "label": "Is on ground",
+      "hint": "Standing on something",
+      "display": "{object} is on the ground",
+      "displayNoObject": null,
+      "icon": "🦶",
+      "description": "True when a physics object is standing on something.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.isEmittingParticles",
+      "kind": "condition",
+      "category": "Particles",
+      "label": "Is emitting particles",
+      "hint": "Making particles",
+      "display": "{object} is emitting particles",
+      "displayNoObject": null,
+      "icon": "✨",
+      "description": "True while its Particles component is making new particles.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.isPlayingAnimation",
+      "kind": "condition",
+      "category": "Object",
+      "label": "Is playing animation",
+      "hint": "Animation is playing",
+      "display": "{object} is playing animation {name}",
+      "displayNoObject": null,
+      "icon": "🏃",
+      "description": "True while the given model animation is playing.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "name",
+          "label": "Animation",
+          "type": "expression",
+          "options": null,
+          "default": "\"walk\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.onAnimationFinished",
+      "kind": "condition",
+      "category": "Object",
+      "label": "On animation finished",
+      "hint": "Animation ended",
+      "display": "On {object} animation {name} finished",
+      "displayNoObject": null,
+      "icon": "🏁",
+      "description": "Runs when a play-once animation (loop off) reaches its end. Leave the name empty for any animation.",
+      "isTrigger": true,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "name",
+          "label": "Animation (empty = any)",
+          "type": "string",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.hasLineOfSight",
+      "kind": "condition",
+      "category": "Physics",
+      "label": "Has line of sight to",
+      "hint": "Can see it, no wall between",
+      "display": "{object} can see {target}",
+      "displayNoObject": null,
+      "icon": "👀",
+      "description": "True when nothing solid (walls, crates…) is between the object and the target, e.g. an enemy only chases the player it can see. Triggers (checkpoints, coins) never block the view.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "target",
+          "label": "Target",
+          "type": "object",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.isMoving",
+      "kind": "condition",
+      "category": "Physics",
+      "label": "Is moving",
+      "hint": "Physics speed above 0",
+      "display": "{object} is moving",
+      "displayNoObject": null,
+      "icon": "🏃",
+      "description": "True when the object's physics speed is above zero.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.isTweening",
+      "kind": "condition",
+      "category": "Object",
+      "label": "Is tweening",
+      "hint": "A tween is running",
+      "display": "{object} is tweening {property}",
+      "displayNoObject": null,
+      "icon": "〽",
+      "description": "True while a tween of that property is still running.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "property",
+          "label": "Property",
+          "type": "choice",
+          "options": [
+            {
+              "value": "x",
+              "label": "Position X"
+            },
+            {
+              "value": "y",
+              "label": "Position Y"
+            },
+            {
+              "value": "z",
+              "label": "Position Z"
+            },
+            {
+              "value": "angle",
+              "label": "Angle (°)"
+            },
+            {
+              "value": "size",
+              "label": "Size (all axes)"
+            },
+            {
+              "value": "opacity",
+              "label": "Opacity"
+            }
+          ],
+          "default": "size",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.isVisible",
+      "kind": "condition",
+      "category": "Object",
+      "label": "Is visible",
+      "hint": "Is shown",
+      "display": "{object} is visible",
+      "displayNoObject": null,
+      "icon": "👁️",
+      "description": "True if the object is shown.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.hasTag",
+      "kind": "condition",
+      "category": "Object",
+      "label": "Has tag",
+      "hint": "e.g. #enemy",
+      "display": "{object} has tag {tag}",
+      "displayNoObject": null,
+      "icon": "🏷️",
+      "description": "True if the object has a tag.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "tag",
+          "label": "Tag",
+          "type": "tag",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.onTap",
+      "kind": "condition",
+      "category": "Input",
+      "label": "On tapped",
+      "hint": "Tapped on screen",
+      "display": "{object} is tapped",
+      "displayNoObject": null,
+      "icon": "👆",
+      "description": "Runs when the player taps this object on screen (also works for UI buttons).",
+      "isTrigger": true,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": true,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.onCreated",
+      "kind": "condition",
+      "category": "Object",
+      "label": "On created",
+      "hint": "Just created",
+      "display": "On {object} created",
+      "displayNoObject": null,
+      "icon": "🐣",
+      "description": "Runs when a new instance of the object is created.",
+      "isTrigger": true,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.onDestroyed",
+      "kind": "condition",
+      "category": "Object",
+      "label": "On destroyed",
+      "hint": "Being removed",
+      "display": "On {object} destroyed",
+      "displayNoObject": null,
+      "icon": "💨",
+      "description": "Runs when an instance of the object is destroyed.",
+      "isTrigger": true,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.distanceTo",
+      "kind": "condition",
+      "category": "Object",
+      "label": "Distance to",
+      "hint": "How far to the nearest",
+      "display": "Distance {object} ↔ {other} {op} {value}",
+      "displayNoObject": null,
+      "icon": "📐",
+      "description": "Compare the distance between the object and the nearest other object.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "other",
+          "label": "Other object",
+          "type": "object",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "op",
+          "label": "Comparison",
+          "type": "choice",
+          "options": [
+            {
+              "value": "=",
+              "label": "="
+            },
+            {
+              "value": "≠",
+              "label": "≠"
+            },
+            {
+              "value": "<",
+              "label": "<"
+            },
+            {
+              "value": "≤",
+              "label": "≤"
+            },
+            {
+              "value": ">",
+              "label": ">"
+            },
+            {
+              "value": "≥",
+              "label": "≥"
+            }
+          ],
+          "default": "=",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Distance",
+          "type": "number",
+          "options": null,
+          "default": "2",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.count",
+      "kind": "condition",
+      "category": "Object",
+      "label": "Compare count",
+      "hint": "How many exist",
+      "display": "Number of {object} {op} {value}",
+      "displayNoObject": null,
+      "icon": "🔢",
+      "description": "Compare how many of this object exist (or are picked).",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "op",
+          "label": "Comparison",
+          "type": "choice",
+          "options": [
+            {
+              "value": "=",
+              "label": "="
+            },
+            {
+              "value": "≠",
+              "label": "≠"
+            },
+            {
+              "value": "<",
+              "label": "<"
+            },
+            {
+              "value": "≤",
+              "label": "≤"
+            },
+            {
+              "value": ">",
+              "label": ">"
+            },
+            {
+              "value": "≥",
+              "label": "≥"
+            }
+          ],
+          "default": "=",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Count",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.exists",
+      "kind": "condition",
+      "category": "Object",
+      "label": "Exists",
+      "hint": "Any left in the game",
+      "display": "{object} exists",
+      "displayNoObject": null,
+      "icon": "❓",
+      "description": "True if at least one of these objects exists. Invert it for \"no more coins\".",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.pickNearest",
+      "kind": "condition",
+      "category": "Object",
+      "label": "Pick nearest",
+      "hint": "Only the nearest",
+      "display": "Pick {object} nearest to {other}",
+      "displayNoObject": null,
+      "icon": "🎯",
+      "description": "Only use the instance closest to another object.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": true,
+      "isWait": false,
+      "params": [
+        {
+          "id": "other",
+          "label": "Other object",
+          "type": "object",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.pickFarthest",
+      "kind": "condition",
+      "category": "Object",
+      "label": "Pick farthest",
+      "hint": "Only the farthest",
+      "display": "Pick {object} farthest from {other}",
+      "displayNoObject": null,
+      "icon": "🔭",
+      "description": "Only use the instance farthest from another object.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": true,
+      "isWait": false,
+      "params": [
+        {
+          "id": "other",
+          "label": "Other object",
+          "type": "object",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.pickRandom",
+      "kind": "condition",
+      "category": "Object",
+      "label": "Pick random",
+      "hint": "One at random",
+      "display": "Pick a random {object}",
+      "displayNoObject": null,
+      "icon": "🎲",
+      "description": "Only use one random instance.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": true,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.forEach",
+      "kind": "condition",
+      "category": "Loops",
+      "label": "For each",
+      "hint": "Each one in turn",
+      "display": "For each {object}",
+      "displayNoObject": null,
+      "icon": "🔂",
+      "description": "Run the actions and sub-events once for every instance, one at a time.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": "forEach",
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.destroy",
+      "kind": "action",
+      "category": "Object",
+      "label": "Destroy",
+      "hint": "Remove it",
+      "display": "Destroy {object}",
+      "displayNoObject": null,
+      "icon": "🗑️",
+      "description": "Remove the object from the game.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.spawn",
+      "kind": "action",
+      "category": "Object",
+      "label": "Spawn object",
+      "hint": "Create at its position",
+      "display": "{object} spawns {what} (offset {x}, {y}, {z})",
+      "displayNoObject": "Spawn {what} at ({x}, {y}, {z})",
+      "icon": "📦",
+      "description": "Create an object (prefab) at this object's position (+ offset). The new object becomes picked for the next actions.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": true,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "what",
+          "label": "Object / prefab to create",
+          "type": "prefab",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "x",
+          "label": "Offset X",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Offset Y",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Offset Z",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.setPosition",
+      "kind": "action",
+      "category": "Object",
+      "label": "Set position",
+      "hint": "Teleport",
+      "display": "Set {object} position to ({x}, {y}, {z})",
+      "displayNoObject": null,
+      "icon": "📍",
+      "description": "Teleport the object. Self.x means \"keep the current x\".",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "x",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "Self.x",
+          "optional": false,
+          "hint": "",
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "type": "number",
+          "options": null,
+          "default": "Self.y",
+          "optional": false,
+          "hint": "",
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Z",
+          "type": "number",
+          "options": null,
+          "default": "Self.z",
+          "optional": false,
+          "hint": "",
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.move",
+      "kind": "action",
+      "category": "Object",
+      "label": "Move by",
+      "hint": "Shift by x, y, z",
+      "display": "Move {object} by ({dx}, {dy}, {dz})",
+      "displayNoObject": null,
+      "icon": "➡️",
+      "description": "Move the object by an amount (world axes). Multiply by dt for smooth per-second movement.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "dx",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "dy",
+          "label": "Y",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "dz",
+          "label": "Z",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.moveForward",
+      "kind": "action",
+      "category": "Object",
+      "label": "Move forward",
+      "hint": "Move where it faces",
+      "display": "Move {object} forward {distance}",
+      "displayNoObject": null,
+      "icon": "⬆️",
+      "description": "Move in the direction the object is facing.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "distance",
+          "label": "Distance",
+          "type": "number",
+          "options": null,
+          "default": "0.1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.moveToward",
+      "kind": "action",
+      "category": "Object",
+      "label": "Move toward object",
+      "hint": "Go to an object",
+      "display": "Move {object} toward {target} at speed {speed}",
+      "displayNoObject": null,
+      "icon": "🧲",
+      "description": "Move toward another object (speed in meters per second).",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "target",
+          "label": "Target",
+          "type": "object",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "speed",
+          "label": "Speed",
+          "type": "number",
+          "options": null,
+          "default": "2",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.moveTowardPosition",
+      "kind": "action",
+      "category": "Object",
+      "label": "Move toward position",
+      "hint": "Go to a point",
+      "display": "Move {object} toward ({x}, {y}, {z}) at speed {speed}",
+      "displayNoObject": null,
+      "icon": "🧭",
+      "description": "Move toward a point (speed in meters per second).",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "x",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Z",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "speed",
+          "label": "Speed",
+          "type": "number",
+          "options": null,
+          "default": "2",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.setRotation",
+      "kind": "action",
+      "category": "Object",
+      "label": "Set rotation",
+      "hint": "Angles in degrees",
+      "display": "Set {object} rotation to ({x}°, {y}°, {z}°)",
+      "displayNoObject": null,
+      "icon": "🧭",
+      "description": "Set the rotation in degrees.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "x",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "Self.rotX",
+          "optional": false,
+          "hint": "",
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "type": "number",
+          "options": null,
+          "default": "Self.rotY",
+          "optional": false,
+          "hint": "",
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Z",
+          "type": "number",
+          "options": null,
+          "default": "Self.rotZ",
+          "optional": false,
+          "hint": "",
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.setAngle",
+      "kind": "action",
+      "category": "Object",
+      "label": "Set angle",
+      "hint": "Face a direction",
+      "display": "Set {object} angle to {angle}°",
+      "displayNoObject": null,
+      "icon": "🧭",
+      "description": "Turn the object to face a direction (degrees around the vertical axis).",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "angle",
+          "label": "Angle",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.rotate",
+      "kind": "action",
+      "category": "Object",
+      "label": "Rotate by",
+      "hint": "Turn by degrees",
+      "display": "Rotate {object} by ({x}°, {y}°, {z}°)",
+      "displayNoObject": null,
+      "icon": "🔄",
+      "description": "Turn the object by some degrees. Multiply by dt for smooth per-second rotation.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "x",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "type": "number",
+          "options": null,
+          "default": "5",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Z",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.lookAt",
+      "kind": "action",
+      "category": "Object",
+      "label": "Look at",
+      "hint": "Face an object",
+      "display": "{object} looks at {target}",
+      "displayNoObject": null,
+      "icon": "👀",
+      "description": "Turn the object to face another object.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "target",
+          "label": "Target",
+          "type": "object",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.setScale",
+      "kind": "action",
+      "category": "Object",
+      "label": "Set size",
+      "hint": "1 = normal size",
+      "display": "Set {object} size to ({x}, {y}, {z})",
+      "displayNoObject": null,
+      "icon": "📐",
+      "description": "Change the size (1 = normal).",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "x",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Z",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.setVisible",
+      "kind": "action",
+      "category": "Object",
+      "label": "Set visible",
+      "hint": "Show or hide",
+      "display": "Set {object} visible: {visible}",
+      "displayNoObject": null,
+      "icon": "👁️",
+      "description": "Show or hide the object.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "visible",
+          "label": "Visible",
+          "type": "boolean",
+          "options": null,
+          "default": "true",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.setEnabled",
+      "kind": "action",
+      "category": "Object",
+      "label": "Set enabled",
+      "hint": "Turn on/off",
+      "display": "Set {object} enabled: {enabled}",
+      "displayNoObject": null,
+      "icon": "🔌",
+      "description": "A disabled object is hidden and stops moving/colliding.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "enabled",
+          "label": "Enabled",
+          "type": "boolean",
+          "options": null,
+          "default": "true",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.setColor",
+      "kind": "action",
+      "category": "Object",
+      "label": "Set color",
+      "hint": "Tint it, e.g. red when hit",
+      "display": "Set {object} color to {color}",
+      "displayNoObject": null,
+      "icon": "🎨",
+      "description": "Change the object's color.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "color",
+          "label": "Color",
+          "type": "color",
+          "options": null,
+          "default": "#ff0000",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.setOpacity",
+      "kind": "action",
+      "category": "Object",
+      "label": "Set opacity",
+      "hint": "See-through",
+      "display": "Set {object} opacity to {opacity}",
+      "displayNoObject": null,
+      "icon": "◐",
+      "description": "1 = solid, 0 = invisible.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "opacity",
+          "label": "Opacity",
+          "type": "number",
+          "options": null,
+          "default": "0.5",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.tween",
+      "kind": "action",
+      "category": "Object",
+      "label": "Tween",
+      "hint": "Animate smoothly over time",
+      "display": "Tween {object} {property} to {value} in {seconds} s ({ease})",
+      "displayNoObject": null,
+      "icon": "〽",
+      "description": "Smoothly animate position, angle, size or opacity to a value, e.g. size 1.5 with Back for a pop, or Self.y + 2 to rise. Starting another tween of the same property replaces it.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "property",
+          "label": "Property",
+          "type": "choice",
+          "options": [
+            {
+              "value": "x",
+              "label": "Position X"
+            },
+            {
+              "value": "y",
+              "label": "Position Y"
+            },
+            {
+              "value": "z",
+              "label": "Position Z"
+            },
+            {
+              "value": "angle",
+              "label": "Angle (°)"
+            },
+            {
+              "value": "size",
+              "label": "Size (all axes)"
+            },
+            {
+              "value": "opacity",
+              "label": "Opacity"
+            }
+          ],
+          "default": "size",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "To",
+          "type": "number",
+          "options": null,
+          "default": "1.5",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "seconds",
+          "label": "Seconds",
+          "type": "number",
+          "options": null,
+          "default": "0.3",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "ease",
+          "label": "Easing",
+          "type": "choice",
+          "options": [
+            {
+              "value": "linear",
+              "label": "Linear"
+            },
+            {
+              "value": "easeIn",
+              "label": "Ease in (speeds up)"
+            },
+            {
+              "value": "easeOut",
+              "label": "Ease out (slows down)"
+            },
+            {
+              "value": "easeInOut",
+              "label": "Ease in and out"
+            },
+            {
+              "value": "back",
+              "label": "Back (overshoots)"
+            },
+            {
+              "value": "elastic",
+              "label": "Elastic (wobbles)"
+            },
+            {
+              "value": "bounce",
+              "label": "Bounce"
+            }
+          ],
+          "default": "back",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.stopTweens",
+      "kind": "action",
+      "category": "Object",
+      "label": "Stop tweens",
+      "hint": "Freeze where it is",
+      "display": "Stop {object} tweens",
+      "displayNoObject": null,
+      "icon": "⏹",
+      "description": "Stop every running tween of the object where it is now.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.attachTo",
+      "kind": "action",
+      "category": "Object",
+      "label": "Attach to",
+      "hint": "Pick up, carry, ride",
+      "display": "Attach {object} to {target}",
+      "displayNoObject": null,
+      "icon": "📎",
+      "description": "The object becomes a child of the target and moves with it, e.g. a key the player picked up. It stays where it is; use Set position afterwards to place it relative to the target (0, 0, 0 = the center of the target).",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "target",
+          "label": "Attach to",
+          "type": "object",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.detach",
+      "kind": "action",
+      "category": "Object",
+      "label": "Detach",
+      "hint": "Drop it",
+      "display": "Detach {object}",
+      "displayNoObject": null,
+      "icon": "⛓️‍💥",
+      "description": "Let go of an attached object: it stays where it is and moves on its own again.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.setVar",
+      "kind": "action",
+      "category": "Variables",
+      "label": "Set instance variable",
+      "hint": "e.g. health = 100",
+      "display": "Set {object}.{var} to {value}",
+      "displayNoObject": null,
+      "icon": "📝",
+      "description": "Change one of the object's own variables.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "var",
+          "label": "Instance variable",
+          "type": "variable",
+          "options": null,
+          "default": "",
+          "optional": false,
+          "hint": null,
+          "varScope": "instance"
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "expression",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.addToVar",
+      "kind": "action",
+      "category": "Variables",
+      "label": "Add to instance variable",
+      "hint": "e.g. health + 5",
+      "display": "Add {value} to {object}.{var}",
+      "displayNoObject": null,
+      "icon": "➕",
+      "description": "Increase one of the object's own variables.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "var",
+          "label": "Instance variable",
+          "type": "variable",
+          "options": null,
+          "default": "",
+          "optional": false,
+          "hint": null,
+          "varScope": "instance"
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "expression",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.subtractFromVar",
+      "kind": "action",
+      "category": "Variables",
+      "label": "Subtract from instance variable",
+      "hint": "e.g. health − 10",
+      "display": "Subtract {value} from {object}.{var}",
+      "displayNoObject": null,
+      "icon": "➖",
+      "description": "Decrease one of the object's own variables.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "var",
+          "label": "Instance variable",
+          "type": "variable",
+          "options": null,
+          "default": "",
+          "optional": false,
+          "hint": null,
+          "varScope": "instance"
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "expression",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.setVelocity",
+      "kind": "action",
+      "category": "Physics",
+      "label": "Set velocity",
+      "hint": "Set its speed",
+      "display": "Set {object} velocity to ({x}, {y}, {z})",
+      "displayNoObject": null,
+      "icon": "💨",
+      "description": "Set the physics speed on each axis (needs a Rigid body).",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "x",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "Self.vx",
+          "optional": false,
+          "hint": "",
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "type": "number",
+          "options": null,
+          "default": "Self.vy",
+          "optional": false,
+          "hint": "",
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Z",
+          "type": "number",
+          "options": null,
+          "default": "Self.vz",
+          "optional": false,
+          "hint": "",
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.applyImpulse",
+      "kind": "action",
+      "category": "Physics",
+      "label": "Push (impulse)",
+      "hint": "Sudden push",
+      "display": "Push {object} by ({x}, {y}, {z})",
+      "displayNoObject": null,
+      "icon": "👊",
+      "description": "Give the object a sudden push (needs a Rigid body).",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "x",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "type": "number",
+          "options": null,
+          "default": "5",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Z",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.applyForce",
+      "kind": "action",
+      "category": "Physics",
+      "label": "Apply force",
+      "hint": "Keep pushing",
+      "display": "Apply force ({x}, {y}, {z}) to {object}",
+      "displayNoObject": null,
+      "icon": "🌬️",
+      "description": "Push continuously (use every tick; needs a Rigid body).",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "x",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "type": "number",
+          "options": null,
+          "default": "10",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Z",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.jump",
+      "kind": "action",
+      "category": "Physics",
+      "label": "Jump",
+      "hint": "Only when on the ground",
+      "display": "{object} jumps (strength {strength})",
+      "displayNoObject": null,
+      "icon": "🦘",
+      "description": "Jump up, only when standing on the ground (needs a Rigid body).",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "strength",
+          "label": "Strength",
+          "type": "number",
+          "options": null,
+          "default": "7",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.setText",
+      "kind": "action",
+      "category": "Text",
+      "label": "Set text",
+      "hint": "Change its text",
+      "display": "Set {object} text to {text}",
+      "displayNoObject": null,
+      "icon": "🔤",
+      "description": "Change the text shown by a text object.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "text",
+          "label": "Text",
+          "type": "expression",
+          "options": null,
+          "default": "\"Hello\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "text.setText",
+      "kind": "action",
+      "category": "Text",
+      "label": "Set text",
+      "hint": "Change its text",
+      "display": "Set text of {object} to {value}",
+      "displayNoObject": null,
+      "icon": "🔤",
+      "description": "Change the text of an object with a Text component, e.g. \"Score: \" + Score.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "value",
+          "label": "Text",
+          "type": "expression",
+          "options": null,
+          "default": "\"Score: \" + Score",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "text.appendText",
+      "kind": "action",
+      "category": "Text",
+      "label": "Append text",
+      "hint": "Add to its text",
+      "display": "Append {value} to text of {object}",
+      "displayNoObject": null,
+      "icon": "🔡",
+      "description": "Add text at the end of the current text.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "value",
+          "label": "Text",
+          "type": "expression",
+          "options": null,
+          "default": "\"!\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.playAnimation",
+      "kind": "action",
+      "category": "Object",
+      "label": "Play animation",
+      "hint": "Play a model animation",
+      "display": "{object} plays animation {name} (loop: {loop})",
+      "displayNoObject": null,
+      "icon": "🏃",
+      "description": "Play a clip of its 3D model, e.g. \"walk\", \"jump\" or \"die\". Loop off = play once and hold the last frame.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "name",
+          "label": "Animation",
+          "type": "expression",
+          "options": null,
+          "default": "\"walk\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "loop",
+          "label": "Loop",
+          "type": "boolean",
+          "options": null,
+          "default": "true",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.stopAnimation",
+      "kind": "action",
+      "category": "Object",
+      "label": "Stop animation",
+      "hint": "Freeze the model",
+      "display": "{object} stops its animation",
+      "displayNoObject": null,
+      "icon": "⏹",
+      "description": "Stop the playing model animation.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.setAnimationSpeed",
+      "kind": "action",
+      "category": "Object",
+      "label": "Set animation speed",
+      "hint": "1 = normal, 2 = double",
+      "display": "Set {object} animation speed to {speed}",
+      "displayNoObject": null,
+      "icon": "⏩",
+      "description": "1 = normal, 0.5 = half speed, 2 = double.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "speed",
+          "label": "Speed",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.burstParticles",
+      "kind": "action",
+      "category": "Particles",
+      "label": "Burst particles",
+      "hint": "Shoot particles",
+      "display": "{object} bursts {count} particles",
+      "displayNoObject": null,
+      "icon": "💥",
+      "description": "Shoot some particles at once, e.g. sparks on a hit or a puff on landing. Needs a Particles component.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "count",
+          "label": "How many",
+          "type": "number",
+          "options": null,
+          "default": "20",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.spawnParticlesAt",
+      "kind": "action",
+      "category": "Particles",
+      "label": "Spawn particles here",
+      "hint": "Effect at its spot",
+      "display": "Spawn {effect} at {object}",
+      "displayNoObject": null,
+      "icon": "🎆",
+      "description": "Play a ready-made effect once where the object is, e.g. Sparkles when a coin is collected (works even if you destroy it right after). No Particles component needed.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "effect",
+          "label": "Effect",
+          "type": "choice",
+          "options": [
+            {
+              "value": "sparkle",
+              "label": "Sparkles"
+            },
+            {
+              "value": "fire",
+              "label": "Fire"
+            },
+            {
+              "value": "smoke",
+              "label": "Smoke"
+            },
+            {
+              "value": "explosion",
+              "label": "Explosion"
+            },
+            {
+              "value": "dust",
+              "label": "Dust puff"
+            },
+            {
+              "value": "rain",
+              "label": "Rain"
+            },
+            {
+              "value": "confetti",
+              "label": "Confetti"
+            },
+            {
+              "value": "magic",
+              "label": "Magic"
+            }
+          ],
+          "default": "sparkle",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.startParticles",
+      "kind": "action",
+      "category": "Particles",
+      "label": "Start particles",
+      "hint": "Or play it again",
+      "display": "{object} starts its particles",
+      "displayNoObject": null,
+      "icon": "✨",
+      "description": "Start (or restart) its Particles component. One-shot effects like Explosion play again.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.stopParticles",
+      "kind": "action",
+      "category": "Particles",
+      "label": "Stop particles",
+      "hint": "Flying ones fade out",
+      "display": "{object} stops its particles",
+      "displayNoObject": null,
+      "icon": "⏹",
+      "description": "Stop making new particles. The ones already flying fade out normally.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.setParticleRate",
+      "kind": "action",
+      "category": "Particles",
+      "label": "Set particle rate",
+      "hint": "Particles per second",
+      "display": "Set {object} particles per second to {rate}",
+      "displayNoObject": null,
+      "icon": "🎚️",
+      "description": "How many particles it makes per second, e.g. a bigger fire or a stronger engine trail.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "rate",
+          "label": "Per second",
+          "type": "number",
+          "options": null,
+          "default": "20",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.playSound",
+      "kind": "action",
+      "category": "Audio",
+      "label": "Play its sound",
+      "hint": "From its Sound component",
+      "display": "{object} plays its sound",
+      "displayNoObject": null,
+      "icon": "🔊",
+      "description": "Play the sound of the object's Audio component.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.stopSound",
+      "kind": "action",
+      "category": "Audio",
+      "label": "Stop its sound",
+      "hint": "From its Sound component",
+      "display": "{object} stops its sound",
+      "displayNoObject": null,
+      "icon": "🔇",
+      "description": "Stop the sound of the object's Audio component.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.setBehaviorEnabled",
+      "kind": "action",
+      "category": "Behaviors",
+      "label": "Enable/disable behavior",
+      "hint": "Behavior on/off",
+      "display": "Set {object} behavior {behavior} enabled: {enabled}",
+      "displayNoObject": null,
+      "icon": "🧩",
+      "description": "Turn one of the object's behaviors on or off.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "behavior",
+          "label": "Behavior",
+          "type": "behavior",
+          "options": [
+            {
+              "value": "platformer",
+              "label": "platformer"
+            },
+            {
+              "value": "topdown",
+              "label": "topdown"
+            },
+            {
+              "value": "car",
+              "label": "car"
+            },
+            {
+              "value": "cameraFollow",
+              "label": "cameraFollow"
+            },
+            {
+              "value": "rotate",
+              "label": "rotate"
+            },
+            {
+              "value": "bullet",
+              "label": "bullet"
+            },
+            {
+              "value": "sine",
+              "label": "sine"
+            },
+            {
+              "value": "follow",
+              "label": "follow"
+            },
+            {
+              "value": "destroyOffscreen",
+              "label": "destroyOffscreen"
+            },
+            {
+              "value": "draggable",
+              "label": "draggable"
+            }
+          ],
+          "default": "platformer",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "enabled",
+          "label": "Enabled",
+          "type": "boolean",
+          "options": null,
+          "default": "true",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.setBehaviorParam",
+      "kind": "action",
+      "category": "Behaviors",
+      "label": "Set behavior setting",
+      "hint": "e.g. platformer speed",
+      "display": "Set {object} {behavior}.{param} to {value}",
+      "displayNoObject": null,
+      "icon": "🎛️",
+      "description": "Change a behavior setting, e.g. platformer speed.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "behavior",
+          "label": "Behavior",
+          "type": "behavior",
+          "options": [
+            {
+              "value": "platformer",
+              "label": "platformer"
+            },
+            {
+              "value": "topdown",
+              "label": "topdown"
+            },
+            {
+              "value": "car",
+              "label": "car"
+            },
+            {
+              "value": "cameraFollow",
+              "label": "cameraFollow"
+            },
+            {
+              "value": "rotate",
+              "label": "rotate"
+            },
+            {
+              "value": "bullet",
+              "label": "bullet"
+            },
+            {
+              "value": "sine",
+              "label": "sine"
+            },
+            {
+              "value": "follow",
+              "label": "follow"
+            },
+            {
+              "value": "destroyOffscreen",
+              "label": "destroyOffscreen"
+            },
+            {
+              "value": "draggable",
+              "label": "draggable"
+            }
+          ],
+          "default": "platformer",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "param",
+          "label": "Setting",
+          "type": "string",
+          "options": null,
+          "default": "speed",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "expression",
+          "options": null,
+          "default": "5",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.addTag",
+      "kind": "action",
+      "category": "Object",
+      "label": "Add tag",
+      "hint": "Mark it, e.g. #enemy",
+      "display": "Add tag {tag} to {object}",
+      "displayNoObject": null,
+      "icon": "🏷️",
+      "description": "Give the object a tag.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "tag",
+          "label": "Tag",
+          "type": "tag",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.removeTag",
+      "kind": "action",
+      "category": "Object",
+      "label": "Remove tag",
+      "hint": "Unmark it",
+      "display": "Remove tag {tag} from {object}",
+      "displayNoObject": null,
+      "icon": "🏷️",
+      "description": "Remove a tag from the object.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "tag",
+          "label": "Tag",
+          "type": "tag",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.onClick",
+      "kind": "condition",
+      "category": "UI",
+      "label": "On clicked",
+      "hint": "Button tapped",
+      "display": "On {object} clicked",
+      "displayNoObject": null,
+      "icon": "👆",
+      "description": "Runs when the player taps a UI button (e.g. Start, Pause, Retry).",
+      "isTrigger": true,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": true,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "ui.isPressed",
+      "kind": "condition",
+      "category": "UI",
+      "label": "Is held down",
+      "hint": "Button held",
+      "display": "{object} is held down",
+      "displayNoObject": null,
+      "icon": "✊",
+      "description": "True while the player holds a UI button (e.g. a custom fire button).",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "ui.compareValue",
+      "kind": "condition",
+      "category": "UI",
+      "label": "Compare bar value",
+      "hint": "Check a bar value",
+      "display": "{object} value {op} {value}",
+      "displayNoObject": null,
+      "icon": "📊",
+      "description": "Compare the value of a progress bar, e.g. Health value ≤ 0.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "op",
+          "label": "Comparison",
+          "type": "choice",
+          "options": [
+            {
+              "value": "=",
+              "label": "="
+            },
+            {
+              "value": "≠",
+              "label": "≠"
+            },
+            {
+              "value": "<",
+              "label": "<"
+            },
+            {
+              "value": "≤",
+              "label": "≤"
+            },
+            {
+              "value": ">",
+              "label": ">"
+            },
+            {
+              "value": "≥",
+              "label": "≥"
+            }
+          ],
+          "default": "=",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "expression",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.show",
+      "kind": "action",
+      "category": "UI",
+      "label": "Show",
+      "hint": "Element or whole screen",
+      "display": "Show {object}",
+      "displayNoObject": null,
+      "icon": "👁️",
+      "description": "Show a UI element or a whole screen (and everything inside it).",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "ui.hide",
+      "kind": "action",
+      "category": "UI",
+      "label": "Hide",
+      "hint": "Element or whole screen",
+      "display": "Hide {object}",
+      "displayNoObject": null,
+      "icon": "🙈",
+      "description": "Hide a UI element or a whole screen.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "ui.toggle",
+      "kind": "action",
+      "category": "UI",
+      "label": "Show / hide",
+      "hint": "Show if hidden, else hide",
+      "display": "Toggle {object} visible",
+      "displayNoObject": null,
+      "icon": "🔁",
+      "description": "Show it if hidden, hide it if shown.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "ui.setText",
+      "kind": "action",
+      "category": "UI",
+      "label": "Set label",
+      "hint": "Change its text",
+      "display": "Set {object} label to {text}",
+      "displayNoObject": null,
+      "icon": "🔤",
+      "description": "Change the text of a label or button, e.g. \"Lives: \" + Lives.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "text",
+          "label": "Text",
+          "type": "expression",
+          "options": null,
+          "default": "\"Hello\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.setValue",
+      "kind": "action",
+      "category": "UI",
+      "label": "Set bar value",
+      "hint": "Health, energy, timer…",
+      "display": "Set {object} value to {value}",
+      "displayNoObject": null,
+      "icon": "📊",
+      "description": "Set a progress bar value, e.g. health or time left.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "expression",
+          "options": null,
+          "default": "100",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.addValue",
+      "kind": "action",
+      "category": "UI",
+      "label": "Add to bar value",
+      "hint": "e.g. −10 when hit",
+      "display": "Add {value} to {object} value",
+      "displayNoObject": null,
+      "icon": "➕",
+      "description": "Add (or subtract with a negative number) to a progress bar. Stays between 0 and max.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "value",
+          "label": "Amount",
+          "type": "expression",
+          "options": null,
+          "default": "-10",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.setMax",
+      "kind": "action",
+      "category": "UI",
+      "label": "Set bar maximum",
+      "hint": "Value of a full bar",
+      "display": "Set {object} max to {max}",
+      "displayNoObject": null,
+      "icon": "📏",
+      "description": "Set the maximum of a progress bar.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "max",
+          "label": "Maximum",
+          "type": "expression",
+          "options": null,
+          "default": "100",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.setImage",
+      "kind": "action",
+      "category": "UI",
+      "label": "Set image",
+      "hint": "Change its picture",
+      "display": "Set {object} image to {image}",
+      "displayNoObject": null,
+      "icon": "🖼️",
+      "description": "Change the picture of an image, button or panel.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "image",
+          "label": "Image",
+          "type": "image",
+          "options": null,
+          "default": "",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.setBackground",
+      "kind": "action",
+      "category": "UI",
+      "label": "Set background color",
+      "hint": "Button, panel or bar",
+      "display": "Set {object} background to {color}",
+      "displayNoObject": null,
+      "icon": "🎨",
+      "description": "Change the background color of a button, panel or bar.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "color",
+          "label": "Color",
+          "type": "color",
+          "options": null,
+          "default": "#4f8cff",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.setTextColor",
+      "kind": "action",
+      "category": "UI",
+      "label": "Set text color",
+      "hint": "Label or button",
+      "display": "Set {object} text color to {color}",
+      "displayNoObject": null,
+      "icon": "🖍️",
+      "description": "Change the text color of a label or button.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "color",
+          "label": "Color",
+          "type": "color",
+          "options": null,
+          "default": "#ffffff",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.setFillColor",
+      "kind": "action",
+      "category": "UI",
+      "label": "Set bar color",
+      "hint": "Bar fill color",
+      "display": "Set {object} bar color to {color}",
+      "displayNoObject": null,
+      "icon": "🟩",
+      "description": "Change the fill color of a progress bar.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "color",
+          "label": "Color",
+          "type": "color",
+          "options": null,
+          "default": "#3ecf8e",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "audio.play",
+      "kind": "action",
+      "category": "Audio",
+      "label": "Play sound",
+      "hint": "Any sound file",
+      "display": "Play sound {sound} (volume {volume}, loop {loop})",
+      "displayNoObject": null,
+      "icon": "🔊",
+      "description": "Play a sound from your assets.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "audio",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "sound",
+          "label": "Sound",
+          "type": "sound",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "volume",
+          "label": "Volume",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "loop",
+          "label": "Loop",
+          "type": "boolean",
+          "options": null,
+          "default": "false",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "audio.stop",
+      "kind": "action",
+      "category": "Audio",
+      "label": "Stop sound",
+      "hint": "One sound or all",
+      "display": "Stop sound {sound}",
+      "displayNoObject": "Stop sound {sound}",
+      "icon": "🔇",
+      "description": "Stop a sound (leave empty to stop all sounds).",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "audio",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "sound",
+          "label": "Sound (empty = all)",
+          "type": "sound",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "audio.setVolume",
+      "kind": "action",
+      "category": "Audio",
+      "label": "Set master volume",
+      "hint": "0 = silent, 1 = full",
+      "display": "Set master volume to {volume}",
+      "displayNoObject": null,
+      "icon": "🎚️",
+      "description": "0 = silent, 1 = full volume.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "audio",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "volume",
+          "label": "Volume",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "camera.shake",
+      "kind": "action",
+      "category": "Camera",
+      "label": "Shake camera",
+      "hint": "Shake the screen",
+      "display": "Shake camera (strength {intensity}, {duration} s)",
+      "displayNoObject": null,
+      "icon": "📳",
+      "description": "Shake the screen, great for hits and explosions.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "camera",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "intensity",
+          "label": "Strength",
+          "type": "number",
+          "options": null,
+          "default": "0.3",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "duration",
+          "label": "Seconds",
+          "type": "number",
+          "options": null,
+          "default": "0.3",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "camera.lookAt",
+      "kind": "action",
+      "category": "Camera",
+      "label": "Camera look at",
+      "hint": "Face an object",
+      "display": "Camera looks at {target}",
+      "displayNoObject": null,
+      "icon": "🎥",
+      "description": "Turn the main camera toward an object.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "camera",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "target",
+          "label": "Target",
+          "type": "object",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "camera.setPosition",
+      "kind": "action",
+      "category": "Camera",
+      "label": "Set camera position",
+      "hint": "Move the camera",
+      "display": "Set camera position to ({x}, {y}, {z})",
+      "displayNoObject": null,
+      "icon": "🎥",
+      "description": "Move the main camera.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "camera",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "x",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "type": "number",
+          "options": null,
+          "default": "6",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Z",
+          "type": "number",
+          "options": null,
+          "default": "10",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "particles.spawn",
+      "kind": "action",
+      "category": "Particles",
+      "label": "Spawn particles",
+      "hint": "Effect at a position",
+      "display": "Spawn {effect} at ({x}, {y}, {z})",
+      "displayNoObject": null,
+      "icon": "🎆",
+      "description": "Play a ready-made effect once at a position, e.g. an Explosion at Enemy.x, Enemy.y, Enemy.z. No object needed.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "effect",
+          "label": "Effect",
+          "type": "choice",
+          "options": [
+            {
+              "value": "sparkle",
+              "label": "Sparkles"
+            },
+            {
+              "value": "fire",
+              "label": "Fire"
+            },
+            {
+              "value": "smoke",
+              "label": "Smoke"
+            },
+            {
+              "value": "explosion",
+              "label": "Explosion"
+            },
+            {
+              "value": "dust",
+              "label": "Dust puff"
+            },
+            {
+              "value": "rain",
+              "label": "Rain"
+            },
+            {
+              "value": "confetti",
+              "label": "Confetti"
+            },
+            {
+              "value": "magic",
+              "label": "Magic"
+            }
+          ],
+          "default": "sparkle",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "x",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Z",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    }
+  ]
+}

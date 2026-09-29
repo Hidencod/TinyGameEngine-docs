@@ -1,0 +1,174 @@
+---
+title: Components reference
+sidebar_label: Components
+description: Every field of every component, with its default value.
+---
+
+# Components reference
+
+Every field of the ten components, as shown in the Inspector, with the default a new component gets. The guides linked under each heading explain them with screenshots.
+
+## 🧊 Shape & look
+
+Guide: [Shapes & materials](../world/shapes-and-materials), [3D models](../world/models)
+
+| Field | Values | Default |
+| --- | --- | --- |
+| Shape | Cube, Sphere, Plane, Capsule, Cylinder, Cone, Torus, 3D model (file) | Cube |
+| Model | a model asset (3D model shape only) | — |
+| Faces forward | on / off (models) | on for new models |
+| Animation | a clip of the model, or None | None |
+| Play on start | on / off | on |
+| Animation speed | number | 1 |
+| Color | color | `#8ab4f8` |
+| Texture | an image asset | none |
+| Tiling | U, V | 1, 1 |
+| Style | Matte (fast), Realistic, Cartoon, Unlit (flat color) | Matte |
+| Roughness / Metalness | 0–1 (Realistic only) | 0.8 / 0 |
+| Glow color | color | black (none) |
+| Opacity | 0–1 | 1 |
+| Flat shading | on / off | off |
+| Casts shadow / Receives shadow | on / off | on / on |
+
+## 🎥 Camera
+
+Guide: [Cameras & lights](../world/cameras-and-lights)
+
+| Field | Values | Default |
+| --- | --- | --- |
+| Main camera | on / off | on (if no other main camera) |
+| Projection | Perspective (3D), Orthographic (flat) | Perspective |
+| Field of view | 20–120° | 60 |
+| View size | meters (orthographic) | 10 |
+| Near / Far | meters | 0.1 / 500 |
+
+## 💡 Light
+
+Guide: [Cameras & lights](../world/cameras-and-lights)
+
+| Field | Values | Default |
+| --- | --- | --- |
+| Type | Sun (directional), Lamp (point), Spotlight, Sky (hemisphere) | Sun |
+| Color (Sky color) | color | white |
+| Ground color | color (Sky only) | `#444444` |
+| Brightness | 0–5 | 1.5 |
+| Range | meters, 0 = unlimited (Lamp, Spotlight) | 0 |
+| Cone angle | 1–89° (Spotlight) | 45 |
+| Casts shadows | on / off (not Sky) | on |
+
+## 🥅 Collider
+
+Guide: [Physics](../world/physics)
+
+| Field | Values | Default |
+| --- | --- | --- |
+| Shape | Automatic, Box, Sphere, Capsule, Convex hull, Exact mesh | Automatic |
+| Size | X, Y, Z (Box) | 1, 1, 1 |
+| Radius | meters (Sphere, Capsule) | 0.5 |
+| Height | meters (Capsule) | 2 |
+| Offset | X, Y, Z (not Automatic) | 0, 0, 0 |
+| Trigger only | on / off | off |
+
+## ⚙️ Physics body
+
+Guide: [Physics](../world/physics)
+
+| Field | Values | Default |
+| --- | --- | --- |
+| Type | Dynamic, Static, Kinematic | Dynamic |
+| Mass | number (Dynamic) | 1 |
+| Friction | 0–1 | 0.4 |
+| Bounciness | 0–1 | 0.1 |
+| Gravity scale | number (Dynamic) | 1 |
+| Don’t tip over | on / off (Dynamic) | off |
+| Air drag | 0–1 (Dynamic) | 0.05 |
+| Spin drag | 0–1 (Dynamic) | 0.1 |
+
+## 🔊 Sound
+
+Guide: [Sound](../world/sound)
+
+| Field | Values | Default |
+| --- | --- | --- |
+| Sound file | a sound asset | none |
+| Play on start | on / off | off |
+| Loop | on / off | off |
+| Volume | 0–1 | 1 |
+| 3D sound | on / off | off |
+
+## 🔤 Text
+
+Guide: [Game UI](../world/ui#text-component)
+
+| Field | Values | Default |
+| --- | --- | --- |
+| Text | text | `Text` |
+| Size | 6–200 px | 24 |
+| Color | color | white |
+| Above object (3D) | on / off | off |
+| Screen position | 9 anchors | top-left |
+| Offset (px) | X, Y | 16, 16 |
+
+## 🖼️ UI element
+
+Guide: [Game UI](../world/ui)
+
+| Field | Values | Default |
+| --- | --- | --- |
+| Type | Label, Button, Image, Panel / screen, Progress bar | Label |
+| Text / Caption | text (`{value}`, `{max}`, `{percent}` in bars) | `Label` |
+| Value / Maximum | numbers (Progress bar) | 50 / 100 |
+| Bar color | color (Progress bar) | `#3ecf8e` |
+| Image / Background image | an image asset | none |
+| Fill parent | on / off | off |
+| Above object (3D) | on / off | off |
+| Position | 9 anchors | top-left |
+| Offset (px) | X, Y | 16, 16 |
+| Size (px) | W, H (0 = fit content) | 0, 0 |
+| Font size | 6–200 | 22 |
+| Bold | on / off | on |
+| Text color | color | white |
+| Align | Left, Center, Right | Center |
+| Background | color | `#1e2128` |
+| Background opacity | 0–1 | 0 |
+| Corner radius | 0–500 px | 10 |
+| Border width / color | 0–40 px / color | 0 / white |
+| Opacity | 0–1 | 1 |
+| Layer | whole number, higher on top | 0 |
+
+The Add menu’s UI presets change some defaults (e.g. a Button is 180 × 56, centered, blue).
+
+## 📜 Code script
+
+Guide: [Code scripts](../logic/scripting)
+
+| Field | Values | Default |
+| --- | --- | --- |
+| Script | an object script, New script…, or None | None |
+| Properties | named number / text / yes-no values, read as `props.name` | none |
+
+## ✨ Particles
+
+Guide: [Particles](../world/particles)
+
+| Field | Values | Default |
+| --- | --- | --- |
+| Preset | Sparkles, Fire, Smoke, Explosion, Dust puff, Rain, Confetti, Magic | — |
+| Per second | number (0 = bursts only) | 20 |
+| Burst | whole number | 0 |
+| Play on start | on / off | on |
+| Loop | on / off | on |
+| Duration (s) | seconds (when not looping) | 2 |
+| Shape | Fountain (cone), Ball (sphere), Point, Box (area) | Fountain |
+| Radius / Area size | meters | 0.1 |
+| Spread | 0–180° (cone) | 25 |
+| Lifetime (s) | min, max | 0.8, 1.4 |
+| Speed | min, max | 1.5, 3 |
+| Gravity | multiplier (negative rises) | 0.3 |
+| Air drag | number | 0.5 |
+| Leave behind | on / off | on |
+| Size over lifetime | curve | 0.25 → 0.05 |
+| Color over lifetime | gradient | yellow → orange, fading out |
+| Glow | on / off | on |
+| Texture | an image asset (none = soft dot) | none |
+| Max particles | 1 – engine limit | 200 |

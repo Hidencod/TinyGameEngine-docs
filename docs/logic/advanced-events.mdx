@@ -1,0 +1,83 @@
+---
+title: Advanced events
+description: Sub-events, Else, OR blocks, groups, functions, loops, timers, Wait, including sheets and scripts inside sheets.
+---
+
+# Advanced events
+
+## Sub-events
+
+A **sub-event** sits under an event and is only checked when its parent ran — and it keeps the parent’s picked objects. Use it to add a second test without repeating the first:
+
+| # | Conditions | Actions |
+| --- | --- | --- |
+| 1 | ⚡ Player collides with #coin | Destroy #coin · Add 1 to Score |
+| 1.1 | ↳ Score ≥ 10 | Set label "You win!" · Shake camera |
+
+Add with the event menu → **Add sub-event**, or **Make sub-event of the one above**.
+
+## Else
+
+An **Else** event runs when the event directly above did **not** run. It can have its own conditions (“else if”).
+
+| Conditions | Actions |
+| --- | --- |
+| Player is on ground | Set animation speed 1 |
+| **Else** | Set animation speed 0.5 |
+
+Event menu → **Add “Else” below** or **Make “Else” event**.
+
+## OR blocks
+
+Normally all conditions must be true (AND). Event menu → **Make OR block** makes the event run when **any** condition is true. The event shows **OR** between its conditions.
+
+## Groups
+
+A **group** is a named folder of events. Tap its arrow to fold it. Its checkbox (or the actions **Set group active** / condition **Group is active**) turns all its events on or off — for example a `Boss fight` group that only runs during the boss fight. Event menu → **Put in a new group**; group menu → **Ungroup (keep events)**.
+
+## Functions
+
+A **function** is a block of events you run by name, with **parameters** and an optional **return value**. **＋ More… → Function**: give it a name, a description, parameters (each a number, text or yes/no with a default) and a return type.
+
+- Run it with the action **Call function** (fill in its parameters).
+- Or use it inside an expression: `Functions.Damage(10)`.
+- Inside, parameters are read like variables; **Set return value** sets the result.
+
+## Loops
+
+Loop conditions repeat the rest of the event (its other conditions, actions and sub-events):
+
+| Condition | Repeats |
+| --- | --- |
+| 🔁 **Repeat** | N times. |
+| 🔁 **For** | Counting from *From* to *To* (both included). Give it a name and read the count with `loopindex("name")`. |
+| 🔁 **While** | As long as the conditions after it are true (or until *Stop loop*). |
+| 🔁 **For each** | Once per picked instance of an object, picking just that one. |
+
+In *Repeat*, `loopIndex` is the current repeat (0, 1, 2…). **Stop loop** ends the loop early.
+
+Example — spawn 10 coins in a row: *On start of scene* + *Repeat 10* → *Create object Coin at x = loopIndex * 2*.
+
+## Time
+
+| Tool | Use |
+| --- | --- |
+| **Every X seconds** | Something at a steady rhythm (spawn an enemy every 2 s). |
+| **Start timer** / ⚡ **On timer finished** / **Timer is running** / **Stop timer** | Named timers, once or repeating (a 60-second level clock, a cooldown). |
+| **Wait** | Pauses the rest of the event (including sub-events) for some seconds, keeping the picked objects, then continues. |
+| **Compare scene time** | How long the scene has been running. |
+| **Set time scale** | Slow motion (0.5), fast forward (2), freeze (0). |
+| **Pause game** / **Resume game** | Stop and restart the game world (UI keeps working). |
+| **Trigger once while true** | Run the event only on the first frame its other conditions become true. |
+
+## Include other sheets {/* #include-sheets */}
+
+A sheet can **include** other sheets: their events run first, as if they were at the top. Use it for logic shared by all levels (pause menu, HUD, sounds). Sheet menu → **Include other sheets…**.
+
+## Comments
+
+**＋ More… → Comment** adds a yellow note. Use comments to explain tricky events to your future self.
+
+## Scripts inside a sheet
+
+**＋ More… → Script** adds a few lines of JavaScript. At the top level it runs once at the start; inside an event it runs every time the event runs. It can use `game`, `input`, `audio`, `vars` (e.g. `vars.Score += 1`) and `picked('Coin')` (the picked instances). See [Code scripts](./scripting).

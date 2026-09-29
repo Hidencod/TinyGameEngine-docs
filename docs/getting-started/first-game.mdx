@@ -1,0 +1,122 @@
+---
+title: "Tutorial 1: Your first game"
+sidebar_label: "Tutorial 1: First game"
+description: Roll a ball, add a coin and write your first event — about 5 minutes.
+---
+
+# Tutorial 1: Your first game
+
+In about **5 minutes** you will make a ball that rolls around and collects a coin. You will use the three things behind every game: **objects**, the **Inspector** and **events**.
+
+:::tip[Do it in the app]
+The app has this tutorial built in: on the home screen tap **New here? Make your first game → Part 1**. A card at the top of the screen tells you what to do and an orange ring shows where to tap; it moves on by itself when you have done each step. This page shows the same steps, so you can follow along or read ahead.
+:::
+
+<Row>
+  <Phone name="tutorials-picker" caption="Pick Part 1" />
+  <Phone name="tut1-01-welcome" caption="The tutorial card" />
+</Row>
+
+The tutorial starts with a small project called **My first game**: a ground with walls, a camera, a light and a blue ball called **Player** that already rolls with the joystick. The card at the top can be folded with **–** (tap the pill to bring it back) or closed with **Skip tutorial**.
+
+<Step n={1} title="Look around">
+
+The big 3D view is your game world. **Drag with one finger** to orbit around, **pinch** to zoom, **drag with two fingers** to pan. Tap **Let’s go**.
+
+</Step>
+
+<Step n={2} title="Try the game">
+
+Tap **▶ Play** at the top. The game starts full screen. Move the ball with the **joystick** at the bottom left. There is nothing to collect yet, so tap **■ Stop** to go back to the editor.
+
+<Row>
+  <Phone name="tut1-02-try" caption="Tap Play" />
+  <Phone name="tut1-03-playing" caption="Playing: joystick bottom left, Stop at the bottom" />
+</Row>
+
+</Step>
+
+<Step n={3} title="Add a coin">
+
+Open the **Objects** tab, tap **＋ Add** and choose **Cylinder**. A cylinder appears on top of the ball — that will be the coin.
+
+<Row>
+  <Phone name="tut1-04-add-coin" caption="The step card" />
+  <Phone name="tut1-05-add-menu" caption="＋ Add → Cylinder" />
+</Row>
+
+</Step>
+
+<Step n={4} title="Move the coin">
+
+With the cylinder selected, the 3D view shows **arrows** (the move gizmo). **Drag the red or the blue arrow** to slide the coin away from the ball. The tutorial shows an animated finger on the arrow to press.
+
+<Row>
+  <Phone name="tut1-06-move-hint" caption="The arrows of the selected object" />
+  <Phone name="tut1-07-moved" caption="Coin dragged away from the ball" />
+</Row>
+
+Red moves along X (left/right), blue along Z (forward/back), green along Y (up/down). See [The 3D view](../editor/viewport).
+
+</Step>
+
+<Step n={5} title="Make it gold">
+
+Open the **Inspect** tab. It shows everything about the selected object. Tap the **Color** box and pick a yellow.
+
+<Row>
+  <Phone name="tut1-08-gold" caption="Open Inspect" />
+  <Phone name="tut1-09-color-field" caption="Tap Color and pick yellow" />
+</Row>
+
+</Step>
+
+<Step n={6} title="Open the event sheet">
+
+Events are the rules of your game: **WHEN** something happens → **DO** something. Open the **Logic** tab and tap the event sheet **Main events**.
+
+<Phone name="tut1-10-open-sheet" size="small" />
+
+</Step>
+
+<Step n={7} title="WHEN the ball touches the coin…">
+
+Tap **＋ Add event**. First pick **what** the event is about: **Player**. Then pick the condition **On collision with** (under *Physics*). Set **Other object** to the coin (*Cylinder*) and tap **✓ Add condition**.
+
+<Row>
+  <Phone name="tut1-11-add-event" caption="＋ Add event" />
+  <Phone name="tut1-12-pick-object" caption="Pick Player" />
+  <Phone name="tut1-13-pick-condition" caption="On collision with" />
+  <Phone name="tut1-14-condition-params" caption="Other object: Cylinder" />
+</Row>
+
+The ⚡ means it is a **trigger**: it runs once, at the moment the two start touching.
+
+</Step>
+
+<Step n={8} title="…DO destroy the coin">
+
+Under your new event tap **Add action**, pick the coin (*Cylinder*), then **Destroy**.
+
+<Row>
+  <Phone name="tut1-15-add-action" caption="Add action under the event" />
+  <Phone name="tut1-16-pick-destroy" caption="Cylinder → Destroy" />
+  <Phone name="tut1-17-event-done" caption="Your first event" />
+</Row>
+
+Read the event from left to right: *WHEN Player collides with Cylinder → Cylinder: Destroy*.
+
+</Step>
+
+<Step n={9} title="Test it!">
+
+Tap **←** to go back to the editor and tap **▶ Play**. Roll the ball into the coin — poof, it’s gone! Tap **■ Stop** when you’re done.
+
+<Row>
+  <Phone name="tut1-18-collect" caption="Roll into the coin" />
+  <Phone name="tut1-19-done" caption="🎉 You made a game!" />
+</Row>
+
+</Step>
+
+**Next:** [Tutorial 2: Keep score and win](./keep-score) — add more coins, count them and show “You win!”.

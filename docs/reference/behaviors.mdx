@@ -1,0 +1,30 @@
+---
+title: Behaviors reference
+sidebar_label: Behaviors
+description: Every behavior setting, its default and its id for scripts.
+---
+
+# Behaviors reference
+
+Settings are shown in the Inspector with friendly names; scripts and the *Set behavior setting* action use the **id**. For explanations and screenshots see the [Behaviors guide](../behaviors).
+
+| Behavior | Type id | Setting id | Default |
+| --- | --- | --- | --- |
+| 🏃 Platformer | `platformer` | `speed` · `jumpStrength` · `jumpButton` · `turnToDirection` · `cameraRelative` · `animate` | 5 · 7 · `jump` · true · true · true |
+| 🕹️ Top-down movement | `topdown` | `speed` · `turnToDirection` · `cameraRelative` · `animate` | 5 · true · true · true |
+| 🏎️ Car | `car` | `speed` · `acceleration` · `steering` · `grip` · `brake` · `wheels` · `frontWheels` | 15 · 10 · 30 · 1 · 1 · (auto) · (auto) |
+| 🎥 Camera follow | `cameraFollow` | `target` · `offsetX` · `offsetY` · `offsetZ` · `smoothing` · `lookAtTarget` · `stayBehind` | `Player` · 0 · 6 · 10 · 5 · true · false |
+| 🔄 Rotate | `rotate` | `speedX` · `speedY` · `speedZ` | 0 · 90 · 0 |
+| ➤ Bullet | `bullet` | `speed` · `gravity` | 10 · false |
+| 〰️ Wave (sine) | `sine` | `property` · `magnitude` · `period` | `y` · 0.5 · 2 |
+| 🎯 Follow target | `follow` | `target` · `speed` · `stopDistance` · `lookAt` · `animate` | `Player` · 2 · 1 · true · true |
+| 🗑️ Destroy when far | `destroyOffscreen` | `killY` · `maxDistance` | −20 · 200 |
+| ✋ Draggable | `draggable` | `axis` | `xz` |
+
+## Using behaviors from events and scripts
+
+| To… | Event | Script |
+| --- | --- | --- |
+| Turn on/off | *Enable/disable behavior* | `entity.setBehaviorEnabled('car', false)` |
+| Change a setting | *Set behavior setting* | `entity.setBehaviorParam('platformer', 'speed', 8)` |
+| Read a setting | `Player.behavior("platformer", "speed")` | `entity.getBehaviorParam('platformer', 'speed')` |

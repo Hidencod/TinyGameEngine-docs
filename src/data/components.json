@@ -1,0 +1,54 @@
+{
+  "info": {
+    "mesh": {
+      "icon": "🧊",
+      "title": "Shape & look",
+      "desc": "Visible 3D shape or model with a material"
+    },
+    "camera": {
+      "icon": "🎥",
+      "title": "Camera",
+      "desc": "Shows the game world from this object"
+    },
+    "light": {
+      "icon": "💡",
+      "title": "Light",
+      "desc": "Sun, lamp or spotlight"
+    },
+    "collider": {
+      "icon": "🥅",
+      "title": "Collider",
+      "desc": "Lets the object touch and bump into others"
+    },
+    "rigidbody": {
+      "icon": "⚙️",
+      "title": "Physics body",
+      "desc": "Gravity, mass, bouncing (needs a collider)"
+    },
+    "audio": {
+      "icon": "🔊",
+      "title": "Sound",
+      "desc": "Plays an audio file"
+    },
+    "text": {
+      "icon": "🔤",
+      "title": "Text",
+      "desc": "On-screen text like score or messages"
+    },
+    "ui": {
+      "icon": "🖼️",
+      "title": "UI element",
+      "desc": "Button, label, image, panel or progress bar"
+    },
+    "script": {
+      "icon": "📜",
+      "title": "Code script",
+      "desc": "Custom JavaScript for advanced logic"
+    },
+    "particles": {
+      "icon": "✨",
+      "title": "Particles",
+      "desc": "Sparks, smoke, fire, confetti"
+    }
+  }
+}

@@ -1,0 +1,44 @@
+---
+title: Troubleshooting
+description: Fixes for the most common problems.
+---
+
+# Troubleshooting
+
+## Objects and physics
+
+| Problem | Try |
+| --- | --- |
+| **The player falls through the floor** | The floor needs a **Collider**, and a **static** Physics body. Turn on **Colliders** in the viewport to check the shapes. |
+| **Nothing moves with the joystick** | The object needs a movement behavior (Platformer, Top-down, Car). Platformer and Car need a **dynamic** Physics body. Check the joystick is on in *Touch controls*. |
+| **My character walks backwards** | Toggle **Faces forward** on its Shape & look. |
+| **It tips over / rolls away** | Tick **Don’t tip over** on its Physics body. |
+| **Coins block the player instead of being collected** | Tick **Trigger only** on the coin’s Collider. |
+| **A car drives on invisible wheels** | Pick the wheel nodes in the Car behavior’s **Wheels**. |
+| **Something is too dark** | Raise **Ambient strength** (Scene tab), add a **Sky light**, or check the Sun’s rotation. |
+
+## Events
+
+| Problem | Try |
+| --- | --- |
+| **An event has a red badge** | Tap it to see the problem — usually a renamed object or variable, or text without "quotes". |
+| **“Variable doesn’t exist yet”** | Create it (Scene tab, or ＋ New variable… in the action). Names are case-sensitive. |
+| **All coins disappear instead of one** | Make sure the event has a condition that **picks** the coin (e.g. *On collision with Coin*) — actions on an unpicked type affect all instances. |
+| **An action runs again and again** | Non-trigger conditions are checked every frame. Add **Trigger once while true**, or use a ⚡ trigger. |
+| **I can’t tell if an event runs** | Add **Log to console** and open the console in Play mode. |
+
+## Export and install
+
+| Problem | Try |
+| --- | --- |
+| **“App not installed” when updating** | The new APK must have the **same package name** and be signed with the **same key**. Restore your key backup, or uninstall the old app first. |
+| **Android blocks the install** | Allow installing unknown apps for the app you opened the APK from (Files, Drive, chat). |
+| **The exported game has no sound** | Tap the *Tap to play* screen — browsers only allow sound after a touch. |
+
+## The app
+
+| Problem | Try |
+| --- | --- |
+| **The free libraries don’t load** | They need internet. Once added, models and sounds are stored in your project and work offline. |
+| **I lost a project** | Projects live only on the phone. Import your latest `.tge` [backup](../publish/backup). |
+| **Something else broke** | **? → Report a problem** sends the developer an email with the app’s recent error log. |

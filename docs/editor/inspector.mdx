@@ -1,0 +1,93 @@
+---
+title: Inspector
+description: Edit the selected object — name, tags, transform, components, behaviors and instance variables.
+---
+
+# Inspector
+
+The **Inspect** tab shows everything about the selected object, as a stack of cards. Select an object (tap it in the 3D view or the Objects list) and open **Inspect**.
+
+<Side shot="inspector-header-annotated">
+
+<Legend items={[
+  <><b>Name</b> — also the object’s <i>type</i> for events. Letters, numbers and <code>_</code>.</>,
+  <><b>Visible</b> — drawn or not (hidden objects still collide and run).</>,
+  <><b>Active</b> — inactive objects are not updated or drawn at all.</>,
+  <><b>Tags</b> — labels like <code>#enemy</code> that group objects of different types.</>,
+  <><b>Transform</b> — position, rotation and scale.</>,
+]} />
+
+With nothing selected, the tab says so and offers **＋ Add object**.
+
+</Side>
+
+## Tags
+
+Tap **+ tag** to add a tag. You can pick a tag already used in the project or create a new one. Tap **×** on a tag to remove it.
+
+<Row>
+  <Phone name="inspector-new-tag" caption="New tag" />
+  <Crop name="inspector-tag-added" caption="The object now has #crate" width={320} />
+</Row>
+
+Tags work like *families*: in events, `#enemy` means every object with that tag, whatever its name. A spider and a slime can both be `#enemy` and share one “touch an enemy → lose a life” event.
+
+## Transform
+
+<Side shot="card-transform" crop>
+
+| Field | Meaning |
+| --- | --- |
+| **Position** | X (right), Y (up), Z (toward the camera), in meters. Relative to the parent, if it has one. |
+| **Rotation (°)** | Turn around X, Y and Z, in degrees. Y turns left/right. |
+| **Scale** | Size multiplier per axis. `2` = twice as big. |
+
+**↺** resets rotation and scale. Drag a number sideways to change it, or tap it to type. Screen UI elements don’t have a Transform (they use their UI anchor instead).
+
+</Side>
+
+## Components
+
+Each **component** gives the object an ability. The cards under Transform are its components; **＋ Add component** adds more.
+
+<Row>
+  <Phone name="inspector-cube" caption="A cube: Shape & look + Collider" />
+  <Phone name="add-component-menu" caption="＋ Add component" />
+  <Phone name="component-menu" caption="⋮ on a component card" />
+</Row>
+
+| Component | Gives the object… | Guide |
+| --- | --- | --- |
+| 🧊 **Shape & look** | a visible shape or 3D model, color, texture and material | [Shapes & materials](../world/shapes-and-materials) |
+| 🎥 **Camera** | a view of the world (the *main* camera shows the game) | [Cameras & lights](../world/cameras-and-lights) |
+| 💡 **Light** | sun, lamp, spotlight or sky light | [Cameras & lights](../world/cameras-and-lights) |
+| 🥅 **Collider** | a shape to touch and bump into others | [Physics](../world/physics) |
+| ⚙️ **Physics body** | gravity, mass, bouncing (needs a collider) | [Physics](../world/physics) |
+| 🔊 **Sound** | an audio file to play | [Sound](../world/sound) |
+| 🔤 **Text** | on-screen or floating text | [Game UI](../world/ui#text-component) |
+| 🖼️ **UI element** | button, label, image, panel or progress bar | [Game UI](../world/ui) |
+| 📜 **Code script** | custom JavaScript | [Code scripts](../logic/scripting) |
+| ✨ **Particles** | sparks, smoke, fire, confetti | [Particles](../world/particles) |
+
+An object has at most one of each (except Code script). The **⋮** on a card offers **Reset to defaults**, **Move up** and **Remove**. Adding a *Physics body* also adds a *Collider* if missing. Tap a card’s title to fold it. Every field of every component is described in the [Components reference](../reference/components).
+
+## Behaviors
+
+Below the components are the object’s **behaviors** — ready-made movement and logic. **＋ Add behavior** lists them; the switch on a behavior card turns it on or off, 🗑 removes it.
+
+<Row>
+  <Phone name="add-behavior-menu" caption="＋ Add behavior" />
+  <Phone name="add-behavior-menu-end" caption="…more behaviors" />
+</Row>
+
+Adding **Platformer** also adds a Physics body (that doesn’t tip over) and a Collider. See [Behaviors](../behaviors).
+
+## Instance variables
+
+<Side shot="inspector-instance-vars-list" crop>
+
+Instance variables are values **each copy** of the object has for itself — like `health` for every enemy. Tap **+ Add variable**, type a name and choose **Number**, **Text** or **Yes / No**. Edit the start value in the list; 🗑 deletes it.
+
+In events use *Compare instance variable*, *Set instance variable* etc.; in expressions write `Enemy.health`. See [Variables](../logic/variables).
+
+</Side>
