@@ -5,7 +5,7 @@ description: Add events, conditions and actions; edit parameters; select, move, 
 
 # The event sheet editor
 
-Open **Logic** and tap an event sheet. The editor fills the screen; **←** goes back.
+Open **Logic** and tap an event sheet. The editor fills the screen; **←** goes back. The screenshots use the **Roll-a-ball** template’s sheet.
 
 <Phone name="es-overview-annotated" caption="The event sheet editor" />
 
@@ -15,7 +15,7 @@ Open **Logic** and tap an event sheet. The editor fills the screen; **←** goes
   <><b>Event number</b> — tap to select the event, long-press for its menu.</>,
   <><b>Conditions</b> (left, blue edge) — the WHEN part. The object column shows what each is about.</>,
   <><b>Actions</b> (green edge) — the DO part. <b>Add action</b> is at the bottom.</>,
-  <><b>＋ Add event</b> and <b>＋ More…</b> (group, comment, variable, function, script).</>,
+  <><b>＋ Add</b> — add an event, group, comment, variable, function or script. The bottom of the sheet also has <b>＋ Add event</b> and <b>＋ More…</b>.</>,
 ]} />
 
 ## Add an event
@@ -28,7 +28,7 @@ Tap **＋ Add event** at the bottom (or **＋** at the top).
 
 <Step n={2} title="Pick what it’s about">
 
-Choose **System** or **Input** for general conditions, or an **object** from the scene (or a **#tag**).
+Choose **System** or **Input** for general conditions, or an **object** from the scene (or a **#tag**). Objects show how many instances they have.
 
 <Phone name="tut1-12-pick-object" size="small" />
 
@@ -40,7 +40,8 @@ Conditions are grouped by category, with a short hint on each. Type in **Search*
 
 <Row>
   <Phone name="tut1-13-pick-condition" caption="Conditions for an object" />
-  <Phone name="tut2-08-system-actions" caption="System actions" />
+  <Phone name="es-picker-system" caption="System conditions" />
+  <Phone name="es-picker-search" caption="Search: timer" />
 </Row>
 
 </Step>
@@ -67,7 +68,10 @@ Add actions the same way with **Add action** under the event.
 
 A red message under a field explains a problem (for example *Unknown variable: Scor. Text needs "quotes".*).
 
-<Phone name="es-param-fx" size="small" caption="The ƒx insert panel" />
+<Row>
+  <Phone name="es-edit-action" caption="Editing an action (tap it twice)" />
+  <Phone name="es-param-fx" caption="The ƒx insert panel" />
+</Row>
 
 ## Select, edit and the menu
 
@@ -82,6 +86,8 @@ Rows work like this:
 | **Tap empty space** | Clear the selection. |
 
 When something is selected, a **selection bar** appears at the bottom:
+
+<Phone name="es-selected" size="small" caption="Event 2 selected" />
 
 <Crop name="es-selbar" width={420} />
 
@@ -102,6 +108,8 @@ Copy and paste work between sheets and projects.
 
 ### Condition and action menus
 
+<Phone name="es-condition-menu" size="small" caption="Long-press a condition" />
+
 Conditions: **Edit**, **Invert (NOT)**, **Add another condition**, **Disable**, **Replace with…**, **Duplicate**, **Move up/down**, **Delete**.
 Actions: **Edit**, **Add action below**, **Disable**, **Replace with…**, **Duplicate**, **Move up/down**, **Delete**.
 
@@ -109,7 +117,20 @@ An **inverted** condition shows ✖ and means the opposite: *NOT Player is on gr
 
 ## Find
 
+<Side shot="es-find">
+
 Tap **🔍** (Ctrl+F) and type: matching events light up; **▲ ▼** step through the results (folded events open to show them).
+
+</Side>
+
+## Sheet menu and ＋ More…
+
+<Row>
+  <Phone name="es-sheet-menu" caption="Tap the sheet name" />
+  <Phone name="es-add-more" caption="＋ More…" />
+</Row>
+
+The **sheet menu** switches between sheets and has **New event sheet**, **Rename this sheet**, **Use this sheet for ‹scene›**, **Include other sheets…** and **Delete this sheet**. **＋ More…** adds an **Event**, **Group**, **Comment**, **Variable**, **Function** or **Script**.
 
 ## Errors
 

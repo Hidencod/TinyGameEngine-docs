@@ -57,11 +57,11 @@ export class Shooter {
       let box = null;
       if (item.target && typeof item.target.boundingBox === 'function') {
         const loc = item.target.first();
-        await loc.scrollIntoViewIfNeeded({ timeout: 3000 }).catch(() => {});
+        if (!item.noScroll) await loc.scrollIntoViewIfNeeded({ timeout: 3000 }).catch(() => {});
         box = await loc.boundingBox({ timeout: 5000 }).catch(() => null);
       } else if (item.target) box = { x: item.target.x, y: item.target.y, width: item.target.w, height: item.target.h };
       if (!box) { console.warn('  ! highlight target not found', item.label ?? ''); continue; }
-      boxes.push({ ...box, label: item.label ?? null, note: item.note ?? null, pad: item.pad ?? 4, side: item.side ?? 'auto' });
+      boxes.push({ ...box, label: item.label ?? null, note: item.note ?? null, pad: item.pad ?? 4, side: item.side ?? 'auto', badge: item.badge ?? 'tl' });
     }
     await this.page.evaluate(({ boxes, dim }) => {
       const vw = innerWidth, vh = innerHeight;
@@ -73,8 +73,13 @@ export class Shooter {
         document.body.appendChild(d);
         if (b.label != null) {
           const s = document.createElement('div'); s.className = '__hl-badge'; s.textContent = String(b.label);
-          const left = Math.min(vw - 30, Math.max(2, b.x - b.pad - 12));
-          const top = Math.min(vh - 30, Math.max(2, b.y - b.pad - 12));
+          // Badge placement: top-left corner (default), right of the box, below it, or centered.
+          let left = b.x - b.pad - 12, top = b.y - b.pad - 12;
+          if (b.badge === 'right') { left = b.x + b.width + b.pad + 4; top = b.y + b.height / 2 - 13; }
+          else if (b.badge === 'below') { left = b.x + b.width / 2 - 13; top = b.y + b.height + b.pad + 3; }
+          else if (b.badge === 'center') { left = b.x + b.width / 2 - 13; top = b.y + b.height / 2 - 13; }
+          left = Math.min(vw - 30, Math.max(2, left));
+          top = Math.min(vh - 30, Math.max(2, top));
           s.style.left = left + 'px'; s.style.top = top + 'px';
           document.body.appendChild(s);
         }
@@ -121,7 +126,11 @@ export class Shooter {
         const pad = opts.pad ?? 8;
         const vp = this.page.viewportSize();
         const x = Math.max(0, box.x - pad), y = Math.max(0, box.y - pad);
-        clip = { x, y, width: Math.min(vp.width - x, box.width + pad * 2), height: Math.min(vp.height - y, box.height + pad * 2) };
+        clip = {
+          x, y,
+          width: Math.min(vp.width - x, box.width + pad * 2 + (opts.padRight ?? 0)),
+          height: Math.min(vp.height - y, box.height + pad * 2 + (opts.padBottom ?? 0)),
+        };
       }
     }
     const buf = await this.page.screenshot({ clip, animations: 'disabled', caret: 'hide' });

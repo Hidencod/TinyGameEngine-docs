@@ -131,8 +131,10 @@ export async function run({ page, s, H }) {
   await page.setViewportSize(TALL);
   await H.split(8);
   await s.settle(1500);
-  const stop = H.card('Particles').getByRole('button', { name: /Stop preview/ });
-  if (await stop.count()) { await stop.click(); await s.settle(300); }
+  {
+    const stopBtn = H.card('Particles').getByRole('button', { name: /Stop preview/ });
+    if (await stopBtn.count()) { await stopBtn.click(); await s.settle(300); }
+  }
   await cardShot('card-particles-fire', 'Particles');
 
   // Instance variables.
@@ -191,26 +193,5 @@ export async function run({ page, s, H }) {
     await cardShot('card-ui-' + name, 'UI element');
   }
 
-  // Behaviors: add each one to a fresh sphere and crop its card.
-  const behaviors = [
-    ['Platformer', 'platformer'], ['Top-down movement', 'topdown'], ['Car', 'car'], ['Rotate', 'rotate'], ['Bullet', 'bullet'],
-    ['Wave (sine)', 'sine'], ['Follow target', 'follow'], ['Destroy when far', 'destroyOffscreen'], ['Draggable', 'draggable'],
-  ];
-  for (const [label, id] of behaviors) {
-    await page.setViewportSize(PHONE);
-    await H.split(52);
-    await H.addObject('Sphere');
-    await page.setViewportSize(TALL);
-    await H.split(8);
-    await H.tab('inspector');
-    await collapseAll();
-    await addBehavior(label);
-    await cardShot('behavior-' + id, label);
-  }
-  await H.select('Camera');
-  await H.tab('inspector');
-  await collapseAll();
-  await addBehavior('Camera follow');
-  await cardShot('behavior-cameraFollow', 'Camera follow');
   void toggle;
 }

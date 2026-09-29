@@ -13,28 +13,28 @@ export async function run({ page, s, H }) {
       { target: page.locator('.topbar'), label: 1, pad: 0 },
       { target: tb, label: 2 },
       { target: page.locator('.split-viewport canvas').first(), label: 3, pad: -40 },
-      { target: page.locator('.split-handle'), label: 4, pad: 0 },
+      { target: page.locator('.split-grip'), label: 4, pad: 6, badge: 'right' },
       { target: page.locator('.tabbar'), label: 5, pad: 0 },
       { target: page.locator('.dock-body'), label: 6, pad: -4 },
     ],
   });
   await s.shot('editor-topbar-annotated', {
-    clip: page.locator('.topbar'), pad: 0,
+    clip: page.locator('.topbar'), pad: 0, padBottom: 34,
     hl: [
-      { target: page.getByRole('button', { name: 'Back to projects' }), label: 1, pad: 1 },
-      { target: page.locator('.topbar-name'), label: 2, pad: 1 },
-      { target: page.locator('.topbar').getByRole('button', { name: 'Undo' }), label: 3, pad: 1 },
-      { target: page.locator('.topbar').getByRole('button', { name: 'Redo' }), label: 4, pad: 1 },
-      { target: page.locator('.play-btn'), label: 5, pad: 1 },
-      { target: page.locator('.topbar').getByRole('button', { name: 'Menu' }), label: 6, pad: 1 },
+      { target: page.getByRole('button', { name: 'Back to projects' }), label: 1, pad: 1, badge: 'below' },
+      { target: page.locator('.topbar-name'), label: 2, pad: 1, badge: 'below' },
+      { target: page.locator('.topbar').getByRole('button', { name: 'Undo' }), label: 3, pad: 1, badge: 'below' },
+      { target: page.locator('.topbar').getByRole('button', { name: 'Redo' }), label: 4, pad: 1, badge: 'below' },
+      { target: page.locator('.play-btn'), label: 5, pad: 1, badge: 'below' },
+      { target: page.locator('.topbar').getByRole('button', { name: 'Menu' }), label: 6, pad: 1, badge: 'below' },
     ],
   });
   await s.shot('editor-viewport-toolbar', { clip: tb, pad: 16 });
   {
     const n = await page.locator('.vp-btn').count();
     const hl = [];
-    for (let i = 0; i < n; i++) hl.push({ target: page.locator('.vp-btn').nth(i), label: i + 1, pad: 0 });
-    await s.shot('editor-viewport-toolbar-annotated', { clip: tb, pad: 16, hl });
+    for (let i = 0; i < n; i++) hl.push({ target: page.locator('.vp-btn').nth(i), label: i + 1, pad: 0, badge: 'right' });
+    await s.shot('editor-viewport-toolbar-annotated', { clip: tb, pad: 16, padRight: 44, hl });
   }
   await s.shot('editor-tabbar', { clip: page.locator('.tabbar'), pad: 4 });
   await s.shot('editor-topbar', { clip: page.locator('.topbar'), pad: 0 });
