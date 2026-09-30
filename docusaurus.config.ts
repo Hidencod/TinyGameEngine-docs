@@ -11,8 +11,7 @@ const config: Config = {
     v4: true,
   },
 
-  // Change to the Vercel domain once the project is connected.
-  url: 'https://tinygameengine-docs.vercel.app',
+  url: 'https://tinygameengine.jeevagames.com',
   baseUrl: '/',
 
   organizationName: 'Hidencod',
