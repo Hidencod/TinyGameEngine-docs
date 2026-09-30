@@ -146,3 +146,13 @@
 .tge-zoom img { max-height: 96vh; max-width: 96vw; border-radius: 16px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); }
 
 .markdown table { display: table; width: 100%; }
+
+/* Decorative sprites (tools/art) */
+.tge-art { height: auto; filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.2)); pointer-events: none; }
+.tge-art-right { float: right; margin: -0.5rem 0 1rem 1.5rem; }
+.tge-art-left { float: left; margin: 0 1.5rem 1rem 0; }
+.tge-art-center { display: block; margin: 1rem auto; }
+@media (max-width: 600px) {
+  .tge-art-right, .tge-art-left { max-width: 72px; margin-top: 0; }
+}
+.tge-card-art { width: 56px !important; height: 56px; aspect-ratio: auto !important; object-fit: contain !important; margin: 0 0 0.3rem !important; border-radius: 0 !important; filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.18)); }

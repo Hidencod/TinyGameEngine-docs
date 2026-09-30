@@ -83,15 +83,25 @@ export function Legend({items}: {items: ReactNode[]}) {
 export function Cards({children}: {children: ReactNode}) {
   return <div className="tge-cards">{children}</div>;
 }
-export function Card({to, icon, title, children, img}: {to: string; icon?: string; title: string; children?: ReactNode; img?: string}) {
+export function Card({to, icon, art, title, children, img}: {to: string; icon?: string; art?: string; title: string; children?: ReactNode; img?: string}) {
   const href = useBaseUrl(to);
   const image = useBaseUrl(img ?? '');
+  const sprite = useBaseUrl(`/img/art/${art ?? 'coin'}.webp`);
   return (
     <a className="tge-card" href={href}>
       {img && <img src={image} alt="" loading="lazy" />}
-      {icon && <div className="tge-card-icon">{icon}</div>}
+      {art ? <img className="tge-card-art" src={sprite} alt="" loading="lazy" /> : icon && <div className="tge-card-icon">{icon}</div>}
       <div className="tge-card-title">{title}</div>
       {children && <div className="tge-card-text">{children}</div>}
     </a>
   );
+}
+
+/**
+ * A decorative sprite from static/img/art (see tools/art/cut-sprites.py).
+ * Placed right after a page's # heading it floats beside the title.
+ */
+export function Art({name, size = 110, side = 'right'}: {name: string; size?: number; side?: 'right' | 'left' | 'center'}) {
+  const src = useBaseUrl(`/img/art/${name}.webp`);
+  return <img className={`tge-art tge-art-${side}`} src={src} alt="" aria-hidden="true" loading="lazy" style={{width: size}} />;
 }

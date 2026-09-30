@@ -46,7 +46,7 @@ function acePage(kind) {
   const word = kind === 'condition' ? 'Condition' : 'Action';
   const out = [];
   out.push('---', `title: ${word}s`, `description: Every ${kind} available in event sheets, with its parameters.`, `sidebar_label: ${word}s`, '---', '', HEADER);
-  out.push(`# ${word}s`, '');
+  out.push(`# ${word}s`, '', kind === 'condition' ? '<Art name="block-when" size={180} />' : '<Art name="block-add" size={200} />', '');
   if (kind === 'condition') {
     out.push('Conditions are the **WHEN / IF** part of an event. All conditions of an event must be true for its actions to run (or *any* of them, in an OR block). A condition about an object **picks** the instances that match, so the actions only affect those. See [How events work](../logic/event-sheets).', '');
     out.push(':::info[Legend]', '- <span class="tge-pill trigger">⚡ Trigger</span> runs at the moment something happens (not every frame). It can’t be inverted.', '- <span class="tge-pill loop">🔁 Loop</span> repeats the rest of the event.', '- Most other conditions can be **inverted** (NOT) from the condition’s menu.', ':::', '');
@@ -90,7 +90,7 @@ function acePage(kind) {
 
 function expressionsPage() {
   const e = data('expressions');
-  const out = ['---', 'title: Expressions', 'description: Every function, property and value you can use inside event sheet expressions.', '---', '', HEADER, '# Expressions', ''];
+  const out = ['---', 'title: Expressions', 'description: Every function, property and value you can use inside event sheet expressions.', '---', '', HEADER, '# Expressions', '', '<Art name="block-collide" size={200} />', ''];
   out.push('Every number or text field in an event is an **expression**: a small formula the game works out while it runs. Type `10`, `Score + 1`, `"Score: " + Score`, `Player.x` or `random(1, 6)`.', '');
   out.push('## Values and operators', '');
   out.push('| Write | Meaning |', '| --- | --- |');
@@ -122,7 +122,7 @@ function expressionsPage() {
 function apiPage() {
   const api = data('api');
   const snippets = data('snippets');
-  const out = ['---', 'title: Scripting API', 'description: Every object, property and method available in JavaScript code scripts.', '---', '', HEADER, '# Scripting API', ''];
+  const out = ['---', 'title: Scripting API', 'description: Every object, property and method available in JavaScript code scripts.', '---', '', HEADER, '# Scripting API', '', '<Art name="tile-code" size={95} />', ''];
   out.push('This is the complete list of what code scripts can use. It is the same list the code editor’s autocomplete and **API** help sheet show. For an introduction, read [Code scripts](../logic/scripting).', '');
   out.push('## Lifecycle functions', '', 'Define any of these in a script; the engine calls them.', '', '| Function | When it runs | Object script | Game script |', '| --- | --- | :-: | :-: |');
   for (const l of api.lifecycle) out.push(`| ${c(l.name + '(' + l.args + ')')} | ${t(l.doc)} | ✔ | ${l.global ? '✔' : ''} |`);
