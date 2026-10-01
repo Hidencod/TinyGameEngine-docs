@@ -29,6 +29,10 @@ const sidebars: SidebarsConfig = {
     },
     'templates',
     {
+      type: 'category', label: 'Showcase',
+      items: ['showcase/street-racer'],
+    },
+    {
       type: 'category', label: 'Help',
       items: ['help/performance', 'help/troubleshooting', 'help/faq', 'help/feedback'],
     },

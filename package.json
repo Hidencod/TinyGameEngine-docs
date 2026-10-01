@@ -15,7 +15,8 @@
     "typecheck": "tsc",
     "docs:data": "node tools/capture/dump-data.mjs",
     "docs:reference": "node tools/gen-reference.mjs",
-    "docs:shots": "node tools/capture/capture.mjs"
+    "docs:shots": "node tools/capture/capture.mjs",
+    "docs:showcase": "node tools/capture/showcase.mjs"
   },
   "dependencies": {
     "@docusaurus/core": "3.10.2",

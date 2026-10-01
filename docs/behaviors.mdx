@@ -62,8 +62,12 @@ Drive with the joystick: **up = gas**, **down = brake, then reverse**, **left/ri
 | **Grip** | 1 | Tyre grip. Lower = drifty, higher = sticky. |
 | **Brake** | 1 | Braking strength. |
 | **Wheels** | — | Which nodes of the car model are the wheels (they spin and steer). Tap to choose; mark the front ones. |
+| **Driver** | player | Who drives: **player** (joystick, WASD or arrow keys), **ai** (drives itself along the Path) or **none** (parked: no gas, no steering). Change it from events with *Set behavior setting*, e.g. to start a race after a countdown. |
+| **Path** | — | Waypoint objects that form a closed racing line, e.g. `#waypoint`. Needed for **ai**. They are visited in the order of their `index` variable, or by name (“Waypoint 2” before “Waypoint 10”). |
 
 Wheels are found automatically in models whose parts are named “wheel…” (like the Kenney car kit). Otherwise pick them in **Wheels**; without wheels it drives on 4 invisible wheels at the corners.
+
+With a **Path**, every car keeps two instance variables up to date: `progress` (laps driven, e.g. `1.4`) and `lap` (the lap it is on, from 1). Compare cars' `progress` to work out race positions. See the [Street Racer showcase](./showcase/street-racer).
 
 </Side>
 

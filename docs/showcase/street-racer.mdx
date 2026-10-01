@@ -1,0 +1,80 @@
+---
+title: Street Racer
+description: A city street race against three AI cars, made with Tiny Game Engine. Play it in your browser, then open the project and see how it works.
+---
+
+# Street Racer
+
+You against three AI drivers, three laps through a city built from free Kenney models. Everything in it is ordinary engine features: the **Car** behavior drives every car, **Camera follow** chases yours, and one event sheet runs the countdown, race positions, laps, the finish and your best time. There are no code scripts.
+
+<PlayEmbed
+  src="https://hidencod.github.io/tge-assets/showcase/street-racer/"
+  poster="/img/showcase/street-racer-race.webp"
+  title="Street Racer"
+  size="12 MB"
+/>
+
+**Controls:** up = gas, down = brake and reverse, left / right = steer. On a computer use **WASD** or the **arrow keys**; on a phone, the joystick. You start last: finish first to win. Your best time is saved in the browser.
+
+## Open it in the editor
+
+1. Download **[street-racer.tge](https://hidencod.github.io/tge-assets/showcase/street-racer/street-racer.tge)** (5 MB, every model and sound inside).
+2. Open the editor: **[editor.jeevagames.com](https://editor.jeevagames.com)** on a computer, or the Android app.
+3. On the home screen tap **Import .tge** and pick the file. The project appears as *Street Racer (imported)*.
+4. Open it and press **▶ Play**, or open **Logic → Main events** to read the race rules.
+
+![Street Racer in the editor's desktop layout, with its event sheet open](/img/showcase/street-racer-events.webp)
+
+The track, the city and the cars were placed by a small build script, but the result is a normal project: every road tile, barrier, building and waypoint is an object you can select, move or delete.
+
+## How it works
+
+### The racing line
+
+An invisible box tagged **`#waypoint`** sits in the middle of the road on every road tile (and two more in each bend), all the way round. Each has an `index` variable (0, 1, 2…) so the order is clear. These waypoints are the **racing line**: the AI drivers follow it, and every car measures its progress along it.
+
+The barriers are thin boxes with a **static** physics body, tagged `#wall`. The road itself is just flat model tiles: the barriers are what keeps the cars on track.
+
+### One behavior, three kinds of driver
+
+All four cars have the same [Car behavior](../behaviors#car) with **Path** set to `#waypoint`. Only their **Speed** and **Driver** differ:
+
+| Car | Driver after the countdown | Speed (m/s) |
+| --- | --- | --- |
+| Player | **player** | 26 |
+| Rival Blue | **ai** | 25 |
+| Rival Yellow | **ai** | 24 |
+| Rival Green | **ai** | 23.5 |
+
+They all start with Driver **none**, so nobody moves on the start screen. When you press *Race!*, the event sheet counts down 3, 2, 1 (with *Wait 1 seconds* between the numbers) and then uses **Set behavior setting** to switch your car to `player` and every `#ai` car to `ai`.
+
+To make the race **easier or harder**, select a rival and change its Car **Speed**. Lower **Grip** makes them slide more in the bends.
+
+### Race position in one event
+
+Because the cars have a Path, each one keeps an instance variable **`progress`**: laps driven, as a decimal (`1.4` = one lap and 40% of the next). Your position is then simple:
+
+- while racing, set `Place` to **1**,
+- then **For each** `#ai` car whose `progress` is greater than `Player.progress`, add 1 to `Place`,
+- and show `"P" + Place + " / 4"` in the corner.
+
+The lap counter shows the car's `lap` variable the same way, and a **Trigger once while true** event shouts *FINAL LAP* when `Player.lap` reaches 3.
+
+### Finish and best time
+
+When `Player.progress` reaches **3**, the race is over:
+
+- your car's Driver switches to `ai`, so it keeps driving by itself while the results show,
+- a sub-event checks `Place`: 1 means *🏆 You win!* with confetti, anything else *You finished P2* (or P3, P4),
+- if the time beats `BestTime` (or there is none yet), it is stored with **Save value**. On the next start, **Load value** reads it back. See [Saving between game sessions](../logic/variables#saving-between-game-sessions).
+
+Bumping into a `#wall` plays a metal sound and shakes the camera a little; touching a rival plays a softer hit. **Race again** uses *Restart scene*.
+
+## Make it yours
+
+- Add a fifth car: duplicate a rival, give it another model and a different Speed. The position event already counts every `#ai` car; just change `/ 4` in the position text to `/ 5`.
+- Make it longer: change the `3` in the finish event, the *FINAL LAP* event and the lap text to `5`.
+- Reshape the track: move road tiles, barriers and waypoints together, keeping the waypoints in the middle of the road and their `index` in order.
+- Swap the city: the buildings are models from the free library (**Assets → 🌐 Free models**).
+
+![The starting grid, just after GO](/img/showcase/street-racer-grid.webp)

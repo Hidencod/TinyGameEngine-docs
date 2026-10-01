@@ -21,7 +21,9 @@
       "grip": 1,
       "brake": 1,
       "wheels": "",
-      "frontWheels": ""
+      "frontWheels": "",
+      "driver": "player",
+      "path": ""
     },
     "cameraFollow": {
       "target": "Player",
