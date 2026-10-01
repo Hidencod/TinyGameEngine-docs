@@ -3,7 +3,9 @@
  * Showcase games: build each game from its source in TinyGameEngine/showcase/, export
  * the playable HTML and a .tge project, and capture screenshots for its docs page.
  *
- *   (in TinyGameEngine)       npx vite --port 5199 --strictPort
+ *   (in TinyGameEngine)       npm run build:player   # the export embeds this prebuilt player:
+ *                                                   # rebuild it after engine changes
+ *                             npx vite --port 5199 --strictPort
  *   (in TinyGameEngine-docs)  npm run docs:showcase                # all games
  *                             npm run docs:showcase -- street      # games whose slug matches
  *

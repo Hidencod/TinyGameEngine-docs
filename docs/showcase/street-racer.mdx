@@ -35,6 +35,8 @@ An invisible box tagged **`#waypoint`** sits in the middle of the road on every 
 
 The barriers are thin boxes with a **static** physics body, tagged `#wall`. The road itself is just flat model tiles: the barriers are what keeps the cars on track.
 
+The buildings are static too, with a **Convex** collider that wraps each model. That is what lets the chase camera's **Avoid walls** setting ([Camera follow](../behaviors#camera-follow)) keep it out of the buildings in the tight bends.
+
 ### One behavior, three kinds of driver
 
 All four cars have the same [Car behavior](../behaviors#car) with **Path** set to `#waypoint`. Only their **Speed** and **Driver** differ:
