@@ -134,6 +134,7 @@ The running game.
 | `save(key, value)` | `void` | Save a value on the device (high scores...). |
 | `load(key)` | `value` | Load a saved value. |
 | `getCamera()` | `entity\|null` | The active camera entity. |
+| `three` | `{renderer,scene,camera}` | Advanced: the three.js renderer, scene and camera behind the game, e.g. game.three.scene.add(mesh). |
 | `spawnParticles(effect, x, y, z, overrides?)` | `void` | Play an effect once at a position: "Sparkles", "Fire", "Smoke", "Explosion", "Dust puff", "Rain", "Confetti", "Magic". overrides e.g. &#123; burst: 50, color: ["#f00", "#ff0"] &#125; |
 | `shakeCamera(intensity, duration)` | `void` | Shake the camera. |
 | `vibrate(ms)` | `void` | Vibrate the phone, e.g. vibrate(40) on a hit (Android; ignored elsewhere). |
@@ -187,6 +188,7 @@ Handy math functions available everywhere.
 | `audio` | `audio` | Play sounds. |
 | `props` | `object` | Values set in the Inspector for this script, e.g. props.speed |
 | `vars` | `object` | Variables storage for this script. |
+| `THREE` | `three.js` | Advanced: the three.js library, e.g. new THREE.MeshStandardMaterial(&#123; color: "red" &#125;). |
 
 ## Vectors
 

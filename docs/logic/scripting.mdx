@@ -1,6 +1,6 @@
 ---
 title: Code scripts (JavaScript)
-description: Object scripts and game scripts, lifecycle functions, the code editor, and examples.
+description: Object scripts, game scripts and libraries, lifecycle functions, three.js, the code editor, and examples.
 ---
 
 # Code scripts (JavaScript)
@@ -9,12 +9,13 @@ description: Object scripts and game scripts, lifecycle functions, the code edit
 
 Most games can be made with **behaviors** and **event sheets** alone. When you want more control, write a small **JavaScript** script. Scripts and event sheets work together: they share variables, and both can find, move, create and destroy objects.
 
-## Two kinds of script
+## Three kinds of script
 
 | Kind | Where it runs | Create it |
 | --- | --- | --- |
 | 📜 **Object script** | On every object that has a **Code script** component with it. One copy runs per object, and gets that object as `entity`. | Logic → Code scripts → **+ New → Object script**, or Inspector → ＋ Add component → Code script → *New script…* |
 | 🌍 **Game script** | Once for the whole scene. | Logic → Code scripts → **+ New → Game script** |
+| 📚 **Library** | Nowhere on its own: other scripts `import` what it exports. See [Share code with libraries](#libraries). | Logic → Code scripts → **+ New → Library** |
 
 <Row>
   <Crop name="card-script-attached" caption="A Code script component on an object" width={320} />
@@ -78,8 +79,99 @@ function update(dt) {
 | `props` | The values set in the Inspector on the Code script component. Give defaults: `props.speed ?? 5`. |
 | `vars` | A storage object for the script. |
 | helpers | `lerp`, `clamp`, `random`, `randomInt`, `deg2rad` and JavaScript’s `Math`. |
+| `THREE` | The [three.js](https://threejs.org/docs/) library, for advanced effects. See [three.js](#threejs). |
+| `import` | Code from your [libraries](#libraries): `import { roll } from 'Dice'`. |
 
 Full list: [Scripting API](../reference/scripting-api).
+
+## Share code with libraries {/* #libraries */}
+
+As a game grows, several scripts need the same code: a damage formula, a "find the nearest enemy" helper, the settings of every level. Put it in a **library** once and use it everywhere.
+
+A library is a script whose **`export`**ed functions and values other scripts can use. It has no `start()` or `update()`.
+
+```js
+// Library named "Combat"
+export const MAX_HEALTH = 100;
+
+export function damage(target, amount) {
+  const hp = (target.getVar('health') ?? MAX_HEALTH) - amount;
+  target.setVar('health', Math.max(hp, 0));
+  if (hp <= 0) game.destroy(target);
+}
+
+export function nearest(from, selector) {
+  let best = null, bestDist = Infinity;
+  for (const e of game.select(selector)) {
+    const d = from.distanceTo(e);
+    if (d < bestDist) { best = e; bestDist = d; }
+  }
+  return best;
+}
+```
+
+Then, in any object script, game script or event-sheet script block, **import** it by the library's name:
+
+```js
+// Object script on a Turret
+import { damage, nearest } from 'Combat';
+
+let cooldown = 0;
+function update(dt) {
+  cooldown -= dt;
+  const target = nearest(entity, '#enemy');
+  if (target && cooldown <= 0) { damage(target, 10); cooldown = 0.5; }
+}
+```
+
+Good to know:
+
+- **Names:** `import { damage as hit } from 'Combat'` renames; `import * as Combat from 'Combat'` (or `import Combat from 'Combat'`) gives the whole library, used as `Combat.damage(…)`.
+- **One copy:** a library runs **once per game**, the first time something imports it. Its top-level variables are shared by every script that imports it, and keep their values when the scene changes, so a library is also a good place for game-wide state.
+- **Libraries can import libraries**, but not in a circle (A imports B imports A).
+- Libraries get `game`, `input`, `audio`, `THREE` and the helpers, like a game script; there is no `entity` or `props`.
+- If the name is wrong, the error lists the libraries that do exist, with the line of the `import`.
+
+## three.js (advanced) {/* #threejs */}
+
+The engine draws everything with [three.js](https://threejs.org/docs/), and scripts can use it directly when the built-in components are not enough: custom materials and shaders, generated meshes, extra lights, instancing.
+
+- **`THREE`** is the three.js library, in every script. (`import * as THREE from 'three'` also works, so code from three.js examples can be pasted as it is.)
+- **`entity.object3d`** is the three.js object of an object.
+- **`game.three`** has the `renderer`, the current `scene` and the `camera` drawing this frame.
+
+```js
+// Game script: a glowing ring that pulses, built with three.js
+let ring;
+function start() {
+  ring = new THREE.Mesh(
+    new THREE.TorusGeometry(3, 0.15, 12, 64),
+    new THREE.MeshStandardMaterial({ color: '#4fc3ff', emissive: '#1a6fff', emissiveIntensity: 2 }),
+  );
+  ring.rotation.x = Math.PI / 2;
+  ring.position.set(0, 0.2, 0);
+  game.three.scene.add(ring);
+}
+function update(dt) {
+  ring.scale.setScalar(1 + Math.sin(game.time * 3) * 0.1);
+}
+```
+
+```js
+// Object script: give this object a custom shader material
+function start() {
+  const mat = new THREE.ShaderMaterial({
+    uniforms: { time: { value: 0 } },
+    vertexShader: 'varying vec3 vPos; void main() { vPos = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+    fragmentShader: 'uniform float time; varying vec3 vPos; void main() { gl_FragColor = vec4(0.5 + 0.5 * sin(vPos.y * 4.0 + time * 3.0), 0.3, 0.8, 1.0); }',
+  });
+  entity.object3d.traverse((o) => { if (o.isMesh) o.material = mat; });
+  this.mat = mat;
+}
+function update(dt) { this.mat.uniforms.time.value += dt; }
+```
+
+Objects you add yourself are not part of the scene in the editor: they exist only while the game runs, they have no physics, and events don't see them. Remove what you add when you no longer need it. The engine still owns the renderer and camera; changing their settings can affect how the game looks everywhere.
 
 ## Units and conventions
 

@@ -659,6 +659,12 @@
           "doc": "The active camera entity."
         },
         {
+          "name": "three",
+          "kind": "property",
+          "type": "{renderer,scene,camera}",
+          "doc": "Advanced: the three.js renderer, scene and camera behind the game, e.g. game.three.scene.add(mesh)."
+        },
+        {
           "name": "spawnParticles",
           "kind": "method",
           "sig": "(effect, x, y, z, overrides?)",
@@ -941,6 +947,12 @@
       "kind": "property",
       "type": "object",
       "doc": "Variables storage for this script."
+    },
+    {
+      "name": "THREE",
+      "kind": "property",
+      "type": "three.js",
+      "doc": "Advanced: the three.js library, e.g. new THREE.MeshStandardMaterial({ color: \"red\" })."
     }
   ],
   "vec3": [
