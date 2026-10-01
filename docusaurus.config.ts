@@ -4,7 +4,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'Tiny Game Engine',
-  tagline: 'Make 3D games on your phone',
+  tagline: 'Make 3D games on your phone or in your browser',
   favicon: 'img/favicon.png',
 
   future: {

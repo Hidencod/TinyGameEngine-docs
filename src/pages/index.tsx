@@ -24,7 +24,7 @@ const START = [
 ];
 
 const FEATURES = [
-  {art: 'tile-gamepad', title: 'Made for your phone', text: 'Build, test and export a 3D game with touch. No PC needed.'},
+  {art: 'tile-gamepad', title: 'Made for your phone', text: 'Build, test and export a 3D game with touch. No PC needed, but it runs in a browser on your PC too.'},
   {art: 'cube-stone', title: 'Real physics', text: 'Gravity, collisions, triggers, bouncing and ray-cast cars.'},
   {art: 'tree', title: 'Free assets', text: 'Hundreds of CC0 models, sounds and 360° skies by Kenney.'},
   {art: 'star', title: 'Menus & HUD', text: 'Buttons, labels, health bars and full-screen menus.'},
@@ -50,10 +50,11 @@ export default function Home(): ReactNode {
             <img src={useBaseUrl('/img/logo.png')} alt="" className={styles.logo} />
             <h1 className={styles.title}>Tiny Game Engine</h1>
             <p className={styles.tagline}>Make 3D games on your phone.</p>
-            <p className={styles.sub}>No PC. No code required. The complete guide — from your first game to every setting in the editor.</p>
+            <p className={styles.sub}>No PC needed, or use it in your browser. No code required. The complete guide — from your first game to every setting in the editor.</p>
             <div className={styles.buttons}>
               <Link className={`button button--lg ${styles.btnMain}`} to="/docs/getting-started/first-game">Make your first game</Link>
               <Link className={`button button--lg ${styles.btnGhost}`} to="/docs/intro">Read the guide</Link>
+              <Link className={`button button--lg ${styles.btnGhost}`} href="https://editor.jeevagames.com">Open in your browser</Link>
             </div>
           </div>
 
