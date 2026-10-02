@@ -42,6 +42,18 @@ While sculpting, one finger (or the left mouse button) sculpts, two fingers (or 
 
 Painting changes only the colors, not the shape, and stays when you reshape or change **Detail**. **🧽 Clear paint** removes all of it.
 
+### Paint with your own images {/* #images */}
+
+Next to the built-in surfaces, **＋ Image** adds a surface made from a picture: one already in your **Assets**, a new one from your phone's gallery or your computer (**Import image**), or one of the **Free textures** (lawn, forest floor, gravel, sand, rock, cobblestones, stone slabs, wood planks, blue tiles). It gets its own button with the picture on it; paint with it like any other surface.
+
+| Setting | What it does |
+| --- | --- |
+| **Tint** | White keeps the picture's own colors; any other color tints it. |
+| **Image size** | How many meters one copy of the picture covers before it repeats. |
+| **🗑 Remove image** | Takes it off the list; ground painted with it turns to dirt (Undo brings it back). |
+
+A terrain can have up to **4** image surfaces. Use **seamless** textures (made to repeat without visible edges) — the free ones are. A normal photo shows a seam every time it repeats. Big photos are scaled down to 2048 pixels when you import them, so they stay light on phones.
+
 ### Scatter trees, rocks and grass {/* #scatter */}
 
 With **🌳 Scatter**, pick a **Model** (any 3D model in the project — add one first from **Objects → ＋ Add → Free models library…**) and drag over the terrain. Copies stand on the ground with a random turn and size, and skip slopes too steep to stand on.
@@ -69,7 +81,7 @@ Every copy is a real object: a few hundred are fine, thousands slow phones down.
 | **Detail** | Squares per side: Low (32), Medium (64) or High (128). More detail = smaller bumps possible, but more work for the phone. Changing it keeps the shape. |
 | **Grass / Rock / Snow** | The colors it paints with. Rock goes on steep slopes. |
 | **Snow above** | Snow covers the ground above this height (0 = no snow). |
-| **Textures** | Surface detail over the colors: grass blades and clumps, rough rock on steep slopes, soft snow, and the textures of painted surfaces. The colors still decide the look. Switch it off for plain colors. |
+| **Textures** | Surface detail over the colors: grass blades and clumps, rough rock on steep slopes, soft snow, and the textures of painted surfaces. The colors still decide the look. Switch it off for plain colors (pictures you paint with **＋ Image** still show). |
 | **Texture size** | How many meters one repeat of the detail covers (default 4). Smaller = finer detail. |
 
 ## Physics
