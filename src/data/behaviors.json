@@ -34,6 +34,7 @@
       "lookAtTarget": true,
       "stayBehind": false,
       "avoidWalls": false,
+      "ignoreTag": "",
       "mouseLook": false,
       "lookSpeed": 1
     },
