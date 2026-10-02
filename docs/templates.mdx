@@ -18,6 +18,7 @@ Start a project from a template with **＋ New project** on the home screen. Eve
   <Card to="#platformer" img="/img/templates/platformer.webp" title="🏃 3D Platformer">Animated hero, lives, enemy, flag.</Card>
   <Card to="#runner" img="/img/templates/runner.webp" title="🏁 Endless runner">Swipe lanes, jump, high score.</Card>
   <Card to="#shooter" img="/img/templates/shooter.webp" title="🎯 Arena shooter">Waves, health, auto-aim.</Card>
+  <Card to="#explorer" img="/img/templates/explorer.webp" title="⛰️ Hill explorer">Terrain, gems, a hunter.</Card>
   <Card to="#racing" img="/img/templates/racing.webp" title="🏎️ Kart racing">3 laps, checkpoints, best lap.</Card>
 </Cards>
 
@@ -54,6 +55,12 @@ The hero runs forward by itself. **Swipe** left/right (or ←/→) to change lan
 Dodge waves of slimes with the joystick while your hero automatically shoots the **nearest** one. Slimes take 2 hits and brutes 5, with a health bar over each one once it's hit; you have 3 lives. Enemies walk around the rocks to reach you. Waves grow over time — survive as long as you can.
 
 **Learn:** *Pick nearest*, *Look at*, *Spawn object* (bullets), the Health behavior (*Damage*, *On hurt*, *On death*, knockback), *Repeat*, the Follow target behavior with *Pathfinding*, a lives bar, best-score saving.
+
+## ⛰️ Hill explorer {/* #explorer */}
+
+Explore rolling hills with snowy tops in third person and find the 8 gems. A red hunter follows you around the trees and rocks — touching it costs one of your 3 lives, jumping on its head defeats it. A heart hidden on the hills gives a life back; falling off the edge starts again.
+
+**Learn:** a [Terrain](./world/terrain) (try **Sculpt** to reshape it), Camera follow with *Mouse look* and *Avoid walls*, the Follow target behavior with *Pathfinding*, the Health behavior, *Else* blocks.
 
 ## 🏎️ Kart racing {/* #racing */}
 

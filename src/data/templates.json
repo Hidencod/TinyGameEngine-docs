@@ -36,6 +36,12 @@
     "icon": "🎯"
   },
   {
+    "id": "explorer",
+    "name": "Hill explorer",
+    "description": "Find the gems on rolling hills while a hunter chases you around the trees.",
+    "icon": "⛰️"
+  },
+  {
     "id": "racing",
     "name": "Kart racing",
     "description": "Race 3 laps around an oval against the clock. Beat your best lap!",
