@@ -32,7 +32,10 @@
       "offsetZ": 10,
       "smoothing": 5,
       "lookAtTarget": true,
-      "stayBehind": false
+      "stayBehind": false,
+      "avoidWalls": false,
+      "mouseLook": false,
+      "lookSpeed": 1
     },
     "rotate": {
       "speedX": 0,

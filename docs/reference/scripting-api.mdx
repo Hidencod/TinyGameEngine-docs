@@ -147,8 +147,10 @@ Touch controls and keyboard.
 
 | Member | Type | Description |
 | --- | --- | --- |
-| `axis` | `{x,y}` | Joystick / WASD / arrows, each in -1..1. y = forward. |
-| `isDown(name)` | `boolean` | Button or key held, e.g. input.isDown("jump"), input.isDown("Space") |
+| `axis` | `{x,y}` | Joystick / WASD / arrows / gamepad stick, each in -1..1. y = forward. |
+| `look` | `{x,y}` | Look this frame in degrees: locked mouse, gamepad right stick or a drag. x = right, y = up. |
+| `gamepad` | `boolean` | A gamepad has been used. Its buttons work as keys: "PadA", "PadB", "PadX", "PadY", "PadLB", "PadRB", "PadLT", "PadRT", "PadStart". |
+| `isDown(name)` | `boolean` | Button, key or gamepad button held, e.g. input.isDown("jump"), input.isDown("Space"), input.isDown("PadA") |
 | `wasPressed(name)` | `boolean` | Button or key pressed this frame. |
 | `wasReleased(name)` | `boolean` | Button or key released this frame. |
 | `pointer` | `{x,y,down}` | Finger / mouse position in pixels. |

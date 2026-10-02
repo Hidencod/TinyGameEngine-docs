@@ -75,3 +75,5 @@ The on-screen controls shown while playing (also in [Project settings](./project
 | **Buttons** | Round on-screen buttons. Each has a **Name** used by events and scripts (e.g. `jump`), a **Label** shown on it (e.g. `A`) and a **Color**. **Add button** adds one; 🗑 deletes it. |
 
 New projects have one button, `jump`, labelled **A** — the Platformer behavior jumps with it. On a keyboard, WASD or the arrow keys move; Space or J presses the first button, K the second and L the third.
+
+**Gamepads** work too, in a browser and in exported games: the left stick or d-pad moves, and **A, X, B, Y** press the first, second, third and fourth button. Every gamepad button also has its own name for *Key is held* / *On key pressed* and scripts: `PadA`, `PadB`, `PadX`, `PadY`, `PadLB`, `PadRB`, `PadLT`, `PadRT`, `PadStart`. The on-screen controls hide while a gamepad is used and come back on the next touch. The right stick turns a camera with [Mouse look](../behaviors#camera-follow).

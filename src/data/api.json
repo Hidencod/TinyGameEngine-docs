@@ -710,14 +710,26 @@
           "name": "axis",
           "kind": "property",
           "type": "{x,y}",
-          "doc": "Joystick / WASD / arrows, each in -1..1. y = forward."
+          "doc": "Joystick / WASD / arrows / gamepad stick, each in -1..1. y = forward."
+        },
+        {
+          "name": "look",
+          "kind": "property",
+          "type": "{x,y}",
+          "doc": "Look this frame in degrees: locked mouse, gamepad right stick or a drag. x = right, y = up."
+        },
+        {
+          "name": "gamepad",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "A gamepad has been used. Its buttons work as keys: \"PadA\", \"PadB\", \"PadX\", \"PadY\", \"PadLB\", \"PadRB\", \"PadLT\", \"PadRT\", \"PadStart\"."
         },
         {
           "name": "isDown",
           "kind": "method",
           "sig": "(name)",
           "type": "boolean",
-          "doc": "Button or key held, e.g. input.isDown(\"jump\"), input.isDown(\"Space\")"
+          "doc": "Button, key or gamepad button held, e.g. input.isDown(\"jump\"), input.isDown(\"Space\"), input.isDown(\"PadA\")"
         },
         {
           "name": "wasPressed",

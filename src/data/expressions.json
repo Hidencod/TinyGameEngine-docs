@@ -307,6 +307,20 @@
       "description": "Joystick down/up (-1 to 1)",
       "category": "Input",
       "insert": "joystickY"
+    },
+    {
+      "name": "lookX",
+      "signature": "lookX",
+      "description": "Mouse / right stick / drag turn this frame, in degrees (right = positive)",
+      "category": "Input",
+      "insert": "lookX"
+    },
+    {
+      "name": "lookY",
+      "signature": "lookY",
+      "description": "Mouse / right stick / drag tilt this frame, in degrees (up = positive)",
+      "category": "Input",
+      "insert": "lookY"
     }
   ],
   "objectProps": [
@@ -426,6 +440,8 @@
     "touching",
     "joystickX",
     "joystickY",
+    "lookX",
+    "lookY",
     "loopIndex",
     "timeScale"
   ],
