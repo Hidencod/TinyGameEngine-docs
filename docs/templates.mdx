@@ -15,7 +15,7 @@ Start a project from a template with **＋ New project** on the home screen. Eve
   <Card to="#empty" img="/img/templates/empty.webp" title="⬜ Empty 3D scene">Camera, light and ground.</Card>
   <Card to="#physics" img="/img/templates/physics.webp" title="🧱 Physics playground">Boxes and balls falling.</Card>
   <Card to="#coins" img="/img/templates/coins.webp" title="🪙 Roll-a-ball: Coin collector">Menus, HUD, win screen.</Card>
-  <Card to="#platformer" img="/img/templates/platformer.webp" title="🏃 3D Platformer">Animated hero, jump, flag.</Card>
+  <Card to="#platformer" img="/img/templates/platformer.webp" title="🏃 3D Platformer">Animated hero, lives, enemy, flag.</Card>
   <Card to="#runner" img="/img/templates/runner.webp" title="🏁 Endless runner">Swipe lanes, jump, high score.</Card>
   <Card to="#shooter" img="/img/templates/shooter.webp" title="🎯 Arena shooter">Waves, health, auto-aim.</Card>
   <Card to="#racing" img="/img/templates/racing.webp" title="🏎️ Kart racing">3 laps, checkpoints, best lap.</Card>
@@ -39,9 +39,9 @@ Roll the ball with the joystick and collect the spinning coins. It has a **start
 
 ## 🏃 3D Platformer {/* #platformer */}
 
-Run and jump with an animated hero (joystick + **A** button), grab the coins and reach the flag. Falling off restarts the level.
+Run and jump with an animated hero (joystick + **A** button), grab the coins and reach the flag. You have 3 lives: spikes and the red enemy patrolling the start cost one (jump on its head to defeat it), and a heart up on the platforms gives one back. Falling off restarts the level.
 
-**Learn:** the Platformer and Camera follow behaviors, automatic character animation (idle / walk / sprint / jump), models from the Kenney Platformer Kit, *Is on ground*, *Compare property* (falling below a height), *Wait*.
+**Learn:** the Platformer and Camera follow behaviors, automatic character animation (idle / walk / sprint / jump), the Health behavior (*Damage*, *Heal*, *On hurt*, *On death*, knockback), a patrol with *Move to position* and *On arrived*, *Else* blocks, models from the Kenney Platformer Kit, *Is on ground*, *Compare property* (falling below a height), *Wait*.
 
 ## 🏁 Endless runner {/* #runner */}
 
