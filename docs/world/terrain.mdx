@@ -1,0 +1,60 @@
+---
+title: Terrain
+description: Hills you shape by dragging — raise, lower, smooth and flatten, painted grass, rock and snow, with physics that follows them.
+---
+
+# Terrain
+
+<Art name="penguin" size={95} />
+
+A **terrain** is ground with hills: a square of land you shape by dragging on it, a bit like sculpting clay. It paints itself — grass where it's flat, rock on steep slopes, snow up high if you want — and everything that walks, rolls or drives follows its hills.
+
+## Add a terrain
+
+**Objects → ＋ Add → Terrain (hills)**. It starts with gentle random hills, 40 × 40 m, centred in the scene, and the camera zooms out to show all of it.
+
+<Row>
+  <Phone name="terrain-view" caption="A new terrain" />
+</Row>
+
+New projects also have a flat **Ground**; delete it if the terrain replaces it, or keep it as a floor around the hills.
+
+## Shape it
+
+<Side shot="card-terrain" crop>
+
+Select the terrain, open **Inspect** and tap **🖌️ Sculpt**. Then drag on the terrain in the 3D view:
+
+| Tool | What it does |
+| --- | --- |
+| **Raise** | Pushes the ground up under the brush. Holding still keeps raising. |
+| **Lower** | Digs it down (valleys, lakes, paths). |
+| **Smooth** | Rounds off bumps and sharp edges. |
+| **Flatten** | Levels the ground to the height where the drag started — roads, building plots, a flat arena on a hill. |
+
+**Brush size** is the radius in meters; **Strength** is how fast it works. A yellow ring shows where the brush is. Each drag is one step of **Undo**.
+
+While sculpting, one finger (or the left mouse button) sculpts, two fingers (or the right mouse button) move and zoom the camera. Tap **Stop sculpting** to turn the camera again.
+
+</Side>
+
+**⛰️ Make hills** replaces the terrain with new random hills up to **Hill height** meters (Undo brings the old ones back); **Flatten all** makes it flat again.
+
+## Settings
+
+| Setting | What it does |
+| --- | --- |
+| **Size** | Width and depth in meters. Making it bigger stretches the same hills. |
+| **Detail** | Squares per side: Low (32), Medium (64) or High (128). More detail = smaller bumps possible, but more work for the phone. Changing it keeps the shape. |
+| **Grass / Rock / Snow** | The colors it paints with. Rock goes on steep slopes. |
+| **Snow above** | Snow covers the ground above this height (0 = no snow). |
+
+## Physics
+
+A terrain comes with a **Collider** (shape *Auto*), which follows the hills exactly: players walk up them, balls roll down, cars drive over them. Don't give it a dynamic Rigid body — a terrain stays put.
+
+[Pathfinding](../behaviors#follow) treats a terrain as ground to walk on, not as a wall. Steep slopes are still climbed only as far as the physics allows.
+
+:::tip
+Keep **Detail** at Medium unless you need small bumps: a High terrain has four times as many triangles. One big terrain is cheaper than many small ones.
+:::

@@ -49,6 +49,11 @@
       "icon": "✨",
       "title": "Particles",
       "desc": "Sparks, smoke, fire, confetti"
+    },
+    "terrain": {
+      "icon": "⛰️",
+      "title": "Terrain",
+      "desc": "Hills you sculpt by dragging"
     }
   }
 }

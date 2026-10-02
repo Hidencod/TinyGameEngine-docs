@@ -16,7 +16,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category', label: 'Building your world',
-      items: ['world/shapes-and-materials', 'world/models', 'world/cameras-and-lights', 'world/physics', 'world/sound', 'world/particles', 'world/ui'],
+      items: ['world/shapes-and-materials', 'world/models', 'world/terrain', 'world/cameras-and-lights', 'world/physics', 'world/sound', 'world/particles', 'world/ui'],
     },
     'behaviors',
     {
