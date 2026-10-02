@@ -18,7 +18,7 @@ Conditions are the **WHEN / IF** part of an event. All conditions of an event mu
 - Most other conditions can be **inverted** (NOT) from the condition’s menu.
 :::
 
-There are **58 conditions**, grouped by category as in the condition picker.
+There are **61 conditions**, grouped by category as in the condition picker.
 
 [⚙️ System](#system) · [🔢 Variables](#variables) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🧱 Physics](#physics) · [❤️ Health](#health) · [🖼️ UI](#ui) · [✨ Particles](#particles)
 
@@ -648,6 +648,36 @@ True when a physics object is standing on something.
 
 - **Where:** Pick an **object** (or a #tag) first, then this condition.
 - **ID:** `object.isOnGround` (as saved in project files)
+- **Parameters:** none
+
+### Is in water {/* #object-isinwater */}
+
+<span class="tge-ace-display">‹Object› is in water</span>
+
+True while the object is in a Water object (for a physics object: any part of it, even just its feet).
+
+- **Where:** Pick an **object** (or a #tag) first, then this condition.
+- **ID:** `object.isInWater` (as saved in project files)
+- **Parameters:** none
+
+### On enter water {/* #object-onenterwater */}
+
+<span class="tge-ace-display">On ‹Object› enters water</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+Runs when a physics object goes into a Water object (feet first counts). Lava? Make orange water and destroy the player here.
+
+- **Where:** Pick an **object** (or a #tag) first, then this condition.
+- **ID:** `object.onEnterWater` (as saved in project files)
+- **Parameters:** none
+
+### On leave water {/* #object-onleavewater */}
+
+<span class="tge-ace-display">On ‹Object› leaves water</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+Runs when a physics object comes all the way out of a Water object.
+
+- **Where:** Pick an **object** (or a #tag) first, then this condition.
+- **ID:** `object.onLeaveWater` (as saved in project files)
 - **Parameters:** none
 
 ### Has line of sight to {/* #object-haslineofsight */}

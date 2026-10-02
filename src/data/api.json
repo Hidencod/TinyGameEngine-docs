@@ -472,6 +472,12 @@
           "doc": "A moveTo() is under way."
         },
         {
+          "name": "inWater",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "In a Water object (a physics body: any part of it)."
+        },
+        {
           "name": "getParent",
           "kind": "method",
           "sig": "()",
@@ -731,7 +737,7 @@
           "kind": "method",
           "sig": "(event, fn)",
           "type": "unsubscribe",
-          "doc": "Listen: \"sceneStart\", \"collisionStart\", \"entityCreated\", ..."
+          "doc": "Listen: \"sceneStart\", \"collisionStart\", \"entityCreated\", \"waterEnter\", ..."
         },
         {
           "name": "log",

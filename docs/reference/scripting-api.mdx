@@ -100,6 +100,7 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `moveTo(x, z, speed?, avoidWalls?)` | `void` | Walk to a point on the ground (default speed 3, around walls). "On arrived" fires there. |
 | `stopMoving()` | `void` | Cancel moveTo(). |
 | `movingTo` | `boolean` | A moveTo() is under way. |
+| `inWater` | `boolean` | In a Water object (a physics body: any part of it). |
 | `getParent()` | `entity\|null` | Parent entity. |
 | `getChildren()` | `entity[]` | Child entities. |
 | `destroy()` | `void` | Remove the entity (at end of frame). |
@@ -144,7 +145,7 @@ The running game.
 | `spawnParticles(effect, x, y, z, overrides?)` | `void` | Play an effect once at a position: "Sparkles", "Fire", "Smoke", "Explosion", "Dust puff", "Rain", "Confetti", "Magic". overrides e.g. &#123; burst: 50, color: ["#f00", "#ff0"] &#125; |
 | `shakeCamera(intensity, duration)` | `void` | Shake the camera. |
 | `vibrate(ms)` | `void` | Vibrate the phone, e.g. vibrate(40) on a hit (Android; ignored elsewhere). |
-| `on(event, fn)` | `unsubscribe` | Listen: "sceneStart", "collisionStart", "entityCreated", ... |
+| `on(event, fn)` | `unsubscribe` | Listen: "sceneStart", "collisionStart", "entityCreated", "waterEnter", ... |
 | `log(...values)` | `void` | Show a message on screen (debugging). |
 
 ## `input` — input {/* #input */}

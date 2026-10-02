@@ -54,6 +54,11 @@
       "icon": "⛰️",
       "title": "Terrain",
       "desc": "Hills you sculpt by dragging"
+    },
+    "water": {
+      "icon": "🌊",
+      "title": "Water",
+      "desc": "Lake or sea: things float, characters swim"
     }
   }
 }

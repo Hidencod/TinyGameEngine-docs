@@ -1,0 +1,68 @@
+---
+title: Water
+description: Lakes, pools and seas with waves. Things float in them, characters swim, and the camera turns blue under the surface.
+---
+
+# Water
+
+<Art name="island" size={110} />
+
+**Water** is a lake, a pool or a sea: a flat surface with gentle waves that mirrors the sky and lets you see a little way below. It isn't just for looks. Physics objects **float** in it, characters **swim**, and when the camera goes under the surface everything turns deep blue.
+
+## Add water
+
+**Objects → ＋ Add → Water**. You get a 20 × 20 m surface just above the ground.
+
+<Row>
+  <Phone name="water-view" caption="The lake in the Hill explorer template" />
+</Row>
+
+To make a **lake**, dig a dip in a [terrain](./terrain) with the **Lower** tool, then move the water down into it (its **Position Y** is the water level). The terrain around the lake hides the square corners of the water. Paint the shore with **Sand** to finish it. A water square sitting on flat ground works as a **pool** or a **sea** that reaches the horizon.
+
+## Settings
+
+<Side shot="card-water" crop>
+
+| Setting | What it does |
+| --- | --- |
+| **Width / Length** | Size of the surface in meters. Changing the object's **Scale** stretches it too. |
+| **Depth** | How far down the water goes. Below that, objects are out of the water (and don't float). |
+| **Color** | The color near the edges and in shallow views. |
+| **Deep color** | The color toward the middle, and what you see under water. |
+| **Clearness** | 0 = murky, 1 = very clear: how much of the bottom shows through, and how far you can see under water. |
+| **Wave height** | In meters. 0 = calm. Floating objects bob on the same waves. |
+| **Wave speed** | 1 = normal, 2 = twice as fast. |
+
+</Side>
+
+*Set color* and *Set opacity* work on water too, for example to turn a pool red.
+
+## Floating and swimming
+
+Water needs no collider. Anything with a **dynamic Rigid body** that goes into it is pushed up and slowed down:
+
+- **Objects** (crates, balls, barrels) settle about half under water and bob on the waves.
+- **Characters** with the [Platformer](../behaviors#platformer) or [Top-down](../behaviors#topdown) behavior **swim** once the water is deep enough. They float with their head out, move a bit slower, and **Jump** near the surface hops out, for example back onto the shore. In shallow water they just wade. Models with a `swim` animation play it while swimming.
+- Enemies with [Follow target](../behaviors#follow) float and keep chasing you.
+
+Nobody drowns by default. Add it yourself with the events below if your game needs it.
+
+## Events
+
+| Block | When |
+| --- | --- |
+| **On enter water** | An object's body goes into water (feet first counts). |
+| **On leave water** | It came all the way out again. |
+| **Is in water** | True while it is in water. Use it in a block with other conditions, e.g. *Player is in water* + *Every X seconds* (1) → *Damage Player*. |
+
+You'll find them under **Physics** in the event picker. In code: `entity.inWater`, and `game.on('waterEnter', ({ entity, water }) => …)` / `'waterExit'`.
+
+:::tip Lava
+Lava is orange water: **Color** `#ff7a1a`, **Deep color** `#a01e00`, **Clearness** 0, **Wave speed** 0.3. Then add *On Player enter water* → *Damage Player* (or *Restart scene*).
+:::
+
+## Good to know
+
+- Water is drawn with a single surface: no live reflections of objects, so it stays fast on phones. Several water objects are fine.
+- The surface is see-through, so keep the bottom under it (terrain or a floor). Otherwise you see the sky through the water.
+- Tilting water (Rotation X / Z) isn't supported: floating always uses a flat surface.
