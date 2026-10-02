@@ -34,6 +34,7 @@ Each row has an icon showing what the object is (🎥 camera, 💡 light, 🧊 s
 - **👁** hides or shows the object. Hidden objects are not drawn in the game either, but still exist — events can show them again.
 - **⋮** opens the object menu.
 - A **▾ / ▸** arrow before a parent folds or unfolds its children.
+- **Drag a row** to reorganize: drop it onto the **middle** of another row to make it that object's child, onto a row's **top or bottom edge** to move it before or after, or onto the **empty space below the list** to bring it back to the top level. With a mouse, just drag; on a phone, **press and hold** a row a moment, then drag (a quick swipe still scrolls). It stays where it is in the 3D world. On-screen UI and 3D objects can't be mixed.
 - Greyed-out rows are **inactive** objects (see the Inspector’s *Active* switch).
 
 ## The Add menu {/* #add-menu */}
@@ -84,7 +85,7 @@ Objects with the same name are **instances of one object type**. An event about 
 
 <Side shot="objects-hierarchy">
 
-**Set parent…** attaches an object to another. The child then moves, turns and scales with its parent, and its position becomes relative to it. Here an *Empty* object is the parent of a *Cube* and a *Sphere*:
+Drag a row onto another (see [Object rows](#object-rows)), or use **Set parent…** to attach an object to another. The child then moves, turns and scales with its parent, and its position becomes relative to it. Here an *Empty* object is the parent of a *Cube* and a *Sphere*:
 
 <Legend items={['Parent', 'Child', 'Child']} />
 

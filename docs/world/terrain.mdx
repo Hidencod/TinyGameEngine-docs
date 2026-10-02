@@ -53,7 +53,7 @@ With **🌳 Scatter**, pick a **Model** (any 3D model in the project — add one
 | **Solid** | Copies get a Collider and block the player and [pathfinding](../behaviors#follow) — on for trees and rocks, off for grass and flowers. |
 | **Remove** | The brush removes scattered copies instead of adding them. **🗑 Remove all scattered** clears them all. |
 
-Scattered copies are ordinary objects inside the terrain (they move with it) and are tagged `#scattered`. Each drag is one Undo step. Put `#scattered` in the camera's **Ignore tag** ([Camera follow](../behaviors#camera-follow)) so a forest doesn't keep pushing the camera in.
+Scattered copies are ordinary objects inside the terrain (they move with it) and are tagged `#scattered`. The terrain's row in the Objects list folds when you scatter, so they don't flood it — tap its ▸ to see them. Each drag is one Undo step. Put `#scattered` in the camera's **Ignore tag** ([Camera follow](../behaviors#camera-follow)) so a forest doesn't keep pushing the camera in.
 
 :::tip
 Every copy is a real object: a few hundred are fine, thousands slow phones down. Grass and flowers look good at a low density spread over a big area.
