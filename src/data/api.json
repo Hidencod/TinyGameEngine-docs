@@ -478,6 +478,26 @@
           "doc": "In a Water object (a physics body: any part of it)."
         },
         {
+          "name": "enterVehicle",
+          "kind": "method",
+          "sig": "(vehicle)",
+          "type": "void",
+          "doc": "Get into a Boat or Car: ride in its seat; the joystick drives it, cameras follow it."
+        },
+        {
+          "name": "exitVehicle",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Get out, beside the vehicle (on land if possible)."
+        },
+        {
+          "name": "vehicle",
+          "kind": "property",
+          "type": "entity|null",
+          "doc": "The vehicle it is riding, or null."
+        },
+        {
           "name": "getParent",
           "kind": "method",
           "sig": "()",

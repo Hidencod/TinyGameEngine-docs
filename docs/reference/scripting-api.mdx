@@ -101,6 +101,9 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `stopMoving()` | `void` | Cancel moveTo(). |
 | `movingTo` | `boolean` | A moveTo() is under way. |
 | `inWater` | `boolean` | In a Water object (a physics body: any part of it). |
+| `enterVehicle(vehicle)` | `void` | Get into a Boat or Car: ride in its seat; the joystick drives it, cameras follow it. |
+| `exitVehicle()` | `void` | Get out, beside the vehicle (on land if possible). |
+| `vehicle` | `entity\|null` | The vehicle it is riding, or null. |
 | `getParent()` | `entity\|null` | Parent entity. |
 | `getChildren()` | `entity[]` | Child entities. |
 | `destroy()` | `void` | Remove the entity (at end of frame). |

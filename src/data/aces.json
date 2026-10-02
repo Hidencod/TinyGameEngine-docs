@@ -2075,6 +2075,25 @@
       "params": []
     },
     {
+      "id": "object.isInVehicle",
+      "kind": "condition",
+      "category": "Object",
+      "label": "Is in a vehicle",
+      "hint": "Riding a boat or car",
+      "display": "{object} is in a vehicle",
+      "displayNoObject": null,
+      "icon": "🚤",
+      "description": "True while the object rides a vehicle (after Enter vehicle).",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
       "id": "object.isInWater",
       "kind": "condition",
       "category": "Physics",
@@ -3635,6 +3654,55 @@
       ]
     },
     {
+      "id": "object.enterVehicle",
+      "kind": "action",
+      "category": "Object",
+      "label": "Enter vehicle",
+      "hint": "Pick the player, then the boat or car",
+      "display": "{object} gets into {vehicle}",
+      "displayNoObject": null,
+      "icon": "🚤",
+      "description": "The object (usually the player) gets into a vehicle — an object with the Boat or Car behavior: it sits in the vehicle’s Seat and rides along, its own movement stops, the joystick drives the vehicle and cameras following it follow the vehicle. Undo it all with Exit vehicle.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "vehicle",
+          "label": "Vehicle (boat or car)",
+          "type": "object",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.exitVehicle",
+      "kind": "action",
+      "category": "Object",
+      "label": "Exit vehicle",
+      "hint": "Get out",
+      "display": "{object} gets out of its vehicle",
+      "displayNoObject": null,
+      "icon": "🚶",
+      "description": "Gets out of the vehicle it is in: it is put down beside it (on land if one side has some) and moves on its own again; the vehicle stops being driven.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
       "id": "object.detach",
       "kind": "action",
       "category": "Object",
@@ -5035,6 +5103,106 @@
           "type": "color",
           "options": null,
           "default": "#3ecf8e",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "input.showButton",
+      "kind": "action",
+      "category": "Input",
+      "label": "Show",
+      "hint": "A control button",
+      "display": "Show button {button}",
+      "displayNoObject": null,
+      "icon": "👁️",
+      "description": "Show an on-screen control button (Scene → Controls) hidden with Hide.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "input",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "button",
+          "label": "Button",
+          "type": "button",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "input.hideButton",
+      "kind": "action",
+      "category": "Input",
+      "label": "Hide",
+      "hint": "A control button",
+      "display": "Hide button {button}",
+      "displayNoObject": null,
+      "icon": "🙈",
+      "description": "Hide an on-screen control button (Scene → Controls). A hidden button can’t be pressed — not with a finger, keys or a gamepad — so it only works where it makes sense, e.g. only while the player touches the boat.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "input",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "button",
+          "label": "Button",
+          "type": "button",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "input.setButtonLabel",
+      "kind": "action",
+      "category": "Input",
+      "label": "Set label",
+      "hint": "A control button’s text",
+      "display": "Set button {button} label to {label}",
+      "displayNoObject": null,
+      "icon": "🏷️",
+      "description": "Change the text on an on-screen control button, e.g. “Board” next to the boat and “Leave” while sailing.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "input",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "button",
+          "label": "Button",
+          "type": "button",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "label",
+          "label": "Label",
+          "type": "expression",
+          "options": null,
+          "default": "\"Go\"",
           "optional": false,
           "hint": null,
           "varScope": null

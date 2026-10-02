@@ -72,8 +72,18 @@ The on-screen controls shown while playing (also in [Project settings](./project
 | --- | --- |
 | **Joystick** | Show the virtual joystick. It drives the Platformer, Top-down and Car behaviors and the `joystickX` / `joystickY` values. |
 | **Joystick side** | Left or Right. The buttons go on the other side. |
-| **Buttons** | Round on-screen buttons. Each has a **Name** used by events and scripts (e.g. `jump`), a **Label** shown on it (e.g. `A`) and a **Color**. **Add button** adds one; 🗑 deletes it. |
+| **Buttons** | Round on-screen buttons. Each has a **Name** used by events, behaviors and scripts (e.g. `jump`), a **Label** shown on it (e.g. `A`), a **Color**, the **Keys** and **Gamepad** button that press it, and **On screen** (off = a keyboard / gamepad only button, e.g. `pause` on Esc). **Add button** adds one; 🗑 deletes it. Events can hide a button until it's useful and change its label with *Show*, *Hide* and *Set label* under **Input** — the same names as for UI buttons — see [getting into a boat](../behaviors#boat). |
 
-New projects have one button, `jump`, labelled **A** — the Platformer behavior jumps with it. On a keyboard, WASD or the arrow keys move; Space or J presses the first button, K the second and L the third.
+<Side shot="controls-card" crop>
 
-**Gamepads** work too, in a browser and in exported games: the left stick or d-pad moves, and **A, X, B, Y** press the first, second, third and fourth button. Every gamepad button also has its own name for *Key is held* / *On key pressed* and scripts: `PadA`, `PadB`, `PadX`, `PadY`, `PadLB`, `PadRB`, `PadLT`, `PadRT`, `PadStart`. The on-screen controls hide while a gamepad is used and come back on the next touch. The right stick turns a camera with [Mouse look](../behaviors#camera-follow).
+New projects have one button, `jump`, labelled **A**, pressed by **Space**, **J** and gamepad **A** — the Platformer behavior jumps with it (its **Jump button** setting names the button). WASD or the arrow keys and the left stick move.
+
+**Keys:** tap **＋ Key**, then press the key on your keyboard (or pick one from the list on a phone); ✕ removes one. A button can have several keys, and the same key can press several buttons.
+
+**Gamepad:** the button on a controller that presses it, or None.
+
+A new button gets keys that suit its name — `use` / `interact`: **E** and **X**, `fire` / `shoot`: **F** and **RB**, `run` / `sprint`: **Shift** and **LB**, `pause`: **Esc** and **Start** — or the next free key (J, K, L…). Change them any time.
+
+</Side>
+
+**Gamepads** work in a browser and in exported games: the left stick or d-pad moves, and each button's **Gamepad** setting presses it. Every gamepad button also has its own name for *Key is held* / *On key pressed* and scripts: `PadA`, `PadB`, `PadX`, `PadY`, `PadLB`, `PadRB`, `PadLT`, `PadRT`, `PadStart`. The on-screen controls hide while a gamepad is used and come back on the next touch. The right stick turns a camera with [Mouse look](../behaviors#camera-follow).

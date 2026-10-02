@@ -18,7 +18,8 @@
       "speed": 8,
       "turnSpeed": 70,
       "acceleration": 3,
-      "driver": "player"
+      "driver": "player",
+      "seat": "0, 0.3, 0"
     },
     "car": {
       "speed": 15,
@@ -29,7 +30,8 @@
       "wheels": "",
       "frontWheels": "",
       "driver": "player",
-      "path": ""
+      "path": "",
+      "seat": "0, 0.5, 0"
     },
     "cameraFollow": {
       "target": "Player",

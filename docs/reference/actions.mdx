@@ -16,9 +16,9 @@ Actions are the **DO** part of an event. They run from top to bottom when the ev
 Number and text fields accept expressions, e.g. `Score + 1`, `"Score: " + Score`, `Player.x`, `random(1, 6)`. See [Expressions](./expressions).
 :::
 
-There are **89 actions**, grouped by category as in the action picker.
+There are **94 actions**, grouped by category as in the action picker.
 
-[⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [📦 Object](#object) · [🧱 Physics](#physics) · [❤️ Health](#health) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera)
+[⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🧱 Physics](#physics) · [❤️ Health](#health) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera)
 
 ## ⚙️ System {/* #system */}
 
@@ -356,6 +356,48 @@ End the loop this event is in (Repeat, For, For each, While) after the current r
 - **ID:** `system.stopLoop` (as saved in project files)
 - **Parameters:** none
 
+## 🎮 Input {/* #input */}
+
+### Show {/* #input-showbutton */}
+
+<span class="tge-ace-display">Show button ‹Button›</span>
+
+Show an on-screen control button (Scene → Controls) hidden with Hide.
+
+- **Where:** Found under **Input** in the picker.
+- **ID:** `input.showButton` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Button | Touch button |  |  |
+
+### Hide {/* #input-hidebutton */}
+
+<span class="tge-ace-display">Hide button ‹Button›</span>
+
+Hide an on-screen control button (Scene → Controls). A hidden button can’t be pressed — not with a finger, keys or a gamepad — so it only works where it makes sense, e.g. only while the player touches the boat.
+
+- **Where:** Found under **Input** in the picker.
+- **ID:** `input.hideButton` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Button | Touch button |  |  |
+
+### Set label {/* #input-setbuttonlabel */}
+
+<span class="tge-ace-display">Set button ‹Button› label to ‹Label›</span>
+
+Change the text on an on-screen control button, e.g. “Board” next to the boat and “Leave” while sailing.
+
+- **Where:** Found under **Input** in the picker.
+- **ID:** `input.setButtonLabel` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Button | Touch button |  |  |
+| Label | Expression | `"Go"` |  |
+
 ## 📦 Object {/* #object */}
 
 ### Create object {/* #system-create */}
@@ -660,6 +702,29 @@ The object becomes a child of the target and moves with it, e.g. a key the playe
 | Parameter | Type | Default | Notes |
 | --- | --- | --- | --- |
 | Attach to | Object or #tag |  |  |
+
+### Enter vehicle {/* #object-entervehicle */}
+
+<span class="tge-ace-display">‹Object› gets into ‹Vehicle (boat or car)›</span>
+
+The object (usually the player) gets into a vehicle — an object with the Boat or Car behavior: it sits in the vehicle’s Seat and rides along, its own movement stops, the joystick drives the vehicle and cameras following it follow the vehicle. Undo it all with Exit vehicle.
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.enterVehicle` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Vehicle (boat or car) | Object or #tag |  |  |
+
+### Exit vehicle {/* #object-exitvehicle */}
+
+<span class="tge-ace-display">‹Object› gets out of its vehicle</span>
+
+Gets out of the vehicle it is in: it is put down beside it (on land if one side has some) and moves on its own again; the vehicle stops being driven.
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.exitVehicle` (as saved in project files)
+- **Parameters:** none
 
 ### Detach {/* #object-detach */}
 

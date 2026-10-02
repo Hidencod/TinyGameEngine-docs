@@ -64,6 +64,7 @@ Drive with the joystick: **up = gas**, **down = brake, then reverse**, **left/ri
 | **Wheels** | — | Which nodes of the car model are the wheels (they spin and steer). Tap to choose; mark the front ones. |
 | **Driver** | player | Who drives: **player** (joystick, WASD or arrow keys), **ai** (drives itself along the Path) or **none** (parked: no gas, no steering). Change it from events with *Set behavior setting*, e.g. to start a race after a countdown. |
 | **Path** | — | Waypoint objects that form a closed racing line, e.g. `#waypoint`. Needed for **ai**. They are visited in the order of their `index` variable, or by name (“Waypoint 2” before “Waypoint 10”). |
+| **Seat** | 0, 0.5, 0 | Where a rider sits after *Enter vehicle* (see [Boat](#boat)): meters right, up, back from the car's middle. |
 
 Wheels are found automatically in models whose parts are named “wheel…” (like the Kenney car kit). Otherwise pick them in **Wheels**; without wheels it drives on 4 invisible wheels at the corners.
 
@@ -81,11 +82,28 @@ Sail on [Water](./world/water) with the joystick: **up = forward**, **down = rev
 | **Turn speed** | 70 | How fast it turns (degrees per second) once it is moving; it turns less when nearly still, like a real boat. |
 | **Acceleration** | 3 | How quickly it speeds up. With the stick released it glides to a stop. |
 | **Driver** | player | **player** (joystick, WASD or arrow keys) or **none** (nobody at the wheel). |
+| **Seat** | 0, 0.3, 0 | Where a rider sits after *Enter vehicle*: meters right, up, back from the boat's middle (forward is negative). |
 
 The boat keeps its speed in the instance variable `speed` (m/s). Put **Camera follow** on the camera with **Target** = the boat and **Stay behind** on.
 
 :::tip Getting in and out
-Give the boat **Driver = none** at the start. When the player touches the boat and presses a button: *Attach to* the boat (the player rides along), set the player's Platformer off and the boat's **Driver** to **player** with *Set behavior setting*, and point the camera at the boat. Do the reverse to get off.
+Two event actions do everything: *Enter vehicle* (`Player` gets into `Boat`) and *Exit vehicle*. Getting in puts the player in the **Seat**, stops their own movement, gives the boat the joystick and makes cameras that follow the player follow the boat. Getting out puts them down beside it — on land if one side has some — and gives it all back.
+
+With an on-screen control button named `use` (Scene → Controls), one event does both:
+- **On button use pressed**
+  - sub-event: *Player is in a vehicle* → *Player exits vehicle*
+  - **Else** + *Player is touching Boat* → *Player enters Boat*
+
+Keep it as one event with **Else**: two separate events would get in and straight back out on the same press.
+
+To show the button only where it can be used — and say what it does — add these three events (they run every frame). *Show*, *Hide* and *Set label* are under **Input** for control buttons, and under **UI** if you made a UI button instead (then use *On clicked* to press it):
+- *Player is in a vehicle* → *Show button use*, *Set button use label to "Leave"*
+- **Else** + *Player is touching Boat* → *Show button use*, *Set button use label to "Board"*
+- **Else** → *Hide button use*
+
+A hidden button can't be pressed at all (not even with its keyboard key), so the player can only get in next to the boat.
+
+Start the boat with **Driver = none** so it doesn't move before anyone gets in.
 :::
 
 ## 🎥 Camera follow {/* #camera-follow */}
