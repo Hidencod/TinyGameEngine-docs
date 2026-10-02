@@ -142,6 +142,7 @@ Moves toward another object — chasing enemies, pets, homing missiles.
 | **Stop distance** | 1 | Stops this close. |
 | **Look at** | on | Face the target. |
 | **Animate** | on | Walk / idle clips automatically. |
+| **Pathfinding** | off | Walk around walls, rocks and buildings instead of pushing into them. It finds a way round anything **static** (a Physics body set to *Static*, with a Collider), re-plans as the target moves, and stands at the closest spot when the target can't be reached. Other moving objects don't count. Works on flat ground; it doesn't plan jumps or stairs between floors. |
 
 </Side>
 

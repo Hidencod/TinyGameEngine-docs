@@ -56,7 +56,8 @@
       "speed": 2,
       "stopDistance": 1,
       "lookAt": true,
-      "animate": true
+      "animate": true,
+      "pathfinding": false
     },
     "destroyOffscreen": {
       "killY": -20,
