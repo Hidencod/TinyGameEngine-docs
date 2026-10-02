@@ -42,6 +42,18 @@
     "description": "Colorful party burst (plays once)"
   },
   {
+    "id": "splash",
+    "name": "Splash",
+    "icon": "💦",
+    "description": "Water thrown up when something falls in (plays once)"
+  },
+  {
+    "id": "bubbles",
+    "name": "Bubbles",
+    "icon": "🫧",
+    "description": "Little bubbles and froth on the water (swimmers leave them behind)"
+  },
+  {
     "id": "magic",
     "name": "Magic",
     "icon": "🔮",

@@ -4284,6 +4284,14 @@
               "label": "Confetti"
             },
             {
+              "value": "splash",
+              "label": "Splash"
+            },
+            {
+              "value": "bubbles",
+              "label": "Bubbles"
+            },
+            {
               "value": "magic",
               "label": "Magic"
             }
@@ -5313,6 +5321,14 @@
             {
               "value": "confetti",
               "label": "Confetti"
+            },
+            {
+              "value": "splash",
+              "label": "Splash"
+            },
+            {
+              "value": "bubbles",
+              "label": "Bubbles"
             },
             {
               "value": "magic",

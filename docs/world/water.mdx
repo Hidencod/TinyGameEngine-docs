@@ -32,6 +32,7 @@ To make a **lake**, dig a dip in a [terrain](./terrain) with the **Lower** tool,
 | **Clearness** | 0 = murky, 1 = very clear: how much of the bottom shows through, and how far you can see under water. |
 | **Wave height** | In meters. 0 = calm. Floating objects bob on the same waves. |
 | **Wave speed** | 1 = normal, 2 = twice as fast. |
+| **Splashes** | Drops when something falls in fast (stepping into the shallows doesn't splash; bigger, faster things splash bigger), and a trail of bubbles behind swimmers and floating things that move. |
 
 </Side>
 
@@ -41,6 +42,8 @@ To make a **lake**, dig a dip in a [terrain](./terrain) with the **Lower** tool,
 
 Water needs no collider. Anything with a **dynamic Rigid body** that goes into it is pushed up and slowed down:
 
+- Anything that falls in fast enough **splashes**: drops in the water's color, bigger for bigger and faster things. Want a sound too? Add *On enter water* → *Play sound* in your events.
+- Swimmers and floating objects that move leave a **trail of bubbles** behind them, more the faster they go.
 - **Objects** (crates, balls, barrels) settle about half under water and bob on the waves.
 - **Characters** with the [Platformer](../behaviors#platformer) or [Top-down](../behaviors#topdown) behavior **swim** once the water is deep enough. They float with their head out, move a bit slower, and **Jump** near the surface hops out, for example back onto the shore. In shallow water they just wade. Models with a `swim` animation play it while swimming.
 - Enemies with [Follow target](../behaviors#follow) float and keep chasing you.
