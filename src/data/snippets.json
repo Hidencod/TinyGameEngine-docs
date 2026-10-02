@@ -16,6 +16,14 @@
     "code": "// Jump when the \"jump\" button is pressed (needs a RigidBody).\nfunction update(dt) {\n  if (input.wasPressed('jump') && entity.isOnGround()) {\n    const v = entity.getVelocity();\n    entity.setVelocity(v.x, props.jumpStrength ?? 7, v.z);\n  }\n}\n"
   },
   {
+    "id": "tapmove",
+    "title": "Tap to move",
+    "icon": "🚶",
+    "scope": "entity",
+    "description": "Tap the ground and walk there, around walls.",
+    "code": "// Tap (or click) the ground: walk there, going around walls.\nfunction update(dt) {\n  if (input.tapped) {\n    const p = game.touchWorld();\n    entity.moveTo(p.x, p.z, props.speed ?? 4);\n  }\n}\n"
+  },
+  {
     "id": "spin",
     "title": "Spin",
     "icon": "🔄",

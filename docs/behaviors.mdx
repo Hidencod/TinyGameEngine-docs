@@ -146,6 +146,19 @@ Moves toward another object — chasing enemies, pets, homing missiles.
 
 </Side>
 
+### Walk to a point {/* #move-to-position */}
+
+To send something to a **spot** instead of after an object, use the **Move to position** action (*Object* group): it walks there over the next frames, around walls when **Go around walls** is on, and **On arrived** runs when it gets there (or as close as it can). **Stop moving** cancels it, and *Is moving to a position* is true on the way. It works with or without a Physics body; a movement behavior on the same object waits while it walks, and the joystick takes over again at once.
+
+Tap to move — two rows, with the spot under the finger from **`touchWorldX`** / **`touchWorldZ`**:
+
+```text
+On screen tapped   →  Move Player to (touchWorldX, touchWorldZ) at speed 4
+On Player arrived  →  Play sound "Click"
+```
+
+A patrol: **On Guard arrived** → **Move Guard to** the next point. In scripts: `entity.moveTo(x, z, speed)`, `entity.stopMoving()`, and `game.touchWorld()` for the tapped spot (the **Tap to move** snippet).
+
 ## 🗑️ Destroy when far {/* #destroy-offscreen */}
 
 <Side shot="behavior-destroyOffscreen" crop>

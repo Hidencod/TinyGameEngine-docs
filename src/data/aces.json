@@ -2162,6 +2162,44 @@
       "params": []
     },
     {
+      "id": "object.onArrived",
+      "kind": "condition",
+      "category": "Object",
+      "label": "On arrived",
+      "hint": "Reached its Move to position",
+      "display": "On {object} arrived",
+      "displayNoObject": null,
+      "icon": "🏁",
+      "description": "Runs when the object reaches the point of its \"Move to position\" (or gets as close as it can when walls are in the way).",
+      "isTrigger": true,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.isMovingTo",
+      "kind": "condition",
+      "category": "Object",
+      "label": "Is moving to a position",
+      "hint": "Still walking there",
+      "display": "{object} is moving to a position",
+      "displayNoObject": null,
+      "icon": "🚶",
+      "description": "True while a \"Move to position\" is under way.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
       "id": "object.onAnimationFinished",
       "kind": "condition",
       "category": "Object",
@@ -2966,6 +3004,85 @@
           "varScope": null
         }
       ]
+    },
+    {
+      "id": "object.moveToPosition",
+      "kind": "action",
+      "category": "Object",
+      "label": "Move to position",
+      "hint": "Walk there, around walls",
+      "display": "Move {object} to ({x}, {z}) at speed {speed}",
+      "displayNoObject": null,
+      "icon": "🚶",
+      "description": "Walk to a point on the ground over the next frames (speed in meters per second), going around walls and rocks when \"Go around walls\" is on. \"On arrived\" runs when it gets there. Tap to move: X = touchWorldX, Z = touchWorldZ.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "x",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Z",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "speed",
+          "label": "Speed",
+          "type": "number",
+          "options": null,
+          "default": "3",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "avoidWalls",
+          "label": "Go around walls",
+          "type": "boolean",
+          "options": null,
+          "default": "true",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.stopMoving",
+      "kind": "action",
+      "category": "Object",
+      "label": "Stop moving",
+      "hint": "Cancel Move to position",
+      "display": "{object} stops moving",
+      "displayNoObject": null,
+      "icon": "✋",
+      "description": "Cancel a \"Move to position\" (it stays where it is, without \"On arrived\").",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
     },
     {
       "id": "object.setRotation",

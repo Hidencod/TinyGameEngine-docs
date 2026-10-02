@@ -97,6 +97,9 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `setBehaviorParam(type, param, value)` | `void` | Change a behavior parameter, e.g. ("platformer", "speed", 8) |
 | `damage(amount, from?)` | `void` | Health behavior: lose health; from = what hit it (for Knockback). Fires On hurt / On death. |
 | `heal(amount)` | `void` | Health behavior: get health back, up to Max health. Current health: getVar("health"). |
+| `moveTo(x, z, speed?, avoidWalls?)` | `void` | Walk to a point on the ground (default speed 3, around walls). "On arrived" fires there. |
+| `stopMoving()` | `void` | Cancel moveTo(). |
+| `movingTo` | `boolean` | A moveTo() is under way. |
 | `getParent()` | `entity\|null` | Parent entity. |
 | `getChildren()` | `entity[]` | Child entities. |
 | `destroy()` | `void` | Remove the entity (at end of frame). |
@@ -123,6 +126,7 @@ The running game.
 | `spawn(name, position?, rotation?)` | `entity\|null` | Create a prefab / clone: game.spawn("Coin", &#123;x:0,y:5,z:0&#125;) |
 | `destroy(entity)` | `void` | Destroy an entity. |
 | `pick(screenX, screenY)` | `entity\|null` | Entity at a screen point. |
+| `touchWorld()` | `{x,y,z}` | The spot in the world under the finger / mouse (a surface, else the ground plane). Tap to move: player.moveTo(p.x, p.z). |
 | `hasLineOfSight(a, b)` | `boolean` | True when nothing solid is between the two objects, e.g. an enemy can see the player. |
 | `raycast(from, to)` | `{entity,point,distance}\|null` | Physics ray between two world points. |
 | `isTouching(a, b)` | `boolean` | Are two entities touching? |
@@ -235,6 +239,20 @@ function update(dt) {
   if (input.wasPressed('jump') && entity.isOnGround()) {
     const v = entity.getVelocity();
     entity.setVelocity(v.x, props.jumpStrength ?? 7, v.z);
+  }
+}
+```
+
+### Tap to move
+
+Tap the ground and walk there, around walls.
+
+```js
+// Tap (or click) the ground: walk there, going around walls.
+function update(dt) {
+  if (input.tapped) {
+    const p = game.touchWorld();
+    entity.moveTo(p.x, p.z, props.speed ?? 4);
   }
 }
 ```

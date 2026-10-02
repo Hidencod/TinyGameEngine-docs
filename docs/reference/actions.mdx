@@ -16,7 +16,7 @@ Actions are the **DO** part of an event. They run from top to bottom when the ev
 Number and text fields accept expressions, e.g. `Score + 1`, `"Score: " + Score`, `Player.x`, `random(1, 6)`. See [Expressions](./expressions).
 :::
 
-There are **87 actions**, grouped by category as in the action picker.
+There are **89 actions**, grouped by category as in the action picker.
 
 [⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [📦 Object](#object) · [🧱 Physics](#physics) · [❤️ Health](#health) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera)
 
@@ -472,6 +472,32 @@ Move toward a point (speed in meters per second).
 | Y | Number (expression) | `0` |  |
 | Z | Number (expression) | `0` |  |
 | Speed | Number (expression) | `2` |  |
+
+### Move to position {/* #object-movetoposition */}
+
+<span class="tge-ace-display">Move ‹Object› to (‹X›, ‹Z›) at speed ‹Speed›</span>
+
+Walk to a point on the ground over the next frames (speed in meters per second), going around walls and rocks when "Go around walls" is on. "On arrived" runs when it gets there. Tap to move: X = touchWorldX, Z = touchWorldZ.
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.moveToPosition` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| X | Number (expression) | `0` |  |
+| Z | Number (expression) | `0` |  |
+| Speed | Number (expression) | `3` |  |
+| Go around walls | Yes / No (expression) | `true` |  |
+
+### Stop moving {/* #object-stopmoving */}
+
+<span class="tge-ace-display">‹Object› stops moving</span>
+
+Cancel a "Move to position" (it stays where it is, without "On arrived").
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.stopMoving` (as saved in project files)
+- **Parameters:** none
 
 ### Set rotation {/* #object-setrotation */}
 

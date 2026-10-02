@@ -295,6 +295,27 @@
       "insert": "touchY"
     },
     {
+      "name": "touchWorldX",
+      "signature": "touchWorldX",
+      "description": "X of the spot in the world under the finger / mouse (the ground or an object)",
+      "category": "Input",
+      "insert": "touchWorldX"
+    },
+    {
+      "name": "touchWorldY",
+      "signature": "touchWorldY",
+      "description": "Y (height) of the spot in the world under the finger / mouse",
+      "category": "Input",
+      "insert": "touchWorldY"
+    },
+    {
+      "name": "touchWorldZ",
+      "signature": "touchWorldZ",
+      "description": "Z of the spot in the world under the finger / mouse",
+      "category": "Input",
+      "insert": "touchWorldZ"
+    },
+    {
       "name": "joystickX",
       "signature": "joystickX",
       "description": "Joystick left/right (-1 to 1)",
@@ -442,6 +463,9 @@
     "joystickY",
     "lookX",
     "lookY",
+    "touchWorldX",
+    "touchWorldY",
+    "touchWorldZ",
     "loopIndex",
     "timeScale"
   ],

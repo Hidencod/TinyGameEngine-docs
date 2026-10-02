@@ -452,6 +452,26 @@
           "doc": "Health behavior: get health back, up to Max health. Current health: getVar(\"health\")."
         },
         {
+          "name": "moveTo",
+          "kind": "method",
+          "sig": "(x, z, speed?, avoidWalls?)",
+          "type": "void",
+          "doc": "Walk to a point on the ground (default speed 3, around walls). \"On arrived\" fires there."
+        },
+        {
+          "name": "stopMoving",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Cancel moveTo()."
+        },
+        {
+          "name": "movingTo",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "A moveTo() is under way."
+        },
+        {
           "name": "getParent",
           "kind": "method",
           "sig": "()",
@@ -580,6 +600,13 @@
           "sig": "(screenX, screenY)",
           "type": "entity|null",
           "doc": "Entity at a screen point."
+        },
+        {
+          "name": "touchWorld",
+          "kind": "method",
+          "sig": "()",
+          "type": "{x,y,z}",
+          "doc": "The spot in the world under the finger / mouse (a surface, else the ground plane). Tap to move: player.moveTo(p.x, p.z)."
         },
         {
           "name": "hasLineOfSight",

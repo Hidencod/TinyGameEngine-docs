@@ -103,6 +103,9 @@ If you mistype a name, the game keeps running: it shows a friendly message once 
 | --- | --- |
 | `touchX` | Finger X position on screen |
 | `touchY` | Finger Y position on screen |
+| `touchWorldX` | X of the spot in the world under the finger / mouse (the ground or an object) |
+| `touchWorldY` | Y (height) of the spot in the world under the finger / mouse |
+| `touchWorldZ` | Z of the spot in the world under the finger / mouse |
 | `joystickX` | Joystick left/right (-1 to 1) |
 | `joystickY` | Joystick down/up (-1 to 1) |
 | `lookX` | Mouse / right stick / drag turn this frame, in degrees (right = positive) |
@@ -145,7 +148,7 @@ Inside an action on an object type, `Coin.x` means *the coin being processed*. W
 
 ## Built-in values
 
-`time` · `dt` · `fps` · `screenWidth` · `screenHeight` · `touchX` · `touchY` · `touching` · `joystickX` · `joystickY` · `lookX` · `lookY` · `loopIndex` · `timeScale`
+`time` · `dt` · `fps` · `screenWidth` · `screenHeight` · `touchX` · `touchY` · `touching` · `joystickX` · `joystickY` · `lookX` · `lookY` · `touchWorldX` · `touchWorldY` · `touchWorldZ` · `loopIndex` · `timeScale`
 
 ## Compare operators
 
