@@ -14,6 +14,12 @@
       "cameraRelative": true,
       "animate": true
     },
+    "boat": {
+      "speed": 8,
+      "turnSpeed": 70,
+      "acceleration": 3,
+      "driver": "player"
+    },
     "car": {
       "speed": 15,
       "acceleration": 10,
@@ -91,6 +97,11 @@
       "icon": "🏎️",
       "title": "Car",
       "desc": "Drive with the joystick: gas, brake, steer (needs a Physics body)"
+    },
+    "boat": {
+      "icon": "⛵",
+      "title": "Boat",
+      "desc": "Sail on water with the joystick (needs a Physics body)"
     },
     "cameraFollow": {
       "icon": "🎥",

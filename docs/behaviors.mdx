@@ -71,6 +71,23 @@ With a **Path**, every car keeps two instance variables up to date: `progress` (
 
 </Side>
 
+## ⛵ Boat {/* #boat */}
+
+Sail on [Water](./world/water) with the joystick: **up = forward**, **down = reverse** (slower), **left/right = steer**. The boat floats high on the waves, speeds up and turns smoothly, hardly drifts sideways, leans into turns and rocks gently. On land it has no power. Needs a **dynamic Physics body** (a **Collider** on *Auto* fits a boat model).
+
+| Setting | Default | What it does |
+| --- | --- | --- |
+| **Speed** | 8 | Top speed (m/s). Reverse is slower. |
+| **Turn speed** | 70 | How fast it turns (degrees per second) once it is moving; it turns less when nearly still, like a real boat. |
+| **Acceleration** | 3 | How quickly it speeds up. With the stick released it glides to a stop. |
+| **Driver** | player | **player** (joystick, WASD or arrow keys) or **none** (nobody at the wheel). |
+
+The boat keeps its speed in the instance variable `speed` (m/s). Put **Camera follow** on the camera with **Target** = the boat and **Stay behind** on.
+
+:::tip Getting in and out
+Give the boat **Driver = none** at the start. When the player touches the boat and presses a button: *Attach to* the boat (the player rides along), set the player's Platformer off and the boat's **Driver** to **player** with *Set behavior setting*, and point the camera at the boat. Do the reverse to get off.
+:::
+
 ## 🎥 Camera follow {/* #camera-follow */}
 
 <Side shot="behavior-cameraFollow" crop>
