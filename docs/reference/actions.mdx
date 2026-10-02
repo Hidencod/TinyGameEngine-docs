@@ -16,9 +16,9 @@ Actions are the **DO** part of an event. They run from top to bottom when the ev
 Number and text fields accept expressions, e.g. `Score + 1`, `"Score: " + Score`, `Player.x`, `random(1, 6)`. See [Expressions](./expressions).
 :::
 
-There are **85 actions**, grouped by category as in the action picker.
+There are **87 actions**, grouped by category as in the action picker.
 
-[⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [📦 Object](#object) · [🧱 Physics](#physics) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera)
+[⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [📦 Object](#object) · [🧱 Physics](#physics) · [❤️ Health](#health) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera)
 
 ## ⚙️ System {/* #system */}
 
@@ -767,6 +767,35 @@ Jump up, only when standing on the ground (needs a Rigid body).
 | Parameter | Type | Default | Notes |
 | --- | --- | --- | --- |
 | Strength | Number (expression) | `7` |  |
+
+## ❤️ Health {/* #health */}
+
+### Damage {/* #object-damage */}
+
+<span class="tge-ace-display">Damage ‹Object› by ‹Amount› (from ‹From (optional)›)</span>
+
+Take health from the object (it needs the Health behavior). "From" is what hit it, e.g. Bullet: with Knockback on, it is pushed away from that.
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.damage` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Amount | Number (expression) | `1` |  |
+| From (optional) | Object or #tag |  | *Optional.* |
+
+### Heal {/* #object-heal */}
+
+<span class="tge-ace-display">Heal ‹Object› by ‹Amount›</span>
+
+Give the object health back, up to its Max health (it needs the Health behavior).
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.heal` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Amount | Number (expression) | `1` |  |
 
 ## 🔤 Text {/* #text */}
 

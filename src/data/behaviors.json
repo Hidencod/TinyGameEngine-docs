@@ -65,6 +65,14 @@
     },
     "draggable": {
       "axis": "xz"
+    },
+    "health": {
+      "maxHealth": 3,
+      "invincibleTime": 0.5,
+      "flash": true,
+      "knockback": 0,
+      "showBar": false,
+      "destroyOnDeath": true
     }
   },
   "info": {
@@ -117,6 +125,11 @@
       "icon": "✋",
       "title": "Draggable",
       "desc": "Player can drag it with a finger"
+    },
+    "health": {
+      "icon": "❤️",
+      "title": "Health",
+      "desc": "Takes damage, flashes, dies at 0"
     }
   }
 }

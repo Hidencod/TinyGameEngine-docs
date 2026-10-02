@@ -1,6 +1,6 @@
 ---
 title: Behaviors
-description: Ready-made movement and logic — platformer, top-down, car, camera follow, rotate, bullet, wave, follow, destroy when far, draggable.
+description: Ready-made movement and logic — platformer, top-down, car, camera follow, rotate, bullet, wave, follow, destroy when far, draggable, health.
 ---
 
 # Behaviors
@@ -170,3 +170,34 @@ The player can drag it with a finger — puzzles, sorting games, placing things.
 | **Axis** | xz | `xz` = along the ground, `xy` = up/down and sideways (facing the camera), or a single axis `x`, `y`, `z`. |
 
 </Side>
+
+## ❤️ Health {/* #health */}
+
+<Side shot="behavior-health" crop>
+
+Gives the object health: it loses some with the **Damage** action, gets it back with **Heal**, and dies at 0. Use it for the player's lives, enemies that take several hits, crates that break.
+
+| Setting | Default | What it does |
+| --- | --- | --- |
+| **Max health** | 3 | Health at the start, and the most **Heal** gives back. |
+| **Invincible time** | 0.5 | Seconds after a hit when more damage does nothing, so one touch doesn't cost several lives. 0 = every hit counts. |
+| **Flash** | on | Blink while invincible. |
+| **Knockback** | 0 | Push it away from what hit it (the *From* object of **Damage**), in m/s. Needs a dynamic Physics body. |
+| **Show bar** | off | A small health bar floats above it once it is hurt: green, then orange, then red. |
+| **Destroy on death** | on | Remove it at 0 health, right after its **On death** event. Turn off for the player, to show a game over screen instead. |
+
+</Side>
+
+Health is kept in the object's own variable **`health`**, so you can show it (`Player.health` in a progress bar) or compare it like any variable. Setting `health` above 0 again brings a dead object back, e.g. on respawn.
+
+In the event sheet, **Health** has:
+
+- **Damage** *amount* (from *object*) and **Heal** *amount* — actions.
+- **On hurt** and **On death** — conditions that run when it happens. The object is still there during *On death*, so you can play an explosion at it and add its points.
+
+```text
+On Bullet collides with #enemy  →  Damage #enemy by 1 (from Bullet), Destroy Bullet
+On #enemy death                 →  Spawn particles "explosion" at #enemy, add #enemy.points to Score
+```
+
+Damage first, then destroy the bullet: a destroyed object can't be the *From* of the knockback. In scripts: `entity.damage(1, bullet)`, `entity.heal(1)`.

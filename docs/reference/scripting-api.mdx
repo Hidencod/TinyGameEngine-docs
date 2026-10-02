@@ -95,6 +95,8 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `setBehaviorEnabled(type, on)` | `void` | Enable/disable a behavior, e.g. ("platformer", false) |
 | `getBehaviorParam(type, param)` | `value` | Read a behavior parameter. |
 | `setBehaviorParam(type, param, value)` | `void` | Change a behavior parameter, e.g. ("platformer", "speed", 8) |
+| `damage(amount, from?)` | `void` | Health behavior: lose health; from = what hit it (for Knockback). Fires On hurt / On death. |
+| `heal(amount)` | `void` | Health behavior: get health back, up to Max health. Current health: getVar("health"). |
 | `getParent()` | `entity\|null` | Parent entity. |
 | `getChildren()` | `entity[]` | Child entities. |
 | `destroy()` | `void` | Remove the entity (at end of frame). |

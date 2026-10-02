@@ -438,6 +438,20 @@
           "doc": "Change a behavior parameter, e.g. (\"platformer\", \"speed\", 8)"
         },
         {
+          "name": "damage",
+          "kind": "method",
+          "sig": "(amount, from?)",
+          "type": "void",
+          "doc": "Health behavior: lose health; from = what hit it (for Knockback). Fires On hurt / On death."
+        },
+        {
+          "name": "heal",
+          "kind": "method",
+          "sig": "(amount)",
+          "type": "void",
+          "doc": "Health behavior: get health back, up to Max health. Current health: getVar(\"health\")."
+        },
+        {
           "name": "getParent",
           "kind": "method",
           "sig": "()",
