@@ -1,6 +1,6 @@
 ---
 title: Terrain
-description: Hills you shape by dragging — raise, lower, smooth, flatten and paint paths — with physics that follows them.
+description: Hills you shape by dragging — raise, lower, smooth, flatten, paint paths and scatter trees — with physics that follows them.
 ---
 
 # Terrain
@@ -32,6 +32,7 @@ Select the terrain, open **Inspect** and tap **🖌️ Sculpt**. Then drag on th
 | **Smooth** | Rounds off bumps and sharp edges. |
 | **Flatten** | Levels the ground to the height where the drag started — roads, building plots, a flat arena on a hill. |
 | **🎨 Paint** | Paints a color onto the ground with a soft edge: a dirt path, a sandy beach, dark grass under trees. Pick a swatch (Dirt, Sand, Path, Dark grass, Flowers, Snow) or any **Color**. **Auto** erases paint back to the automatic colors. |
+| **🌳 Scatter** | Sprinkles copies of a 3D model over the ground under the brush — a forest, rocks, grass tufts, flowers. See below. |
 
 **Brush size** is the radius in meters; **Strength** is how fast it works. A yellow ring shows where the brush is. Each drag is one step of **Undo**.
 
@@ -40,6 +41,23 @@ While sculpting, one finger (or the left mouse button) sculpts, two fingers (or 
 </Side>
 
 Painting changes only the colors, not the shape, and stays when you reshape or change **Detail**. **🧽 Clear paint** removes all of it.
+
+### Scatter trees, rocks and grass {/* #scatter */}
+
+With **🌳 Scatter**, pick a **Model** (any 3D model in the project — add one first from **Objects → ＋ Add → Free models library…**) and drag over the terrain. Copies stand on the ground with a random turn and size, and skip slopes too steep to stand on.
+
+| Setting | What it does |
+| --- | --- |
+| **Density** | How many per 100 m². Going over the same spot again only fills gaps — it never piles them up. |
+| **Size from / to** | Each copy gets a random size in this range. |
+| **Solid** | Copies get a Collider and block the player and [pathfinding](../behaviors#follow) — on for trees and rocks, off for grass and flowers. |
+| **Remove** | The brush removes scattered copies instead of adding them. **🗑 Remove all scattered** clears them all. |
+
+Scattered copies are ordinary objects inside the terrain (they move with it) and are tagged `#scattered`. Each drag is one Undo step. Put `#scattered` in the camera's **Ignore tag** ([Camera follow](../behaviors#camera-follow)) so a forest doesn't keep pushing the camera in.
+
+:::tip
+Every copy is a real object: a few hundred are fine, thousands slow phones down. Grass and flowers look good at a low density spread over a big area.
+:::
 
 **⛰️ Make hills** replaces the terrain with new random hills up to **Hill height** meters (Undo brings the old ones back); **Flatten all** makes it flat again.
 
