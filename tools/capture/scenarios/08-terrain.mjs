@@ -20,6 +20,9 @@ export async function run({ page, s, H }) {
   }));
   const card = H.card('Terrain');
   await card.locator('button', { hasText: 'Sculpt' }).first().click();
+  await s.settle(300);
+  // The Paint tool shows its color swatches.
+  await card.locator('.terrain-tools button', { hasText: 'Paint' }).first().click();
   await s.settle(400);
   await card.scrollIntoViewIfNeeded();
   await s.shot('card-terrain', { clip: card, pad: 6 });
