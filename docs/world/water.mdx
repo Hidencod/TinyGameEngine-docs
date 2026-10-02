@@ -7,7 +7,7 @@ description: Lakes, pools and seas with waves. Things float in them, characters 
 
 <Art name="island" size={110} />
 
-**Water** is a lake, a pool or a sea: a flat surface with gentle waves that mirrors the sky and lets you see a little way below. A web of light moves across it, and the ground and objects under it catch dancing light (*caustics*) and a touch of the water's color the deeper they are. It isn't just for looks: physics objects **float** in it, characters **swim**, and when the camera goes under the surface everything turns deep blue and the screen edges darken.
+**Water** is a lake, a pool or a sea: a flat surface with gentle waves that mirrors the sky and lets you see a little way below. A web of light moves across it, and the ground and objects under it catch dancing light (*caustics*) and a touch of the water's color the deeper they are. Foam gathers where the water meets the shore and anything standing or floating in it, and swimmers and floating objects get a foam collar, ripples and a wake. It isn't just for looks: physics objects **float** in it, characters **swim**, and when the camera goes under the surface everything turns deep blue and the screen edges darken.
 
 ## Add water
 
@@ -64,6 +64,7 @@ Lava is orange water: **Color** `#ff7a1a`, **Deep color** `#a01e00`, **Clearness
 ## Good to know
 
 - Water is drawn with a single surface: no live reflections of objects, so it stays fast on phones. Several water objects are fine; caustics show under the first 4.
-- Caustics show when the game runs (press Play), not in the editor view.
+- Caustics and foam show when the game runs (press Play), not in the editor view.
+- Foam rings, ripples and wakes are drawn for the 16 objects nearest the camera that have a physics body. Static things (rocks, trees, the shore) get foam only where they touch the water.
 - The surface is see-through, so keep the bottom under it (terrain or a floor). Otherwise you see the sky through the water.
 - Tilting water (Rotation X / Z) isn't supported: floating always uses a flat surface.
