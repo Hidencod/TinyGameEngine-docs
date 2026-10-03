@@ -475,9 +475,9 @@
         {
           "name": "moveTo",
           "kind": "method",
-          "sig": "(x, z, speed?, avoidWalls?)",
+          "sig": "(x, z, speed?, options?)",
           "type": "void",
-          "doc": "Walk to a point on the ground (default speed 3, around walls). onArrived() runs there."
+          "doc": "Walk to a point on the ground (default speed 3, around walls), playing walk / idle clips. onArrived() runs there. options: { avoidWalls: false, animate: false, sprintSpeed: 8 }"
         },
         {
           "name": "stopMoving",

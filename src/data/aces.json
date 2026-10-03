@@ -3090,7 +3090,7 @@
       "display": "Move {object} to ({x}, {z}) at speed {speed}",
       "displayNoObject": null,
       "icon": "🚶",
-      "description": "Walk to a point on the ground over the next frames (speed in meters per second), going around walls and rocks when \"Go around walls\" is on. \"On arrived\" runs when it gets there. Tap to move: X = touchWorldX, Z = touchWorldZ.",
+      "description": "Walk to a point on the ground over the next frames (speed in meters per second), going around walls and rocks when \"Go around walls\" is on. A model plays its walk clip (sprint above \"Sprint above speed\") and idle when it stops, unless \"Play walk / idle animations\" is off. \"On arrived\" runs when it gets there. Tap to move: X = touchWorldX, Z = touchWorldZ.",
       "isTrigger": false,
       "objectRequired": true,
       "objectOptional": false,
@@ -3135,6 +3135,26 @@
           "type": "boolean",
           "options": null,
           "default": "true",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "animate",
+          "label": "Play walk / idle animations",
+          "type": "boolean",
+          "options": null,
+          "default": "true",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "sprintSpeed",
+          "label": "Sprint above speed",
+          "type": "number",
+          "options": null,
+          "default": "6",
           "optional": false,
           "hint": null,
           "varScope": null

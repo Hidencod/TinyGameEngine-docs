@@ -314,6 +314,14 @@ function onArrived() {
 
 Tap to move: `const p = game.touchWorld(); entity.moveTo(p.x, p.z);` inside `if (input.tapped)` in `update`. `entity.stopMoving()` cancels, and `entity.movingTo` is true while it walks.
 
+A model plays its **walk** clip while it walks (**sprint** above speed 6, if it has one) and **idle** when it stops. Change that with options as the 4th argument:
+
+```js
+entity.moveTo(x, z, 8, { sprintSpeed: 10 });   // walk up to 10, sprint above
+entity.moveTo(x, z, 3, { animate: false });    // leave the animation alone (play your own)
+entity.moveTo(x, z, 3, { avoidWalls: false }); // straight line
+```
+
 ### UI: pause button
 
 ```js

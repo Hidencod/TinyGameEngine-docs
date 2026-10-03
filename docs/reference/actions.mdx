@@ -519,7 +519,7 @@ Move toward a point (speed in meters per second).
 
 <span class="tge-ace-display">Move ‹Object› to (‹X›, ‹Z›) at speed ‹Speed›</span>
 
-Walk to a point on the ground over the next frames (speed in meters per second), going around walls and rocks when "Go around walls" is on. "On arrived" runs when it gets there. Tap to move: X = touchWorldX, Z = touchWorldZ.
+Walk to a point on the ground over the next frames (speed in meters per second), going around walls and rocks when "Go around walls" is on. A model plays its walk clip (sprint above "Sprint above speed") and idle when it stops, unless "Play walk / idle animations" is off. "On arrived" runs when it gets there. Tap to move: X = touchWorldX, Z = touchWorldZ.
 
 - **Where:** Pick an **object** (or a #tag) first, then this action.
 - **ID:** `object.moveToPosition` (as saved in project files)
@@ -530,6 +530,8 @@ Walk to a point on the ground over the next frames (speed in meters per second),
 | Z | Number (expression) | `0` |  |
 | Speed | Number (expression) | `3` |  |
 | Go around walls | Yes / No (expression) | `true` |  |
+| Play walk / idle animations | Yes / No (expression) | `true` |  |
+| Sprint above speed | Number (expression) | `6` |  |
 
 ### Stop moving {/* #object-stopmoving */}
 

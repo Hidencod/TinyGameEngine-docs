@@ -184,7 +184,7 @@ Moves toward another object — chasing enemies, pets, homing missiles.
 
 ### Walk to a point {/* #move-to-position */}
 
-To send something to a **spot** instead of after an object, use the **Move to position** action (*Object* group): it walks there over the next frames, around walls when **Go around walls** is on, and **On arrived** runs when it gets there (or as close as it can). **Stop moving** cancels it, and *Is moving to a position* is true on the way. It works with or without a Physics body; a movement behavior on the same object waits while it walks, and the joystick takes over again at once.
+To send something to a **spot** instead of after an object, use the **Move to position** action (*Object* group): it walks there over the next frames, around walls when **Go around walls** is on, and **On arrived** runs when it gets there (or as close as it can). **Stop moving** cancels it, and *Is moving to a position* is true on the way. It works with or without a Physics body; a movement behavior on the same object waits while it walks, and the joystick takes over again at once. A model plays its walk clip on the way (sprint above **Sprint above speed**, 6 by default) and idle when it stops; turn off **Play walk / idle animations** to play your own.
 
 Tap to move — two rows, with the spot under the finger from **`touchWorldX`** / **`touchWorldZ`**:
 
