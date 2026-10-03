@@ -24,6 +24,7 @@ Define any of these in a script; the engine calls them.
 | `onCollisionEnd(other)` | This entity stopped touching `other`. | ✔ |  |
 | `onTap()` | The player tapped this entity. | ✔ |  |
 | `onClick()` | This UI button was clicked. | ✔ |  |
+| `onArrived()` | It reached the point of entity.moveTo() (or got as close as it could). | ✔ |  |
 | `onDestroy()` | This entity is about to be destroyed. | ✔ |  |
 
 ## `entity` — entity {/* #entity */}
@@ -100,7 +101,7 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `setBehaviorParam(type, param, value)` | `void` | Change a behavior parameter, e.g. ("platformer", "speed", 8) |
 | `damage(amount, from?)` | `void` | Health behavior: lose health; from = what hit it (for Knockback). Fires On hurt / On death. |
 | `heal(amount)` | `void` | Health behavior: get health back, up to Max health. Current health: getVar("health"). |
-| `moveTo(x, z, speed?, avoidWalls?)` | `void` | Walk to a point on the ground (default speed 3, around walls). "On arrived" fires there. |
+| `moveTo(x, z, speed?, avoidWalls?)` | `void` | Walk to a point on the ground (default speed 3, around walls). onArrived() runs there. |
 | `stopMoving()` | `void` | Cancel moveTo(). |
 | `movingTo` | `boolean` | A moveTo() is under way. |
 | `inWater` | `boolean` | In a Water object (a physics body: any part of it). |

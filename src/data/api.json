@@ -477,7 +477,7 @@
           "kind": "method",
           "sig": "(x, z, speed?, avoidWalls?)",
           "type": "void",
-          "doc": "Walk to a point on the ground (default speed 3, around walls). \"On arrived\" fires there."
+          "doc": "Walk to a point on the ground (default speed 3, around walls). onArrived() runs there."
         },
         {
           "name": "stopMoving",
@@ -974,6 +974,11 @@
       "name": "onClick",
       "args": "",
       "doc": "This UI button was clicked."
+    },
+    {
+      "name": "onArrived",
+      "args": "",
+      "doc": "It reached the point of entity.moveTo() (or got as close as it could)."
     },
     {
       "name": "onDestroy",
