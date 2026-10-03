@@ -40,6 +40,14 @@
     "code": "// Chase the Player.\nfunction update(dt) {\n  const player = game.find('Player');\n  if (!player) return;\n  const target = player.getWorldPosition();\n  entity.lookAt(target.x, entity.position.y, target.z);\n  if (entity.distanceTo(player) > 1.5) {\n    entity.moveToward(target.x, entity.position.y, target.z, (props.speed ?? 2) * dt);\n  }\n}\n"
   },
   {
+    "id": "patrol",
+    "title": "Patrol between two points",
+    "icon": "🔁",
+    "scope": "entity",
+    "description": "Walk back and forth between two objects you pick in the Inspector (each enemy its own).",
+    "code": "// Walk back and forth between two objects picked in the Inspector.\n// Put this script on any number of enemies and give each its own Point A and Point B\n// (empty objects make good markers). The fields below show up in the Inspector.\nconst properties = {\n  speed: 2,          // meters per second\n  pointA: object(),  // pick an object in the Inspector\n  pointB: object(),\n  wait: 0.5,         // seconds to pause at each end\n};\n\nlet goingToB = true;\nlet waitLeft = 0;\n\nfunction update(dt) {\n  const target = goingToB ? props.pointB : props.pointA;\n  if (!target) return;                       // not picked yet\n  if (waitLeft > 0) { waitLeft -= dt; return; }\n  const me = entity.getWorldPosition();\n  const p = target.getWorldPosition();\n  entity.lookAt(p.x, me.y, p.z);             // face it, staying upright\n  entity.moveToward(p.x, me.y, p.z, props.speed * dt);\n  if (Math.hypot(p.x - me.x, p.z - me.z) < 0.2) {\n    goingToB = !goingToB;                    // turn around\n    waitLeft = props.wait;\n  }\n}\n"
+  },
+  {
     "id": "spawner",
     "title": "Spawn every second",
     "icon": "⏱️",

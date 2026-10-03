@@ -41,8 +41,8 @@
       "smoothing": 5,
       "lookAtTarget": true,
       "stayBehind": false,
-      "avoidWalls": false,
-      "ignoreTag": "",
+      "fadeInWay": false,
+      "fadeTag": "",
       "mouseLook": false,
       "lookSpeed": 1
     },

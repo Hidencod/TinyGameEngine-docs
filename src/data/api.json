@@ -417,6 +417,27 @@
           "doc": "Stop this entity's Audio component."
         },
         {
+          "name": "getComponent",
+          "kind": "method",
+          "sig": "(type)",
+          "type": "object|null",
+          "doc": "A copy of a component's or behavior's settings, e.g. getComponent(\"rigidbody\").mass. Read-only: change things with the set… methods."
+        },
+        {
+          "name": "hasComponent",
+          "kind": "method",
+          "sig": "(type)",
+          "type": "boolean",
+          "doc": "Does it have this component or behavior? e.g. other.hasComponent(\"health\")"
+        },
+        {
+          "name": "getScript",
+          "kind": "method",
+          "sig": "(name)",
+          "type": "object|null",
+          "doc": "What a code script on this object exports, e.g. other.getScript(\"Enemy\")?.hit(1). In that script: export function hit(n) { … }"
+        },
+        {
           "name": "setBehaviorEnabled",
           "kind": "method",
           "sig": "(type, on)",
@@ -905,6 +926,13 @@
           "sig": "(degrees)",
           "type": "number",
           "doc": "Degrees to radians (for Math.sin etc.)."
+        },
+        {
+          "name": "object",
+          "kind": "method",
+          "sig": "()",
+          "type": "property",
+          "doc": "In const properties = { … }: a field where each object picks another object in the Inspector, e.g. target: object(). Read it as props.target."
         }
       ]
     }
@@ -988,6 +1016,13 @@
       "sig": "(degrees)",
       "type": "number",
       "doc": "Degrees to radians (for Math.sin etc.)."
+    },
+    {
+      "name": "object",
+      "kind": "method",
+      "sig": "()",
+      "type": "property",
+      "doc": "In const properties = { … }: a field where each object picks another object in the Inspector, e.g. target: object(). Read it as props.target."
     }
   ],
   "globals": [
@@ -1019,7 +1054,7 @@
       "name": "props",
       "kind": "property",
       "type": "object",
-      "doc": "Values set in the Inspector for this script, e.g. props.speed"
+      "doc": "Values set in the Inspector for this object, e.g. props.speed. Declare them with const properties = { speed: 2, target: object() } and every object using the script shows those fields; an object() property is the chosen object itself (or null)."
     },
     {
       "name": "vars",

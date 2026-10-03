@@ -92,6 +92,9 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `getParticleCount()` | `number` | Particles currently alive. |
 | `playSound()` | `void` | Play this entity's Audio component. |
 | `stopSound()` | `void` | Stop this entity's Audio component. |
+| `getComponent(type)` | `object\|null` | A copy of a component's or behavior's settings, e.g. getComponent("rigidbody").mass. Read-only: change things with the set… methods. |
+| `hasComponent(type)` | `boolean` | Does it have this component or behavior? e.g. other.hasComponent("health") |
+| `getScript(name)` | `object\|null` | What a code script on this object exports, e.g. other.getScript("Enemy")?.hit(1). In that script: export function hit(n) &#123; … &#125; |
 | `setBehaviorEnabled(type, on)` | `void` | Enable/disable a behavior, e.g. ("platformer", false) |
 | `getBehaviorParam(type, param)` | `value` | Read a behavior parameter. |
 | `setBehaviorParam(type, param, value)` | `void` | Change a behavior parameter, e.g. ("platformer", "speed", 8) |
@@ -189,6 +192,7 @@ Handy math functions available everywhere.
 | `random(min, max)` | `number` | Random decimal number between min and max. |
 | `randomInt(min, max)` | `number` | Random whole number between min and max (inclusive). |
 | `deg2rad(degrees)` | `number` | Degrees to radians (for Math.sin etc.). |
+| `object()` | `property` | In const properties = &#123; … &#125;: a field where each object picks another object in the Inspector, e.g. target: object(). Read it as props.target. |
 
 ## Globals
 
@@ -198,7 +202,7 @@ Handy math functions available everywhere.
 | `game` | `game` | The game: find/spawn entities, variables, scenes... |
 | `input` | `input` | Joystick, buttons, taps and swipes. |
 | `audio` | `audio` | Play sounds. |
-| `props` | `object` | Values set in the Inspector for this script, e.g. props.speed |
+| `props` | `object` | Values set in the Inspector for this object, e.g. props.speed. Declare them with const properties = &#123; speed: 2, target: object() &#125; and every object using the script shows those fields; an object() property is the chosen object itself (or null). |
 | `vars` | `object` | Variables storage for this script. |
 | `THREE` | `three.js` | Advanced: the three.js library, e.g. new THREE.MeshStandardMaterial(&#123; color: "red" &#125;). |
 
@@ -285,6 +289,39 @@ function update(dt) {
   entity.lookAt(target.x, entity.position.y, target.z);
   if (entity.distanceTo(player) > 1.5) {
     entity.moveToward(target.x, entity.position.y, target.z, (props.speed ?? 2) * dt);
+  }
+}
+```
+
+### Patrol between two points
+
+Walk back and forth between two objects you pick in the Inspector (each enemy its own).
+
+```js
+// Walk back and forth between two objects picked in the Inspector.
+// Put this script on any number of enemies and give each its own Point A and Point B
+// (empty objects make good markers). The fields below show up in the Inspector.
+const properties = {
+  speed: 2,          // meters per second
+  pointA: object(),  // pick an object in the Inspector
+  pointB: object(),
+  wait: 0.5,         // seconds to pause at each end
+};
+
+let goingToB = true;
+let waitLeft = 0;
+
+function update(dt) {
+  const target = goingToB ? props.pointB : props.pointA;
+  if (!target) return;                       // not picked yet
+  if (waitLeft > 0) { waitLeft -= dt; return; }
+  const me = entity.getWorldPosition();
+  const p = target.getWorldPosition();
+  entity.lookAt(p.x, me.y, p.z);             // face it, staying upright
+  entity.moveToward(p.x, me.y, p.z, props.speed * dt);
+  if (Math.hypot(p.x - me.x, p.z - me.z) < 0.2) {
+    goingToB = !goingToB;                    // turn around
+    waitLeft = props.wait;
   }
 }
 ```

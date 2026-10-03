@@ -132,6 +132,45 @@ Good to know:
 - Libraries get `game`, `input`, `audio`, `THREE` and the helpers, like a game script; there is no `entity` or `props`.
 - If the name is wrong, the error lists the libraries that do exist, with the line of the `import`.
 
+## Talk to other scripts and components {/* #components */}
+
+A library is shared by the whole game. When the code belongs to **one object** (this enemy's health, this door's open/close), put it in that object's script and **`export`** what other scripts may use:
+
+```js
+// Object script named "Enemy"
+export let hp = 3;
+
+export function hit(amount) {
+  hp -= amount;
+  if (hp <= 0) entity.destroy();
+}
+```
+
+Any other script reaches it with **`getScript('Name')`** on that object:
+
+```js
+// Object script on a Bullet
+function onCollision(other) {
+  other.getScript('Enemy')?.hit(1);   // ?. : does nothing if `other` has no Enemy script
+  entity.destroy();
+}
+```
+
+- Each object has **its own copy**: hitting one enemy doesn't change the others' `hp`.
+- Values are live: `getScript('Enemy').hp` is always the current value.
+- `getScript()` gives `null` when the object has no script of that name (upper/lower case doesn't matter). It works on `entity` too, to reach another script on the same object.
+- Only what is exported can be used; `start`, `update` and the other lifecycle functions stay private.
+
+To **read a component's settings**, use `getComponent()`. It works for components and behaviors:
+
+```js
+const mass = entity.getComponent('rigidbody').mass;
+const maxHp = other.getComponent('health')?.maxHealth;
+if (other.hasComponent('car')) { /* … */ }
+```
+
+`getComponent()` gives a **copy**: changing it does nothing. To change things, use the methods for them, such as `setBehaviorParam('health', 'maxHealth', 5)`, `setColor()` or `setVelocity()` (see the [Scripting API](../reference/scripting-api)).
+
 ## three.js (advanced) {/* #threejs */}
 
 The engine draws everything with [three.js](https://threejs.org/docs/), and scripts can use it directly when the built-in components are not enough: custom materials and shaders, generated meshes, extra lights, instancing.
