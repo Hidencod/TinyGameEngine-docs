@@ -260,6 +260,13 @@
       "insert": "fps"
     },
     {
+      "name": "loadingProgress",
+      "signature": "loadingProgress",
+      "description": "On a loading screen: how far it got, 0 to 1 (for a loading bar). It is 1 exactly when the game is ready to leave the screen",
+      "category": "Game",
+      "insert": "loadingProgress"
+    },
+    {
       "name": "loopIndex",
       "signature": "loopIndex",
       "description": "Current number of the innermost loop (Repeat, For, For each, While)",
@@ -439,11 +446,15 @@
     },
     {
       "name": "value",
-      "description": "Progress bar value (UI)"
+      "description": "Slider / bar value (UI)"
+    },
+    {
+      "name": "min",
+      "description": "Slider / bar minimum (UI)"
     },
     {
       "name": "max",
-      "description": "Progress bar maximum (UI)"
+      "description": "Slider / bar maximum (UI)"
     },
     {
       "name": "pressed",
@@ -467,7 +478,8 @@
     "touchWorldY",
     "touchWorldZ",
     "loopIndex",
-    "timeScale"
+    "timeScale",
+    "loadingProgress"
   ],
   "compareOps": [
     "=",
@@ -497,6 +509,7 @@
     "worldZ",
     "text",
     "value",
+    "min",
     "max"
   ]
 }

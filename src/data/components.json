@@ -10,6 +10,11 @@
       "title": "Camera",
       "desc": "Shows the game world from this object"
     },
+    "canvas": {
+      "icon": "🖼️",
+      "title": "Canvas",
+      "desc": "Where UI elements are drawn: the screen, or a place in the scene"
+    },
     "light": {
       "icon": "💡",
       "title": "Light",
@@ -38,7 +43,7 @@
     "ui": {
       "icon": "🖼️",
       "title": "UI element",
-      "desc": "Button, label, image, panel or progress bar"
+      "desc": "Text, button, image, slider or panel"
     },
     "script": {
       "icon": "📜",

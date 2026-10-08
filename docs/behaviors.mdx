@@ -16,6 +16,20 @@ A **behavior** is ready-made movement or logic you add to an object in one tap: 
 
 Each behavior card has a switch to turn it **on/off** and 🗑 to remove it. Events can do the same while playing (**Enable/disable behavior**) and change any setting (**Set behavior setting**); scripts use `entity.setBehaviorParam('platformer', 'speed', 8)`. In expressions: `Player.behavior("platformer", "speed")`.
 
+## Custom controls {/* #custom-controls */}
+
+The Platformer, Top-down, Car and Boat never read the joystick or keys themselves. You pass the input in with events (or scripts), from the joystick, your own buttons, a touch wheel or any logic:
+
+- **Car:** *Drive car* with **steer** (−1 left … 1 right), **gas** and **brake** (0 … 1). With the joystick: steer `joystickX`, gas `max(joystickY, 0)`, brake `max(-joystickY, 0)`.
+- **Platformer / Top-down / Boat:** *Move with input* with **x** (−1 left … 1 right) and **y** (−1 back … 1 forward). With the joystick: x `joystickX`, y `joystickY`.
+- **Any of them:** *Simulate control* presses Left, Right, Up, Down, Jump or Handbrake for one frame, like a key.
+
+Put the action under a *Button is held* condition, for example *Button Gas is held* → *Drive car: steer 0, gas 1, brake 0*. The action has to run every frame the controls are held. When it stops, the vehicle coasts and the character stops.
+
+Make the buttons in **Scene → Controls**. Each button can also have keyboard keys, so you can test on a computer. Jump still uses the *Jump button* name, so it works with any movement mode.
+
+Pick `events` from the **Driver** or **Control** dropdown in the inspector.
+
 ## 🏃 Platformer {/* #platformer */}
 
 <Side shot="behavior-platformer" crop>
@@ -26,6 +40,7 @@ Walk with the joystick (or WASD / arrows) and jump with a button. Needs a **dyna
 | --- | --- | --- |
 | **Speed** | 5 | Walking speed (m/s). |
 | **Jump strength** | 7 | How high it jumps. |
+| **Control** | joystick | Where the movement comes from: **joystick** (joystick, WASD or arrow keys) or **events** (*Move with input* from your own buttons, see [Custom controls](#custom-controls)). |
 | **Jump button** | jump | The touch button that jumps (see *Touch controls*). |
 | **Turn to direction** | on | Face the way it moves. |
 | **Camera relative** | on | “Up” on the joystick means *away from the camera*, not a fixed direction. |
@@ -42,6 +57,7 @@ Move in 8 directions on the ground with the joystick — no jumping. For top-dow
 | Setting | Default | What it does |
 | --- | --- | --- |
 | **Speed** | 5 | Movement speed. |
+| **Control** | joystick | Where the movement comes from: **joystick** (joystick, WASD or arrow keys) or **events** (*Move with input* from your own buttons, see [Custom controls](#custom-controls)). |
 | **Turn to direction** | on | Face the way it moves. |
 | **Camera relative** | on | Joystick directions follow the camera. |
 | **Animate** | on | Idle / walk / sprint clips automatically. |
@@ -52,7 +68,7 @@ Move in 8 directions on the ground with the joystick — no jumping. For top-dow
 
 <Side shot="behavior-car" crop>
 
-Drive with the joystick: **up = gas**, **down = brake, then reverse**, **left/right = steer**. Real ray-cast vehicle physics with suspension. Needs a **dynamic Physics body**.
+Gas, brake and steering come from your events or scripts (*Drive car*, see [Custom controls](#custom-controls)): **gas**, **brake then reverse**, **steer**. Real ray-cast vehicle physics with suspension. Needs a **dynamic Physics body**.
 
 | Setting | Default | What it does |
 | --- | --- | --- |
@@ -61,10 +77,18 @@ Drive with the joystick: **up = gas**, **down = brake, then reverse**, **left/ri
 | **Steering** | 30 | Largest steering angle (degrees). |
 | **Grip** | 1 | Tyre grip. Lower = drifty, higher = sticky. |
 | **Brake** | 1 | Braking strength. |
+| **Reverse speed** | 0 | Top speed in reverse (m/s). 0 = 60% of Speed. |
+| **Steer rate** | 0 | How fast the wheels turn toward full lock (degrees per second). 0 = default. |
+| **Steer at top speed** | 35 | Percent of the full steering angle kept at top speed. 100 = the same at any speed. |
+| **Top speed ease** | 15 | Percent of top speed over which the engine fades out. 0 = a hard cap, which can make the body pitch. |
+| **Suspension stiffness** | 1 | Spring strength multiplier. Higher = stiffer, less dive when braking. |
+| **Suspension damping** | 1 | Spring damping multiplier. Higher = settles faster, less bounce. |
 | **Wheels** | — | Which nodes of the car model are the wheels (they spin and steer). Tap to choose; mark the front ones. |
-| **Driver** | player | Who drives: **player** (joystick, WASD or arrow keys), **ai** (drives itself along the Path) or **none** (parked: no gas, no steering). Change it from events with *Set behavior setting*, e.g. to start a race after a countdown. |
+| **Driver** | manual | **manual** (you drive it with *Drive car* from events or scripts) or **ai** (drives itself along the Path). Change it from events with *Set behavior setting*, e.g. to start a race after a countdown. |
 | **Path** | — | Waypoint objects that form a closed racing line, e.g. `#waypoint`. Needed for **ai**. They are visited in the order of their `index` variable, or by name (“Waypoint 2” before “Waypoint 10”). |
-| **Seat** | 0, 0.5, 0 | Where a rider sits after *Enter vehicle* (see [Boat](#boat)): meters right, up, back from the car's middle. |
+| **Seat** | 0, 0.5, 0 | Where a rider sits after *Enter vehicle* (see [Getting in and out](#boat)): meters right, up, back from the car's middle. |
+| **Auto seat** | on | *Enter vehicle* seats the rider and *Exit vehicle* puts them down beside the car. Off = do it yourself with *Attach to* / *Detach*. |
+| **Auto camera** | on | *Enter vehicle* makes cameras that follow the rider follow the car (and back on exit). Off = use *Set behavior setting* on the camera. |
 
 Wheels are found automatically in models whose parts are named “wheel…” (like the Kenney car kit). Otherwise pick them in **Wheels**; without wheels it drives on 4 invisible wheels at the corners.
 
@@ -74,20 +98,23 @@ With a **Path**, every car keeps two instance variables up to date: `progress` (
 
 ## ⛵ Boat {/* #boat */}
 
-Sail on [Water](./world/water) with the joystick: **up = forward**, **down = reverse** (slower), **left/right = steer**. The boat floats high on the waves, speeds up and turns smoothly, hardly drifts sideways, leans into turns and rocks gently. On land it has no power. Needs a **dynamic Physics body** (a **Collider** on *Auto* fits a boat model).
+Sail on [Water](./world/water). Your events or scripts steer it with *Move with input* (**y** forward / reverse, **x** steer); reverse is slower. The boat floats high on the waves, speeds up and turns smoothly, hardly drifts sideways, leans into turns and rocks gently. On land it has no power. Needs a **dynamic Physics body** (a **Collider** on *Auto* fits a boat model).
 
 | Setting | Default | What it does |
 | --- | --- | --- |
 | **Speed** | 8 | Top speed (m/s). Reverse is slower. |
 | **Turn speed** | 70 | How fast it turns (degrees per second) once it is moving; it turns less when nearly still, like a real boat. |
 | **Acceleration** | 3 | How quickly it speeds up. With the stick released it glides to a stop. |
-| **Driver** | player | **player** (joystick, WASD or arrow keys) or **none** (nobody at the wheel). |
 | **Seat** | 0, 0.3, 0 | Where a rider sits after *Enter vehicle*: meters right, up, back from the boat's middle (forward is negative). |
+| **Auto seat** | on | *Enter vehicle* seats the rider and *Exit vehicle* puts them down beside the boat. Off = *Attach to* / *Detach* yourself. |
+| **Auto camera** | on | *Enter vehicle* makes cameras that follow the rider follow the boat. Off = point the camera yourself. |
 
 The boat keeps its speed in the instance variable `speed` (m/s). Put **Camera follow** on the camera with **Target** = the boat and **Stay behind** on.
 
 :::tip Getting in and out
-Two event actions do everything: *Enter vehicle* (`Player` gets into `Boat`) and *Exit vehicle*. Getting in puts the player in the **Seat**, stops their own movement, gives the boat the joystick and makes cameras that follow the player follow the boat. Getting out puts them down beside it — on land if one side has some — and gives it all back.
+Two event actions do the work, for a boat or a car: *Enter vehicle* (`Player` gets into `Boat`) and *Exit vehicle*. Getting in puts the player in the **Seat**, stops their own movement and makes cameras that follow the player follow the vehicle (turn either off with **Auto seat** / **Auto camera**). Getting out puts them down beside it — on land if one side has some — and gives it all back. The vehicle remembers its driver: the condition *Has a driver* is true while someone is in it.
+
+It does **not** steer the vehicle. Pass the input in yourself, for example *Boat has a driver* (every tick) → *Move with input: Boat, x joystickX, y joystickY*.
 
 With an on-screen control button named `use` (Scene → Controls), one event does both:
 - **On button use pressed**
@@ -103,7 +130,7 @@ To show the button only where it can be used — and say what it does — add th
 
 A hidden button can't be pressed at all (not even with its keyboard key), so the player can only get in next to the boat.
 
-Start the boat with **Driver = none** so it doesn't move before anyone gets in.
+A vehicle without a driver does nothing until your events give it input, so no setup is needed to keep it parked.
 :::
 
 ## 🎥 Camera follow {/* #camera-follow */}

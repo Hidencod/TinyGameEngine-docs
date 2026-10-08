@@ -239,28 +239,42 @@
           "kind": "method",
           "sig": "()",
           "type": "number",
-          "doc": "Progress bar value (UI component)."
+          "doc": "Slider (or bar) value (UI component)."
         },
         {
           "name": "setUIValue",
           "kind": "method",
           "sig": "(value)",
           "type": "void",
-          "doc": "Set the progress bar value, e.g. health."
+          "doc": "Set the slider value, e.g. health."
         },
         {
           "name": "getUIMax",
           "kind": "method",
           "sig": "()",
           "type": "number",
-          "doc": "Progress bar maximum."
+          "doc": "Slider maximum."
         },
         {
           "name": "setUIMax",
           "kind": "method",
           "sig": "(max)",
           "type": "void",
-          "doc": "Set the progress bar maximum."
+          "doc": "Set the slider maximum."
+        },
+        {
+          "name": "getUIMin",
+          "kind": "method",
+          "sig": "()",
+          "type": "number",
+          "doc": "Slider minimum."
+        },
+        {
+          "name": "setUIMin",
+          "kind": "method",
+          "sig": "(min)",
+          "type": "void",
+          "doc": "Set the slider minimum."
         },
         {
           "name": "setUIImage",
@@ -275,6 +289,20 @@
           "sig": "({ background, text, fill })",
           "type": "void",
           "doc": "Change UI colors, e.g. { background: \"#ff0000\" }."
+        },
+        {
+          "name": "setUIInteractable",
+          "kind": "method",
+          "sig": "(on)",
+          "type": "void",
+          "doc": "Grey a button or slider out, or turn it back on (Interactable)."
+        },
+        {
+          "name": "refreshUI",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Re-apply the UI styles after writing component data directly."
         },
         {
           "name": "isPressed",
@@ -372,7 +400,14 @@
           "kind": "method",
           "sig": "()",
           "type": "void",
-          "doc": "Start (or restart) the Particles component; also fires its Burst."
+          "doc": "Start the Particles component; also fires its Burst. Safe to call every frame: already emitting means nothing changes."
+        },
+        {
+          "name": "restartParticles",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Play the Particles component from the beginning even if it is already emitting."
         },
         {
           "name": "stopParticles",
@@ -421,7 +456,42 @@
           "kind": "method",
           "sig": "(type)",
           "type": "object|null",
-          "doc": "A copy of a component's or behavior's settings, e.g. getComponent(\"rigidbody\").mass. Read-only: change things with the set… methods."
+          "doc": "A copy of a component's or behavior's settings, e.g. getComponent(\"rigidbody\").mass. Read-only — component() gives you the live one."
+        },
+        {
+          "name": "component",
+          "kind": "method",
+          "sig": "(type)",
+          "type": "component|null",
+          "doc": "A component as a live object: every setting in the Inspector is a property you can read and write, e.g. component(\"rigidbody\").mass = 5, component(\"light\").intensity = 2. Structural ones (shape, model) need rebuild() — component(type).set({ … }) does it for you."
+        },
+        {
+          "name": "getComponents",
+          "kind": "method",
+          "sig": "()",
+          "type": "string[]",
+          "doc": "Component types on this object."
+        },
+        {
+          "name": "addComponent",
+          "kind": "method",
+          "sig": "(type, settings?)",
+          "type": "component|null",
+          "doc": "Add a component and rebuild, e.g. addComponent(\"rigidbody\", { mass: 2 }). Types: mesh, collider, rigidbody, light, camera, text, ui, audio, particles, terrain, water."
+        },
+        {
+          "name": "removeComponent",
+          "kind": "method",
+          "sig": "(type)",
+          "type": "boolean",
+          "doc": "Remove a component and rebuild."
+        },
+        {
+          "name": "rebuild",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Rebuild the object from its components (3D content, body, text, UI, particles, behaviors), keeping where it is and its variables."
         },
         {
           "name": "hasComponent",
@@ -436,6 +506,34 @@
           "sig": "(name)",
           "type": "object|null",
           "doc": "What a code script on this object exports, e.g. other.getScript(\"Enemy\")?.hit(1). In that script: export function hit(n) { … }"
+        },
+        {
+          "name": "behavior",
+          "kind": "method",
+          "sig": "(type)",
+          "type": "behavior|null",
+          "doc": "A behavior as a live object: its settings are properties (behavior(\"platformer\").speed = 8) and it has its own readings and methods, e.g. behavior(\"car\").speed, behavior(\"platformer\").jump(), behavior(\"health\").health. Null without that behavior."
+        },
+        {
+          "name": "getBehaviors",
+          "kind": "method",
+          "sig": "()",
+          "type": "string[]",
+          "doc": "Behavior types on this object."
+        },
+        {
+          "name": "addBehavior",
+          "kind": "method",
+          "sig": "(type, params?)",
+          "type": "behavior|null",
+          "doc": "Add a behavior and start it now, e.g. addBehavior(\"bullet\", { speed: 20 })"
+        },
+        {
+          "name": "removeBehavior",
+          "kind": "method",
+          "sig": "(type)",
+          "type": "boolean",
+          "doc": "Stop and remove a behavior."
         },
         {
           "name": "setBehaviorEnabled",
@@ -503,7 +601,7 @@
           "kind": "method",
           "sig": "(vehicle)",
           "type": "void",
-          "doc": "Get into a Boat or Car: ride in its seat; the joystick drives it, cameras follow it."
+          "doc": "Get into a Boat or Car: ride in its seat; cameras follow it. It does not steer it: pass the input in with driveCar / setMoveInput."
         },
         {
           "name": "exitVehicle",
@@ -513,10 +611,37 @@
           "doc": "Get out, beside the vehicle (on land if possible)."
         },
         {
+          "name": "driveCar",
+          "kind": "method",
+          "sig": "(steer, gas, brake)",
+          "type": "void",
+          "doc": "Drive a Car this frame: steer −1 (left) … 1 (right), gas and brake 0 … 1. Call it every frame the controls are held; calls in one frame merge, so steering and gas from two places both arrive."
+        },
+        {
+          "name": "setMoveInput",
+          "kind": "method",
+          "sig": "(x, y)",
+          "type": "void",
+          "doc": "Move a Platformer, Top-down or Boat this frame: right/left (x) and forward/back (y), −1 … 1. Call it every frame the input is held; calls in one frame merge."
+        },
+        {
+          "name": "simulateControl",
+          "kind": "method",
+          "sig": "(...controls)",
+          "type": "void",
+          "doc": "Press controls for this frame, like a key would: \"left\", \"right\", \"up\" (gas / forward), \"down\" (brake / reverse), \"jump\", \"handbrake\". Several at once: simulateControl(\"left\", \"up\"). Works on Platformer, Top-down, Car and Boat."
+        },
+        {
           "name": "vehicle",
           "kind": "property",
           "type": "entity|null",
           "doc": "The vehicle it is riding, or null."
+        },
+        {
+          "name": "hasDriver",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "A boat or car someone got into (Enter vehicle)."
         },
         {
           "name": "getParent",
@@ -589,6 +714,18 @@
           "doc": "Is the game paused?"
         },
         {
+          "name": "loadingProgress",
+          "kind": "property",
+          "type": "number",
+          "doc": "On a loading screen: how far it got, 0 … 1 (assets loaded and time held, whichever is further behind). Draw a loading bar with it; the game moves on when it reaches 1."
+        },
+        {
+          "name": "isLoading",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "A loading screen is up and the game has not moved on yet."
+        },
+        {
           "name": "input",
           "kind": "property",
           "type": "input",
@@ -633,6 +770,13 @@
           "sig": "(name, position?, rotation?)",
           "type": "entity|null",
           "doc": "Create a prefab / clone: game.spawn(\"Coin\", {x:0,y:5,z:0})"
+        },
+        {
+          "name": "create",
+          "kind": "method",
+          "sig": "(spec?)",
+          "type": "entity|null",
+          "doc": "Make a brand-new object other scripts and event sheets can find: game.create({name:\"Portal\", shape:\"torus\", position:{x:0,y:2,z:0}, color:\"#8f6fff\"}). Put your own three.js meshes inside its .object3d."
         },
         {
           "name": "destroy",
@@ -751,6 +895,12 @@
           "kind": "property",
           "type": "{renderer,scene,camera}",
           "doc": "Advanced: the three.js renderer, scene and camera behind the game, e.g. game.three.scene.add(mesh)."
+        },
+        {
+          "name": "rapier",
+          "kind": "property",
+          "type": "{RAPIER,world,gravity,…}",
+          "doc": "Advanced: the physics engine behind the game. game.rapier.world is the Rapier World, game.rapier.bodyOf(entity) / collidersOf(entity) its objects, game.rapier.setGravity(x, y, z) the world gravity. Use it with RAPIER."
         },
         {
           "name": "spawnParticles",
@@ -1071,7 +1221,13 @@
       "name": "THREE",
       "kind": "property",
       "type": "three.js",
-      "doc": "Advanced: the three.js library, e.g. new THREE.MeshStandardMaterial({ color: \"red\" })."
+      "doc": "The three.js library, e.g. game.three.scene.add(new THREE.Mesh(geometry, material)). Same as import * as THREE from \"three\"."
+    },
+    {
+      "name": "RAPIER",
+      "kind": "property",
+      "type": "rapier3d",
+      "doc": "The physics library (Rapier), e.g. RAPIER.JointData.fixed(…) with game.rapier.world. Same as import * as RAPIER from \"rapier\"."
     }
   ],
   "vec3": [

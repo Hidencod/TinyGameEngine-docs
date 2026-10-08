@@ -67,12 +67,16 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `setOpacity(0..1)` | `void` | Change material opacity. |
 | `setText(text)` | `void` | Set the text of a Text component. |
 | `getText()` | `string` | Get the text of a Text component. |
-| `getUIValue()` | `number` | Progress bar value (UI component). |
-| `setUIValue(value)` | `void` | Set the progress bar value, e.g. health. |
-| `getUIMax()` | `number` | Progress bar maximum. |
-| `setUIMax(max)` | `void` | Set the progress bar maximum. |
+| `getUIValue()` | `number` | Slider (or bar) value (UI component). |
+| `setUIValue(value)` | `void` | Set the slider value, e.g. health. |
+| `getUIMax()` | `number` | Slider maximum. |
+| `setUIMax(max)` | `void` | Set the slider maximum. |
+| `getUIMin()` | `number` | Slider minimum. |
+| `setUIMin(min)` | `void` | Set the slider minimum. |
 | `setUIImage(assetName)` | `void` | Change the image of a UI element. |
 | `setUIColors({ background, text, fill })` | `void` | Change UI colors, e.g. &#123; background: "#ff0000" &#125;. |
+| `setUIInteractable(on)` | `void` | Grey a button or slider out, or turn it back on (Interactable). |
+| `refreshUI()` | `void` | Re-apply the UI styles after writing component data directly. |
 | `isPressed()` | `boolean` | True while this UI button is held down. |
 | `playAnimation(name: string, loop = true)` | `void` | Play a clip of the 3D model, e.g. "walk" or "jump". loop=false plays once and holds the last frame. |
 | `stopAnimation()` | `void` | Stop the playing model animation. |
@@ -86,16 +90,26 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `attachTo(parent)` | `void` | Carry this object along with another (keeps its place in the world), e.g. a picked-up key. |
 | `detach()` | `void` | Let go: back to the top level where it is now. |
 | `emitParticles(count: number)` | `void` | Shoot particles at once from the Particles component, e.g. emitParticles(30) on a hit. |
-| `startParticles()` | `void` | Start (or restart) the Particles component; also fires its Burst. |
+| `startParticles()` | `void` | Start the Particles component; also fires its Burst. Safe to call every frame: already emitting means nothing changes. |
+| `restartParticles()` | `void` | Play the Particles component from the beginning even if it is already emitting. |
 | `stopParticles()` | `void` | Stop making new particles (the ones out fade normally). |
 | `setParticleRate(rate: number)` | `void` | Particles per second while emitting. |
 | `isEmittingParticles()` | `boolean` | True while the Particles component makes new particles. |
 | `getParticleCount()` | `number` | Particles currently alive. |
 | `playSound()` | `void` | Play this entity's Audio component. |
 | `stopSound()` | `void` | Stop this entity's Audio component. |
-| `getComponent(type)` | `object\|null` | A copy of a component's or behavior's settings, e.g. getComponent("rigidbody").mass. Read-only: change things with the set… methods. |
+| `getComponent(type)` | `object\|null` | A copy of a component's or behavior's settings, e.g. getComponent("rigidbody").mass. Read-only — component() gives you the live one. |
+| `component(type)` | `component\|null` | A component as a live object: every setting in the Inspector is a property you can read and write, e.g. component("rigidbody").mass = 5, component("light").intensity = 2. Structural ones (shape, model) need rebuild() — component(type).set(&#123; … &#125;) does it for you. |
+| `getComponents()` | `string[]` | Component types on this object. |
+| `addComponent(type, settings?)` | `component\|null` | Add a component and rebuild, e.g. addComponent("rigidbody", &#123; mass: 2 &#125;). Types: mesh, collider, rigidbody, light, camera, text, ui, audio, particles, terrain, water. |
+| `removeComponent(type)` | `boolean` | Remove a component and rebuild. |
+| `rebuild()` | `void` | Rebuild the object from its components (3D content, body, text, UI, particles, behaviors), keeping where it is and its variables. |
 | `hasComponent(type)` | `boolean` | Does it have this component or behavior? e.g. other.hasComponent("health") |
 | `getScript(name)` | `object\|null` | What a code script on this object exports, e.g. other.getScript("Enemy")?.hit(1). In that script: export function hit(n) &#123; … &#125; |
+| `behavior(type)` | `behavior\|null` | A behavior as a live object: its settings are properties (behavior("platformer").speed = 8) and it has its own readings and methods, e.g. behavior("car").speed, behavior("platformer").jump(), behavior("health").health. Null without that behavior. |
+| `getBehaviors()` | `string[]` | Behavior types on this object. |
+| `addBehavior(type, params?)` | `behavior\|null` | Add a behavior and start it now, e.g. addBehavior("bullet", &#123; speed: 20 &#125;) |
+| `removeBehavior(type)` | `boolean` | Stop and remove a behavior. |
 | `setBehaviorEnabled(type, on)` | `void` | Enable/disable a behavior, e.g. ("platformer", false) |
 | `getBehaviorParam(type, param)` | `value` | Read a behavior parameter. |
 | `setBehaviorParam(type, param, value)` | `void` | Change a behavior parameter, e.g. ("platformer", "speed", 8) |
@@ -105,9 +119,13 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `stopMoving()` | `void` | Cancel moveTo(). |
 | `movingTo` | `boolean` | A moveTo() is under way. |
 | `inWater` | `boolean` | In a Water object (a physics body: any part of it). |
-| `enterVehicle(vehicle)` | `void` | Get into a Boat or Car: ride in its seat; the joystick drives it, cameras follow it. |
+| `enterVehicle(vehicle)` | `void` | Get into a Boat or Car: ride in its seat; cameras follow it. It does not steer it: pass the input in with driveCar / setMoveInput. |
 | `exitVehicle()` | `void` | Get out, beside the vehicle (on land if possible). |
+| `driveCar(steer, gas, brake)` | `void` | Drive a Car this frame: steer −1 (left) … 1 (right), gas and brake 0 … 1. Call it every frame the controls are held; calls in one frame merge, so steering and gas from two places both arrive. |
+| `setMoveInput(x, y)` | `void` | Move a Platformer, Top-down or Boat this frame: right/left (x) and forward/back (y), −1 … 1. Call it every frame the input is held; calls in one frame merge. |
+| `simulateControl(...controls)` | `void` | Press controls for this frame, like a key would: "left", "right", "up" (gas / forward), "down" (brake / reverse), "jump", "handbrake". Several at once: simulateControl("left", "up"). Works on Platformer, Top-down, Car and Boat. |
 | `vehicle` | `entity\|null` | The vehicle it is riding, or null. |
+| `hasDriver` | `boolean` | A boat or car someone got into (Enter vehicle). |
 | `getParent()` | `entity\|null` | Parent entity. |
 | `getChildren()` | `entity[]` | Child entities. |
 | `destroy()` | `void` | Remove the entity (at end of frame). |
@@ -125,6 +143,8 @@ The running game.
 | `dt` | `number` | Last frame time in seconds. |
 | `timeScale` | `number` | Game speed: 1 normal, 0.5 slow motion. |
 | `paused` | `boolean` | Is the game paused? |
+| `loadingProgress` | `number` | On a loading screen: how far it got, 0 … 1 (assets loaded and time held, whichever is further behind). Draw a loading bar with it; the game moves on when it reaches 1. |
+| `isLoading` | `boolean` | A loading screen is up and the game has not moved on yet. |
 | `input` | `input` | Same as `input`. |
 | `audio` | `audio` | Same as `audio`. |
 | `screen` | `{width,height}` | Screen size in pixels. |
@@ -132,6 +152,7 @@ The running game.
 | `find(nameOrId)` | `entity\|null` | First entity with that name/id: game.find("Player") |
 | `getAllEntities()` | `entity[]` | Every live entity. |
 | `spawn(name, position?, rotation?)` | `entity\|null` | Create a prefab / clone: game.spawn("Coin", &#123;x:0,y:5,z:0&#125;) |
+| `create(spec?)` | `entity\|null` | Make a brand-new object other scripts and event sheets can find: game.create(&#123;name:"Portal", shape:"torus", position:&#123;x:0,y:2,z:0&#125;, color:"#8f6fff"&#125;). Put your own three.js meshes inside its .object3d. |
 | `destroy(entity)` | `void` | Destroy an entity. |
 | `pick(screenX, screenY)` | `entity\|null` | Entity at a screen point. |
 | `touchWorld()` | `{x,y,z}` | The spot in the world under the finger / mouse (a surface, else the ground plane). Tap to move: player.moveTo(p.x, p.z). |
@@ -149,6 +170,7 @@ The running game.
 | `load(key)` | `value` | Load a saved value. |
 | `getCamera()` | `entity\|null` | The active camera entity. |
 | `three` | `{renderer,scene,camera}` | Advanced: the three.js renderer, scene and camera behind the game, e.g. game.three.scene.add(mesh). |
+| `rapier` | `{RAPIER,world,gravity,…}` | Advanced: the physics engine behind the game. game.rapier.world is the Rapier World, game.rapier.bodyOf(entity) / collidersOf(entity) its objects, game.rapier.setGravity(x, y, z) the world gravity. Use it with RAPIER. |
 | `spawnParticles(effect, x, y, z, overrides?)` | `void` | Play an effect once at a position: "Sparkles", "Fire", "Smoke", "Explosion", "Dust puff", "Rain", "Confetti", "Magic". overrides e.g. &#123; burst: 50, color: ["#f00", "#ff0"] &#125; |
 | `shakeCamera(intensity, duration)` | `void` | Shake the camera. |
 | `vibrate(ms)` | `void` | Vibrate the phone, e.g. vibrate(40) on a hit (Android; ignored elsewhere). |
@@ -205,7 +227,8 @@ Handy math functions available everywhere.
 | `audio` | `audio` | Play sounds. |
 | `props` | `object` | Values set in the Inspector for this object, e.g. props.speed. Declare them with const properties = &#123; speed: 2, target: object() &#125; and every object using the script shows those fields; an object() property is the chosen object itself (or null). |
 | `vars` | `object` | Variables storage for this script. |
-| `THREE` | `three.js` | Advanced: the three.js library, e.g. new THREE.MeshStandardMaterial(&#123; color: "red" &#125;). |
+| `THREE` | `three.js` | The three.js library, e.g. game.three.scene.add(new THREE.Mesh(geometry, material)). Same as import * as THREE from "three". |
+| `RAPIER` | `rapier3d` | The physics library (Rapier), e.g. RAPIER.JointData.fixed(…) with game.rapier.world. Same as import * as RAPIER from "rapier". |
 
 ## Vectors
 
@@ -413,5 +436,59 @@ function update(dt) {
   if (input.swipe === 'right') lane = clamp(lane + 1, -1, 1);
   if (input.swipe === 'up' && entity.isOnGround()) entity.applyImpulse(0, 6, 0);
   entity.position.x = lerp(entity.position.x, lane * 2, 10 * dt);
+}
+```
+
+### Get in and out of a vehicle
+
+Put on the Player. Press the "use" button next to a boat or car (tag #vehicle) to get in or out. Seating and the camera are automatic; steering is yours.
+
+```js
+// Put this on the Player. Give the vehicle the tag "vehicle" and a Car or Boat behavior, and add
+// a control button called "use" in Scene → Controls.
+function update(dt) {
+  const vehicle = entity.vehicle;
+
+  if (input.wasPressed('use')) {
+    if (vehicle) {
+      entity.exitVehicle();   // put down beside it, walking again, camera back on you
+    } else {
+      // Get in: the nearest vehicle within 3 meters.
+      let nearest = null;
+      for (const v of game.select('#vehicle')) {
+        if (entity.distanceTo(v) < 3 && (!nearest || entity.distanceTo(v) < entity.distanceTo(nearest))) nearest = v;
+      }
+      if (nearest) entity.enterVehicle(nearest);   // sits in the seat, camera follows
+    }
+    return;
+  }
+
+  // Entering does not steer: pass the joystick to whoever you are driving.
+  if (vehicle) {
+    if (vehicle.behavior('car')) vehicle.driveCar(input.axis.x, Math.max(input.axis.y, 0), Math.max(-input.axis.y, 0));
+    else vehicle.setMoveInput(input.axis.x, input.axis.y);
+  } else {
+    entity.setMoveInput(input.axis.x, input.axis.y);
+  }
+}
+```
+
+### Drive a car or walk with the joystick
+
+Put on a Car, Boat or Platformer object. The behavior never reads the joystick: you pass it in.
+
+```js
+// Put this on an object with a Car (or Boat, or Platformer) behavior. The behavior does
+// nothing until you tell it what to do; read the joystick and pass it in.
+function update(dt) {
+  const x = input.axis.x;   // left / right
+  const y = input.axis.y;   // up / down
+
+  // Car: steer, gas, brake
+  entity.driveCar(x, Math.max(y, 0), Math.max(-y, 0));
+
+  // Boat or Platformer / Top-down instead:
+  // entity.setMoveInput(x, y);
+  // if (input.wasPressed('jump')) entity.simulateControl('jump');
 }
 ```

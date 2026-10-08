@@ -3,7 +3,6 @@
     "platformer": {
       "speed": 5,
       "jumpStrength": 7,
-      "jumpButton": "jump",
       "turnToDirection": true,
       "cameraRelative": true,
       "animate": true
@@ -18,20 +17,29 @@
       "speed": 8,
       "turnSpeed": 70,
       "acceleration": 3,
-      "driver": "player",
-      "seat": "0, 0.3, 0"
+      "seat": "0, 0.3, 0",
+      "autoSeat": true,
+      "autoCamera": true
     },
     "car": {
       "speed": 15,
+      "reverseSpeed": 0,
       "acceleration": 10,
       "steering": 30,
+      "steerRate": 0,
+      "steerAtTopSpeed": 35,
+      "topSpeedEase": 15,
       "grip": 1,
       "brake": 1,
+      "suspensionStiffness": 1,
+      "suspensionDamping": 1,
       "wheels": "",
       "frontWheels": "",
-      "driver": "player",
+      "driver": "manual",
       "path": "",
-      "seat": "0, 0.5, 0"
+      "seat": "0, 0.5, 0",
+      "autoSeat": true,
+      "autoCamera": true
     },
     "cameraFollow": {
       "target": "Player",
@@ -88,22 +96,22 @@
     "platformer": {
       "icon": "🏃",
       "title": "Platformer",
-      "desc": "Walk with the joystick and jump (needs a Physics body)"
+      "desc": "Walk and jump when your events or scripts tell it to (needs a Physics body)"
     },
     "topdown": {
       "icon": "🕹️",
       "title": "Top-down movement",
-      "desc": "Move in 8 directions on the ground"
+      "desc": "Move in 8 directions when your events or scripts tell it to"
     },
     "car": {
       "icon": "🏎️",
       "title": "Car",
-      "desc": "Drive with the joystick: gas, brake, steer (needs a Physics body)"
+      "desc": "Gas, brake, steer when your events or scripts tell it to (needs a Physics body)"
     },
     "boat": {
       "icon": "⛵",
       "title": "Boat",
-      "desc": "Sail on water with the joystick (needs a Physics body)"
+      "desc": "Sail on water when your events or scripts tell it to (needs a Physics body)"
     },
     "cameraFollow": {
       "icon": "🎥",

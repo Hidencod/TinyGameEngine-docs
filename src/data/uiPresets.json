@@ -1,7 +1,7 @@
 [
   {
-    "id": "label",
-    "name": "Label",
+    "id": "text",
+    "name": "Text",
     "kind": "text"
   },
   {
@@ -15,14 +15,14 @@
     "kind": "image"
   },
   {
+    "id": "slider",
+    "name": "Slider",
+    "kind": "slider"
+  },
+  {
     "id": "panel",
     "name": "Panel",
     "kind": "panel"
-  },
-  {
-    "id": "progress",
-    "name": "ProgressBar",
-    "kind": "progress"
   },
   {
     "id": "screen",

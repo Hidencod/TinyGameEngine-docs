@@ -18,7 +18,7 @@ Conditions are the **WHEN / IF** part of an event. All conditions of an event mu
 - Most other conditions can be **inverted** (NOT) from the condition’s menu.
 :::
 
-There are **62 conditions**, grouped by category as in the condition picker.
+There are **64 conditions**, grouped by category as in the condition picker.
 
 [⚙️ System](#system) · [🔢 Variables](#variables) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🧱 Physics](#physics) · [❤️ Health](#health) · [🖼️ UI](#ui) · [✨ Particles](#particles)
 
@@ -418,7 +418,7 @@ Compare position, angle, size or speed, e.g. Player y &lt; -5.
 
 | Parameter | Type | Default | Notes |
 | --- | --- | --- | --- |
-| Property | Choice | `y` | Options: x, y, z, angle, rotX, rotY, rotZ, scaleX, scaleY, scaleZ, vx, vy, vz, speed, worldX, worldY, worldZ, text, value, max |
+| Property | Choice | `y` | Options: x, y, z, angle, rotX, rotY, rotZ, scaleX, scaleY, scaleZ, vx, vy, vz, speed, worldX, worldY, worldZ, text, value, min, max |
 | Comparison | Choice | `=` | Options: =, ≠, &lt;, ≤, &gt;, ≥ |
 | Value | Expression | `0` |  |
 
@@ -430,6 +430,16 @@ True while the object rides a vehicle (after Enter vehicle).
 
 - **Where:** Pick an **object** (or a #tag) first, then this condition.
 - **ID:** `object.isInVehicle` (as saved in project files)
+- **Parameters:** none
+
+### Has a driver {/* #object-hasdriver */}
+
+<span class="tge-ace-display">‹Object› has a driver</span>
+
+True while someone is in this boat or car (after Enter vehicle).
+
+- **Where:** Pick an **object** (or a #tag) first, then this condition.
+- **ID:** `object.hasDriver` (as saved in project files)
 - **Parameters:** none
 
 ### Is playing animation {/* #object-isplayinganimation */}
@@ -664,7 +674,7 @@ True when a physics object is standing on something.
 
 <span class="tge-ace-display">‹Object› is in water</span>
 
-True while the object is in a Water object (for a physics object: any part of it, even just its feet).
+True while the object is inside a Water object — for a physics object, while any part of it is.
 
 - **Where:** Pick an **object** (or a #tag) first, then this condition.
 - **ID:** `object.isInWater` (as saved in project files)
@@ -674,7 +684,7 @@ True while the object is in a Water object (for a physics object: any part of it
 
 <span class="tge-ace-display">On ‹Object› enters water</span> <span class="tge-pill trigger">⚡ Trigger</span>
 
-Runs when a physics object goes into a Water object (feet first counts). Lava? Make orange water and destroy the player here.
+Runs when a physics object enters a Water object, as soon as any part of it is under the surface.
 
 - **Where:** Pick an **object** (or a #tag) first, then this condition.
 - **ID:** `object.onEnterWater` (as saved in project files)
@@ -757,11 +767,11 @@ True while the player holds a UI button (e.g. a custom fire button).
 - **ID:** `ui.isPressed` (as saved in project files)
 - **Parameters:** none
 
-### Compare bar value {/* #ui-comparevalue */}
+### Compare slider value {/* #ui-comparevalue */}
 
 <span class="tge-ace-display">‹Object› value ‹Comparison› ‹Value›</span>
 
-Compare the value of a progress bar, e.g. Health value ≤ 0.
+Compare the value of a slider or bar, e.g. Health value ≤ 0.
 
 - **Where:** Pick an **object** (or a #tag) first, then this condition.
 - **ID:** `ui.compareValue` (as saved in project files)
@@ -770,6 +780,16 @@ Compare the value of a progress bar, e.g. Health value ≤ 0.
 | --- | --- | --- | --- |
 | Comparison | Choice | `=` | Options: =, ≠, &lt;, ≤, &gt;, ≥ |
 | Value | Expression | `0` |  |
+
+### On value changed {/* #ui-onvaluechanged */}
+
+<span class="tge-ace-display">On ‹Object› value changed</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+Runs when the player drags a slider to a new value (e.g. a volume setting).
+
+- **Where:** Pick an **object** (or a #tag) first, then this condition.
+- **ID:** `ui.onValueChanged` (as saved in project files)
+- **Parameters:** none
 
 ## ✨ Particles {/* #particles */}
 

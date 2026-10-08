@@ -48,6 +48,7 @@ If you mistype a name, the game keeps running: it shows a friendly message once 
 | `time` | Seconds since the scene started |
 | `dt` | Seconds since the last frame (multiply speeds by dt) |
 | `fps` | Frames per second |
+| `loadingProgress` | On a loading screen: how far it got, 0 to 1 (for a loading bar). It is 1 exactly when the game is ready to leave the screen |
 | `loopIndex` | Current number of the innermost loop (Repeat, For, For each, While) |
 | `screenWidth` | Screen width in pixels |
 | `screenHeight` | Screen height in pixels |
@@ -140,15 +141,16 @@ Write the object’s name (or `Self` inside an action on that object), a dot, th
 | `.visible` | true if visible |
 | `.name` | Object name |
 | `.id` | Unique id of the instance |
-| `.value` | Progress bar value (UI) |
-| `.max` | Progress bar maximum (UI) |
+| `.value` | Slider / bar value (UI) |
+| `.min` | Slider / bar minimum (UI) |
+| `.max` | Slider / bar maximum (UI) |
 | `.pressed` | UI button is held down |
 
 Inside an action on an object type, `Coin.x` means *the coin being processed*. With several picked coins, the action runs once per coin and each sees its own values.
 
 ## Built-in values
 
-`time` · `dt` · `fps` · `screenWidth` · `screenHeight` · `touchX` · `touchY` · `touching` · `joystickX` · `joystickY` · `lookX` · `lookY` · `touchWorldX` · `touchWorldY` · `touchWorldZ` · `loopIndex` · `timeScale`
+`time` · `dt` · `fps` · `screenWidth` · `screenHeight` · `touchX` · `touchY` · `touching` · `joystickX` · `joystickY` · `lookX` · `lookY` · `touchWorldX` · `touchWorldY` · `touchWorldZ` · `loopIndex` · `timeScale` · `loadingProgress`
 
 ## Compare operators
 

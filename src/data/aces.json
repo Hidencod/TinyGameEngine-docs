@@ -894,7 +894,7 @@
       "display": "Show message {message}",
       "displayNoObject": null,
       "icon": "💬",
-      "description": "Show a short message on screen (handy for testing).",
+      "description": "Show a short message on screen.",
       "isTrigger": false,
       "objectRequired": false,
       "objectOptional": false,
@@ -1999,6 +1999,10 @@
               "label": "value"
             },
             {
+              "value": "min",
+              "label": "min"
+            },
+            {
               "value": "max",
               "label": "max"
             }
@@ -2094,6 +2098,25 @@
       "params": []
     },
     {
+      "id": "object.hasDriver",
+      "kind": "condition",
+      "category": "Object",
+      "label": "Has a driver",
+      "hint": "Someone got into this vehicle",
+      "display": "{object} has a driver",
+      "displayNoObject": null,
+      "icon": "🚗",
+      "description": "True while someone is in this boat or car (after Enter vehicle).",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
       "id": "object.isInWater",
       "kind": "condition",
       "category": "Physics",
@@ -2102,7 +2125,7 @@
       "display": "{object} is in water",
       "displayNoObject": null,
       "icon": "🌊",
-      "description": "True while the object is in a Water object (for a physics object: any part of it, even just its feet).",
+      "description": "True while the object is inside a Water object — for a physics object, while any part of it is.",
       "isTrigger": false,
       "objectRequired": true,
       "objectOptional": false,
@@ -2121,7 +2144,7 @@
       "display": "On {object} enters water",
       "displayNoObject": null,
       "icon": "💦",
-      "description": "Runs when a physics object goes into a Water object (feet first counts). Lava? Make orange water and destroy the player here.",
+      "description": "Runs when a physics object enters a Water object, as soon as any part of it is under the surface.",
       "isTrigger": true,
       "objectRequired": true,
       "objectOptional": false,
@@ -2482,7 +2505,7 @@
       "kind": "condition",
       "category": "Object",
       "label": "On created",
-      "hint": "Just created",
+      "hint": "The moment it is created",
       "display": "On {object} created",
       "displayNoObject": null,
       "icon": "🐣",
@@ -3682,7 +3705,7 @@
       "display": "{object} gets into {vehicle}",
       "displayNoObject": null,
       "icon": "🚤",
-      "description": "The object (usually the player) gets into a vehicle — an object with the Boat or Car behavior: it sits in the vehicle’s Seat and rides along, its own movement stops, the joystick drives the vehicle and cameras following it follow the vehicle. Undo it all with Exit vehicle.",
+      "description": "The object (usually the player) gets into a vehicle — an object with the Boat or Car behavior: it sits in the vehicle’s Seat and rides along, its own movement stops and cameras following it follow the vehicle (the vehicle’s Auto seat and Auto camera settings switch these off if you do them yourself). It does not steer the vehicle: pass the input in with Drive car / Move with input. Undo it all with Exit vehicle.",
       "isTrigger": false,
       "objectRequired": true,
       "objectOptional": false,
@@ -3721,6 +3744,171 @@
       "noInvert": false,
       "isWait": false,
       "params": []
+    },
+    {
+      "id": "object.driveCar",
+      "kind": "action",
+      "category": "Object",
+      "label": "Drive car",
+      "hint": "Steer, gas, brake (every tick)",
+      "display": "Drive {object}: steer {steer}, gas {gas}, brake {brake}",
+      "displayNoObject": null,
+      "icon": "🏎️",
+      "description": "Drives a Car (Driver \"manual\"): steer −1 (left) … 1 (right), gas 0 … 1, brake 0 … 1. Use it every tick the controls are held (e.g. under \"On button Gas held\"); when the event stops running the car coasts. Works with your own buttons, a touch wheel or anything else in events.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "steer",
+          "label": "Steer (−1 left … 1 right)",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "gas",
+          "label": "Gas (0 … 1)",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "brake",
+          "label": "Brake (0 … 1)",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.setMoveInput",
+      "kind": "action",
+      "category": "Object",
+      "label": "Move with input",
+      "hint": "Direction, every tick",
+      "display": "Move {object} with input ({x}, {y})",
+      "displayNoObject": null,
+      "icon": "🕹️",
+      "description": "Moves the object like the joystick does, from events: x −1 (left) … 1 (right), y −1 (back) … 1 (forward). Works for a Platformer, Top-down movement or a Boat. They never read the joystick themselves, so pass it in: x = joystickX, y = joystickY. Use it every tick the input is held (e.g. under \"On button Left held\"); when it stops, the object stops.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "x",
+          "label": "Right / left (−1 … 1)",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Forward / back (−1 … 1)",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.simulateControl",
+      "kind": "action",
+      "category": "Object",
+      "label": "Simulate control",
+      "hint": "Press a control (every tick)",
+      "display": "Simulate {control} on {object}",
+      "displayNoObject": null,
+      "icon": "🎮",
+      "description": "Presses one of the movement controls for this tick, like the joystick or a key would: Left / Right steer and strafe, Up is gas / forward, Down is brake / reverse, Jump jumps, Handbrake locks the wheels. Use it every tick the control is held (e.g. under \"On button Left held\"). Several at once in the same tick stack up, so Left + Up steers and accelerates together. Works on Platformer, Top-down, Car and Boat. They never read the joystick themselves: this and Move with input / Drive car are the only things that move them.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "control",
+          "label": "Control",
+          "type": "choice",
+          "options": [
+            {
+              "value": "left",
+              "label": "left"
+            },
+            {
+              "value": "right",
+              "label": "right"
+            },
+            {
+              "value": "up",
+              "label": "up"
+            },
+            {
+              "value": "down",
+              "label": "down"
+            },
+            {
+              "value": "forward",
+              "label": "forward"
+            },
+            {
+              "value": "back",
+              "label": "back"
+            },
+            {
+              "value": "gas",
+              "label": "gas"
+            },
+            {
+              "value": "brake",
+              "label": "brake"
+            },
+            {
+              "value": "reverse",
+              "label": "reverse"
+            },
+            {
+              "value": "jump",
+              "label": "jump"
+            },
+            {
+              "value": "handbrake",
+              "label": "handbrake"
+            }
+          ],
+          "default": "up",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
     },
     {
       "id": "object.detach",
@@ -4396,11 +4584,30 @@
       "kind": "action",
       "category": "Particles",
       "label": "Start particles",
-      "hint": "Or play it again",
+      "hint": "Begins emitting",
       "display": "{object} starts its particles",
       "displayNoObject": null,
       "icon": "✨",
-      "description": "Start (or restart) its Particles component. One-shot effects like Explosion play again.",
+      "description": "Start its Particles component. Running it while the emitter is already going has no effect, so it can sit under a condition that holds for many ticks; a one-shot effect such as Explosion plays again once the previous one has finished.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.restartParticles",
+      "kind": "action",
+      "category": "Particles",
+      "label": "Restart particles",
+      "hint": "Play from the start",
+      "display": "{object} restarts its particles",
+      "displayNoObject": null,
+      "icon": "🔁",
+      "description": "Play its Particles component from the beginning, even if it is already going (bursts again).",
       "isTrigger": false,
       "objectRequired": true,
       "objectOptional": false,
@@ -4771,12 +4978,12 @@
       "id": "ui.compareValue",
       "kind": "condition",
       "category": "UI",
-      "label": "Compare bar value",
-      "hint": "Check a bar value",
+      "label": "Compare slider value",
+      "hint": "Check a slider or bar value",
       "display": "{object} value {op} {value}",
       "displayNoObject": null,
       "icon": "📊",
-      "description": "Compare the value of a progress bar, e.g. Health value ≤ 0.",
+      "description": "Compare the value of a slider or bar, e.g. Health value ≤ 0.",
       "isTrigger": false,
       "objectRequired": true,
       "objectOptional": false,
@@ -4831,6 +5038,25 @@
           "varScope": null
         }
       ]
+    },
+    {
+      "id": "ui.onValueChanged",
+      "kind": "condition",
+      "category": "UI",
+      "label": "On value changed",
+      "hint": "Slider dragged",
+      "display": "On {object} value changed",
+      "displayNoObject": null,
+      "icon": "🎚️",
+      "description": "Runs when the player drags a slider to a new value (e.g. a volume setting).",
+      "isTrigger": true,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": true,
+      "isWait": false,
+      "params": []
     },
     {
       "id": "ui.show",
@@ -4923,12 +5149,12 @@
       "id": "ui.setValue",
       "kind": "action",
       "category": "UI",
-      "label": "Set bar value",
+      "label": "Set slider value",
       "hint": "Health, energy, timer…",
       "display": "Set {object} value to {value}",
       "displayNoObject": null,
       "icon": "📊",
-      "description": "Set a progress bar value, e.g. health or time left.",
+      "description": "Set a slider or bar value, e.g. health or time left.",
       "isTrigger": false,
       "objectRequired": true,
       "objectOptional": false,
@@ -4953,12 +5179,12 @@
       "id": "ui.addValue",
       "kind": "action",
       "category": "UI",
-      "label": "Add to bar value",
+      "label": "Add to slider value",
       "hint": "e.g. −10 when hit",
       "display": "Add {value} to {object} value",
       "displayNoObject": null,
       "icon": "➕",
-      "description": "Add (or subtract with a negative number) to a progress bar. Stays between 0 and max.",
+      "description": "Add (or subtract with a negative number) to a slider. Stays between its min and max.",
       "isTrigger": false,
       "objectRequired": true,
       "objectOptional": false,
@@ -4983,12 +5209,12 @@
       "id": "ui.setMax",
       "kind": "action",
       "category": "UI",
-      "label": "Set bar maximum",
+      "label": "Set slider maximum",
       "hint": "Value of a full bar",
       "display": "Set {object} max to {max}",
       "displayNoObject": null,
       "icon": "📏",
-      "description": "Set the maximum of a progress bar.",
+      "description": "Set the maximum of a slider.",
       "isTrigger": false,
       "objectRequired": true,
       "objectOptional": false,
@@ -5003,6 +5229,66 @@
           "type": "expression",
           "options": null,
           "default": "100",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.setMin",
+      "kind": "action",
+      "category": "UI",
+      "label": "Set slider minimum",
+      "hint": "Value of an empty bar",
+      "display": "Set {object} min to {min}",
+      "displayNoObject": null,
+      "icon": "📐",
+      "description": "Set the minimum of a slider (0 by default).",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "min",
+          "label": "Minimum",
+          "type": "expression",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.setInteractable",
+      "kind": "action",
+      "category": "UI",
+      "label": "Enable / disable",
+      "hint": "Button or slider",
+      "display": "Set {object} interactable {on}",
+      "displayNoObject": null,
+      "icon": "🚫",
+      "description": "Grey out a button or slider so it takes no input, or turn it back on (Interactable).",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "on",
+          "label": "Interactable",
+          "type": "boolean",
+          "options": null,
+          "default": "true",
           "optional": false,
           "hint": null,
           "varScope": null
@@ -5104,11 +5390,11 @@
       "kind": "action",
       "category": "UI",
       "label": "Set bar color",
-      "hint": "Bar fill color",
+      "hint": "Slider fill color",
       "display": "Set {object} bar color to {color}",
       "displayNoObject": null,
       "icon": "🟩",
-      "description": "Change the fill color of a progress bar.",
+      "description": "Change the fill color of a slider or bar.",
       "isTrigger": false,
       "objectRequired": true,
       "objectOptional": false,

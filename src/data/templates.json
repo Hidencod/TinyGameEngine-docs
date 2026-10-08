@@ -46,5 +46,11 @@
     "name": "Kart racing",
     "description": "Race 3 laps around an oval against the clock. Beat your best lap!",
     "icon": "🏎️"
+  },
+  {
+    "id": "vehicles",
+    "name": "Cars and boats",
+    "description": "Walk up to a car or a boat, press A to get in, and drive it. Enter / Exit vehicle seat you; you pass the joystick on yourself.",
+    "icon": "🚤"
   }
 ]

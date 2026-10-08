@@ -94,5 +94,21 @@
     "scope": "entity",
     "description": "Swipe left/right to switch between 3 lanes, swipe up to jump.",
     "code": "// Endless-runner style lane switching.\nlet lane = 0; // -1, 0, 1\n\nfunction update(dt) {\n  if (input.swipe === 'left') lane = clamp(lane - 1, -1, 1);\n  if (input.swipe === 'right') lane = clamp(lane + 1, -1, 1);\n  if (input.swipe === 'up' && entity.isOnGround()) entity.applyImpulse(0, 6, 0);\n  entity.position.x = lerp(entity.position.x, lane * 2, 10 * dt);\n}\n"
+  },
+  {
+    "id": "vehicle",
+    "title": "Get in and out of a vehicle",
+    "icon": "🚗",
+    "scope": "entity",
+    "description": "Put on the Player. Press the \"use\" button next to a boat or car (tag #vehicle) to get in or out. Seating and the camera are automatic; steering is yours.",
+    "code": "// Put this on the Player. Give the vehicle the tag \"vehicle\" and a Car or Boat behavior, and add\n// a control button called \"use\" in Scene → Controls.\nfunction update(dt) {\n  const vehicle = entity.vehicle;\n\n  if (input.wasPressed('use')) {\n    if (vehicle) {\n      entity.exitVehicle();   // put down beside it, walking again, camera back on you\n    } else {\n      // Get in: the nearest vehicle within 3 meters.\n      let nearest = null;\n      for (const v of game.select('#vehicle')) {\n        if (entity.distanceTo(v) < 3 && (!nearest || entity.distanceTo(v) < entity.distanceTo(nearest))) nearest = v;\n      }\n      if (nearest) entity.enterVehicle(nearest);   // sits in the seat, camera follows\n    }\n    return;\n  }\n\n  // Entering does not steer: pass the joystick to whoever you are driving.\n  if (vehicle) {\n    if (vehicle.behavior('car')) vehicle.driveCar(input.axis.x, Math.max(input.axis.y, 0), Math.max(-input.axis.y, 0));\n    else vehicle.setMoveInput(input.axis.x, input.axis.y);\n  } else {\n    entity.setMoveInput(input.axis.x, input.axis.y);\n  }\n}\n"
+  },
+  {
+    "id": "drivecar",
+    "title": "Drive a car or walk with the joystick",
+    "icon": "🚗",
+    "scope": "entity",
+    "description": "Put on a Car, Boat or Platformer object. The behavior never reads the joystick: you pass it in.",
+    "code": "// Put this on an object with a Car (or Boat, or Platformer) behavior. The behavior does\n// nothing until you tell it what to do; read the joystick and pass it in.\nfunction update(dt) {\n  const x = input.axis.x;   // left / right\n  const y = input.axis.y;   // up / down\n\n  // Car: steer, gas, brake\n  entity.driveCar(x, Math.max(y, 0), Math.max(-y, 0));\n\n  // Boat or Platformer / Top-down instead:\n  // entity.setMoveInput(x, y);\n  // if (input.wasPressed('jump')) entity.simulateControl('jump');\n}\n"
   }
 ]
