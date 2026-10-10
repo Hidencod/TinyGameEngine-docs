@@ -6,6 +6,8 @@
       "turnToDirection": true,
       "cameraRelative": true,
       "sideView": false,
+      "climb": false,
+      "climbSpeed": 3,
       "animate": true
     },
     "topdown": {

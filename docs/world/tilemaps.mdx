@@ -58,13 +58,25 @@ The **palette** shows every tile of the sheet; tap one to choose it (the chosen 
 
 ## Solid tiles
 
-Under the palette, a button tells whether the **chosen tile** is **solid** (blocks) or **walkthrough** (flowers, backgrounds). Tap it to change. Walkthrough tiles have a small ring in the corner of their thumbnail. By default every tile is solid.
+Under the palette, a button shows what the **chosen tile** does. Tap it to go to the next one:
+
+| Kind | What it does |
+| --- | --- |
+| **🧱 Solid** | Blocks from every side (ground, walls). This is the default. |
+| **⬆ One-way platform** | Blocks only from above: a character jumps up through it and lands on it. It has a yellow line on top of its thumbnail. |
+| **◻ Walkthrough** | Nothing happens: flowers, backgrounds. It has a small ring in the corner of its thumbnail. |
+
+A second button, **🪜 Climbable**, marks the tile as a ladder or vine (a small ladder shows on its thumbnail): see [Climbing](#climbing). A ladder is usually also *Walkthrough*.
 
 Solid tiles that touch are merged into as few boxes as possible, so a long floor is one collider: the player never catches on the seam between two tiles. The boxes are as deep as **Collider depth** says (front to back, in meters).
 
 :::note
 Solid tiles block only when the object has a **Collider** component (set to *Auto*). Without it the tilemap is only a picture.
 :::
+
+## Climbing
+
+A **Platformer** with **Climb** switched on can climb the tiles you marked **Climbable**: press **up** or **down** next to a ladder to grab it, **up / down** to climb, and let go with **left / right** (to step onto a platform at the top) or **Jump**. Stack climbable tiles for the ladder, and put a one-way platform tile beside its top so the hero can step onto it. Objects tagged `ladder` work the same, for a ladder that is one picture.
 
 ## Settings
 

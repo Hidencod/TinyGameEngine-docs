@@ -48,6 +48,11 @@ Make the animations in the [sprite editor](./sprites#animations) and name them e
 
 Side view also works with a 3D model hero: the model turns to face left or right and plays its own clips.
 
+## One-way platforms and ladders
+
+- A **one-way platform** can be jumped up through and stood on. Mark platform tiles **⬆ One-way platform** in a [tilemap](./tilemaps#solid-tiles), or switch on **One-way platform** on a static object's Collider. To drop down through one, press **Down** and jump (Side view).
+- A **ladder** is made of tiles marked **🪜 Climbable** (or an object tagged `ladder`). Switch on **Climb** on the Platformer. If the hero's sprite has an animation named **Climb**, it plays while climbing and pauses when you stop.
+
 ## Build a level
 
 Paint it with a [tilemap](./tilemaps): grass and earth for the ground, a few wooden tiles for stepping stones, and **gaps** for the player to jump. Put pickups, enemies and the goal on top as sprites. Falling off the bottom is an event: *Player y < −8 → Restart scene* (the template does this).
