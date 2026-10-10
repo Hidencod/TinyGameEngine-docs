@@ -16,7 +16,7 @@ Actions are the **DO** part of an event. They run from top to bottom when the ev
 Number and text fields accept expressions, e.g. `Score + 1`, `"Score: " + Score`, `Player.x`, `random(1, 6)`. See [Expressions](./expressions).
 :::
 
-There are **100 actions**, grouped by category as in the action picker.
+There are **115 actions**, grouped by category as in the action picker.
 
 [⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🧱 Physics](#physics) · [❤️ Health](#health) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera)
 
@@ -107,6 +107,100 @@ Turn a group of events on or off.
 | --- | --- | --- | --- |
 | Group | Event group |  |  |
 | Active | Yes / No (expression) | `true` |  |
+
+### Draw point {/* #debug-drawpoint */}
+
+<span class="tge-ace-display">Debug: draw point at (‹X›, ‹Y›, ‹Z›)</span>
+
+Debug: draw a small cross at a position to see where it is, e.g. at Enemy.x, Enemy.y, Enemy.z. Shapes are drawn over the game and are for testing.
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `debug.drawPoint` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| X | Number (expression) | `0` |  |
+| Y | Number (expression) | `0` |  |
+| Z | Number (expression) | `0` |  |
+| Size | Number (expression) | `0.4` |  |
+| Color | Color | `#ffff00` |  |
+| Seconds | Number (expression) | `0` |  |
+
+### Draw line {/* #debug-drawline */}
+
+<span class="tge-ace-display">Debug: draw line (‹X1›, ‹Y1›, ‹Z1›) → (‹X2›, ‹Y2›, ‹Z2›)</span>
+
+Debug: draw a line between two positions, e.g. from the Player to the Target, to check distances and directions.
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `debug.drawLine` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| X1 | Number (expression) | `0` |  |
+| Y1 | Number (expression) | `0` |  |
+| Z1 | Number (expression) | `0` |  |
+| X2 | Number (expression) | `0` |  |
+| Y2 | Number (expression) | `0` |  |
+| Z2 | Number (expression) | `0` |  |
+| Color | Color | `#00ff00` |  |
+| Seconds | Number (expression) | `0` |  |
+
+### Draw sphere {/* #debug-drawsphere */}
+
+<span class="tge-ace-display">Debug: draw sphere at (‹X›, ‹Y›, ‹Z›) radius ‹Radius›</span>
+
+Debug: draw a wire sphere to see a range or radius, e.g. how far an enemy notices you.
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `debug.drawSphere` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| X | Number (expression) | `0` |  |
+| Y | Number (expression) | `0` |  |
+| Z | Number (expression) | `0` |  |
+| Radius | Number (expression) | `1` |  |
+| Color | Color | `#00ffff` |  |
+| Seconds | Number (expression) | `0` |  |
+
+### Draw circle {/* #debug-drawcircle */}
+
+<span class="tge-ace-display">Debug: draw circle at (‹X›, ‹Y›, ‹Z›) radius ‹Radius›</span>
+
+Debug: draw a ring lying flat on the ground at a position, e.g. an area or a spawn radius.
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `debug.drawCircle` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| X | Number (expression) | `0` |  |
+| Y | Number (expression) | `0` |  |
+| Z | Number (expression) | `0` |  |
+| Radius | Number (expression) | `1` |  |
+| Color | Color | `#ff00ff` |  |
+| Seconds | Number (expression) | `0` |  |
+
+### Draw box {/* #debug-drawbox */}
+
+<span class="tge-ace-display">Debug: draw box at (‹X›, ‹Y›, ‹Z›) size (‹Width›, ‹Height›, ‹Depth›)</span>
+
+Debug: draw a wire box around a position to check a size or an area, e.g. a trigger zone.
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `debug.drawBox` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| X | Number (expression) | `0` |  |
+| Y | Number (expression) | `0` |  |
+| Z | Number (expression) | `0` |  |
+| Width | Number (expression) | `1` |  |
+| Height | Number (expression) | `1` |  |
+| Depth | Number (expression) | `1` |  |
+| Color | Color | `#ff8800` |  |
+| Seconds | Number (expression) | `0` |  |
 
 ## 🔢 Variables {/* #variables */}
 
@@ -263,6 +357,23 @@ Inside a function: the value that Functions.Name(...) gives back.
 | --- | --- | --- | --- |
 | Value | Expression | `0` |  |
 
+### Call script function {/* #object-callscript */}
+
+<span class="tge-ace-display">Call ‹Object› script ‹Script name›.‹Function›(‹Argument 1›, ‹Argument 2›, ‹Argument 3›)</span>
+
+Run a function from one of the object's code scripts. In the script, write "export function name(a, b) &#123;…&#125;". Fill only the arguments the function takes. To use its result in a condition or value, write Object.script("Script", "name", a, b) in an expression.
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.callScript` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Script name | Text | `Health` |  |
+| Function | Text | `heal` |  |
+| Argument 1 | Expression |  | *Optional.* |
+| Argument 2 | Expression |  | *Optional.* |
+| Argument 3 | Expression |  | *Optional.* |
+
 ## ⏱️ Time {/* #time */}
 
 ### Wait {/* #system-wait */}
@@ -277,6 +388,29 @@ Pause the rest of this event (next actions and sub-events) for a while.
 | Parameter | Type | Default | Notes |
 | --- | --- | --- | --- |
 | Seconds | Number (expression) | `1` |  |
+
+### Wait for previous actions {/* #system-waitprevious */}
+
+<span class="tge-ace-display">Wait for previous actions to complete</span>
+
+Pause the rest of this event until what the actions above it started has finished: a Tween, a Move to position, a play-once animation. Then the next actions run, e.g. slide a panel in, wait, then show its text. Nothing to wait for means no pause. An object destroyed or a tween stopped meanwhile counts as finished.
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `system.waitPrevious` (as saved in project files)
+- **Parameters:** none
+
+### Wait until {/* #system-waituntil */}
+
+<span class="tge-ace-display">Wait until ‹Condition›</span>
+
+Pause the rest of this event (next actions and sub-events) until the expression is true, e.g. Score &gt;= 10 or Door.y &gt; 5. It is checked every tick. If it is already true the event goes on at once. Careful: in an event that runs every tick, a condition that never comes true keeps adding waits.
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `system.waitUntil` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Condition | Expression | `Score >= 10` |  |
 
 ### Set time scale {/* #system-settimescale */}
 
@@ -670,7 +804,7 @@ Change the object's color.
 
 <span class="tge-ace-display">Tween ‹Object› ‹Property› to ‹To› in ‹Seconds› s (‹Easing›)</span>
 
-Smoothly animate position, angle, size or opacity to a value, e.g. size 1.5 with Back for a pop, or Self.y + 2 to rise. Starting another tween of the same property replaces it.
+Smoothly animate position, angle, size or opacity to a value, e.g. size 1.5 with Back for a pop, or Self.y + 2 to rise. Starting another tween of the same property replaces it. On a UI element, x and y are its position on the screen (in canvas pixels, from its anchor), angle its rotation, size its scale and opacity its fade (children follow); z does nothing.
 
 - **Where:** Pick an **object** (or a #tag) first, then this action.
 - **ID:** `object.tween` (as saved in project files)
@@ -1018,6 +1152,20 @@ Change the text of a label or button, e.g. "Lives: " + Lives.
 | --- | --- | --- | --- |
 | Text | Expression | `"Hello"` |  |
 
+### Set position {/* #ui-setposition */}
+
+<span class="tge-ace-display">Set ‹Object› position to (‹X›, ‹Y›)</span>
+
+Move a UI element on the screen: x (right) and y (up) are its Rect Transform’s anchored position, in canvas pixels from its anchor, the same numbers as in the inspector. Leave a field empty to keep that axis. For a smooth slide use Tween (x / y) instead.
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `ui.setPosition` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| X | Number (expression) |  | *Optional.* |
+| Y | Number (expression) |  | *Optional.* |
+
 ### Set slider value {/* #ui-setvalue */}
 
 <span class="tge-ace-display">Set ‹Object› value to ‹Value›</span>
@@ -1181,6 +1329,28 @@ Shoot some particles at once, e.g. sparks on a hit or a puff on landing. Needs a
 | --- | --- | --- | --- |
 | How many | Number (expression) | `20` |  |
 
+### Emit particles with values {/* #object-emitparticles */}
+
+<span class="tge-ace-display">‹Object› emits ‹How many› particles</span>
+
+Shoot particles at once with values of your own instead of those of the Particle System: a velocity (x, y, z in its simulation space: own space for Local, world space for World), size, lifetime or color. Leave a field empty to use that setting of the Particle System; an empty velocity axis counts as 0 once any axis is filled. A position (same space as the velocity) starts them there instead of at the emitter, e.g. at hitX, hitY, hitZ; an empty position axis counts as 0 once any axis is filled.
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.emitParticles` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| How many | Number (expression) | `20` |  |
+| Velocity X | Number (expression) |  | *Optional.* |
+| Velocity Y | Number (expression) |  | *Optional.* |
+| Velocity Z | Number (expression) |  | *Optional.* |
+| Position X | Number (expression) |  | *Optional.* |
+| Position Y | Number (expression) |  | *Optional.* |
+| Position Z | Number (expression) |  | *Optional.* |
+| Size | Number (expression) |  | *Optional.* |
+| Lifetime (s) | Number (expression) |  | *Optional.* |
+| Color | Color |  | *Optional.* |
+
 ### Spawn particles here {/* #object-spawnparticlesat */}
 
 <span class="tge-ace-display">Spawn ‹Effect› at ‹Object›</span>
@@ -1216,13 +1386,77 @@ Play its Particles component from the beginning, even if it is already going (bu
 
 ### Stop particles {/* #object-stopparticles */}
 
-<span class="tge-ace-display">‹Object› stops its particles</span>
+<span class="tge-ace-display">‹Object› stops its particles (‹Flying particles›)</span>
 
-Stop making new particles. The ones already flying fade out normally.
+Stop making new particles. The ones already flying finish their life, or go at once.
 
 - **Where:** Pick an **object** (or a #tag) first, then this action.
 - **ID:** `object.stopParticles` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Flying particles | Choice | `stopEmitting` | Options: Let them finish, Remove them too |
+
+### Pause particles {/* #object-pauseparticles */}
+
+<span class="tge-ace-display">‹Object› pauses its particles</span>
+
+Freeze its particles where they are. "Start particles" carries on from there.
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.pauseParticles` (as saved in project files)
 - **Parameters:** none
+
+### Clear particles {/* #object-clearparticles */}
+
+<span class="tge-ace-display">Clear ‹Object› particles</span>
+
+Remove every particle it has out right now (it keeps emitting if it was).
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.clearParticles` (as saved in project files)
+- **Parameters:** none
+
+### Set particle start color {/* #object-setparticlestartcolor */}
+
+<span class="tge-ace-display">Set ‹Object› particle start color to ‹Color›</span>
+
+The color new particles start with (Color over Lifetime still multiplies it).
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.setParticleStartColor` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Color | Color | `#ffffff` |  |
+
+### Set particle start value {/* #object-setparticlestart */}
+
+<span class="tge-ace-display">Set ‹Object› particle ‹Setting› to ‹Value›</span>
+
+A start value of new particles: speed (m/s), size (m), lifetime (s), rotation (degrees), gravity modifier, or how fast the whole system runs.
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.setParticleStart` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Setting | Choice | `startSpeed` | Options: Start speed, Start size, Start lifetime, Start rotation, Gravity modifier, Simulation speed |
+| Value | Number (expression) | `1` |  |
+
+### Turn particle module on/off {/* #object-setparticlemodule */}
+
+<span class="tge-ace-display">Turn ‹Object› particle ‹Module› ‹State›</span>
+
+Switch one module of its Particle System on or off while the game runs.
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.setParticleModule` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Module | Choice | `noise` | Options: Emission, Shape, Velocity over Lifetime, Limit Velocity over Lifetime, Inherit Velocity, Lifetime by Emitter Speed, Force over Lifetime, Color over Lifetime, Color by Speed, Size over Lifetime, Size by Speed, Rotation over Lifetime, Rotation by Speed, Noise, Collision, Triggers, Sub Emitters, Texture Sheet Animation, Lights, Trails |
+| State | Choice | `on` | Options: On, Off |
 
 ### Set particle rate {/* #object-setparticlerate */}
 

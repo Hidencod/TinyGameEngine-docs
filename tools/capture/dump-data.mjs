@@ -8,7 +8,7 @@
  *
  * Writes src/data/*.json, then run `npm run docs:reference` to regenerate the reference pages.
  */
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { chromium } from 'playwright';
 
@@ -50,6 +50,13 @@ const data = await page.evaluate(async () => {
     templates: templates.TEMPLATES.map((t) => ({ id: t.id, name: t.name, description: t.description, icon: t.icon })),
   };
 });
+// The editor carries no explanatory text any more: descriptions live here, in src/data/texts.json
+// (action/condition, behavior, component and snippet texts). Edit them there.
+const texts = JSON.parse(readFileSync(join(out, 'texts.json'), 'utf8'));
+for (const a of data.aces.list) a.description = texts.aces[a.id] ?? '';
+for (const [k, v] of Object.entries(data.behaviors.info)) v.desc = texts.behaviors[k] ?? '';
+for (const [k, v] of Object.entries(data.components.info)) v.desc = texts.components[k] ?? '';
+for (const sn of data.snippets) sn.description = texts.snippets[sn.id] ?? '';
 for (const [k, v] of Object.entries(data)) writeFileSync(join(out, k + '.json'), JSON.stringify(v, null, 2) + '\n');
 console.log('wrote', Object.keys(data).map((k) => k + '.json').join(', '));
 await browser.close();

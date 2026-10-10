@@ -886,6 +886,55 @@
       ]
     },
     {
+      "id": "system.waitPrevious",
+      "kind": "action",
+      "category": "Time",
+      "label": "Wait for previous actions",
+      "hint": "Until tweens, walks, animations end",
+      "display": "Wait for previous actions to complete",
+      "displayNoObject": null,
+      "icon": "⏳",
+      "description": "Pause the rest of this event until what the actions above it started has finished: a Tween, a Move to position, a play-once animation. Then the next actions run, e.g. slide a panel in, wait, then show its text. Nothing to wait for means no pause. An object destroyed or a tween stopped meanwhile counts as finished.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "system.waitUntil",
+      "kind": "action",
+      "category": "Time",
+      "label": "Wait until",
+      "hint": "Pause until it is true",
+      "display": "Wait until {condition}",
+      "displayNoObject": null,
+      "icon": "⏱️",
+      "description": "Pause the rest of this event (next actions and sub-events) until the expression is true, e.g. Score >= 10 or Door.y > 5. It is checked every tick. If it is already true the event goes on at once. Careful: in an event that runs every tick, a condition that never comes true keeps adding waits.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "condition",
+          "label": "Condition",
+          "type": "expression",
+          "options": null,
+          "default": "Score >= 10",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "system.log",
       "kind": "action",
       "category": "System",
@@ -1743,7 +1792,7 @@
       "display": "{object} collides with {other}",
       "displayNoObject": null,
       "icon": "🤝",
-      "description": "Runs at the moment the object starts touching another object.",
+      "description": "Runs at the moment the object starts touching another object. In its actions, hitX, hitY, hitZ are where they touched, hitNormalX/Y/Z the surface direction (out of the other object toward this one), hitSpeed how fast they met and hitImpulse how hard they were pushed apart.",
       "isTrigger": true,
       "objectRequired": true,
       "objectOptional": false,
@@ -1803,7 +1852,7 @@
       "display": "{object} is touching {other}",
       "displayNoObject": null,
       "icon": "🤝",
-      "description": "True while the object touches (overlaps) another object.",
+      "description": "True while the object touches (overlaps) another object. In its actions, hitX, hitY, hitZ, hitNormalX/Y/Z, hitSpeed and hitImpulse describe the current contact (for triggers hitX/Y/Z and the surface direction are estimated and hitImpulse is 0; all 0 when nothing touches).",
       "isTrigger": false,
       "objectRequired": true,
       "objectOptional": false,
@@ -2182,8 +2231,160 @@
       "display": "{object} is emitting particles",
       "displayNoObject": null,
       "icon": "✨",
-      "description": "True while its Particles component is making new particles.",
+      "description": "True while its Particle System is making new particles.",
       "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.isPlayingParticles",
+      "kind": "condition",
+      "category": "Particles",
+      "label": "Is playing particles",
+      "hint": "Playing, not paused",
+      "display": "{object} is playing its particles",
+      "displayNoObject": null,
+      "icon": "▶️",
+      "description": "True while its Particle System plays: emitting, or particles still flying after a stop. False when paused or finished.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.isPausedParticles",
+      "kind": "condition",
+      "category": "Particles",
+      "label": "Is particles paused",
+      "hint": "Frozen in place",
+      "display": "{object} particles are paused",
+      "displayNoObject": null,
+      "icon": "⏸",
+      "description": "True while its Particle System is paused (\"Pause particles\").",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.compareParticleCount",
+      "kind": "condition",
+      "category": "Particles",
+      "label": "Compare particle count",
+      "hint": "Particles alive",
+      "display": "{object} particle count {op} {value}",
+      "displayNoObject": null,
+      "icon": "🔢",
+      "description": "How many of its particles are alive right now.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "op",
+          "label": "Comparison",
+          "type": "choice",
+          "options": [
+            {
+              "value": "=",
+              "label": "="
+            },
+            {
+              "value": "≠",
+              "label": "≠"
+            },
+            {
+              "value": "<",
+              "label": "<"
+            },
+            {
+              "value": "≤",
+              "label": "≤"
+            },
+            {
+              "value": ">",
+              "label": ">"
+            },
+            {
+              "value": "≥",
+              "label": "≥"
+            }
+          ],
+          "default": "=",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "expression",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.onParticleCollision",
+      "kind": "condition",
+      "category": "Particles",
+      "label": "On particle collision",
+      "hint": "Its particles hit something",
+      "display": "{object} particles hit {other}",
+      "displayNoObject": null,
+      "icon": "💥",
+      "description": "Runs when particles of the object hit another object. Needs its Collision module with \"Send Collision Messages\" on. In its actions, hitX, hitY, hitZ are where the first one hit, hitNormalX/Y/Z the surface direction and hitSpeed its speed after the hit.",
+      "isTrigger": true,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "other",
+          "label": "Other object",
+          "type": "object",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.onParticlesStopped",
+      "kind": "condition",
+      "category": "Particles",
+      "label": "On particles stopped",
+      "hint": "Last particle died",
+      "display": "On {object} particles stopped",
+      "displayNoObject": null,
+      "icon": "🏁",
+      "description": "Runs when its Particle System has stopped and its last particle died. Needs \"Stop Action\" set to Callback in the Particle System.",
+      "isTrigger": true,
       "objectRequired": true,
       "objectOptional": false,
       "target": "object",
@@ -2899,7 +3100,7 @@
           "options": null,
           "default": "Self.x",
           "optional": false,
-          "hint": "",
+          "hint": null,
           "varScope": null
         },
         {
@@ -2909,7 +3110,7 @@
           "options": null,
           "default": "Self.y",
           "optional": false,
-          "hint": "",
+          "hint": null,
           "varScope": null
         },
         {
@@ -2919,7 +3120,7 @@
           "options": null,
           "default": "Self.z",
           "optional": false,
-          "hint": "",
+          "hint": null,
           "varScope": null
         }
       ]
@@ -3228,7 +3429,7 @@
           "options": null,
           "default": "Self.rotX",
           "optional": false,
-          "hint": "",
+          "hint": null,
           "varScope": null
         },
         {
@@ -3238,7 +3439,7 @@
           "options": null,
           "default": "Self.rotY",
           "optional": false,
-          "hint": "",
+          "hint": null,
           "varScope": null
         },
         {
@@ -3248,7 +3449,7 @@
           "options": null,
           "default": "Self.rotZ",
           "optional": false,
-          "hint": "",
+          "hint": null,
           "varScope": null
         }
       ]
@@ -3542,7 +3743,7 @@
       "display": "Tween {object} {property} to {value} in {seconds} s ({ease})",
       "displayNoObject": null,
       "icon": "〽",
-      "description": "Smoothly animate position, angle, size or opacity to a value, e.g. size 1.5 with Back for a pop, or Self.y + 2 to rise. Starting another tween of the same property replaces it.",
+      "description": "Smoothly animate position, angle, size or opacity to a value, e.g. size 1.5 with Back for a pop, or Self.y + 2 to rise. Starting another tween of the same property replaces it. On a UI element, x and y are its position on the screen (in canvas pixels, from its anchor), angle its rotation, size its scale and opacity its fade (children follow); z does nothing.",
       "isTrigger": false,
       "objectRequired": true,
       "objectOptional": false,
@@ -3930,6 +4131,76 @@
       "params": []
     },
     {
+      "id": "object.callScript",
+      "kind": "action",
+      "category": "Functions",
+      "label": "Call script function",
+      "hint": "Run an exported function of a code script",
+      "display": "Call {object} script {script}.{function}({arg0}, {arg1}, {arg2})",
+      "displayNoObject": null,
+      "icon": "ƒ",
+      "description": "Run a function from one of the object's code scripts. In the script, write \"export function name(a, b) {…}\". Fill only the arguments the function takes. To use its result in a condition or value, write Object.script(\"Script\", \"name\", a, b) in an expression.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "script",
+          "label": "Script name",
+          "type": "string",
+          "options": null,
+          "default": "Health",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "function",
+          "label": "Function",
+          "type": "string",
+          "options": null,
+          "default": "heal",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "arg0",
+          "label": "Argument 1",
+          "type": "expression",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "arg1",
+          "label": "Argument 2",
+          "type": "expression",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "arg2",
+          "label": "Argument 3",
+          "type": "expression",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "object.setVar",
       "kind": "action",
       "category": "Variables",
@@ -4074,7 +4345,7 @@
           "options": null,
           "default": "Self.vx",
           "optional": false,
-          "hint": "",
+          "hint": null,
           "varScope": null
         },
         {
@@ -4084,7 +4355,7 @@
           "options": null,
           "default": "Self.vy",
           "optional": false,
-          "hint": "",
+          "hint": null,
           "varScope": null
         },
         {
@@ -4094,7 +4365,7 @@
           "options": null,
           "default": "Self.vz",
           "optional": false,
-          "hint": "",
+          "hint": null,
           "varScope": null
         }
       ]
@@ -4509,6 +4780,126 @@
       ]
     },
     {
+      "id": "object.emitParticles",
+      "kind": "action",
+      "category": "Particles",
+      "label": "Emit particles with values",
+      "hint": "Burst with its own velocity…",
+      "display": "{object} emits {count} particles",
+      "displayNoObject": null,
+      "icon": "🎯",
+      "description": "Shoot particles at once with values of your own instead of those of the Particle System: a velocity (x, y, z in its simulation space: own space for Local, world space for World), size, lifetime or color. Leave a field empty to use that setting of the Particle System; an empty velocity axis counts as 0 once any axis is filled. A position (same space as the velocity) starts them there instead of at the emitter, e.g. at hitX, hitY, hitZ; an empty position axis counts as 0 once any axis is filled.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "count",
+          "label": "How many",
+          "type": "number",
+          "options": null,
+          "default": "20",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "vx",
+          "label": "Velocity X",
+          "type": "number",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "vy",
+          "label": "Velocity Y",
+          "type": "number",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "vz",
+          "label": "Velocity Z",
+          "type": "number",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "px",
+          "label": "Position X",
+          "type": "number",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "py",
+          "label": "Position Y",
+          "type": "number",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "pz",
+          "label": "Position Z",
+          "type": "number",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "size",
+          "label": "Size",
+          "type": "number",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "lifetime",
+          "label": "Lifetime (s)",
+          "type": "number",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "color",
+          "label": "Color",
+          "type": "color",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "object.spawnParticlesAt",
       "kind": "action",
       "category": "Particles",
@@ -4622,11 +5013,50 @@
       "kind": "action",
       "category": "Particles",
       "label": "Stop particles",
-      "hint": "Flying ones fade out",
-      "display": "{object} stops its particles",
+      "hint": "Stop emitting",
+      "display": "{object} stops its particles ({behavior})",
       "displayNoObject": null,
       "icon": "⏹",
-      "description": "Stop making new particles. The ones already flying fade out normally.",
+      "description": "Stop making new particles. The ones already flying finish their life, or go at once.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "behavior",
+          "label": "Flying particles",
+          "type": "choice",
+          "options": [
+            {
+              "value": "stopEmitting",
+              "label": "Let them finish"
+            },
+            {
+              "value": "stopEmittingAndClear",
+              "label": "Remove them too"
+            }
+          ],
+          "default": "stopEmitting",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.pauseParticles",
+      "kind": "action",
+      "category": "Particles",
+      "label": "Pause particles",
+      "hint": "Freeze them in place",
+      "display": "{object} pauses its particles",
+      "displayNoObject": null,
+      "icon": "⏸",
+      "description": "Freeze its particles where they are. \"Start particles\" carries on from there.",
       "isTrigger": false,
       "objectRequired": true,
       "objectOptional": false,
@@ -4635,6 +5065,250 @@
       "noInvert": false,
       "isWait": false,
       "params": []
+    },
+    {
+      "id": "object.clearParticles",
+      "kind": "action",
+      "category": "Particles",
+      "label": "Clear particles",
+      "hint": "Remove every particle",
+      "display": "Clear {object} particles",
+      "displayNoObject": null,
+      "icon": "🧹",
+      "description": "Remove every particle it has out right now (it keeps emitting if it was).",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.setParticleStartColor",
+      "kind": "action",
+      "category": "Particles",
+      "label": "Set particle start color",
+      "hint": "Color of new particles",
+      "display": "Set {object} particle start color to {color}",
+      "displayNoObject": null,
+      "icon": "🎨",
+      "description": "The color new particles start with (Color over Lifetime still multiplies it).",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "color",
+          "label": "Color",
+          "type": "color",
+          "options": null,
+          "default": "#ffffff",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.setParticleStart",
+      "kind": "action",
+      "category": "Particles",
+      "label": "Set particle start value",
+      "hint": "Speed, size, lifetime…",
+      "display": "Set {object} particle {setting} to {value}",
+      "displayNoObject": null,
+      "icon": "🎛️",
+      "description": "A start value of new particles: speed (m/s), size (m), lifetime (s), rotation (degrees), gravity modifier, or how fast the whole system runs.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "setting",
+          "label": "Setting",
+          "type": "choice",
+          "options": [
+            {
+              "value": "startSpeed",
+              "label": "Start speed"
+            },
+            {
+              "value": "startSize",
+              "label": "Start size"
+            },
+            {
+              "value": "startLifetime",
+              "label": "Start lifetime"
+            },
+            {
+              "value": "startRotation",
+              "label": "Start rotation"
+            },
+            {
+              "value": "gravityModifier",
+              "label": "Gravity modifier"
+            },
+            {
+              "value": "simulationSpeed",
+              "label": "Simulation speed"
+            }
+          ],
+          "default": "startSpeed",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.setParticleModule",
+      "kind": "action",
+      "category": "Particles",
+      "label": "Turn particle module on/off",
+      "hint": "Noise, trails, collision…",
+      "display": "Turn {object} particle {module} {state}",
+      "displayNoObject": null,
+      "icon": "🔌",
+      "description": "Switch one module of its Particle System on or off while the game runs.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "module",
+          "label": "Module",
+          "type": "choice",
+          "options": [
+            {
+              "value": "emission",
+              "label": "Emission"
+            },
+            {
+              "value": "shape",
+              "label": "Shape"
+            },
+            {
+              "value": "velocityOverLifetime",
+              "label": "Velocity over Lifetime"
+            },
+            {
+              "value": "limitVelocityOverLifetime",
+              "label": "Limit Velocity over Lifetime"
+            },
+            {
+              "value": "inheritVelocity",
+              "label": "Inherit Velocity"
+            },
+            {
+              "value": "lifetimeByEmitterSpeed",
+              "label": "Lifetime by Emitter Speed"
+            },
+            {
+              "value": "forceOverLifetime",
+              "label": "Force over Lifetime"
+            },
+            {
+              "value": "colorOverLifetime",
+              "label": "Color over Lifetime"
+            },
+            {
+              "value": "colorBySpeed",
+              "label": "Color by Speed"
+            },
+            {
+              "value": "sizeOverLifetime",
+              "label": "Size over Lifetime"
+            },
+            {
+              "value": "sizeBySpeed",
+              "label": "Size by Speed"
+            },
+            {
+              "value": "rotationOverLifetime",
+              "label": "Rotation over Lifetime"
+            },
+            {
+              "value": "rotationBySpeed",
+              "label": "Rotation by Speed"
+            },
+            {
+              "value": "noise",
+              "label": "Noise"
+            },
+            {
+              "value": "collision",
+              "label": "Collision"
+            },
+            {
+              "value": "triggers",
+              "label": "Triggers"
+            },
+            {
+              "value": "subEmitters",
+              "label": "Sub Emitters"
+            },
+            {
+              "value": "textureSheetAnimation",
+              "label": "Texture Sheet Animation"
+            },
+            {
+              "value": "lights",
+              "label": "Lights"
+            },
+            {
+              "value": "trails",
+              "label": "Trails"
+            }
+          ],
+          "default": "noise",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "state",
+          "label": "State",
+          "type": "choice",
+          "options": [
+            {
+              "value": "on",
+              "label": "On"
+            },
+            {
+              "value": "off",
+              "label": "Off"
+            }
+          ],
+          "default": "on",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
     },
     {
       "id": "object.setParticleRate",
@@ -5140,6 +5814,46 @@
           "options": null,
           "default": "\"Hello\"",
           "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.setPosition",
+      "kind": "action",
+      "category": "UI",
+      "label": "Set position",
+      "hint": "Move it on the screen",
+      "display": "Set {object} position to ({x}, {y})",
+      "displayNoObject": null,
+      "icon": "📍",
+      "description": "Move a UI element on the screen: x (right) and y (up) are its Rect Transform’s anchored position, in canvas pixels from its anchor, the same numbers as in the inspector. Leave a field empty to keep that axis. For a smooth slide use Tween (x / y) instead.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "x",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "type": "number",
+          "options": null,
+          "default": "",
+          "optional": true,
           "hint": null,
           "varScope": null
         }
@@ -5739,6 +6453,446 @@
           "type": "number",
           "options": null,
           "default": "10",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "debug.drawPoint",
+      "kind": "action",
+      "category": "System",
+      "label": "Draw point",
+      "hint": "Debug: mark a position",
+      "display": "Debug: draw point at ({x}, {y}, {z})",
+      "displayNoObject": null,
+      "icon": "📍",
+      "description": "Debug: draw a small cross at a position to see where it is, e.g. at Enemy.x, Enemy.y, Enemy.z. Shapes are drawn over the game and are for testing.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "x",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Z",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "size",
+          "label": "Size",
+          "type": "number",
+          "options": null,
+          "default": "0.4",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "color",
+          "label": "Color",
+          "type": "color",
+          "options": null,
+          "default": "#ffff00",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "seconds",
+          "label": "Seconds",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "debug.drawLine",
+      "kind": "action",
+      "category": "System",
+      "label": "Draw line",
+      "hint": "Debug: a line between two points",
+      "display": "Debug: draw line ({x1}, {y1}, {z1}) → ({x2}, {y2}, {z2})",
+      "displayNoObject": null,
+      "icon": "📏",
+      "description": "Debug: draw a line between two positions, e.g. from the Player to the Target, to check distances and directions.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "x1",
+          "label": "X1",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y1",
+          "label": "Y1",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "z1",
+          "label": "Z1",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "x2",
+          "label": "X2",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y2",
+          "label": "Y2",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "z2",
+          "label": "Z2",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "color",
+          "label": "Color",
+          "type": "color",
+          "options": null,
+          "default": "#00ff00",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "seconds",
+          "label": "Seconds",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "debug.drawSphere",
+      "kind": "action",
+      "category": "System",
+      "label": "Draw sphere",
+      "hint": "Debug: a wire ball (range, radius)",
+      "display": "Debug: draw sphere at ({x}, {y}, {z}) radius {radius}",
+      "displayNoObject": null,
+      "icon": "⚪",
+      "description": "Debug: draw a wire sphere to see a range or radius, e.g. how far an enemy notices you.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "x",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Z",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "radius",
+          "label": "Radius",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "color",
+          "label": "Color",
+          "type": "color",
+          "options": null,
+          "default": "#00ffff",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "seconds",
+          "label": "Seconds",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "debug.drawCircle",
+      "kind": "action",
+      "category": "System",
+      "label": "Draw circle",
+      "hint": "Debug: a ring on the ground",
+      "display": "Debug: draw circle at ({x}, {y}, {z}) radius {radius}",
+      "displayNoObject": null,
+      "icon": "⭕",
+      "description": "Debug: draw a ring lying flat on the ground at a position, e.g. an area or a spawn radius.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "x",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Z",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "radius",
+          "label": "Radius",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "color",
+          "label": "Color",
+          "type": "color",
+          "options": null,
+          "default": "#ff00ff",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "seconds",
+          "label": "Seconds",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "debug.drawBox",
+      "kind": "action",
+      "category": "System",
+      "label": "Draw box",
+      "hint": "Debug: a wire box (size, area)",
+      "display": "Debug: draw box at ({x}, {y}, {z}) size ({w}, {h}, {d})",
+      "displayNoObject": null,
+      "icon": "🔲",
+      "description": "Debug: draw a wire box around a position to check a size or an area, e.g. a trigger zone.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "x",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Z",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "w",
+          "label": "Width",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "h",
+          "label": "Height",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "d",
+          "label": "Depth",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "color",
+          "label": "Color",
+          "type": "color",
+          "options": null,
+          "default": "#ff8800",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "seconds",
+          "label": "Seconds",
+          "type": "number",
+          "options": null,
+          "default": "0",
           "optional": false,
           "hint": null,
           "varScope": null

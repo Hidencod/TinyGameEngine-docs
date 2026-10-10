@@ -65,6 +65,7 @@ If you mistype a name, the game keeps running: it shows a friendly message once 
 | `round(x, digits?)` | Round to nearest (optionally to N decimals) |
 | `sqrt(x)` | Square root |
 | `pow(x, y)` | x to the power of y (same as x ^ y) |
+| `hypot(a, b, ...)` | Length of a vector: sqrt(a² + b² + …), e.g. hypot(vx, vz) is the speed |
 | `sign(x)` | -1, 0 or 1 |
 | `sin(degrees)` | Sine (angle in degrees) |
 | `cos(degrees)` | Cosine (angle in degrees) |
@@ -112,6 +113,19 @@ If you mistype a name, the game keeps running: it shows a friendly message once 
 | `lookX` | Mouse / right stick / drag turn this frame, in degrees (right = positive) |
 | `lookY` | Mouse / right stick / drag tilt this frame, in degrees (up = positive) |
 
+### Collision
+
+| Function | What it does |
+| --- | --- |
+| `hitX` | In "On collision with" or "Is touching": X of the point where they touched |
+| `hitY` | In "On collision with" or "Is touching": Y (height) of the point where they touched |
+| `hitZ` | In "On collision with" or "Is touching": Z of the point where they touched |
+| `hitNormalX` | In "On collision with" or "Is touching": X of the surface direction at the hit, pointing out of the other object toward this one |
+| `hitNormalY` | In "On collision with" or "Is touching": Y of the surface direction at the hit (1 = landed on top of the other object, -1 = hit it from below) |
+| `hitNormalZ` | In "On collision with" or "Is touching": Z of the surface direction at the hit |
+| `hitSpeed` | In "On collision with" or "Is touching": how fast they hit each other (m/s), e.g. damage or a sound volume |
+| `hitImpulse` | In "On collision with" or "Is touching": how hard the physics pushed them apart (N·s); 0 for triggers (hitX/Y/Z and the surface direction are only estimated there) |
+
 ## Object properties
 
 Write the object’s name (or `Self` inside an action on that object), a dot, then the property: `Player.x`, `Coin.count`, `Self.angle`.
@@ -150,7 +164,7 @@ Inside an action on an object type, `Coin.x` means *the coin being processed*. W
 
 ## Built-in values
 
-`time` · `dt` · `fps` · `screenWidth` · `screenHeight` · `touchX` · `touchY` · `touching` · `joystickX` · `joystickY` · `lookX` · `lookY` · `touchWorldX` · `touchWorldY` · `touchWorldZ` · `loopIndex` · `timeScale` · `loadingProgress`
+`time` · `dt` · `fps` · `screenWidth` · `screenHeight` · `touchX` · `touchY` · `touching` · `joystickX` · `joystickY` · `lookX` · `lookY` · `touchWorldX` · `touchWorldY` · `touchWorldZ` · `loopIndex` · `timeScale` · `loadingProgress` · `hitX` · `hitY` · `hitZ` · `hitNormalX` · `hitNormalY` · `hitNormalZ` · `hitSpeed` · `hitImpulse`
 
 ## Compare operators
 

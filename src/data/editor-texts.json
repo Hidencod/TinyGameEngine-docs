@@ -1,0 +1,1028 @@
+{
+ "menus": [
+  {
+   "file": "src/editor/app/apkExport.ts",
+   "label": "Back up key (.tgekey)",
+   "text": "Password-protected file to keep somewhere safe"
+  },
+  {
+   "file": "src/editor/app/apkExport.ts",
+   "label": "Restore key",
+   "text": "Use a key from another device or a reinstall"
+  },
+  {
+   "file": "src/editor/app/editorScreen.ts",
+   "label": "PLAY_MODE_LABEL.editor",
+   "text": "The game runs in the centre of the editor, which is tinted while it plays"
+  },
+  {
+   "file": "src/editor/app/editorScreen.ts",
+   "label": "PLAY_MODE_LABEL.window",
+   "text": "The game runs in a window of its own. It reloads once when you come back to it after editing"
+  },
+  {
+   "file": "src/editor/app/editorScreen.ts",
+   "label": "LAYOUT_LABEL.auto",
+   "text": "Desktop with a mouse and a wide window, phone otherwise"
+  },
+  {
+   "file": "src/editor/app/editorScreen.ts",
+   "label": "LAYOUT_LABEL.phone",
+   "text": "3D view and one tab at a time"
+  },
+  {
+   "file": "src/editor/app/editorScreen.ts",
+   "label": "LAYOUT_LABEL.desktop",
+   "text": "Objects, 3D view and Inspector side by side"
+  },
+  {
+   "file": "src/editor/app/editorScreen.ts",
+   "label": "Project settings",
+   "text": "Orientation, graphics, controls, gravity"
+  },
+  {
+   "file": "src/editor/app/editorScreen.ts",
+   "label": "Scenes",
+   "text": "Add, rename, switch levels"
+  },
+  {
+   "file": "src/editor/app/editorScreen.ts",
+   "label": "Run project",
+   "text": "Start at the project's start scene"
+  },
+  {
+   "file": "src/editor/app/editorScreen.ts",
+   "label": "Export game (HTML)",
+   "text": "One file that runs in any browser"
+  },
+  {
+   "file": "src/editor/app/editorScreen.ts",
+   "label": "Export for web (itch.io)",
+   "text": "A .zip to upload as an HTML5 game"
+  },
+  {
+   "file": "src/editor/app/editorScreen.ts",
+   "label": "Export game (APK)",
+   "text": "Android app you can install and share"
+  },
+  {
+   "file": "src/editor/app/editorScreen.ts",
+   "label": "Backup project (.tge)",
+   "text": "Save a copy you can import later"
+  },
+  {
+   "file": "src/editor/app/editorScreen.ts",
+   "label": "APK signing key",
+   "text": "Back up or restore the key your APKs are signed with"
+  },
+  {
+   "file": "src/editor/app/editorScreen.ts",
+   "label": "Keyboard shortcuts",
+   "text": "Press ? to show them"
+  },
+  {
+   "file": "src/editor/app/editorScreen.ts",
+   "label": "Help & feedback",
+   "text": "Send an idea, report a problem"
+  },
+  {
+   "file": "src/editor/app/feedback.ts",
+   "label": "Guide & documentation",
+   "text": "Tutorials, every feature, reference (opens your browser)"
+  },
+  {
+   "file": "src/editor/app/feedback.ts",
+   "label": "Send feedback",
+   "text": "Ideas, likes, things that confused you"
+  },
+  {
+   "file": "src/editor/app/feedback.ts",
+   "label": "Report a problem",
+   "text": "Something broke or looks wrong"
+  },
+  {
+   "file": "src/editor/app/feedback.ts",
+   "label": "Privacy policy",
+   "text": "What the app keeps and sends"
+  },
+  {
+   "file": "src/editor/app/feedback.ts",
+   "label": "Open-source licences",
+   "text": "The libraries and free assets inside"
+  },
+  {
+   "file": "src/editor/app/home.ts",
+   "label": "Part 1: Your first game",
+   "text": "Roll a ball, add a coin, write your first event (5 min)"
+  },
+  {
+   "file": "src/editor/app/home.ts",
+   "label": "Part 2: Keep score and win",
+   "text": "More coins, a Score variable, a label and a win rule (10 min)"
+  },
+  {
+   "file": "src/editor/code/index.ts",
+   "label": "Entity script",
+   "text": "Attach to objects: movement, collisions, taps…"
+  },
+  {
+   "file": "src/editor/code/index.ts",
+   "label": "Global script",
+   "text": "Runs once for the whole scene: score, spawning, rules…"
+  },
+  {
+   "file": "src/editor/code/index.ts",
+   "label": "Library",
+   "text": "Shared code: export functions, import them in other scripts"
+  },
+  {
+   "file": "src/editor/code/index.ts",
+   "label": "Replace the whole script",
+   "text": "Undo is available"
+  },
+  {
+   "file": "src/editor/eventsheet/panel.ts",
+   "label": "Event",
+   "text": "Conditions → actions"
+  },
+  {
+   "file": "src/editor/eventsheet/panel.ts",
+   "label": "Group",
+   "text": "Organise events; can be turned on/off"
+  },
+  {
+   "file": "src/editor/eventsheet/panel.ts",
+   "label": "Comment",
+   "text": "A note for yourself"
+  },
+  {
+   "file": "src/editor/eventsheet/panel.ts",
+   "label": "Variable",
+   "text": "A value like Score or Lives"
+  },
+  {
+   "file": "src/editor/eventsheet/panel.ts",
+   "label": "Function",
+   "text": "Reusable events with parameters, run with “Call function”"
+  },
+  {
+   "file": "src/editor/eventsheet/panel.ts",
+   "label": "Script",
+   "text": "A few lines of JavaScript"
+  },
+  {
+   "file": "src/editor/eventsheet/panel.ts",
+   "label": "Add sub-event",
+   "text": "Runs only when this event runs"
+  },
+  {
+   "file": "src/editor/eventsheet/panel.ts",
+   "label": "Add sub-event without a condition",
+   "text": "Always runs when this event runs: put shared actions here, above sub-events that have conditions"
+  },
+  {
+   "file": "src/editor/eventsheet/panel.ts",
+   "label": "Add “Else” below",
+   "text": "Runs when this event did not run"
+  },
+  {
+   "file": "src/editor/eventsheet/panel.ts",
+   "label": "Add local variable",
+   "text": "Only exists in this event and its sub-events"
+  },
+  {
+   "file": "src/editor/eventsheet/panel.ts",
+   "label": "Add local variable",
+   "text": "Only exists inside this group"
+  },
+  {
+   "file": "src/editor/eventsheet/picker.ts",
+   "label": "Number",
+   "text": "Score, lives, speed…"
+  },
+  {
+   "file": "src/editor/eventsheet/picker.ts",
+   "label": "Text",
+   "text": "Names, messages…"
+  },
+  {
+   "file": "src/editor/eventsheet/picker.ts",
+   "label": "True / false",
+   "text": "Flags like HasKey"
+  },
+  {
+   "file": "src/editor/panels/library.ts",
+   "label": "View ${pack.name} on kenney.nl",
+   "text": "The full kit and more free assets by Kenney"
+  },
+  {
+   "file": "src/editor/panels/scenes.ts",
+   "label": "Use as loading screen",
+   "text": "Shown while the game loads"
+  },
+  {
+   "file": "src/editor/tabs/assets.ts",
+   "label": "Material",
+   "text": "A look several objects can share"
+  },
+  {
+   "file": "src/editor/tabs/assets.ts",
+   "label": "Shader (GLSL)",
+   "text": "Custom vertex + fragment code"
+  },
+  {
+   "file": "src/editor/tabs/assets.ts",
+   "label": "Script",
+   "text": "JavaScript for objects or the whole scene"
+  },
+  {
+   "file": "src/editor/tabs/assets.ts",
+   "label": "Add to scene",
+   "text": "In the middle of the view (or drag it where you want)"
+  },
+  {
+   "file": "src/editor/tabs/assets.ts",
+   "label": "Delete",
+   "text": "Copies already in scenes stay"
+  },
+  {
+   "file": "src/editor/tabs/logic.ts",
+   "label": "Object script",
+   "text": "Attach to objects with a \"Code script\" component"
+  },
+  {
+   "file": "src/editor/tabs/logic.ts",
+   "label": "Game script",
+   "text": "Runs once for the whole scene"
+  },
+  {
+   "file": "src/editor/tabs/logic.ts",
+   "label": "Library",
+   "text": "Shared code: export functions, import them in other scripts"
+  },
+  {
+   "file": "src/editor/tabs/objects.ts",
+   "label": "Empty object",
+   "text": "Invisible, for grouping or markers"
+  },
+  {
+   "file": "src/editor/tabs/objects.ts",
+   "label": "Terrain (hills)",
+   "text": "Ground with hills you sculpt by dragging"
+  },
+  {
+   "file": "src/editor/tabs/objects.ts",
+   "label": "Water",
+   "text": "A lake or pool: things float, characters swim"
+  },
+  {
+   "file": "src/editor/tabs/objects.ts",
+   "label": "Canvas",
+   "text": "A screen the UI is drawn on"
+  },
+  {
+   "file": "src/editor/tabs/objects.ts",
+   "label": "World Canvas",
+   "text": "UI that belongs to a place in the scene: name tags, signs, screens"
+  },
+  {
+   "file": "src/editor/tabs/objects.ts",
+   "label": "Particle System",
+   "text": "Sparks, smoke, fire, rain… (presets in its inspector)"
+  },
+  {
+   "file": "src/editor/tabs/objects.ts",
+   "label": "Free models library…",
+   "text": "Characters, props, nature, vehicles…"
+  },
+  {
+   "file": "src/editor/tabs/objects.ts",
+   "label": "Set parent…",
+   "text": "Attach to another object so they move together"
+  },
+  {
+   "file": "src/editor/tabs/objects.ts",
+   "label": "Make prefab",
+   "text": "Save as a reusable object (spawn with events)"
+  },
+  {
+   "file": "src/editor/tabs/scene.ts",
+   "label": "Free skies…",
+   "text": "Day, morning, night, space, alien"
+  },
+  {
+   "file": "src/editor/tabs/scene.ts",
+   "label": "Import a 360° image…",
+   "text": "A 2:1 panorama (PNG, JPG or WebP)"
+  },
+  {
+   "file": "src/editor/ui/editors.ts",
+   "label": "Number",
+   "text": "Score, health, speed…"
+  },
+  {
+   "file": "src/editor/ui/editors.ts",
+   "label": "Text",
+   "text": "Names, messages…"
+  },
+  {
+   "file": "src/editor/ui/editors.ts",
+   "label": "Yes / No",
+   "text": "Flags like \"hasKey\""
+  }
+ ],
+ "fieldHints": [
+  {
+   "file": "src/editor/app/apkExport.ts",
+   "label": "App name",
+   "text": "Shown under the icon on the home screen.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/app/apkExport.ts",
+   "label": "Package name",
+   "text": "The app\\'s unique id. Keep it the same so a new export installs as an update — changing it makes a separate app.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/app/apkExport.ts",
+   "label": "Version",
+   "text": "Shown in Android settings (e.g. 1.0, 1.1). The build number goes up automatically.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/app/apkExport.ts",
+   "label": "App icon",
+   "text": "A square image works best.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Faces forward",
+   "text": "Untick if it walks backwards",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Main camera",
+   "text": "The game is shown through this camera",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Range",
+   "text": "0 = unlimited",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Trigger only",
+   "text": "Detects touches but things pass through (coins, zones)",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Don't tip over",
+   "text": "Good for characters",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "3D sound",
+   "text": "Quieter when far from the camera",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Render mode",
+   "text": "Overlay fills the screen. World Space puts the UI where this object is, in the scene.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Face the camera",
+   "text": "On: a name tag or health bar that stays the same size on screen. Off: a flat surface standing in the scene, which turns with the object and shrinks with distance.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Size (px)",
+   "text": "The box the elements inside anchor to, in reference px.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Pixels per metre",
+   "text": "At 100, a 200 px canvas is 2 metres wide.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Height offset (m)",
+   "text": "How far above the object’s top the canvas floats.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Sort order",
+   "text": "Higher canvases are drawn over lower ones.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Canvas",
+   "text": "The Canvas above this element decides where it is drawn. Select it to change that.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "",
+   "text": "c.kind === 'slider' ? 'Optional. {value}, {min}, {max} and {percent} are replaced, e.g. \"HP {value}/{max}\"' : undefined",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Raycast target",
+   "text": "Takes taps and clicks. Off = they fall through to the game behind.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Border (px)",
+   "text": "The edge of the picture that keeps its size instead of stretching",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "",
+   "text": "c.kind === 'image' ? 'Multiplies the picture, as Unity\\'s Image colour does. White leaves it alone.' : undefined",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Wrap",
+   "text": "Fold long text inside the rect instead of running past it",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Handle",
+   "text": "A knob the player can drag while Interactable is on. Off = a bar that only shows a value.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Interactable",
+   "text": "Off = greyed out and deaf to input",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Mask",
+   "text": "Clips the children to this element, like Unity’s Mask. Rectangle uses its box and corner radius; Image uses the opaque parts of a picture.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Blend mode",
+   "text": "How this element mixes with the UI behind it. The 3D view is drawn on its own layer below, so blending stops at the UI.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Anchors",
+   "text": "Where in the parent the element sticks. A stretched row or column makes it grow with the parent.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Also set",
+   "text": "What a preset changes besides the anchors (Unity\\'s Shift and Alt clicks)",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Pivot",
+   "text": "0,0 is the bottom-left corner, 1,1 the top-right. Rotation and scale turn around it.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Width fits content",
+   "text": "Unity\\'s Content Size Fitter: the text or picture decides this axis",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Kind",
+   "text": "Place the children in a row, a column or a grid instead of by their own anchors",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Padding",
+   "text": "Inside edges: X left and right, Y top and bottom",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Child controls size",
+   "text": "The group sizes the children on that axis instead of their own Width / Height",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Child force expand",
+   "text": "Children share out the space left over",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Sort order",
+   "text": "Higher is drawn on top of its siblings",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Clearness",
+   "text": "murky … clear",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Wave height (m)",
+   "text": "0 = calm",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Splashes",
+   "text": "and bubble trails",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Tint",
+   "text": "img ? \"white = the picture's own colors\" : 'Auto erases paint",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Image size",
+   "text": "Meters per repeat",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Density",
+   "text": "per 100 m²",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Solid",
+   "text": "blocks the player",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Remove",
+   "text": "brush removes instead",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Hill height",
+   "text": "for Make hills",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Size (m)",
+   "text": "Square, so this is both sides",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Detail",
+   "text": "squares per side",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Rock",
+   "text": "steep slopes",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Snow above (m)",
+   "text": "0 = no snow",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Textures",
+   "text": "automatic, on unpainted ground",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/components.ts",
+   "label": "Texture size",
+   "text": "Meters per repeat",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "main",
+   "text": "Seconds one cycle lasts; start values with curves run over it",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "main",
+   "text": "Meters",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "main",
+   "text": "Degrees",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "main",
+   "text": "1 = falls like objects, negative = rises",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "main",
+   "text": "Lower is faster on old phones",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "emission",
+   "text": "Particles per second",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "emission",
+   "text": "Particles per meter the object moves",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "velocityOverLifetime",
+   "text": "Radians per second",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "limitVelocityOverLifetime",
+   "text": "Air resistance",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "noise",
+   "text": "Degrees per second",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Collides With",
+   "text": "Tags; empty = everything",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "collision",
+   "text": "Speed lost per hit (0..1)",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "collision",
+   "text": "Share of its lifetime lost per hit",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "textureSheetAnimation",
+   "text": "0 = first frame, 1 = last",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "lights",
+   "text": "Each light costs on every lit pixel: keep it small on phones",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "trails",
+   "text": "Share of the particle\\'s lifetime a trail point lasts",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "trails",
+   "text": "Left = at the particle",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Model",
+   "text": "A 3D model instead of the shape",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "renderer",
+   "text": "Share of the screen height",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "",
+   "text": "Multiplies the start size",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "",
+   "text": "Degrees per second",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/panels/settings.ts",
+   "label": "App icon",
+   "text": "Launcher icon of exported APKs. A square image works best.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/panels/settings.ts",
+   "label": "Max pixel ratio",
+   "text": "Lower = faster & blurrier. 1–1.5 is good for cheap phones.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/panels/settings.ts",
+   "label": "Smooth edges (antialias)",
+   "text": "Slower on low-end phones. Editor applies it after reopening the project.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/panels/settings.ts",
+   "label": "Max particles",
+   "text": "All effects together. Keeps cheap phones smooth when lots of effects play at once.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/panels/settings.ts",
+   "label": "Reference resolution",
+   "text": "The screen the UI is designed for. Every UI px in the editor and in scripts is one px of this.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/panels/settings.ts",
+   "label": "Screen match mode",
+   "text": "Expand: nothing designed is ever cropped (the safe default). Shrink: never show more than the design. Match: blend the two axes.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/panels/settings.ts",
+   "label": "Match",
+   "text": "0 = scale by width, 1 = by height",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/panels/settings.ts",
+   "label": "Gravity",
+   "text": "Earth is 0, -9.82, 0",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/tabs/scene.ts",
+   "label": "Start scene",
+   "text": "The scene the game starts in",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/tabs/scene.ts",
+   "label": "Loading screen",
+   "text": "Show this scene while the game loads, then go to the start scene. loadingProgress (0 … 1) draws a bar",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/tabs/scene.ts",
+   "label": "Shown for",
+   "text": "Shortest time in seconds, so an intro animation can finish. It also waits for the assets to load",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/tabs/scene.ts",
+   "label": "Light with sky",
+   "text": "Reflections and soft light on objects with the Realistic style",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/tabs/scene.ts",
+   "label": "Loading color",
+   "text": "Shown until the sky has loaded",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/ui/editors.ts",
+   "label": "Keys",
+   "text": "keyboard",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/ui/editors.ts",
+   "label": "On screen",
+   "text": "off = keys / gamepad only",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/ui/editors.ts",
+   "label": "Joystick",
+   "text": "⌨ WASD / arrows · 🎮 left stick",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Prewarm",
+   "text": "Start as if it had already run a full cycle",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Flip Rotation",
+   "text": "Share of particles that turn the other way",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Simulation Space",
+   "text": "World: particles stay where they were emitted. Local: they move with the object.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Delta Time",
+   "text": "Unscaled keeps going in slow motion and pause",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Auto Random Seed",
+   "text": "Off: the same effect every time it plays",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Stop Action",
+   "text": "When it has stopped and its last particle died. Callback: onParticleSystemStopped() and \"On particles stopped\"",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Ring Buffer Mode",
+   "text": "Particles outlive their lifetime until new ones replace them",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Loop Range",
+   "text": "0..1 of the lifetime",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Radius Thickness",
+   "text": "0 = only the surface, 1 = all of it",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Spread",
+   "text": "0 = anywhere; otherwise only at steps of this",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Mesh",
+   "text": "Object whose 3D shape particles start on (none = this object)",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Dampen",
+   "text": "How much of the speed over the limit goes",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Mode",
+   "text": "Initial: once at birth. Current: every frame.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Randomize",
+   "text": "Random modes pick a new force every frame",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Color",
+   "text": "Multiplies the start color. Left = birth, right = death.",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Damping",
+   "text": "Strength follows the frequency",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Planes",
+   "text": "Each object's up (Y) side is a floor that never ends",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Collision Quality",
+   "text": "Lower tests fewer particles per frame",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Enable Dynamic Colliders",
+   "text": "Moving bodies count too",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Send Collision Messages",
+   "text": "onParticleCollision() and \"On particle collision\"",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Colliders",
+   "text": "Objects with a collider",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Light",
+   "text": "An object with a Light component to copy (none = white point light)",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Ratio",
+   "text": "Share of particles with a light",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Ratio",
+   "text": "Share of particles with a trail",
+   "kind": "hint"
+  },
+  {
+   "file": "src/editor/inspector/particles.ts",
+   "label": "Texture",
+   "text": "None = soft round dot",
+   "kind": "hint"
+  }
+ ],
+ "behaviorParamHelp": {
+  "driver": "manual = you drive it with events or scripts (Drive car); ai = drives itself along Path",
+  "reverseSpeed": "Top speed in reverse (m/s). 0 = 60% of Speed",
+  "steerRate": "How fast the wheels turn toward full lock (degrees per second). 0 = default",
+  "steerAtTopSpeed": "Percent of full steering lock kept at top speed (100 = same at any speed)",
+  "topSpeedEase": "Percent of top speed over which the engine fades out (0 = hard cap, can make the body pitch)",
+  "suspensionStiffness": "Spring strength multiplier (higher = stiffer, less dive when braking)",
+  "suspensionDamping": "Spring damping multiplier (higher = settles faster, less bounce)",
+  "seat": "Where the rider sits, in the vehicle's own axes: 'x, y, z'",
+  "autoSeat": "Enter vehicle seats the rider here (rides along, stops walking) and Exit vehicle puts it down beside. Off = you do it with Attach to / Detach",
+  "autoCamera": "Enter vehicle makes the camera follow this vehicle (and back on Exit). Off = use Set camera target",
+  "wheels": "Model node names, comma separated",
+  "frontWheels": "Which of those steer",
+  "path": "Waypoint objects forming the racing line, e.g. #waypoint"
+ },
+ "colliderShapeHints": {
+  "auto": "Models follow their real shape (still objects: exact; moving objects: convex parts)",
+  "convex": "One shrink-wrapped hull around the model. Fast; fills in gaps and dents",
+  "mesh": "Follows every triangle. Best for still scenery like trees, arches and ramps"
+ }
+}

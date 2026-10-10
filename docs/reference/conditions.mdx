@@ -18,7 +18,7 @@ Conditions are the **WHEN / IF** part of an event. All conditions of an event mu
 - Most other conditions can be **inverted** (NOT) from the condition’s menu.
 :::
 
-There are **64 conditions**, grouped by category as in the condition picker.
+There are **69 conditions**, grouped by category as in the condition picker.
 
 [⚙️ System](#system) · [🔢 Variables](#variables) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🧱 Physics](#physics) · [❤️ Health](#health) · [🖼️ UI](#ui) · [✨ Particles](#particles)
 
@@ -625,7 +625,7 @@ Only use one random instance.
 
 <span class="tge-ace-display">‹Object› collides with ‹Other object›</span> <span class="tge-pill trigger">⚡ Trigger</span>
 
-Runs at the moment the object starts touching another object.
+Runs at the moment the object starts touching another object. In its actions, hitX, hitY, hitZ are where they touched, hitNormalX/Y/Z the surface direction (out of the other object toward this one), hitSpeed how fast they met and hitImpulse how hard they were pushed apart.
 
 - **Where:** Pick an **object** (or a #tag) first, then this condition.
 - **ID:** `object.collidesWith` (as saved in project files)
@@ -651,7 +651,7 @@ Runs at the moment two objects stop touching.
 
 <span class="tge-ace-display">‹Object› is touching ‹Other object›</span>
 
-True while the object touches (overlaps) another object.
+True while the object touches (overlaps) another object. In its actions, hitX, hitY, hitZ, hitNormalX/Y/Z, hitSpeed and hitImpulse describe the current contact (for triggers hitX/Y/Z and the surface direction are estimated and hitImpulse is 0; all 0 when nothing touches).
 
 - **Where:** Pick an **object** (or a #tag) first, then this condition.
 - **ID:** `object.isTouching` (as saved in project files)
@@ -797,8 +797,65 @@ Runs when the player drags a slider to a new value (e.g. a volume setting).
 
 <span class="tge-ace-display">‹Object› is emitting particles</span>
 
-True while its Particles component is making new particles.
+True while its Particle System is making new particles.
 
 - **Where:** Pick an **object** (or a #tag) first, then this condition.
 - **ID:** `object.isEmittingParticles` (as saved in project files)
+- **Parameters:** none
+
+### Is playing particles {/* #object-isplayingparticles */}
+
+<span class="tge-ace-display">‹Object› is playing its particles</span>
+
+True while its Particle System plays: emitting, or particles still flying after a stop. False when paused or finished.
+
+- **Where:** Pick an **object** (or a #tag) first, then this condition.
+- **ID:** `object.isPlayingParticles` (as saved in project files)
+- **Parameters:** none
+
+### Is particles paused {/* #object-ispausedparticles */}
+
+<span class="tge-ace-display">‹Object› particles are paused</span>
+
+True while its Particle System is paused ("Pause particles").
+
+- **Where:** Pick an **object** (or a #tag) first, then this condition.
+- **ID:** `object.isPausedParticles` (as saved in project files)
+- **Parameters:** none
+
+### Compare particle count {/* #object-compareparticlecount */}
+
+<span class="tge-ace-display">‹Object› particle count ‹Comparison› ‹Value›</span>
+
+How many of its particles are alive right now.
+
+- **Where:** Pick an **object** (or a #tag) first, then this condition.
+- **ID:** `object.compareParticleCount` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Comparison | Choice | `=` | Options: =, ≠, &lt;, ≤, &gt;, ≥ |
+| Value | Expression | `0` |  |
+
+### On particle collision {/* #object-onparticlecollision */}
+
+<span class="tge-ace-display">‹Object› particles hit ‹Other object›</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+Runs when particles of the object hit another object. Needs its Collision module with "Send Collision Messages" on. In its actions, hitX, hitY, hitZ are where the first one hit, hitNormalX/Y/Z the surface direction and hitSpeed its speed after the hit.
+
+- **Where:** Pick an **object** (or a #tag) first, then this condition.
+- **ID:** `object.onParticleCollision` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Other object | Object or #tag |  |  |
+
+### On particles stopped {/* #object-onparticlesstopped */}
+
+<span class="tge-ace-display">On ‹Object› particles stopped</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+Runs when its Particle System has stopped and its last particle died. Needs "Stop Action" set to Callback in the Particle System.
+
+- **Where:** Pick an **object** (or a #tag) first, then this condition.
+- **ID:** `object.onParticlesStopped` (as saved in project files)
 - **Parameters:** none

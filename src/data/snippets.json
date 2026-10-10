@@ -4,111 +4,111 @@
     "title": "Move with joystick",
     "icon": "🕹️",
     "scope": "entity",
-    "description": "Walk around with the on-screen joystick (or WASD / arrow keys).",
-    "code": "// Move with the joystick and face the walking direction.\nfunction update(dt) {\n  const speed = props.speed ?? 5;\n  const x = input.axis.x;\n  const y = input.axis.y;\n  entity.translate(x * speed * dt, 0, -y * speed * dt);\n  if (x !== 0 || y !== 0) {\n    entity.rotation.y = Math.atan2(-x, y) * 180 / Math.PI;\n  }\n}\n"
+    "code": "// Move with the joystick and face the walking direction.\nfunction update(dt) {\n  const speed = props.speed ?? 5;\n  const x = input.axis.x;\n  const y = input.axis.y;\n  entity.translate(x * speed * dt, 0, -y * speed * dt);\n  if (x !== 0 || y !== 0) {\n    entity.rotation.y = Math.atan2(-x, y) * 180 / Math.PI;\n  }\n}\n",
+    "description": "Walk around with the on-screen joystick (or WASD / arrow keys)."
   },
   {
     "id": "jump",
     "title": "Jump on button",
     "icon": "⬆️",
     "scope": "entity",
-    "description": "Press the \"jump\" button to jump. Needs a RigidBody + Collider.",
-    "code": "// Jump when the \"jump\" button is pressed (needs a RigidBody).\nfunction update(dt) {\n  if (input.wasPressed('jump') && entity.isOnGround()) {\n    const v = entity.getVelocity();\n    entity.setVelocity(v.x, props.jumpStrength ?? 7, v.z);\n  }\n}\n"
+    "code": "// Jump when the \"jump\" button is pressed (needs a RigidBody).\nfunction update(dt) {\n  if (input.wasPressed('jump') && entity.isOnGround()) {\n    const v = entity.getVelocity();\n    entity.setVelocity(v.x, props.jumpStrength ?? 7, v.z);\n  }\n}\n",
+    "description": "Press the \"jump\" button to jump. Needs a RigidBody + Collider."
   },
   {
     "id": "tapmove",
     "title": "Tap to move",
     "icon": "🚶",
     "scope": "entity",
-    "description": "Tap the ground and walk there, around walls.",
-    "code": "// Tap (or click) the ground: walk there, going around walls.\nfunction update(dt) {\n  if (input.tapped) {\n    const p = game.touchWorld();\n    entity.moveTo(p.x, p.z, props.speed ?? 4);\n  }\n}\n"
+    "code": "// Tap (or click) the ground: walk there, going around walls.\nfunction update(dt) {\n  if (input.tapped) {\n    const p = game.touchWorld();\n    entity.moveTo(p.x, p.z, props.speed ?? 4);\n  }\n}\n",
+    "description": "Tap the ground and walk there, around walls."
   },
   {
     "id": "spin",
     "title": "Spin",
     "icon": "🔄",
     "scope": "entity",
-    "description": "Rotate constantly around the up axis.",
-    "code": "// Spin around the Y axis.\nfunction update(dt) {\n  entity.rotate(0, (props.speed ?? 90) * dt, 0);\n}\n"
+    "code": "// Spin around the Y axis.\nfunction update(dt) {\n  entity.rotate(0, (props.speed ?? 90) * dt, 0);\n}\n",
+    "description": "Rotate constantly around the up axis."
   },
   {
     "id": "follow",
     "title": "Follow the player",
     "icon": "👣",
     "scope": "entity",
-    "description": "Chase the entity named \"Player\" and stop when close.",
-    "code": "// Chase the Player.\nfunction update(dt) {\n  const player = game.find('Player');\n  if (!player) return;\n  const target = player.getWorldPosition();\n  entity.lookAt(target.x, entity.position.y, target.z);\n  if (entity.distanceTo(player) > 1.5) {\n    entity.moveToward(target.x, entity.position.y, target.z, (props.speed ?? 2) * dt);\n  }\n}\n"
+    "code": "// Chase the Player.\nfunction update(dt) {\n  const player = game.find('Player');\n  if (!player) return;\n  const target = player.getWorldPosition();\n  entity.lookAt(target.x, entity.position.y, target.z);\n  if (entity.distanceTo(player) > 1.5) {\n    entity.moveToward(target.x, entity.position.y, target.z, (props.speed ?? 2) * dt);\n  }\n}\n",
+    "description": "Chase the entity named \"Player\" and stop when close."
   },
   {
     "id": "patrol",
     "title": "Patrol between two points",
     "icon": "🔁",
     "scope": "entity",
-    "description": "Walk back and forth between two objects you pick in the Inspector (each enemy its own).",
-    "code": "// Walk back and forth between two objects picked in the Inspector.\n// Put this script on any number of enemies and give each its own Point A and Point B\n// (empty objects make good markers). The fields below show up in the Inspector.\nconst properties = {\n  speed: 2,          // meters per second\n  pointA: object(),  // pick an object in the Inspector\n  pointB: object(),\n  wait: 0.5,         // seconds to pause at each end\n};\n\nlet goingToB = true;\nlet waitLeft = 0;\n\nfunction update(dt) {\n  const target = goingToB ? props.pointB : props.pointA;\n  if (!target) return;                       // not picked yet\n  if (waitLeft > 0) { waitLeft -= dt; return; }\n  const me = entity.getWorldPosition();\n  const p = target.getWorldPosition();\n  entity.lookAt(p.x, me.y, p.z);             // face it, staying upright\n  entity.moveToward(p.x, me.y, p.z, props.speed * dt);\n  if (Math.hypot(p.x - me.x, p.z - me.z) < 0.2) {\n    goingToB = !goingToB;                    // turn around\n    waitLeft = props.wait;\n  }\n}\n"
+    "code": "// Walk back and forth between two objects picked in the Inspector.\n// Put this script on any number of enemies and give each its own Point A and Point B\n// (empty objects make good markers). The fields below show up in the Inspector.\nconst properties = {\n  speed: 2,          // meters per second\n  pointA: object(),  // pick an object in the Inspector\n  pointB: object(),\n  wait: 0.5,         // seconds to pause at each end\n};\n\nlet goingToB = true;\nlet waitLeft = 0;\n\nfunction update(dt) {\n  const target = goingToB ? props.pointB : props.pointA;\n  if (!target) return;                       // not picked yet\n  if (waitLeft > 0) { waitLeft -= dt; return; }\n  const me = entity.getWorldPosition();\n  const p = target.getWorldPosition();\n  entity.lookAt(p.x, me.y, p.z);             // face it, staying upright\n  entity.moveToward(p.x, me.y, p.z, props.speed * dt);\n  if (Math.hypot(p.x - me.x, p.z - me.z) < 0.2) {\n    goingToB = !goingToB;                    // turn around\n    waitLeft = props.wait;\n  }\n}\n",
+    "description": "Walk back and forth between two objects you pick in the Inspector (each enemy its own)."
   },
   {
     "id": "spawner",
     "title": "Spawn every second",
     "icon": "⏱️",
     "scope": "entity",
-    "description": "Create a \"Coin\" (prefab or object name) near this entity every second.",
-    "code": "// Spawn a Coin every second somewhere around this entity.\nlet timer = 0;\n\nfunction update(dt) {\n  timer += dt;\n  if (timer >= 1) {\n    timer -= 1;\n    const p = entity.getWorldPosition();\n    game.spawn('Coin', { x: p.x + random(-4, 4), y: p.y + 5, z: p.z + random(-4, 4) });\n  }\n}\n"
+    "code": "// Spawn a Coin every second somewhere around this entity.\nlet timer = 0;\n\nfunction update(dt) {\n  timer += dt;\n  if (timer >= 1) {\n    timer -= 1;\n    const p = entity.getWorldPosition();\n    game.spawn('Coin', { x: p.x + random(-4, 4), y: p.y + 5, z: p.z + random(-4, 4) });\n  }\n}\n",
+    "description": "Create a \"Coin\" (prefab or object name) near this entity every second."
   },
   {
     "id": "coin",
     "title": "Collect coin on collision",
     "icon": "🪙",
     "scope": "entity",
-    "description": "Put on the Player: touching a Coin destroys it and adds 1 to Score.",
-    "code": "// Put this on the Player.\nfunction onCollision(other) {\n  if (other.name === 'Coin' || other.hasTag('coin')) {\n    other.destroy();\n    game.setVar('Score', Number(game.getVar('Score') ?? 0) + 1);\n    audio.play('coin');\n  }\n}\n"
+    "code": "// Put this on the Player.\nfunction onCollision(other) {\n  if (other.name === 'Coin' || other.hasTag('coin')) {\n    other.destroy();\n    game.setVar('Score', Number(game.getVar('Score') ?? 0) + 1);\n    audio.play('coin');\n  }\n}\n",
+    "description": "Put on the Player: touching a Coin destroys it and adds 1 to Score."
   },
   {
     "id": "tapcolor",
     "title": "Change color on tap",
     "icon": "🎨",
     "scope": "entity",
-    "description": "Tap the object to cycle through colors.",
-    "code": "// Tap this object to change its color.\nconst colors = ['#ff5c6c', '#ffb547', '#3ecf8e', '#4f8cff', '#a855f7'];\nlet index = 0;\n\nfunction onTap() {\n  index = (index + 1) % colors.length;\n  entity.setColor(colors[index]);\n}\n"
+    "code": "// Tap this object to change its color.\nconst colors = ['#ff5c6c', '#ffb547', '#3ecf8e', '#4f8cff', '#a855f7'];\nlet index = 0;\n\nfunction onTap() {\n  index = (index + 1) % colors.length;\n  entity.setColor(colors[index]);\n}\n",
+    "description": "Tap the object to cycle through colors."
   },
   {
     "id": "fall",
     "title": "Restart when falling",
     "icon": "💀",
     "scope": "entity",
-    "description": "Restart the scene if this entity falls below the world.",
-    "code": "// Restart the level when falling off the map.\nfunction update(dt) {\n  if (entity.position.y < -10) {\n    game.restartScene();\n  }\n}\n"
+    "code": "// Restart the level when falling off the map.\nfunction update(dt) {\n  if (entity.position.y < -10) {\n    game.restartScene();\n  }\n}\n",
+    "description": "Restart the scene if this entity falls below the world."
   },
   {
     "id": "scorehud",
     "title": "Show score (global)",
     "icon": "🏆",
     "scope": "global",
-    "description": "Global script: keeps a Text entity named \"ScoreText\" updated.",
-    "code": "// Global script: show the Score in a Text entity named \"ScoreText\".\nfunction update(dt) {\n  const label = game.find('ScoreText');\n  if (label) label.setText('Score: ' + game.getVar('Score'));\n}\n"
+    "code": "// Global script: show the Score in a Text entity named \"ScoreText\".\nfunction update(dt) {\n  const label = game.find('ScoreText');\n  if (label) label.setText('Score: ' + game.getVar('Score'));\n}\n",
+    "description": "Global script: keeps a Text entity named \"ScoreText\" updated."
   },
   {
     "id": "swipe",
     "title": "Swipe lanes (runner)",
     "icon": "👆",
     "scope": "entity",
-    "description": "Swipe left/right to switch between 3 lanes, swipe up to jump.",
-    "code": "// Endless-runner style lane switching.\nlet lane = 0; // -1, 0, 1\n\nfunction update(dt) {\n  if (input.swipe === 'left') lane = clamp(lane - 1, -1, 1);\n  if (input.swipe === 'right') lane = clamp(lane + 1, -1, 1);\n  if (input.swipe === 'up' && entity.isOnGround()) entity.applyImpulse(0, 6, 0);\n  entity.position.x = lerp(entity.position.x, lane * 2, 10 * dt);\n}\n"
+    "code": "// Endless-runner style lane switching.\nlet lane = 0; // -1, 0, 1\n\nfunction update(dt) {\n  if (input.swipe === 'left') lane = clamp(lane - 1, -1, 1);\n  if (input.swipe === 'right') lane = clamp(lane + 1, -1, 1);\n  if (input.swipe === 'up' && entity.isOnGround()) entity.applyImpulse(0, 6, 0);\n  entity.position.x = lerp(entity.position.x, lane * 2, 10 * dt);\n}\n",
+    "description": "Swipe left/right to switch between 3 lanes, swipe up to jump."
   },
   {
     "id": "vehicle",
     "title": "Get in and out of a vehicle",
     "icon": "🚗",
     "scope": "entity",
-    "description": "Put on the Player. Press the \"use\" button next to a boat or car (tag #vehicle) to get in or out. Seating and the camera are automatic; steering is yours.",
-    "code": "// Put this on the Player. Give the vehicle the tag \"vehicle\" and a Car or Boat behavior, and add\n// a control button called \"use\" in Scene → Controls.\nfunction update(dt) {\n  const vehicle = entity.vehicle;\n\n  if (input.wasPressed('use')) {\n    if (vehicle) {\n      entity.exitVehicle();   // put down beside it, walking again, camera back on you\n    } else {\n      // Get in: the nearest vehicle within 3 meters.\n      let nearest = null;\n      for (const v of game.select('#vehicle')) {\n        if (entity.distanceTo(v) < 3 && (!nearest || entity.distanceTo(v) < entity.distanceTo(nearest))) nearest = v;\n      }\n      if (nearest) entity.enterVehicle(nearest);   // sits in the seat, camera follows\n    }\n    return;\n  }\n\n  // Entering does not steer: pass the joystick to whoever you are driving.\n  if (vehicle) {\n    if (vehicle.behavior('car')) vehicle.driveCar(input.axis.x, Math.max(input.axis.y, 0), Math.max(-input.axis.y, 0));\n    else vehicle.setMoveInput(input.axis.x, input.axis.y);\n  } else {\n    entity.setMoveInput(input.axis.x, input.axis.y);\n  }\n}\n"
+    "code": "// Put this on the Player. Give the vehicle the tag \"vehicle\" and a Car or Boat behavior, and add\n// a control button called \"use\" in Scene → Controls.\nfunction update(dt) {\n  const vehicle = entity.vehicle;\n\n  if (input.wasPressed('use')) {\n    if (vehicle) {\n      entity.exitVehicle();   // put down beside it, walking again, camera back on you\n    } else {\n      // Get in: the nearest vehicle within 3 meters.\n      let nearest = null;\n      for (const v of game.select('#vehicle')) {\n        if (entity.distanceTo(v) < 3 && (!nearest || entity.distanceTo(v) < entity.distanceTo(nearest))) nearest = v;\n      }\n      if (nearest) entity.enterVehicle(nearest);   // sits in the seat, camera follows\n    }\n    return;\n  }\n\n  // Entering does not steer: pass the joystick to whoever you are driving.\n  if (vehicle) {\n    if (vehicle.behavior('car')) vehicle.driveCar(input.axis.x, Math.max(input.axis.y, 0), Math.max(-input.axis.y, 0));\n    else vehicle.setMoveInput(input.axis.x, input.axis.y);\n  } else {\n    entity.setMoveInput(input.axis.x, input.axis.y);\n  }\n}\n",
+    "description": "Put on the Player. Press the \"use\" button next to a boat or car (tag #vehicle) to get in or out. Seating and the camera are automatic; steering is yours."
   },
   {
     "id": "drivecar",
     "title": "Drive a car or walk with the joystick",
     "icon": "🚗",
     "scope": "entity",
-    "description": "Put on a Car, Boat or Platformer object. The behavior never reads the joystick: you pass it in.",
-    "code": "// Put this on an object with a Car (or Boat, or Platformer) behavior. The behavior does\n// nothing until you tell it what to do; read the joystick and pass it in.\nfunction update(dt) {\n  const x = input.axis.x;   // left / right\n  const y = input.axis.y;   // up / down\n\n  // Car: steer, gas, brake\n  entity.driveCar(x, Math.max(y, 0), Math.max(-y, 0));\n\n  // Boat or Platformer / Top-down instead:\n  // entity.setMoveInput(x, y);\n  // if (input.wasPressed('jump')) entity.simulateControl('jump');\n}\n"
+    "code": "// Put this on an object with a Car (or Boat, or Platformer) behavior. The behavior does\n// nothing until you tell it what to do; read the joystick and pass it in.\nfunction update(dt) {\n  const x = input.axis.x;   // left / right\n  const y = input.axis.y;   // up / down\n\n  // Car: steer, gas, brake\n  entity.driveCar(x, Math.max(y, 0), Math.max(-y, 0));\n\n  // Boat or Platformer / Top-down instead:\n  // entity.setMoveInput(x, y);\n  // if (input.wasPressed('jump')) entity.simulateControl('jump');\n}\n",
+    "description": "Put on a Car, Boat or Platformer object. The behavior never reads the joystick: you pass it in."
   }
 ]

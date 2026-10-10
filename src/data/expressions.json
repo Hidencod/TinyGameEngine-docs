@@ -85,6 +85,13 @@
       "insert": "pow("
     },
     {
+      "name": "hypot",
+      "signature": "hypot(a, b, ...)",
+      "description": "Length of a vector: sqrt(a² + b² + …), e.g. hypot(vx, vz) is the speed",
+      "category": "Math",
+      "insert": "hypot("
+    },
+    {
       "name": "sign",
       "signature": "sign(x)",
       "description": "-1, 0 or 1",
@@ -323,6 +330,62 @@
       "insert": "touchWorldZ"
     },
     {
+      "name": "hitX",
+      "signature": "hitX",
+      "description": "In \"On collision with\" or \"Is touching\": X of the point where they touched",
+      "category": "Collision",
+      "insert": "hitX"
+    },
+    {
+      "name": "hitY",
+      "signature": "hitY",
+      "description": "In \"On collision with\" or \"Is touching\": Y (height) of the point where they touched",
+      "category": "Collision",
+      "insert": "hitY"
+    },
+    {
+      "name": "hitZ",
+      "signature": "hitZ",
+      "description": "In \"On collision with\" or \"Is touching\": Z of the point where they touched",
+      "category": "Collision",
+      "insert": "hitZ"
+    },
+    {
+      "name": "hitNormalX",
+      "signature": "hitNormalX",
+      "description": "In \"On collision with\" or \"Is touching\": X of the surface direction at the hit, pointing out of the other object toward this one",
+      "category": "Collision",
+      "insert": "hitNormalX"
+    },
+    {
+      "name": "hitNormalY",
+      "signature": "hitNormalY",
+      "description": "In \"On collision with\" or \"Is touching\": Y of the surface direction at the hit (1 = landed on top of the other object, -1 = hit it from below)",
+      "category": "Collision",
+      "insert": "hitNormalY"
+    },
+    {
+      "name": "hitNormalZ",
+      "signature": "hitNormalZ",
+      "description": "In \"On collision with\" or \"Is touching\": Z of the surface direction at the hit",
+      "category": "Collision",
+      "insert": "hitNormalZ"
+    },
+    {
+      "name": "hitSpeed",
+      "signature": "hitSpeed",
+      "description": "In \"On collision with\" or \"Is touching\": how fast they hit each other (m/s), e.g. damage or a sound volume",
+      "category": "Collision",
+      "insert": "hitSpeed"
+    },
+    {
+      "name": "hitImpulse",
+      "signature": "hitImpulse",
+      "description": "In \"On collision with\" or \"Is touching\": how hard the physics pushed them apart (N·s); 0 for triggers (hitX/Y/Z and the surface direction are only estimated there)",
+      "category": "Collision",
+      "insert": "hitImpulse"
+    },
+    {
       "name": "joystickX",
       "signature": "joystickX",
       "description": "Joystick left/right (-1 to 1)",
@@ -479,7 +542,15 @@
     "touchWorldZ",
     "loopIndex",
     "timeScale",
-    "loadingProgress"
+    "loadingProgress",
+    "hitX",
+    "hitY",
+    "hitZ",
+    "hitNormalX",
+    "hitNormalY",
+    "hitNormalZ",
+    "hitSpeed",
+    "hitImpulse"
   ],
   "compareOps": [
     "=",

@@ -298,6 +298,20 @@
           "doc": "Grey a button or slider out, or turn it back on (Interactable)."
         },
         {
+          "name": "getUIPosition",
+          "kind": "method",
+          "sig": "()",
+          "type": "{x, y}",
+          "doc": "Where a UI element sits: its anchored position in canvas pixels from its anchor."
+        },
+        {
+          "name": "setUIPosition",
+          "kind": "method",
+          "sig": "(x, y)",
+          "type": "void",
+          "doc": "Move a UI element to this anchored position (canvas px). Leave an axis out (undefined) to keep it."
+        },
+        {
           "name": "refreshUI",
           "kind": "method",
           "sig": "()",
@@ -331,6 +345,13 @@
           "sig": "()",
           "type": "string",
           "doc": "Name of the playing clip (empty if none)."
+        },
+        {
+          "name": "isAnimationBusy",
+          "kind": "method",
+          "sig": "()",
+          "type": "boolean",
+          "doc": "True while a play-once animation (loop off) is still running."
         },
         {
           "name": "getAnimationNames",
@@ -389,46 +410,52 @@
           "doc": "Let go: back to the top level where it is now."
         },
         {
+          "name": "particleSystem",
+          "kind": "property",
+          "type": "ParticleSystem|null",
+          "doc": "The Particle System (like Unity's): every module live — particleSystem.main.startSpeed = 8, particleSystem.noise.enabled = true — plus play(), pause(), stop(), emit(count, params), simulate(t), getParticles() / setParticles(). Null without a Particles component."
+        },
+        {
           "name": "emitParticles",
           "kind": "method",
           "sig": "(count: number)",
           "type": "void",
-          "doc": "Shoot particles at once from the Particles component, e.g. emitParticles(30) on a hit."
+          "doc": "Shoot particles at once from the Particle System, e.g. emitParticles(30) on a hit."
         },
         {
           "name": "startParticles",
           "kind": "method",
           "sig": "()",
           "type": "void",
-          "doc": "Start the Particles component; also fires its Burst. Safe to call every frame: already emitting means nothing changes."
+          "doc": "Play the Particle System (bursts at time 0 go out). Safe to call every frame: already playing means nothing changes."
         },
         {
           "name": "restartParticles",
           "kind": "method",
           "sig": "()",
           "type": "void",
-          "doc": "Play the Particles component from the beginning even if it is already emitting."
+          "doc": "Play the Particle System from the beginning even if it is already playing."
         },
         {
           "name": "stopParticles",
           "kind": "method",
-          "sig": "()",
+          "sig": "(clear?: boolean)",
           "type": "void",
-          "doc": "Stop making new particles (the ones out fade normally)."
+          "doc": "Stop making new particles; the ones out finish their life, or go at once with stopParticles(true)."
         },
         {
           "name": "setParticleRate",
           "kind": "method",
           "sig": "(rate: number)",
           "type": "void",
-          "doc": "Particles per second while emitting."
+          "doc": "Emission rate over time (particles per second)."
         },
         {
           "name": "isEmittingParticles",
           "kind": "method",
           "sig": "()",
           "type": "boolean",
-          "doc": "True while the Particles component makes new particles."
+          "doc": "True while the Particle System makes new particles."
         },
         {
           "name": "getParticleCount",
@@ -821,6 +848,13 @@
           "doc": "Are two entities touching?"
         },
         {
+          "name": "touchInfo",
+          "kind": "method",
+          "sig": "(a, b)",
+          "type": "CollisionInfo | null",
+          "doc": "Current contact of two touching entities (point, normal, speed, impulse), or null"
+        },
+        {
           "name": "getVar",
           "kind": "method",
           "sig": "(name)",
@@ -907,7 +941,7 @@
           "kind": "method",
           "sig": "(effect, x, y, z, overrides?)",
           "type": "void",
-          "doc": "Play an effect once at a position: \"Sparkles\", \"Fire\", \"Smoke\", \"Explosion\", \"Dust puff\", \"Rain\", \"Confetti\", \"Magic\". overrides e.g. { burst: 50, color: [\"#f00\", \"#ff0\"] }"
+          "doc": "Play an effect once at a position: \"Sparkles\", \"Fire\", \"Smoke\", \"Explosion\", \"Dust puff\", \"Rain\", \"Confetti\", \"Splash\", \"Bubbles\", \"Magic\". overrides change any module, e.g. { main: { startColor: \"#ff0000\" }, noise: { enabled: true } }"
         },
         {
           "name": "shakeCamera",
@@ -915,6 +949,12 @@
           "sig": "(intensity, duration)",
           "type": "void",
           "doc": "Shake the camera."
+        },
+        {
+          "name": "debug",
+          "kind": "property",
+          "type": "{drawLine,drawRay,drawSphere,drawCircle,drawBox,drawPoint,clear}",
+          "doc": "Draw shapes over the game to check positions and sizes, like Unity Debug.DrawLine and Gizmos: game.debug.drawSphere(enemy.position, 5, \"#ff0000\"), drawLine(a, b, color, seconds), drawRay(origin, direction), drawCircle(center, radius), drawBox(center, size), drawPoint(position). Seconds default to 0 = one frame, so call it every update()."
         },
         {
           "name": "vibrate",
@@ -1085,6 +1125,343 @@
           "doc": "In const properties = { … }: a field where each object picks another object in the Inspector, e.g. target: object(). Read it as props.target."
         }
       ]
+    },
+    {
+      "name": "collision",
+      "title": "collision",
+      "doc": "Second argument of onCollision / onCollisionStay / onCollisionEnd (third for game scripts): what was hit, where and how hard (like Unity's Collision).",
+      "members": [
+        {
+          "name": "other",
+          "kind": "property",
+          "type": "entity",
+          "doc": "The object it hit."
+        },
+        {
+          "name": "self",
+          "kind": "property",
+          "type": "entity",
+          "doc": "The object this collision is reported to."
+        },
+        {
+          "name": "isTrigger",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "One of them is a trigger: they overlap, no contacts."
+        },
+        {
+          "name": "contacts",
+          "kind": "property",
+          "type": "ContactPoint[]",
+          "doc": "Every contact: { point, normal, separation, impulse }. World space; normals point out of `other`."
+        },
+        {
+          "name": "contactCount",
+          "kind": "property",
+          "type": "number",
+          "doc": "How many contacts."
+        },
+        {
+          "name": "point",
+          "kind": "property",
+          "type": "{x,y,z}",
+          "doc": "Where they touched (first contact)."
+        },
+        {
+          "name": "normal",
+          "kind": "property",
+          "type": "{x,y,z}",
+          "doc": "Surface direction at the hit, out of `other` toward this object (y = 1: landed on top of it)."
+        },
+        {
+          "name": "impulse",
+          "kind": "property",
+          "type": "{x,y,z}",
+          "doc": "Total impulse that pushed this object away (N·s); its length is how hard they hit."
+        },
+        {
+          "name": "relativeVelocity",
+          "kind": "property",
+          "type": "{x,y,z}",
+          "doc": "Velocity of `other` relative to this object as they met (m/s)."
+        },
+        {
+          "name": "speed",
+          "kind": "property",
+          "type": "number",
+          "doc": "Impact speed (length of relativeVelocity), e.g. for damage or a sound volume."
+        },
+        {
+          "name": "collider",
+          "kind": "property",
+          "type": "Rapier Collider",
+          "doc": "The other object's collider that touched."
+        },
+        {
+          "name": "thisCollider",
+          "kind": "property",
+          "type": "Rapier Collider",
+          "doc": "This object's collider that touched."
+        },
+        {
+          "name": "rigidbody",
+          "kind": "property",
+          "type": "Rapier RigidBody|null",
+          "doc": "The other object's physics body."
+        },
+        {
+          "name": "flipped",
+          "kind": "method",
+          "sig": "()",
+          "type": "collision",
+          "doc": "The same collision from the other object's side."
+        }
+      ]
+    },
+    {
+      "name": "particleSystem",
+      "title": "entity.particleSystem",
+      "doc": "An object's Particle System, like Unity's ParticleSystem.",
+      "members": [
+        {
+          "name": "main",
+          "kind": "property",
+          "type": "module",
+          "doc": "The main module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
+        },
+        {
+          "name": "emission",
+          "kind": "property",
+          "type": "module",
+          "doc": "The emission module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
+        },
+        {
+          "name": "shape",
+          "kind": "property",
+          "type": "module",
+          "doc": "The shape module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
+        },
+        {
+          "name": "velocityOverLifetime",
+          "kind": "property",
+          "type": "module",
+          "doc": "The velocityOverLifetime module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
+        },
+        {
+          "name": "limitVelocityOverLifetime",
+          "kind": "property",
+          "type": "module",
+          "doc": "The limitVelocityOverLifetime module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
+        },
+        {
+          "name": "inheritVelocity",
+          "kind": "property",
+          "type": "module",
+          "doc": "The inheritVelocity module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
+        },
+        {
+          "name": "lifetimeByEmitterSpeed",
+          "kind": "property",
+          "type": "module",
+          "doc": "The lifetimeByEmitterSpeed module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
+        },
+        {
+          "name": "forceOverLifetime",
+          "kind": "property",
+          "type": "module",
+          "doc": "The forceOverLifetime module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
+        },
+        {
+          "name": "colorOverLifetime",
+          "kind": "property",
+          "type": "module",
+          "doc": "The colorOverLifetime module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
+        },
+        {
+          "name": "colorBySpeed",
+          "kind": "property",
+          "type": "module",
+          "doc": "The colorBySpeed module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
+        },
+        {
+          "name": "sizeOverLifetime",
+          "kind": "property",
+          "type": "module",
+          "doc": "The sizeOverLifetime module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
+        },
+        {
+          "name": "sizeBySpeed",
+          "kind": "property",
+          "type": "module",
+          "doc": "The sizeBySpeed module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
+        },
+        {
+          "name": "rotationOverLifetime",
+          "kind": "property",
+          "type": "module",
+          "doc": "The rotationOverLifetime module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
+        },
+        {
+          "name": "rotationBySpeed",
+          "kind": "property",
+          "type": "module",
+          "doc": "The rotationBySpeed module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
+        },
+        {
+          "name": "noise",
+          "kind": "property",
+          "type": "module",
+          "doc": "The noise module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
+        },
+        {
+          "name": "collision",
+          "kind": "property",
+          "type": "module",
+          "doc": "The collision module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
+        },
+        {
+          "name": "triggers",
+          "kind": "property",
+          "type": "module",
+          "doc": "The triggers module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
+        },
+        {
+          "name": "subEmitters",
+          "kind": "property",
+          "type": "module",
+          "doc": "The subEmitters module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
+        },
+        {
+          "name": "textureSheetAnimation",
+          "kind": "property",
+          "type": "module",
+          "doc": "The textureSheetAnimation module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
+        },
+        {
+          "name": "lights",
+          "kind": "property",
+          "type": "module",
+          "doc": "The lights module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
+        },
+        {
+          "name": "trails",
+          "kind": "property",
+          "type": "module",
+          "doc": "The trails module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
+        },
+        {
+          "name": "renderer",
+          "kind": "property",
+          "type": "module",
+          "doc": "The renderer module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
+        },
+        {
+          "name": "isPlaying",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "Playing (emitting, or particles still flying), not paused."
+        },
+        {
+          "name": "isEmitting",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "Making new particles."
+        },
+        {
+          "name": "isPaused",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "Paused."
+        },
+        {
+          "name": "isStopped",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "Stopped and every particle gone."
+        },
+        {
+          "name": "particleCount",
+          "kind": "property",
+          "type": "number",
+          "doc": "Particles alive."
+        },
+        {
+          "name": "time",
+          "kind": "property",
+          "type": "number",
+          "doc": "Seconds into the current cycle (settable)."
+        },
+        {
+          "name": "play",
+          "kind": "method",
+          "sig": "(withChildren = true)",
+          "type": "void",
+          "doc": "Play (or carry on after pause)."
+        },
+        {
+          "name": "pause",
+          "kind": "method",
+          "sig": "(withChildren = true)",
+          "type": "void",
+          "doc": "Freeze in place."
+        },
+        {
+          "name": "stop",
+          "kind": "method",
+          "sig": "(withChildren = true, stopBehavior = \"stopEmitting\")",
+          "type": "void",
+          "doc": "Stop emitting; \"stopEmittingAndClear\" also removes the particles."
+        },
+        {
+          "name": "clear",
+          "kind": "method",
+          "sig": "(withChildren = true)",
+          "type": "void",
+          "doc": "Remove every particle."
+        },
+        {
+          "name": "isAlive",
+          "kind": "method",
+          "sig": "(withChildren = true)",
+          "type": "boolean",
+          "doc": "Emitting or particles still alive."
+        },
+        {
+          "name": "emit",
+          "kind": "method",
+          "sig": "(count, params?)",
+          "type": "void",
+          "doc": "Emit now. params override start values: { position, velocity, startSize, startColor, startLifetime, rotation, … }."
+        },
+        {
+          "name": "simulate",
+          "kind": "method",
+          "sig": "(t, withChildren = true, restart = true, fixedTimeStep = true)",
+          "type": "void",
+          "doc": "Fast-forward t seconds (leaves it paused)."
+        },
+        {
+          "name": "getParticles",
+          "kind": "method",
+          "sig": "()",
+          "type": "Particle[]",
+          "doc": "Every live particle: position, velocity, remainingLifetime, startSize, startColor, rotation, … (a copy)."
+        },
+        {
+          "name": "setParticles",
+          "kind": "method",
+          "sig": "(particles, size?)",
+          "type": "void",
+          "doc": "Write particles back (change getParticles() results); extra ones are removed."
+        },
+        {
+          "name": "triggerSubEmitter",
+          "kind": "method",
+          "sig": "(index, particles?)",
+          "type": "void",
+          "doc": "Fire a sub emitter from every particle, or the given ones."
+        }
+      ]
     }
   ],
   "lifecycle": [
@@ -1107,13 +1484,33 @@
     },
     {
       "name": "onCollision",
-      "args": "other",
-      "doc": "This entity started touching `other`."
+      "args": "other, collision",
+      "doc": "This entity started touching `other`. collision has the details: contacts, point, normal, impulse, relativeVelocity, speed, isTrigger."
+    },
+    {
+      "name": "onCollisionStay",
+      "args": "other, collision",
+      "doc": "Every frame while it touches `other` (only define it if you need it: it reads every contact)."
     },
     {
       "name": "onCollisionEnd",
-      "args": "other",
+      "args": "other, collision",
       "doc": "This entity stopped touching `other`."
+    },
+    {
+      "name": "onParticleCollision",
+      "args": "other, events",
+      "doc": "Particles hit `other` (Collision module with Send Collision Messages). Called on the system's object and on the one hit. events: [{ intersection, normal, velocity, other }]."
+    },
+    {
+      "name": "onParticleTrigger",
+      "args": "events",
+      "doc": "Particles met the Triggers module's colliders (actions set to Callback). events: [{ type: \"inside\" | \"outside\" | \"enter\" | \"exit\", particles }]."
+    },
+    {
+      "name": "onParticleSystemStopped",
+      "args": "",
+      "doc": "Its Particle System stopped and the last particle died (Stop Action: Callback)."
     },
     {
       "name": "onTap",

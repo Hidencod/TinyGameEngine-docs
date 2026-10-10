@@ -20,8 +20,12 @@ Define any of these in a script; the engine calls them.
 | `start()` | Called once when the scene starts. | ✔ | ✔ |
 | `update(dt)` | Called every frame. dt = seconds since last frame. | ✔ | ✔ |
 | `lateUpdate(dt)` | Called every frame after physics. | ✔ |  |
-| `onCollision(other)` | This entity started touching `other`. | ✔ |  |
-| `onCollisionEnd(other)` | This entity stopped touching `other`. | ✔ |  |
+| `onCollision(other, collision)` | This entity started touching `other`. collision has the details: contacts, point, normal, impulse, relativeVelocity, speed, isTrigger. | ✔ |  |
+| `onCollisionStay(other, collision)` | Every frame while it touches `other` (only define it if you need it: it reads every contact). | ✔ |  |
+| `onCollisionEnd(other, collision)` | This entity stopped touching `other`. | ✔ |  |
+| `onParticleCollision(other, events)` | Particles hit `other` (Collision module with Send Collision Messages). Called on the system's object and on the one hit. events: [&#123; intersection, normal, velocity, other &#125;]. | ✔ |  |
+| `onParticleTrigger(events)` | Particles met the Triggers module's colliders (actions set to Callback). events: [&#123; type: "inside" \| "outside" \| "enter" \| "exit", particles &#125;]. | ✔ |  |
+| `onParticleSystemStopped()` | Its Particle System stopped and the last particle died (Stop Action: Callback). | ✔ |  |
 | `onTap()` | The player tapped this entity. | ✔ |  |
 | `onClick()` | This UI button was clicked. | ✔ |  |
 | `onArrived()` | It reached the point of entity.moveTo() (or got as close as it could). | ✔ |  |
@@ -76,11 +80,14 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `setUIImage(assetName)` | `void` | Change the image of a UI element. |
 | `setUIColors({ background, text, fill })` | `void` | Change UI colors, e.g. &#123; background: "#ff0000" &#125;. |
 | `setUIInteractable(on)` | `void` | Grey a button or slider out, or turn it back on (Interactable). |
+| `getUIPosition()` | `{x, y}` | Where a UI element sits: its anchored position in canvas pixels from its anchor. |
+| `setUIPosition(x, y)` | `void` | Move a UI element to this anchored position (canvas px). Leave an axis out (undefined) to keep it. |
 | `refreshUI()` | `void` | Re-apply the UI styles after writing component data directly. |
 | `isPressed()` | `boolean` | True while this UI button is held down. |
 | `playAnimation(name: string, loop = true)` | `void` | Play a clip of the 3D model, e.g. "walk" or "jump". loop=false plays once and holds the last frame. |
 | `stopAnimation()` | `void` | Stop the playing model animation. |
 | `getAnimation()` | `string` | Name of the playing clip (empty if none). |
+| `isAnimationBusy()` | `boolean` | True while a play-once animation (loop off) is still running. |
 | `getAnimationNames()` | `string[]` | All clip names of the model. |
 | `hasAnimation(name: string)` | `boolean` | True if the model has this clip. |
 | `setAnimationSpeed(speed: number)` | `void` | 1 = normal, 0.5 = half, 2 = double. |
@@ -89,12 +96,13 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `stopTweens()` | `void` | Stop all tweens where they are. |
 | `attachTo(parent)` | `void` | Carry this object along with another (keeps its place in the world), e.g. a picked-up key. |
 | `detach()` | `void` | Let go: back to the top level where it is now. |
-| `emitParticles(count: number)` | `void` | Shoot particles at once from the Particles component, e.g. emitParticles(30) on a hit. |
-| `startParticles()` | `void` | Start the Particles component; also fires its Burst. Safe to call every frame: already emitting means nothing changes. |
-| `restartParticles()` | `void` | Play the Particles component from the beginning even if it is already emitting. |
-| `stopParticles()` | `void` | Stop making new particles (the ones out fade normally). |
-| `setParticleRate(rate: number)` | `void` | Particles per second while emitting. |
-| `isEmittingParticles()` | `boolean` | True while the Particles component makes new particles. |
+| `particleSystem` | `ParticleSystem\|null` | The Particle System (like Unity's): every module live — particleSystem.main.startSpeed = 8, particleSystem.noise.enabled = true — plus play(), pause(), stop(), emit(count, params), simulate(t), getParticles() / setParticles(). Null without a Particles component. |
+| `emitParticles(count: number)` | `void` | Shoot particles at once from the Particle System, e.g. emitParticles(30) on a hit. |
+| `startParticles()` | `void` | Play the Particle System (bursts at time 0 go out). Safe to call every frame: already playing means nothing changes. |
+| `restartParticles()` | `void` | Play the Particle System from the beginning even if it is already playing. |
+| `stopParticles(clear?: boolean)` | `void` | Stop making new particles; the ones out finish their life, or go at once with stopParticles(true). |
+| `setParticleRate(rate: number)` | `void` | Emission rate over time (particles per second). |
+| `isEmittingParticles()` | `boolean` | True while the Particle System makes new particles. |
 | `getParticleCount()` | `number` | Particles currently alive. |
 | `playSound()` | `void` | Play this entity's Audio component. |
 | `stopSound()` | `void` | Stop this entity's Audio component. |
@@ -159,6 +167,7 @@ The running game.
 | `hasLineOfSight(a, b)` | `boolean` | True when nothing solid is between the two objects, e.g. an enemy can see the player. |
 | `raycast(from, to)` | `{entity,point,distance}\|null` | Physics ray between two world points. |
 | `isTouching(a, b)` | `boolean` | Are two entities touching? |
+| `touchInfo(a, b)` | `CollisionInfo \| null` | Current contact of two touching entities (point, normal, speed, impulse), or null |
 | `getVar(name)` | `value` | Read a global/scene variable: game.getVar("Score") |
 | `setVar(name, value)` | `void` | Write a global/scene variable. |
 | `hasVar(name)` | `boolean` | Does the variable exist? |
@@ -171,8 +180,9 @@ The running game.
 | `getCamera()` | `entity\|null` | The active camera entity. |
 | `three` | `{renderer,scene,camera}` | Advanced: the three.js renderer, scene and camera behind the game, e.g. game.three.scene.add(mesh). |
 | `rapier` | `{RAPIER,world,gravity,…}` | Advanced: the physics engine behind the game. game.rapier.world is the Rapier World, game.rapier.bodyOf(entity) / collidersOf(entity) its objects, game.rapier.setGravity(x, y, z) the world gravity. Use it with RAPIER. |
-| `spawnParticles(effect, x, y, z, overrides?)` | `void` | Play an effect once at a position: "Sparkles", "Fire", "Smoke", "Explosion", "Dust puff", "Rain", "Confetti", "Magic". overrides e.g. &#123; burst: 50, color: ["#f00", "#ff0"] &#125; |
+| `spawnParticles(effect, x, y, z, overrides?)` | `void` | Play an effect once at a position: "Sparkles", "Fire", "Smoke", "Explosion", "Dust puff", "Rain", "Confetti", "Splash", "Bubbles", "Magic". overrides change any module, e.g. &#123; main: &#123; startColor: "#ff0000" &#125;, noise: &#123; enabled: true &#125; &#125; |
 | `shakeCamera(intensity, duration)` | `void` | Shake the camera. |
+| `debug` | `{drawLine,drawRay,drawSphere,drawCircle,drawBox,drawPoint,clear}` | Draw shapes over the game to check positions and sizes, like Unity Debug.DrawLine and Gizmos: game.debug.drawSphere(enemy.position, 5, "#ff0000"), drawLine(a, b, color, seconds), drawRay(origin, direction), drawCircle(center, radius), drawBox(center, size), drawPoint(position). Seconds default to 0 = one frame, so call it every update(). |
 | `vibrate(ms)` | `void` | Vibrate the phone, e.g. vibrate(40) on a hit (Android; ignored elsewhere). |
 | `on(event, fn)` | `unsubscribe` | Listen: "sceneStart", "collisionStart", "entityCreated", "waterEnter", ... |
 | `log(...values)` | `void` | Show a message on screen (debugging). |
@@ -216,6 +226,72 @@ Handy math functions available everywhere.
 | `randomInt(min, max)` | `number` | Random whole number between min and max (inclusive). |
 | `deg2rad(degrees)` | `number` | Degrees to radians (for Math.sin etc.). |
 | `object()` | `property` | In const properties = &#123; … &#125;: a field where each object picks another object in the Inspector, e.g. target: object(). Read it as props.target. |
+
+## `collision` — collision {/* #collision */}
+
+Second argument of onCollision / onCollisionStay / onCollisionEnd (third for game scripts): what was hit, where and how hard (like Unity's Collision).
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `other` | `entity` | The object it hit. |
+| `self` | `entity` | The object this collision is reported to. |
+| `isTrigger` | `boolean` | One of them is a trigger: they overlap, no contacts. |
+| `contacts` | `ContactPoint[]` | Every contact: &#123; point, normal, separation, impulse &#125;. World space; normals point out of `other`. |
+| `contactCount` | `number` | How many contacts. |
+| `point` | `{x,y,z}` | Where they touched (first contact). |
+| `normal` | `{x,y,z}` | Surface direction at the hit, out of `other` toward this object (y = 1: landed on top of it). |
+| `impulse` | `{x,y,z}` | Total impulse that pushed this object away (N·s); its length is how hard they hit. |
+| `relativeVelocity` | `{x,y,z}` | Velocity of `other` relative to this object as they met (m/s). |
+| `speed` | `number` | Impact speed (length of relativeVelocity), e.g. for damage or a sound volume. |
+| `collider` | `Rapier Collider` | The other object's collider that touched. |
+| `thisCollider` | `Rapier Collider` | This object's collider that touched. |
+| `rigidbody` | `Rapier RigidBody\|null` | The other object's physics body. |
+| `flipped()` | `collision` | The same collision from the other object's side. |
+
+## `particleSystem` — entity.particleSystem {/* #particlesystem */}
+
+An object's Particle System, like Unity's ParticleSystem.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `main` | `module` | The main module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
+| `emission` | `module` | The emission module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
+| `shape` | `module` | The shape module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
+| `velocityOverLifetime` | `module` | The velocityOverLifetime module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
+| `limitVelocityOverLifetime` | `module` | The limitVelocityOverLifetime module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
+| `inheritVelocity` | `module` | The inheritVelocity module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
+| `lifetimeByEmitterSpeed` | `module` | The lifetimeByEmitterSpeed module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
+| `forceOverLifetime` | `module` | The forceOverLifetime module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
+| `colorOverLifetime` | `module` | The colorOverLifetime module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
+| `colorBySpeed` | `module` | The colorBySpeed module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
+| `sizeOverLifetime` | `module` | The sizeOverLifetime module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
+| `sizeBySpeed` | `module` | The sizeBySpeed module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
+| `rotationOverLifetime` | `module` | The rotationOverLifetime module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
+| `rotationBySpeed` | `module` | The rotationBySpeed module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
+| `noise` | `module` | The noise module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
+| `collision` | `module` | The collision module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
+| `triggers` | `module` | The triggers module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
+| `subEmitters` | `module` | The subEmitters module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
+| `textureSheetAnimation` | `module` | The textureSheetAnimation module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
+| `lights` | `module` | The lights module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
+| `trails` | `module` | The trails module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
+| `renderer` | `module` | The renderer module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
+| `isPlaying` | `boolean` | Playing (emitting, or particles still flying), not paused. |
+| `isEmitting` | `boolean` | Making new particles. |
+| `isPaused` | `boolean` | Paused. |
+| `isStopped` | `boolean` | Stopped and every particle gone. |
+| `particleCount` | `number` | Particles alive. |
+| `time` | `number` | Seconds into the current cycle (settable). |
+| `play(withChildren = true)` | `void` | Play (or carry on after pause). |
+| `pause(withChildren = true)` | `void` | Freeze in place. |
+| `stop(withChildren = true, stopBehavior = "stopEmitting")` | `void` | Stop emitting; "stopEmittingAndClear" also removes the particles. |
+| `clear(withChildren = true)` | `void` | Remove every particle. |
+| `isAlive(withChildren = true)` | `boolean` | Emitting or particles still alive. |
+| `emit(count, params?)` | `void` | Emit now. params override start values: &#123; position, velocity, startSize, startColor, startLifetime, rotation, … &#125;. |
+| `simulate(t, withChildren = true, restart = true, fixedTimeStep = true)` | `void` | Fast-forward t seconds (leaves it paused). |
+| `getParticles()` | `Particle[]` | Every live particle: position, velocity, remainingLifetime, startSize, startColor, rotation, … (a copy). |
+| `setParticles(particles, size?)` | `void` | Write particles back (change getParticles() results); extra ones are removed. |
+| `triggerSubEmitter(index, particles?)` | `void` | Fire a sub emitter from every particle, or the given ones. |
 
 ## Globals
 
