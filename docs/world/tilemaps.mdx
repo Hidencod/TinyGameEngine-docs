@@ -74,6 +74,31 @@ Solid tiles that touch are merged into as few boxes as possible, so a long floor
 Solid tiles block only when the object has a **Collider** component (set to *Auto*). Without it the tilemap is only a picture.
 :::
 
+## Auto tiles
+
+Painting every edge and corner of a hill by hand is slow. With **auto tiles** you paint the ground and the engine picks the right piece for each cell: a corner at the corners, a flat top along the top, a middle inside. Erase a cell and the pieces around it round themselves off.
+
+<Row>
+  <Phone name="card-tilemap-auto-set" caption="Auto tile sets under the palette" />
+</Row>
+
+Set one up in the Tilemap card, under **Auto tiles**:
+
+- **＋ Block (9 pieces)** for ground, walls and hills. You tap the tile for each piece in turn: top left, top, top right, left, middle, right, bottom left, bottom, bottom right. The pieces are laid out as they will meet.
+- **＋ Platform (3 pieces)** for a one-tile-high floating platform: left end, middle, right end.
+
+<Row>
+  <Phone name="autotile-setup" caption="Tap the tile for each piece; tap a piece above to change it" />
+</Row>
+
+Tap a piece in the grid to go back to it, and **Done** when all are filled. Give the set a name. Then tap its name in the list to paint with it (the same drag as **Draw**). To change or redo a set, delete it (🗑) and make it again.
+
+<Row>
+  <Phone name="autotile-painted" caption="One drag with the Earth set: corners and edges fit by themselves" />
+</Row>
+
+How it works: a cell belongs to a set when its tile is one of the set's pieces. Each cell looks at its four neighbours (up, right, down, left) that belong to the same set and picks its piece from that. So you can also **Draw** a piece by hand, **Erase** or **Fill**, and the neighbouring pieces update. A tile that is not a piece of any set is never changed. In events and scripts, *Erase tile* / `removeTile` and `setTile` also update the pieces next to the changed cell, so digging a hole in the ground leaves rounded edges.
+
 ## Climbing
 
 A **Platformer** with **Climb** switched on can climb the tiles you marked **Climbable**: press **up** or **down** next to a ladder to grab it, **up / down** to climb, and let go with **left / right** (to step onto a platform at the top) or **Jump**. Stack climbable tiles for the ladder, and put a one-way platform tile beside its top so the hero can step onto it. Objects tagged `ladder` work the same, for a ladder that is one picture.
