@@ -69,6 +69,11 @@
       "icon": "🎞️",
       "title": "Sprite",
       "desc": ""
+    },
+    "tilemap": {
+      "icon": "🧱",
+      "title": "Tilemap",
+      "desc": ""
     }
   }
 }

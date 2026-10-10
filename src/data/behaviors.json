@@ -5,6 +5,7 @@
       "jumpStrength": 7,
       "turnToDirection": true,
       "cameraRelative": true,
+      "sideView": false,
       "animate": true
     },
     "topdown": {

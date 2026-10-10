@@ -396,6 +396,34 @@
           "doc": "Sprite: how many frames it has."
         },
         {
+          "name": "setTile",
+          "kind": "method",
+          "sig": "(x: number, y: number, tile: number)",
+          "type": "void",
+          "doc": "Tilemap: paint one cell (counted in tiles, y up) with a tile (0 = the first of the sheet). A negative tile erases it."
+        },
+        {
+          "name": "getTile",
+          "kind": "method",
+          "sig": "(x: number, y: number)",
+          "type": "number",
+          "doc": "Tilemap: the tile in a cell, or -1 when it is empty."
+        },
+        {
+          "name": "removeTile",
+          "kind": "method",
+          "sig": "(x: number, y: number)",
+          "type": "void",
+          "doc": "Tilemap: erase a cell."
+        },
+        {
+          "name": "cellAt",
+          "kind": "method",
+          "sig": "(worldX: number, worldY: number)",
+          "type": "{ x, y }",
+          "doc": "Tilemap: the cell at a world position."
+        },
+        {
           "name": "tween",
           "kind": "method",
           "sig": "(property, to, seconds, ease?)",

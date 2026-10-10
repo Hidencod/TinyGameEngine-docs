@@ -1,0 +1,91 @@
+---
+title: Tilemaps
+description: Paint levels from a sheet of tiles, with solid tiles that collide and blocks to change them while the game runs.
+---
+
+# Tilemaps
+
+<Art name="island" size={110} />
+
+A **tilemap** is a whole level made of square **tiles** painted on a grid: ground, walls, platforms, water, flowers. It is one object and one mesh, however many tiles it has, so big levels stay fast. Tiles you mark **solid** block the player and other physics bodies, and you can change tiles while the game runs (open a door, break a block).
+
+It is made for a 2D side view (see [2D games](./2d-games)), but a tilemap is just a flat grid standing in the 3D world: you can lay it flat as a floor too.
+
+## The tile sheet
+
+The tiles come from a **tile sheet**: a picture made in the [sprite editor](./sprites) where **every frame is one tile**. Make a sprite the size of one tile (16 × 16 for pixel art), draw one tile per frame, and save. Tile **0** is the first frame, tile 1 the second, and so on.
+
+<Row>
+  <Phone name="card-tilemap" caption="The Tilemap card with its tile sheet and palette" />
+</Row>
+
+You can also use the sheet of the **2D Platformer** template (grass, earth, stone, brick, wood, flowers).
+
+## Add a tilemap
+
+**Objects → ＋ Add**, under **Sprites**: **Tilemap**. It starts with the first sprite sheet of your project (change it with **Tile sheet**; **🖌️ New tile sheet** draws one, **✏ Edit** reopens the sheet you picked). A Collider is added too, so solid tiles block.
+
+## Paint
+
+Select the tilemap and tap **🖌️ Paint tiles**. Now a drag in the 3D view paints; a faint grid and a yellow square show the cell under your finger. Two fingers (or the right mouse button) still move the view. Tap **✋ Stop painting** when you are done, or select something else.
+
+<Row>
+  <Phone name="card-tilemap-painting" caption="Painting on: tools and palette" />
+</Row>
+
+| Tool | What it does |
+| --- | --- |
+| **🖌️ Draw** | Paints the chosen tile on every cell you drag over. |
+| **🧽 Erase** | Empties the cells you drag over. |
+| **🪣 Fill** | Fills the area you tap: connected cells of the same tile (or, on empty ground, the empty space inside what you have painted, plus a margin). Limited to 5000 cells. |
+
+The **palette** shows every tile of the sheet; tap one to choose it (the chosen tile has a blue frame). One drag is one **Undo** step.
+
+## Solid tiles
+
+Under the palette, a button tells whether the **chosen tile** is **solid** (blocks) or **walkthrough** (flowers, backgrounds). Tap it to change. Walkthrough tiles have a small ring in the corner of their thumbnail. By default every tile is solid.
+
+Solid tiles that touch are merged into as few boxes as possible, so a long floor is one collider: the player never catches on the seam between two tiles. The boxes are as deep as **Collider depth** says (front to back, in meters).
+
+:::note
+Solid tiles block only when the object has a **Collider** component (set to *Auto*). Without it the tilemap is only a picture.
+:::
+
+## Settings
+
+| Setting | What it does |
+| --- | --- |
+| **Tile sheet** | The picture with the tiles. |
+| **Tile size (m)** | How big one tile is in the world. 1 = one meter per tile. |
+| **Color** / **Opacity** | Tint and fade the whole tilemap. |
+| **Sort order** | Higher draws in front of lower, like sprites. Use it to put a scenery tilemap behind the level. |
+| **Edges** | **Smooth** blends pixels; **Pixel (hard)** keeps pixel art crisp. |
+| **Collider depth (m)** | How thick the collision boxes are. |
+| **Clear** | Empty the whole map. |
+
+Cells are counted in tiles from the object's position: cell **(0, 0)** is the square from the position up and to the right (X right, Y up). Negative numbers go left and down.
+
+## Events and scripts
+
+| Block | What it does |
+| --- | --- |
+| **Paint tile … at cell (x, y)** | Puts a tile in one cell. The collision follows at once. |
+| **Erase the tile at cell (x, y)** | Empties one cell. |
+
+In scripts, on the tilemap object:
+
+```js
+entity.setTile(3, 0, 2);      // cell (3, 0) becomes tile 2
+entity.getTile(3, 0);         // 2   (-1 when the cell is empty)
+entity.removeTile(3, 0);      // empty again
+const p = game.find('Player').getWorldPosition();
+const c = entity.cellAt(p.x, p.y);   // { x, y }: the cell at a world position
+```
+
+A negative tile number erases the cell. Use `cellAt` to find the cell under a hero or a tap: *"if the cell under the hero is a spike tile, hurt it"*.
+
+## Ideas
+
+- **Doors and blocks:** a switch calls `removeTile` on a wall, and the way is open.
+- **Digging:** on tap, find the cell with `cellAt` and erase it.
+- **Two layers:** add a second tilemap with a lower **Sort order** for scenery that does not block (give it no Collider).

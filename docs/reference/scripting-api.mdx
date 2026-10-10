@@ -94,6 +94,10 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `setSpriteFrame(frame: number)` | `void` | Sprite: show one frame (0 = the first) and stop its animation. playAnimation() plays again. |
 | `getSpriteFrame()` | `number` | Sprite: the frame being shown (0 = the first). |
 | `getSpriteFrameCount()` | `number` | Sprite: how many frames it has. |
+| `setTile(x: number, y: number, tile: number)` | `void` | Tilemap: paint one cell (counted in tiles, y up) with a tile (0 = the first of the sheet). A negative tile erases it. |
+| `getTile(x: number, y: number)` | `number` | Tilemap: the tile in a cell, or -1 when it is empty. |
+| `removeTile(x: number, y: number)` | `void` | Tilemap: erase a cell. |
+| `cellAt(worldX: number, worldY: number)` | `{ x, y }` | Tilemap: the cell at a world position. |
 | `tween(property, to, seconds, ease?)` | `void` | Animate 'x' \| 'y' \| 'z' \| 'angle' \| 'size' \| 'opacity' to a value, e.g. tween('size', 1.5, 0.3, 'back'). Eases: linear, easeIn, easeOut, easeInOut, back, elastic, bounce. |
 | `isTweening(property?)` | `boolean` | A tween is running (of that property, or any). |
 | `stopTweens()` | `void` | Stop all tweens where they are. |

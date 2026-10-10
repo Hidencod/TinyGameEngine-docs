@@ -1,6 +1,6 @@
 ---
 title: Templates
-description: The seven ready-made starting projects, how to play them and what each one teaches.
+description: The nine ready-made starting projects, how to play them and what each one teaches.
 ---
 
 # Templates
@@ -16,6 +16,7 @@ Start a project from a template with **＋ New project** on the home screen. Eve
   <Card to="#physics" img="/img/templates/physics.webp" title="🧱 Physics playground">Boxes and balls falling.</Card>
   <Card to="#coins" img="/img/templates/coins.webp" title="🪙 Roll-a-ball: Coin collector">Menus, HUD, win screen.</Card>
   <Card to="#platformer" img="/img/templates/platformer.webp" title="🏃 3D Platformer">Animated hero, lives, enemy, flag.</Card>
+  <Card to="#platformer2d" img="/img/templates/platformer2d.webp" title="🟦 2D Platformer">Side view, pixel art, tilemap.</Card>
   <Card to="#runner" img="/img/templates/runner.webp" title="🏁 Endless runner">Swipe lanes, jump, high score.</Card>
   <Card to="#shooter" img="/img/templates/shooter.webp" title="🎯 Arena shooter">Waves, health, auto-aim.</Card>
   <Card to="#explorer" img="/img/templates/explorer.webp" title="⛰️ Hill explorer">Terrain, gems, a hunter.</Card>
@@ -43,6 +44,12 @@ Roll the ball with the joystick and collect the spinning coins. It has a **start
 Run and jump with an animated hero (joystick + **A** button), grab the coins and reach the flag. You have 3 lives: spikes and the red enemy patrolling the start cost one (jump on its head to defeat it), and a heart up on the platforms gives one back. Falling off restarts the level.
 
 **Learn:** the Platformer and Camera follow behaviors, automatic character animation (idle / walk / sprint / jump), the Health behavior (*Damage*, *Heal*, *On hurt*, *On death*, knockback), a patrol with *Move to position* and *On arrived*, *Else* blocks, models from the Kenney Platformer Kit, *Is on ground*, *Compare property* (falling below a height), *Wait*.
+
+## 🟦 2D Platformer {/* #platformer2d */}
+
+A side-on pixel-art platformer. Run with the joystick, jump with **A**, hop over the gaps, dodge the spikes, land on the slime to defeat it, grab the coins and reach the flag. Three lives, like the 3D one; falling into a gap restarts the level.
+
+**Learn:** a [2D setup](world/2d-games) (orthographic camera, Freeze Z, Platformer **Side view**), sprites with named animations (*Idle*, *Walk*, *Jump*, *Fall*) that play by themselves, a level painted as a [tilemap](world/tilemaps) with solid and walkthrough tiles, a patrolling sprite with *Move to position*.
 
 ## 🏁 Endless runner {/* #runner */}
 

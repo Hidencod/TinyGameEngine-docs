@@ -24,6 +24,12 @@
     "icon": "🏃"
   },
   {
+    "id": "platformer2d",
+    "name": "2D Platformer",
+    "description": "Side-on pixel-art platformer: run, jump gaps, stomp the slime, reach the flag.",
+    "icon": "🟦"
+  },
+  {
     "id": "runner",
     "name": "Endless runner",
     "description": "Swipe between lanes, jump over crates, grab coins. How far can you get?",

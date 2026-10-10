@@ -1,0 +1,56 @@
+---
+title: 2D games
+description: Make a side-on platformer with an orthographic camera, a hero that stays in one plane, sprite animations by name and a tilemap level.
+---
+
+# 2D games
+
+<Art name="island" size={110} />
+
+There is no separate "2D mode": a 2D game is the same world seen from the side, with a few settings that keep everything in one flat plane. The **2D Platformer** [template](../templates#platformer2d) has all of it set up; this page explains each piece so you can build your own.
+
+<Row>
+  <Phone name="tilemap-level" caption="The 2D Platformer level in the editor" />
+</Row>
+
+## The pieces
+
+1. **A side camera.** Select the Camera object and set its projection to **Orthographic** (no perspective: things far away are not smaller). *Size* is half the height of the view in meters. Put the camera in front of the level (for example Z = 10) looking straight at it, and add **Camera follow** with **Look at target** off so it follows the hero without turning. *Offset X* pushes the view ahead of the hero.
+2. **Everything in one plane.** Give physics bodies **Freeze Z** (Physics body card) so they cannot drift toward or away from the camera. Static things such as tilemaps need nothing.
+3. **A hero that moves left and right.** Add the Platformer behavior and switch on **Side view**.
+4. **Sprites for the pictures** and a **tilemap** for the level.
+
+## Freeze position
+
+On a dynamic **Physics body**, **Freeze X / Y / Z** stop the body from moving along that axis, like Unity's *Constraints → Freeze Position*. For a side view freeze **Z**. It also works from scripts: `component("rigidbody").freezeZ = true`.
+
+<Side shot="card-rigidbody-freeze" crop>
+
+Together with **Don't tip over** (which stops it from rotating), a body then slides along the X–Y plane only.
+
+</Side>
+
+## Platformer: Side view
+
+With **Side view** on, the Platformer uses only **left and right** (the joystick's x, or ←/→ and A/D) and moves along the world **X** axis, whatever the camera does. Up/down and *Camera relative* are ignored.
+
+<Side shot="card-platformer-sideview" crop>
+
+For a **sprite**, the Platformer also:
+
+- **flips the sprite** to face the way it walks. Draw your character facing **right**; going left turns on *Flip X*;
+- **plays animations by name** while *Animate* is on: **Idle** when standing, **Walk** (or **Run**) when moving, **Sprint** when fast, **Jump** going up, **Fall** going down. A name the sprite lacks is skipped (a missing **Jump** falls back to **Fall** and the other way round), and the sprite keeps what it was playing.
+
+</Side>
+
+Make the animations in the [sprite editor](./sprites#animations) and name them exactly like that (names are not case-sensitive). The same names play for anything that walks with *Move to position*, for example a patrolling enemy: it flips to face where it walks and plays **Walk** (**Idle** when it stops).
+
+Side view also works with a 3D model hero: the model turns to face left or right and plays its own clips.
+
+## Build a level
+
+Paint it with a [tilemap](./tilemaps): grass and earth for the ground, a few wooden tiles for stepping stones, and **gaps** for the player to jump. Put pickups, enemies and the goal on top as sprites. Falling off the bottom is an event: *Player y < −8 → Restart scene* (the template does this).
+
+## Try it
+
+Start a project from the **2D Platformer** template, play it, then open **Logic** to see how it works. Change the jump strength, add a gap, or paint a new stretch of ground.

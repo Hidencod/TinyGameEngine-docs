@@ -4799,6 +4799,96 @@
       ]
     },
     {
+      "id": "object.setTile",
+      "kind": "action",
+      "category": "Object",
+      "label": "Set tile",
+      "hint": "Paint one cell of a tilemap",
+      "display": "Paint tile {tile} at cell ({x}, {y}) of {object}",
+      "displayNoObject": null,
+      "icon": "🧱",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "x",
+          "label": "Cell X",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Cell Y",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "tile",
+          "label": "Tile (0 = first)",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.removeTile",
+      "kind": "action",
+      "category": "Object",
+      "label": "Erase tile",
+      "hint": "Empty one cell of a tilemap",
+      "display": "Erase the tile at cell ({x}, {y}) of {object}",
+      "displayNoObject": null,
+      "icon": "🧽",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "x",
+          "label": "Cell X",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Cell Y",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "object.burstParticles",
       "kind": "action",
       "category": "Particles",

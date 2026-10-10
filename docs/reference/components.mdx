@@ -83,6 +83,7 @@ Guide: [Physics](../world/physics)
 | Bounciness | 0–1 | 0.1 |
 | Gravity scale | number (Dynamic) | 1 |
 | Don’t tip over | on / off (Dynamic) | off |
+| Freeze X / Y / Z | on / off each (Dynamic) | off |
 | Air drag | 0–1 (Dynamic) | 0.05 |
 | Spin drag | 0–1 (Dynamic) | 0.1 |
 
@@ -199,3 +200,18 @@ Guide: [Particles](../world/particles)
 | Glow | on / off | on |
 | Texture | an image asset (none = soft dot) | none |
 | Max particles | 1 – engine limit | 200 |
+
+## 🧱 Tilemap
+
+Guide: [Tilemaps](../world/tilemaps)
+
+| Field | Values | Default |
+| --- | --- | --- |
+| Tile sheet | a sprite whose frames are the tiles | first sprite sheet |
+| Tile size (m) | meters per tile | 1 |
+| Color | color | white |
+| Opacity | 0–1 | 1 |
+| Sort order | whole number (higher is in front) | 0 |
+| Edges | Smooth, Pixel (hard) | Pixel (hard) |
+| Collider depth (m) | meters (front to back) | 1 |
+| Solid tiles | which tiles block (set with the palette button) | all |
