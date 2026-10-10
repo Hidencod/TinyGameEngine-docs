@@ -15,10 +15,11 @@ There is no separate "2D mode": a 2D game is the same world seen from the side, 
 
 ## The pieces
 
-1. **A side camera.** Select the Camera object and set its projection to **Orthographic** (no perspective: things far away are not smaller). *Size* is half the height of the view in meters. Put the camera in front of the level (for example Z = 10) looking straight at it, and add **Camera follow** with **Look at target** off so it follows the hero without turning. *Offset X* pushes the view ahead of the hero.
+1. **A side camera.** Select the Camera object and set its projection to **Orthographic** (no perspective: things far away are not smaller). *Size* is half the height of the view in meters. Put the camera in front of the level (for example Z = 10) looking straight at it, and add **Camera follow** with **Look at target** off so it follows the hero without turning. *Offset X* pushes the view ahead of the hero. Switch on **Use limits** and set the box of your level so the camera stops at its edges.
 2. **Everything in one plane.** Give physics bodies **Freeze Z** (Physics body card) so they cannot drift toward or away from the camera. Static things such as tilemaps need nothing.
 3. **A hero that moves left and right.** Add the Platformer behavior and switch on **Side view**.
 4. **Sprites for the pictures** and a **tilemap** for the level.
+5. **Parallax layers** for the background: hills and clouds that scroll slower than the level (see [Parallax](../behaviors#parallax)).
 
 ## Freeze position
 

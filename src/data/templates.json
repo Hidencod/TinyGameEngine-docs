@@ -26,7 +26,7 @@
   {
     "id": "platformer2d",
     "name": "2D Platformer",
-    "description": "Side-on pixel-art platformer: run, jump gaps, stomp the slime, reach the flag.",
+    "description": "Side-on platformer: run, jump gaps, stomp the slime, reach the flag.",
     "icon": "🟦"
   },
   {

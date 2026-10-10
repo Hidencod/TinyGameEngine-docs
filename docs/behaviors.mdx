@@ -151,8 +151,25 @@ Put it **on the camera**: it smoothly follows a target.
 | **Ignore tag** | (empty) | With Avoid walls on: objects with this tag never push the camera in, e.g. `#tree` in a forest, so it doesn't jump forward every time a trunk passes in front. They still block the player. |
 | **Mouse look** | off | Let the player turn the camera around the target: on a computer, click the game and move the mouse (Esc frees the mouse); with a gamepad, the right stick; on a phone, drag the free side of the screen. Platformer and Top-down movement follow the camera, so *forward* is always away from it. With **Stay behind** on, the camera drifts back behind the target a second after the player stops looking. |
 | **Look speed** | 1 | How fast Mouse look turns. 2 = twice as fast. |
+| **Use limits** | off | Keep the camera inside a box, for a 2D level: it stops at the edges instead of showing empty space. With an *Orthographic* camera the whole view stays inside the box (a box smaller than the view is centered); with any other camera, the camera itself does. |
+| **Limit min X / max X / min Y / max Y** | −10, 10, −5, 10 | The box in world meters: the left and right edges, and the bottom and top. |
 
 </Side>
+
+## 🏞️ Parallax {/* #parallax */}
+
+<Side shot="behavior-parallax" crop>
+
+Put it on a **background layer** (hills, clouds, a far wall): it scrolls slower than the world, so it looks far away. Use one on each layer with a different **Factor X**.
+
+| Setting | Default | What it does |
+| --- | --- | --- |
+| **Factor X / Y** | 0.5, 0 | How much of the camera's movement the layer copies. **0** moves with the world like any object; **1** stays glued to the camera (never seems to move, like the sky). Far layers use bigger numbers, near layers smaller ones. |
+| **Wrap width** | 0 | Repeat endlessly. Put a row of copies side by side (each one picture wide), and set this to *number of copies × the distance between them*: when a copy leaves the view on one side it comes back on the other. 0 = no repeating. |
+
+</Side>
+
+The layer starts where you put it and moves relative to that. Put background layers farther from the camera than the level (a smaller Z) and give them a lower **Sort order**.
 
 ## 🔄 Rotate {/* #rotate */}
 

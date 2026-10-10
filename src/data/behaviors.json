@@ -53,7 +53,17 @@
       "fadeInWay": false,
       "fadeTag": "",
       "mouseLook": false,
-      "lookSpeed": 1
+      "lookSpeed": 1,
+      "useLimits": false,
+      "limitMinX": -10,
+      "limitMaxX": 10,
+      "limitMinY": -5,
+      "limitMaxY": 10
+    },
+    "parallax": {
+      "factorX": 0.5,
+      "factorY": 0,
+      "wrapWidth": 0
     },
     "rotate": {
       "speedX": 0,
@@ -118,6 +128,11 @@
       "icon": "🎥",
       "title": "Camera follow",
       "desc": "Put on the camera to follow a target"
+    },
+    "parallax": {
+      "icon": "🏞️",
+      "title": "Parallax",
+      "desc": ""
     },
     "rotate": {
       "icon": "🔄",
