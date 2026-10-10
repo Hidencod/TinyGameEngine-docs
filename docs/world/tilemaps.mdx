@@ -19,6 +19,21 @@ The tiles come from a **tile sheet**: a picture made in the [sprite editor](./sp
   <Phone name="card-tilemap" caption="The Tilemap card with its tile sheet and palette" />
 </Row>
 
+### Cut a sheet from an image
+
+Tile art usually comes as one picture full of equal squares. Instead of redrawing it, cut it: **Files → ＋ New → Sprite sheet from an image…** (or, in the Tilemap card, **✂️ New tile sheet → Cut it from an image…**).
+
+1. Pick the picture.
+2. Type the size of **one piece** in pixels, such as `64` or `64 x 32`.
+3. Give the sheet a name.
+4. Tap the pieces to keep (or drag over several). Empty pieces start turned off. **All** and **None** help. Tap **Make sheet**.
+
+<Row>
+  <Phone name="cut-pieces" caption="Tap the pieces you want: the blue ones are kept" />
+</Row>
+
+The kept pieces go side by side in a new sprite sheet, in reading order (left to right, top to bottom). A sheet can be 4096 pixels wide, so at 64 px that is up to 64 pieces; when the picture has more, it starts with none selected so you can choose. The same works for a character picture: each piece becomes a frame of a [sprite](./sprites).
+
 You can also use the sheet of the **2D Platformer** template (grass and earth pieces, floating platforms, a bush and a mushroom).
 
 ## Add a tilemap
