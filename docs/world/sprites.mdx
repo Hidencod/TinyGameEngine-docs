@@ -1,0 +1,142 @@
+---
+title: Sprites
+description: Draw 2D pictures and frame-by-frame animations in the built-in painter and place them in your 3D world.
+---
+
+# Sprites
+
+<Art name="island" size={110} />
+
+A **sprite** is a flat picture standing in your 3D world: a coin, a tree, a character, a sign. It can have several **frames** that play as an animation. You draw it in the built-in **sprite editor**, or import any image, and place it like any other object. Sprites can have a physics collider cut to their shape, so a drawn hero can stand on a floor and bump into walls.
+
+## Make a sprite
+
+Open the **Assets** tab, tap **＋ New → Sprite**, pick a size (32 to 2048 px, or **Custom…** such as `300 x 200`) and give it a name. The painter opens straight away on the first frame.
+
+<Row>
+  <Phone name="sprite-painter" caption="The painter on a new 256 × 256 sprite" />
+</Row>
+
+Already have a picture? Drag an image file onto the 3D view. It becomes a sprite object right where you drop it. Any texture in your Files can be used as a sprite too.
+
+## The sprite editor
+
+The editor has three tabs. **Save** (top right) saves the sprite. Closing with ✕ or Back discards unsaved changes.
+
+### Frames
+
+<Row>
+  <Phone name="sprite-frames" caption="Three frames of a bouncing ball" />
+</Row>
+
+A strip of thumbnails shows every frame. Tap one to select it.
+
+| Button | What it does |
+| --- | --- |
+| **＋** | Add an empty frame after this one. |
+| **⧉** | Duplicate this frame: the quick way to start the next step of an animation. |
+| **🗑** | Delete this frame. |
+| **← →** | Move this frame earlier or later. |
+| **▶ / ■** | Play the animation here. |
+| **fps** | Frames per second of the animation (1 to 60). |
+
+Under the strip:
+
+- **🖌️ Draw** opens the painter on this frame (brushes, layers, colors, undo). Tap **Done** in the painter to come back to the sprite editor. For pixel art use the **Pixel** brush.
+- **👁 Onion skin** shows the previous frame faintly under what you draw, so each frame follows the last.
+- **⬇ Import** puts a picture from your device into this frame, scaled to fit.
+
+You can tap the big picture to draw too. All frames are saved together in one picture (a *sprite sheet*, frames side by side, at most 4096 px wide).
+
+### Origin
+
+The **origin** is the point of the picture that sits at the object's position, and what it turns around. Pick one of the nine spots, or tap or drag on the picture to put it anywhere. A character usually stands on **bottom middle**, so its feet touch the ground; a coin spins around **middle**.
+
+<Row>
+  <Phone name="sprite-origin" caption="Origin at the bottom middle" />
+</Row>
+
+### Collision
+
+The collision shape is a polygon around what is solid.
+
+| Button | What it does |
+| --- | --- |
+| **▢ Box** | The whole frame. |
+| **✨ Auto** | Outlines what you drew. |
+| **🗑 Point** | Delete the selected corner. |
+| **↺ Clear** | No shape: the sprite is a plain box. |
+
+<Row>
+  <Phone name="sprite-collision" caption="✨ Auto outlines what is drawn" />
+</Row>
+
+Drag a dot to move a corner. Tap or drag anywhere else on the picture to add a corner on the nearest edge (up to 32).
+
+## Add it to the scene
+
+**Objects → ＋ Add**, under **Sprites**: pick one of your sprites, or **New sprite…** to draw one first. Or drag a sprite from **Files** into the 3D view: it lands on the surface under your finger.
+
+In the Inspector the **Sprite** card has:
+
+<Side shot="card-sprite" crop>
+
+| Setting | What it does |
+| --- | --- |
+| **Sprite** | Which picture. **🖌️ New sprite** draws a new one, **✏ Edit** reopens the editor on this one. |
+| **▶ Preview animation** | Plays the frames in the 3D view, without pressing Play (only for sprites with several frames). |
+| **Pixels per meter** | How big it is. 0 = automatic: about 2 m on its longest side. 100 = 100 pixels per meter. |
+| **Color** | Tints the picture. White leaves it as drawn. |
+| **Opacity** | 1 = solid, 0 = invisible. |
+| **Flip X / Flip Y** | Mirror the picture, for example to make a character face left. |
+| **Face camera** | **No**, **Always** (a billboard, always turned to the camera), or **Upright** (turns around the vertical axis only, so trees don't tilt). |
+| **Sort order** | Higher numbers draw in front of lower ones when sprites overlap. |
+| **Edges** | **Smooth** blends pixels. **Pixel (hard)** keeps pixel art crisp. |
+| **Play on start** | Frames start playing when the game starts. |
+| **Loop** | Start over after the last frame. |
+| **Speed** | 1 = the fps set in the editor, 2 = twice as fast. |
+| **Start frame** | The frame shown first (0 = first). |
+| **Collider depth (m)** | How thick the collision shape is, front to back. |
+
+</Side>
+
+Sprites aren't lit: they always show their own colors, whatever the lights are doing.
+
+## Physics and collisions
+
+Give the object a **Rigid body** and set the collider to **Auto**. Auto uses the collision polygon you drew (as a convex shape; a concave outline is wrapped in its smallest convex shape). There is one polygon per sprite, the same for all frames.
+
+## Events and scripts
+
+The animation blocks that work on models work on sprites too:
+
+| Block | What it does |
+| --- | --- |
+| **Play animation** / **Stop animation** | Start or stop the frames. |
+| **Set animation speed** | 1 = normal, 2 = double. |
+| **On animation finished** | A non-looping sprite reached its last frame. |
+| **Show frame … of …** | Show one frame and stop. Frame 0 is the first. Use it for states such as a door or a health icon. |
+
+In code:
+
+```js
+entity.setSpriteFrame(2);              // show frame 2 and stop
+entity.getSpriteFrame();               // the frame now showing
+entity.getSpriteFrameCount();          // how many frames
+
+entity.playAnimation();                // play from here
+entity.setAnimationSpeed(2);
+
+const sprite = entity.component('sprite');
+sprite.flipX = player.vx < 0;          // face the way it walks
+sprite.billboard = 'upright';
+```
+
+Settings you can change on `component('sprite')`: `flipX`, `flipY`, `color`, `opacity`, `billboard`, `speed` and `loop`.
+
+## Good to know
+
+- Each sprite has one animation (all frames). For a character with *walk*, *jump* and *idle*, put the poses in one sprite and switch between them with **Show frame**, or make one sprite object per animation and show and hide them.
+- The collision polygon is one per sprite and convex, and it doesn't change from frame to frame.
+- The 3D view shows frame 1 until you press **▶ Preview animation** or Play.
+- Large sprites cost memory: a 2048 × 2048 frame is 16 MB on the GPU. Smaller is faster on phones.

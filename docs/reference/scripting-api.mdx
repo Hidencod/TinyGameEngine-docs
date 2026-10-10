@@ -91,6 +91,9 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `getAnimationNames()` | `string[]` | All clip names of the model. |
 | `hasAnimation(name: string)` | `boolean` | True if the model has this clip. |
 | `setAnimationSpeed(speed: number)` | `void` | 1 = normal, 0.5 = half, 2 = double. |
+| `setSpriteFrame(frame: number)` | `void` | Sprite: show one frame (0 = the first) and stop its animation. playAnimation() plays the frames again. |
+| `getSpriteFrame()` | `number` | Sprite: the frame being shown (0 = the first). |
+| `getSpriteFrameCount()` | `number` | Sprite: how many frames it has. |
 | `tween(property, to, seconds, ease?)` | `void` | Animate 'x' \| 'y' \| 'z' \| 'angle' \| 'size' \| 'opacity' to a value, e.g. tween('size', 1.5, 0.3, 'back'). Eases: linear, easeIn, easeOut, easeInOut, back, elastic, bounce. |
 | `isTweening(property?)` | `boolean` | A tween is running (of that property, or any). |
 | `stopTweens()` | `void` | Stop all tweens where they are. |
@@ -109,7 +112,7 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `getComponent(type)` | `object\|null` | A copy of a component's or behavior's settings, e.g. getComponent("rigidbody").mass. Read-only — component() gives you the live one. |
 | `component(type)` | `component\|null` | A component as a live object: every setting in the Inspector is a property you can read and write, e.g. component("rigidbody").mass = 5, component("light").intensity = 2. Structural ones (shape, model) need rebuild() — component(type).set(&#123; … &#125;) does it for you. |
 | `getComponents()` | `string[]` | Component types on this object. |
-| `addComponent(type, settings?)` | `component\|null` | Add a component and rebuild, e.g. addComponent("rigidbody", &#123; mass: 2 &#125;). Types: mesh, collider, rigidbody, light, camera, text, ui, audio, particles, terrain, water. |
+| `addComponent(type, settings?)` | `component\|null` | Add a component and rebuild, e.g. addComponent("rigidbody", &#123; mass: 2 &#125;). Types: mesh, collider, rigidbody, light, camera, text, ui, audio, particles, terrain, water, sprite. |
 | `removeComponent(type)` | `boolean` | Remove a component and rebuild. |
 | `rebuild()` | `void` | Rebuild the object from its components (3D content, body, text, UI, particles, behaviors), keeping where it is and its variables. |
 | `hasComponent(type)` | `boolean` | Does it have this component or behavior? e.g. other.hasComponent("health") |

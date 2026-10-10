@@ -375,6 +375,27 @@
           "doc": "1 = normal, 0.5 = half, 2 = double."
         },
         {
+          "name": "setSpriteFrame",
+          "kind": "method",
+          "sig": "(frame: number)",
+          "type": "void",
+          "doc": "Sprite: show one frame (0 = the first) and stop its animation. playAnimation() plays the frames again."
+        },
+        {
+          "name": "getSpriteFrame",
+          "kind": "method",
+          "sig": "()",
+          "type": "number",
+          "doc": "Sprite: the frame being shown (0 = the first)."
+        },
+        {
+          "name": "getSpriteFrameCount",
+          "kind": "method",
+          "sig": "()",
+          "type": "number",
+          "doc": "Sprite: how many frames it has."
+        },
+        {
           "name": "tween",
           "kind": "method",
           "sig": "(property, to, seconds, ease?)",
@@ -504,7 +525,7 @@
           "kind": "method",
           "sig": "(type, settings?)",
           "type": "component|null",
-          "doc": "Add a component and rebuild, e.g. addComponent(\"rigidbody\", { mass: 2 }). Types: mesh, collider, rigidbody, light, camera, text, ui, audio, particles, terrain, water."
+          "doc": "Add a component and rebuild, e.g. addComponent(\"rigidbody\", { mass: 2 }). Types: mesh, collider, rigidbody, light, camera, text, ui, audio, particles, terrain, water, sprite."
         },
         {
           "name": "removeComponent",

@@ -56,6 +56,25 @@
       "params": []
     },
     {
+      "id": "scene.onLoadComplete",
+      "kind": "condition",
+      "category": "Scene",
+      "label": "On loading complete",
+      "hint": "On a loading screen: everything the game needs is loaded. Go to a scene here, or wait for a tap first",
+      "display": "On loading complete",
+      "displayNoObject": null,
+      "icon": "✅",
+      "description": "",
+      "isTrigger": true,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
       "id": "scene.onEnd",
       "kind": "condition",
       "category": "Scene",
@@ -4743,6 +4762,36 @@
           "type": "number",
           "options": null,
           "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.setSpriteFrame",
+      "kind": "action",
+      "category": "Object",
+      "label": "Set sprite frame",
+      "hint": "Show one frame of a sprite",
+      "display": "Show frame {frame} of {object}",
+      "displayNoObject": null,
+      "icon": "🎞",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "frame",
+          "label": "Frame (0 = first)",
+          "type": "number",
+          "options": null,
+          "default": "0",
           "optional": false,
           "hint": null,
           "varScope": null

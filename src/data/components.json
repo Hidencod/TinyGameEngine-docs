@@ -64,6 +64,11 @@
       "icon": "🌊",
       "title": "Water",
       "desc": "Lake or sea: things float, characters swim"
+    },
+    "sprite": {
+      "icon": "🎞️",
+      "title": "Sprite",
+      "desc": ""
     }
   }
 }
