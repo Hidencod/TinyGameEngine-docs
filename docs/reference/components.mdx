@@ -8,7 +8,7 @@ description: Every field of every component, with its default value.
 
 <Art name="dirt-block" size={95} />
 
-Every field of the ten components, as shown in the Inspector, with the default a new component gets. The guides linked under each heading explain them with screenshots.
+Every field of the components, as shown in the Inspector, with the default a new component gets. The guides linked under each heading explain them with screenshots.
 
 ## 🧊 Shape & look
 
@@ -98,18 +98,23 @@ Guide: [Sound](../world/sound)
 | Volume | 0–1 | 1 |
 | 3D sound | on / off | off |
 
-## 🔤 Text
+## 🖼️ Canvas
 
-Guide: [Game UI](../world/ui#text-component)
+Guide: [Game UI](../world/ui#canvas)
 
 | Field | Values | Default |
 | --- | --- | --- |
-| Text | text | `Text` |
-| Size | 6–200 px | 24 |
-| Color | color | white |
-| Above object (3D) | on / off | off |
-| Screen position | 9 anchors | top-left |
-| Offset (px) | X, Y | 16, 16 |
+| Render mode | Screen Space - Overlay, World Space | Overlay |
+| Sort order | −100–100 | 0 |
+| UI scale mode (Overlay) | Scale with screen size, Constant pixel size | Scale with screen size |
+| Reference resolution (Overlay) | W, H in px | 740 × 360 (landscape), 360 × 740 (portrait) |
+| Screen match mode (Overlay) | Expand, Shrink, Match width or height | Expand |
+| Match (Overlay) | 0–1 | 0.5 |
+| Scale factor (Overlay, constant) | 0.1–10 | 1 |
+| Face the camera (World) | on / off | on |
+| Size (World) | W, H in px | 200 × 60 |
+| Pixels per metre (World, standing) | 1–1000 | 100 |
+| Height offset (World, facing the camera) | −20–20 m | 0.4 |
 
 ## 🖼️ UI element
 
@@ -117,28 +122,48 @@ Guide: [Game UI](../world/ui)
 
 | Field | Values | Default |
 | --- | --- | --- |
-| Type | Label, Button, Image, Panel / screen, Progress bar | Label |
-| Text / Caption | text (`{value}`, `{max}`, `{percent}` in bars) | `Label` |
-| Value / Maximum | numbers (Progress bar) | 50 / 100 |
-| Bar color | color (Progress bar) | `#3ecf8e` |
-| Image / Background image | an image asset | none |
-| Fill parent | on / off | off |
-| Above object (3D) | on / off | off |
-| Position | 9 anchors | top-left |
-| Offset (px) | X, Y | 16, 16 |
-| Size (px) | W, H (0 = fit content) | 0, 0 |
-| Font size | 6–200 | 22 |
-| Bold | on / off | on |
-| Text color | color | white |
-| Align | Left, Center, Right | Center |
+| Type | Text, Button, Image, Slider, Panel | Text |
+| Text / Caption | text | `Text` |
+| Anchors | min / max pair (presets, or stretch) | middle, middle |
+| Pos X / Pos Y | px from the anchor, Y up | 0, 0 |
+| Width / Height | px (or Left / Right / Top / Bottom when stretched) | 160 × 30 |
+| Pivot | X, Y from 0 to 1 | 0.5, 0.5 |
+| Rotation | degrees, counter-clockwise | 0 |
+| Scale | X, Y | 1, 1 |
+| Width / Height fits content | on / off | off |
+| Sort order | whole number, higher on top | 0 |
+| Raycast target | on / off | on |
+| Background image | an image asset | none |
+| Image type | Simple, Sliced (9-slice), Tiled, Filled | Simple |
+| Preserve aspect | on / off | off |
+| Border (Sliced, Tiled) | px | 0 |
+| Fill method / Fill amount / Clockwise (Filled) | Horizontal, Vertical, Radial 360 / 0–1 / on, off | Horizontal / 1 / on |
 | Background | color | `#1e2128` |
 | Background opacity | 0–1 | 0 |
 | Corner radius | 0–500 px | 10 |
 | Border width / color | 0–40 px / color | 0 / white |
 | Opacity | 0–1 | 1 |
-| Layer | whole number, higher on top | 0 |
+| Font size | 6–200 | 22 |
+| Bold / Italic | on / off | on / off |
+| Text color | color | white |
+| Align / Vertical align | Left, Center, Right / Top, Middle, Bottom | Center / Middle |
+| Wrap | on / off | on |
+| Line spacing | 0.5–4 | 1 |
+| Value / Min / Max (Slider) | numbers | 50 / 0 / 100 |
+| Whole numbers (Slider) | on / off | off |
+| Direction (Slider) | Left to right, Right to left, Bottom to top, Top to bottom | Left to right |
+| Fill color (Slider) | color | `#3ecf8e` |
+| Handle / Handle color (Slider) | on / off, color | off, white |
+| Interactable | on / off | on |
+| Transition | None, Color tint, Sprite swap | Color tint |
+| Color multiplier / Fade duration | 0–5 / 0–2 s | 1 / 0.1 |
+| Highlighted / Pressed / Disabled image (Sprite swap) | image assets | none |
+| Mask | None, Rectangle, Image shape | None |
+| Blend mode | Normal, Additive, Multiply, Screen, Overlay… | Normal |
+| Effects | Blur, Frosted glass, Brightness, Contrast, Saturation, Hue shift, Grayscale, Invert, Drop shadow | none |
+| Layout group | None, Horizontal, Vertical, Grid (padding, spacing, alignment, cell size, child control) | None |
 
-The Add menu’s UI presets change some defaults (e.g. a Button is 180 × 56, centered, blue).
+The Add menu’s UI items change some defaults (e.g. a Button is 180 × 56, centered, blue).
 
 ## 📜 Code script
 

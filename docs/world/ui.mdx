@@ -1,82 +1,177 @@
 ---
 title: Game UI (menus & HUD)
-description: Labels, buttons, images, panels, progress bars and full-screen menus; UI mode; the Text component.
+description: Canvas, Rect Transform, Text, Button, Image, Slider and Panel, layout groups, masks and effects. The screen UI works the way Unity's uGUI does.
 ---
 
 # Game UI (menus & HUD)
 
 <Art name="icon-bar" size={200} />
 
-Scores, lives, health bars, pause buttons, title screens and game-over menus are **UI elements**: objects with a **UI element** component, drawn flat on top of the game.
+Scores, lives, health bars, pause buttons, title screens and game-over menus are **UI elements**: objects with a **UI element** component, drawn flat on top of the game (or placed in the 3D world, see [World Canvas](#world-canvas)).
+
+The UI follows Unity's uGUI on purpose, with the same names: **Canvas**, **Canvas Scaler**, **Rect Transform**, **Raycast target**, **Interactable**, **Transition**, **Layout group**. If you know a Unity tutorial for the UI, the settings are where it says.
 
 ## Add UI
 
-**Objects → ＋ Add → UI (on screen)**:
+**Objects → ＋ Add**, in the **UI** group:
 
-<Phone name="add-menu-2" size="small" caption="The UI items of the Add menu" />
+<Phone name="add-menu-ui" size="small" caption="The UI group of the Add menu" />
 
 | Item | Use for |
 | --- | --- |
-| 🏷️ **Label** | Text on screen: score, lives, messages. |
-| 🔲 **Button** | Tappable button: Start, Pause, Retry… |
+| 🏷️ **Text** | Text on screen: score, lives, messages. |
+| 🔲 **Button** | A tappable button: Start, Pause, Retry… Its label is a Text inside it. |
 | 🖼️ **Image** | An icon or picture. |
-| 📊 **Progress bar** | Health, energy, a timer, level progress. |
+| 📊 **Slider** | A bar, or a value you can drag: health, energy, volume. |
 | 🪟 **Panel** | A box that holds other UI elements. |
-| 📱 **Screen (menu)** | A full-screen layer: title screen, pause menu, game over. |
+| 📱 **Screen (menu)** | A full-screen panel: title screen, pause menu, game over. |
+| 🖼️ **Canvas** | The surface the UI is drawn on. Made for you with the first element. |
+| 🌐 **World Canvas** | A canvas that stands in the 3D scene (name tags, signs, a screen on a wall). |
+
+Like Unity, the first UI element you add creates a **Canvas** around itself. UI added while a canvas, panel or screen is **selected** goes **inside** it (it becomes a child).
 
 ## UI mode
 
-When you select a UI element, the 3D view switches to **UI mode**: it shows the game screen as a phone-shaped frame. **Tap** an element to select it, **drag** to move it and pull the orange **corner handle** to resize it. The **UI** button in the viewport toolbar switches UI mode on and off; **Snap** moves in 8 px steps.
+When you select a UI element, the 3D view switches to **UI mode**: it shows the game screen as a frame, at the size of the canvas's reference resolution. **Tap** an element to select it, **drag** to move it and pull the orange **corner handle** to resize it. The **UI** button in the viewport toolbar switches UI mode on and off; **Snap** moves in 8 px steps.
 
 <Row>
   <Phone name="ui-mode-button" caption="A button in UI mode" />
-  <Phone name="ui-mode-progress" caption="A progress bar" />
+  <Phone name="ui-mode-slider" caption="A slider" />
 </Row>
 
-## Placing: anchors and offsets
+## Canvas
 
-A UI element is placed by an **anchor** — a corner, an edge or the center of the screen (or of its parent panel) — plus an **offset** in pixels. That keeps it in the right place on every screen size: a score anchored *top-left* stays in the top-left corner on a small phone and on a tablet.
+Every UI element lives inside a **Canvas**, which decides where the UI is drawn.
 
-Tap one of the 9 dots of the **Position** grid to choose the anchor.
-
-## UI element settings
-
-<Row>
-  <Crop name="card-ui-label" caption="Label" width={300} />
-  <Crop name="card-ui-button" caption="Button" width={300} />
-  <Crop name="card-ui-progress" caption="Progress bar" width={300} />
-</Row>
+<Crop name="card-canvas" caption="Canvas, Screen Space - Overlay" width={340} />
 
 | Field | What it does |
 | --- | --- |
-| **Type** | Label (text), Button, Image, Panel / screen, Progress bar. |
-| **Text** / **Caption** | The text. For bars `{value}`, `{max}` and `{percent}` are replaced, e.g. `HP {value}/{max}`. |
-| **Value / Maximum / Bar color** | (Progress bar) How full it is. |
-| **Image / Background image** | A picture (image kind) or a background for buttons and panels. |
-| **Fill parent** | Cover the whole screen (or parent panel). Use for menus and overlays. |
-| **Above object (3D)** | Follow this object in the world — e.g. a health bar over an enemy. |
-| **Position** | The anchor (9-dot grid). |
-| **Offset (px)** | Distance from the anchor. |
-| **Size (px)** | Width × height. 0 = fit the content. |
-| **Font size, Bold, Text color, Align** | Text style. |
-| **Background, Background opacity** | Fill color; 0 = transparent. |
-| **Corner radius, Border width, Border color** | Shape of the box. |
-| **Opacity** | Of the element and everything inside it. |
-| **Layer** | Higher layers are drawn on top of lower ones. |
+| **Render mode** | **Screen Space - Overlay**: flat on top of the game. **World Space**: a panel in the scene. |
+| **Sort order** | A higher canvas is drawn on top of a lower one. |
+
+### Canvas Scaler
+
+An overlay canvas has a **Canvas Scaler**, which keeps the UI the same shape on every screen. Every pixel you type anywhere in the UI is a pixel of its **reference resolution**.
+
+| Field | What it does |
+| --- | --- |
+| **UI scale mode** | **Scale with screen size** (the usual choice) or **Constant pixel size**. |
+| **Reference resolution** | The screen size you design for. New projects use 740 × 360 (landscape) or 360 × 740 (portrait). |
+| **Screen match mode** | How the reference is fitted to the real screen: **Expand** (everything stays visible), **Shrink** (fills the screen, may crop), or **Match width or height**. |
+| **Match** | With *Match width or height*: 0 follows the width, 1 follows the height. |
+| **Scale factor** | With *Constant pixel size*: how many screen pixels one UI pixel takes. |
+
+### World Canvas {/* #world-canvas */}
+
+<Crop name="card-canvas-world" caption="Canvas, World Space" width={340} />
+
+| Field | What it does |
+| --- | --- |
+| **Face the camera** | On: a flat label that turns to the camera and keeps its size on screen, like a health bar over an enemy. Off: a panel that stands in the scene where you put it and turns with its object. |
+| **Size (px)** | The width and height of the canvas, in UI pixels. Elements are placed inside this box. |
+| **Pixels per metre** | (Standing canvas) How many UI pixels make one metre in the world. |
+| **Height offset (m)** | (Facing the camera) How far above the object it floats. |
+
+To put a health bar over an enemy, add a **World Canvas** and drag it onto the enemy in the Objects list so it is a child, turn on **Face the camera**, and add a Slider inside it.
+
+## Rect Transform
+
+A UI element is placed by its **Rect Transform**, exactly as in Unity.
+
+<Crop name="card-ui-rect" caption="Rect Transform" width={340} />
+
+- **Anchors**: tap one of the presets. The 3 × 3 dots pin the element to a corner, an edge or the middle of its parent, so a score anchored *top-left* stays in the top-left on a small phone and on a tablet. The bars on the right and bottom *stretch* the element across the parent.
+- **Also set** (Pivot / Position): choose whether tapping a preset also moves the pivot and the position to match, as holding Shift and Alt does in Unity.
+- **Pos X / Pos Y** and **Width / Height**: where the pivot sits relative to the anchor, and the size. With a stretched anchor these become **Left, Right, Top, Bottom**, the distances from the parent's edges.
+- **Pivot**: the point the element turns and scales around, 0 to 1 from its bottom-left.
+- **Rotation** (degrees, counter-clockwise) and **Scale**.
+- **Width fits content / Height fits content**: size the element to its text (Unity's *Content Size Fitter*).
+- **Sort order**: a higher number is drawn on top of its siblings.
+
+Y counts **up**, as in Unity: a Pos Y of −16 is 16 pixels below the anchor.
+
+## Text, Button, Image, Slider and Panel
+
+The card shows the fields of the **Type** you picked. You can change the type later.
 
 <Row>
+  <Crop name="card-ui-text" caption="Text" width={300} />
+  <Crop name="card-ui-button" caption="Button" width={300} />
   <Crop name="card-ui-image" caption="Image" width={300} />
-  <Crop name="card-ui-panel" caption="Panel" width={300} />
 </Row>
+
+<Row>
+  <Crop name="card-ui-slider" caption="Slider" width={300} />
+  <Crop name="card-ui-panel" caption="Panel" width={300} />
+  <Crop name="card-ui-screen" caption="Screen" width={300} />
+</Row>
+
+### Look
+
+| Field | What it does |
+| --- | --- |
+| **Text** / **Caption** | The words. A button's label is a Text object inside it. |
+| **Raycast target** | Whether the element receives taps. Turn it off on decoration that should let taps through. |
+| **Background image**, **Background**, **Background opacity** | A picture or a color behind the element; opacity 0 = transparent. |
+| **Image type** | **Simple**, **Sliced (9-slice)** (corners stay sharp when stretched, with a **Border**), **Tiled**, or **Filled** (a clock-wipe or a bar, driven by **Fill method**, **Fill amount**, **Clockwise**). **Preserve aspect** keeps the picture's proportions. |
+| **Corner radius**, **Border width**, **Border color** | The shape of the box. |
+| **Opacity** | Of the element and everything inside it. |
+| **Font size, Bold, Italic, Text color** | Text style. |
+| **Align**, **Vertical align**, **Wrap**, **Line spacing** | Where the text sits and how it wraps. |
+
+### Slider values
+
+| Field | What it does |
+| --- | --- |
+| **Value / Min / Max** | How full it is. |
+| **Whole numbers** | Snap to whole numbers. |
+| **Direction** | Left to right, right to left, bottom to top, top to bottom. |
+| **Fill color** | The color of the filled part. |
+| **Handle**, **Handle color** | A draggable knob. Off for a plain bar such as health. Tapping or dragging a slider with a handle changes its value. |
+
+### Interaction
+
+For buttons and sliders:
+
+| Field | What it does |
+| --- | --- |
+| **Interactable** | Off greys it out and it takes no input. |
+| **Transition** | How it reacts: **None**, **Color tint** (colors for normal, highlighted, pressed and disabled, with a **Color multiplier** and **Fade duration**) or **Sprite swap** (a different picture for highlighted, pressed and disabled). |
+
+## Layout groups
+
+A **Layout group** arranges the children of a panel for you, like Unity's Horizontal, Vertical and Grid Layout Groups. Use it for a row of buttons, a list of menu items or an inventory grid.
+
+<Crop name="card-ui-layout" caption="Layout group on a panel" width={340} />
+
+| Field | What it does |
+| --- | --- |
+| **Kind** | None, Horizontal, Vertical or Grid. |
+| **Padding**, **Spacing** | The gap inside the edge and between children. |
+| **Child alignment** | Where the children sit when there is spare room. |
+| **Reverse order** | Lay them out from the other end. |
+| **Cell size**, **Constraint**, **Count** | (Grid) The size of each cell, and whether to fix the number of columns or rows. |
+| **Child controls size**, **Child force expand** | Whether the group sets each child's width and height, and whether children grow to fill the spare room. |
+
+## Masks and effects
+
+<Crop name="card-ui-fx" caption="Mask & effects" width={340} />
+
+- **Mask**: **Rectangle** cuts off whatever sticks out of the element (a scrolling list, a rounded avatar); **Image shape** cuts it to the shape of a picture.
+- **Blend mode**: how the element mixes with what is behind it: Normal, Additive, Multiply, Screen, Overlay and more. Use Additive for glows.
+- **Effects**: a stack you add to with **+ Add effect**: Blur, Frosted glass, Brightness, Contrast, Saturation, Hue shift, Grayscale, Invert and Drop shadow.
+
+The UI is drawn by the browser, so there are no shaders on UI elements and a blend mode mixes the UI only with other UI, not with the 3D scene behind it.
 
 ## Screens and panels
 
-A **Screen** is a full-screen panel. UI added while a screen or panel is **selected** goes **inside** it (it becomes a child). Showing or hiding the screen shows or hides everything in it — so one action opens a whole menu.
+A **Screen** is a full-screen panel. Showing or hiding the screen shows or hides everything in it, so one action opens a whole menu.
 
 A typical pause menu:
 
 1. Add a **Screen** named `PauseScreen` with a dark, half-transparent background; turn its **Visible** off.
-2. With `PauseScreen` selected, add a **Label** “Paused” and a **Button** `ResumeButton`.
+2. With `PauseScreen` selected, add a **Text** “Paused” and a **Button** `ResumeButton`.
 3. Add a **Button** `PauseButton` (outside the screen) anchored top-right.
 4. Events:
    - *WHEN PauseButton: On clicked* → *PauseScreen: Show*, *System: Pause game*
@@ -84,29 +179,30 @@ A typical pause menu:
 
 Screens that start hidden are still shown in the editor when you select them or something inside them.
 
-- A panel with a visible background **blocks taps** to the game behind it.
-- A button’s taps never reach the joystick or *On screen tapped*.
+- A panel with a visible background **blocks taps** to the game behind it (unless **Raycast target** is off).
+- A button's taps never reach the joystick or *On screen tapped*.
 
 ## UI in events and expressions
 
-- Conditions: **On clicked** ⚡, **Is held down**, **Compare bar value**.
-- Actions: **Show**, **Hide**, **Show / hide**, **Set label**, **Set bar value**, **Add to bar value**, **Set bar maximum**, **Set image**, **Set background color**, **Set text color**, **Set bar color**.
-- Expressions: `HealthBar.value`, `HealthBar.max`, `PlayButton.pressed`, `ScoreText.text`.
+- Conditions: **On clicked** ⚡, **Is held down**, **Compare slider value**, **On value changed** ⚡.
+- Actions: **Show**, **Hide**, **Show / hide**, **Set label**, **Set position**, **Set slider value**, **Add to slider value**, **Set slider maximum / minimum**, **Enable / disable**, **Set image**, **Set background color**, **Set text color**, **Set bar color**.
+- Expressions: `HealthBar.value`, `HealthBar.min`, `HealthBar.max`, `PlayButton.pressed`, `ScoreText.text`.
 
 See the [UI conditions](../reference/conditions#ui) and [UI actions](../reference/actions#ui).
 
-## The Text component {/* #text-component */}
+## UI in scripts
 
-The older, simpler **Text** component (＋ Add → Text) shows text anchored on screen, or floating **above the object in 3D** (*Above object (3D)*) — good for name tags and damage numbers.
+```js
+entity.setText('HP');                          // text, or a button's label
+entity.setUIValue(entity.getUIValue() - 10);   // a slider's value
+entity.setUIInteractable(false);               // grey a button or slider out
 
-<Crop name="card-text" width={340} />
+// The layout is Unity's Rect Transform. Pixels are reference-resolution pixels, Y counts up.
+const rect = entity.component('ui');
+rect.anchorMin = [0, 1]; rect.anchorMax = [0, 1]; rect.pivot = [0, 1];   // top-left
+rect.anchoredPosition = [16, -16];
+rect.sizeDelta = [200, 40];
+rect.rotation = 8;                             // degrees, counter-clockwise
+```
 
-| Field | What it does |
-| --- | --- |
-| **Text** | The text (several lines allowed). |
-| **Size, Color** | Font size and color. |
-| **Above object (3D)** | Float above the object instead of sticking to the screen. |
-| **Screen position** | The anchor (9-dot grid). |
-| **Offset (px)** | Distance from the anchor. |
-
-Change it with the **Set text** / **Append text** actions. For menus and HUDs, prefer UI elements.
+See the [scripting API](../reference/scripting-api) for the rest.

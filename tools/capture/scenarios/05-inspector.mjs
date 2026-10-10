@@ -171,27 +171,7 @@ export async function run({ page, s, H }) {
   }
   await H.card('Light').locator('select').first().selectOption('directional');
 
-  // Text (3D/HUD text component).
-  await page.setViewportSize(PHONE);
-  await H.split(52);
-  await H.addObject('Text');
-  await page.setViewportSize(TALL);
-  await H.split(8);
-  await H.tab('inspector');
-  await cardShot('card-text', 'Text');
-
-  // UI elements of every kind.
-  for (const [menu, name] of [['Label', 'label'], ['Button', 'button'], ['Image', 'image'], ['Progress bar', 'progress'], ['Panel', 'panel'], ['Screen (menu)', 'screen']]) {
-    await page.setViewportSize(PHONE);
-    await H.split(52);
-    await H.addObject(menu);
-    await s.settle(400);
-    if (name === 'button' || name === 'progress') await s.shot('ui-mode-' + name);
-    await page.setViewportSize(TALL);
-    await H.split(8);
-    await H.tab('inspector');
-    await cardShot('card-ui-' + name, 'UI element');
-  }
+  // UI elements and canvases: see 12-ui.mjs.
 
   void toggle;
 }

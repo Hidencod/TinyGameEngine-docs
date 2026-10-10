@@ -42,8 +42,8 @@ A strip of thumbnails shows every frame. Tap one to select it.
 
 Under the strip:
 
-- **🖌️ Draw** opens the painter on this frame (brushes, layers, colors, undo). Tap **Done** in the painter to come back to the sprite editor. For pixel art use the **Pixel** brush.
-- **👁 Onion skin** shows the previous frame faintly under what you draw, so each frame follows the last.
+- **🖌️ Draw** opens the painter on this frame (brushes, layers, colors, undo). Tap **Done** in the painter to come back to the sprite editor; a *Saving…* spinner shows while it works. For pixel art use the **Pixel** brush. The paint bucket and the gradient, text and shape tools are in the tool menu under the brush icon (top left).
+- **👁 Onion skin** shows the previous frame as a faint picture on top of the one you draw, so each frame follows the last. It sits above your drawing, so a bucket fill never hides it, and it is never saved into the frame. There is the same **👁 Onion skin** button (yellow when on) in the corner of the painter, and the two stay in step. The first frame has no previous frame, so nothing shows there.
 - **⬇ Import** puts a picture from your device into this frame, scaled to fit.
 
 You can tap the big picture to draw too. All frames are saved together in one picture (a *sprite sheet*, frames side by side, at most 4096 px wide).
@@ -65,7 +65,7 @@ Tap **＋ Animation** to add one. It starts as the frame you are on. Each animat
 | **fps** | Its own speed. Empty uses the sprite's fps from the Frames tab. |
 | **Loop** | Whether it repeats when the sprite starts with it (see **Play on start** below). |
 
-Select an animation and press **▶** to see just those frames. Inserting or deleting a frame keeps the animations on the same pictures. Moving a frame with **← →** doesn't, so check the numbers after reordering.
+Select an animation and press **▶** to see just those frames. Inserting, deleting or moving a frame keeps the animations on the same pictures.
 
 ### Origin
 
@@ -163,5 +163,5 @@ Settings you can change on `component('sprite')`: `flipX`, `flipY`, `color`, `op
 
 - **Show frame** counts over the whole strip, not inside an animation, and leaves the animation it was playing.
 - The collision polygon is one per sprite and convex, and it doesn't change from frame to frame or between animations.
-- The 3D view shows frame 1 until you press **▶ Preview animation** or Play.
+- The 3D view shows one still frame (the **Start frame**, or the first frame of the chosen animation) until you press **▶ Preview animation** or Play.
 - Large sprites cost memory: a 2048 × 2048 frame is 16 MB on the GPU. Smaller is faster on phones.

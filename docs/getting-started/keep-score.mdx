@@ -1,14 +1,14 @@
 ---
 title: "Tutorial 2: Keep score and win"
 sidebar_label: "Tutorial 2: Score & win"
-description: More coins, a Score variable shown on a label, and a win rule — about 10 minutes.
+description: More coins, a Score variable shown on a Text, and a win rule — about 10 minutes.
 ---
 
 # Tutorial 2: Keep score and win
 
 <Art name="star" size={100} />
 
-Your game has one coin. Now you will add more, **count them with a Score variable**, show the score on a **label**, and show **“You win!”** when all are collected.
+Your game has one coin. Now you will add more, **count them with a Score variable**, show the score on a **Text**, and show **“You win!”** when all are collected.
 
 :::tip[Do it in the app]
 At the end of Tutorial 1 tap **Continue to part 2**, or on the home screen tap **New here? Make your first game → Part 2** (it starts from a finished Part 1).
@@ -37,12 +37,12 @@ The copies sit on top of each other. Tap each coin (in the 3D view or in the Obj
 
 </Step>
 
-<Step n={3} title="A label for the score">
+<Step n={3} title="A Text for the score">
 
-Labels show text on the screen. In **Objects** tap **＋ Add** and choose **Label** (under *UI (on screen)*). Then, in **Inspect**, change its **Text** to `Score: 0`.
+A Text shows words on the screen. In **Objects** tap **＋ Add** and choose **Text** (under *UI*). Then, in **Inspect**, change its **Text** to `Score: 0`.
 
 <Row>
-  <Phone name="tut2-05-label" caption="＋ Add → Label" />
+  <Phone name="tut2-05-label" caption="＋ Add → Text" />
   <Phone name="tut2-06-label-text" caption="Text: Score: 0" />
 </Row>
 
@@ -65,7 +65,7 @@ Open **Logic → Main events**. Under your collision event tap **Add action → 
 
 <Step n={5} title="Show the score">
 
-Tap **Add action** again, pick **Label**, then **Set label**. As the text type
+Tap **Add action** again, pick **Text**, then **Set label**. As the text type
 
 ```
 "Score: " + Score
@@ -74,7 +74,7 @@ Tap **Add action** again, pick **Label**, then **Set label**. As the text type
 with the quotes around `Score: `. Text in quotes is shown as it is; `Score` without quotes is the variable’s value. Tap **✓ Add action**.
 
 <Row>
-  <Phone name="tut2-12-show-score" caption="Add action → Label" />
+  <Phone name="tut2-12-show-score" caption="Add action → Text" />
   <Phone name="tut2-13-set-label" caption="Set label to the score" />
 </Row>
 
@@ -93,7 +93,7 @@ Tap **＋ Add event → System → Compare variable**. Choose **Score**, keep **
 
 <Step n={7} title="…DO show “You win!”">
 
-Under that new event tap **Add action**, pick **Label**, **Set label**, type `"You win!"` (with the quotes) and tap **✓ Add action**. Your sheet now has two events:
+Under that new event tap **Add action**, pick **Text**, **Set label**, type `"You win!"` (with the quotes) and tap **✓ Add action**. Your sheet now has two events:
 
 <Phone name="tut2-16-sheet-done" size="large" caption="The finished event sheet" />
 
