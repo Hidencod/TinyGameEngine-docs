@@ -31,6 +31,11 @@ export async function run({ page, s, H }) {
   await s.settle(1200);
   await s.shot('tilemap-level');
 
+  // The 2D button: a flat side view with a vertical grid, to paint on.
+  await page.locator('.vp-btn[aria-label="2D view"]').click();
+  await s.settle(1200);
+  await s.shot('tilemap-2d');
+
   // Side view on the hero's Platformer card.
   await H.inspect('Player');
   await page.setViewportSize(TALL);
