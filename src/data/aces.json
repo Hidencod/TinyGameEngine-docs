@@ -4684,7 +4684,7 @@
       "kind": "action",
       "category": "Object",
       "label": "Play animation",
-      "hint": "Play a model animation",
+      "hint": "Play a model or sprite animation",
       "display": "{object} plays animation {name} (loop: {loop})",
       "displayNoObject": null,
       "icon": "🏃",

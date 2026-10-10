@@ -52,6 +52,15 @@ export async function run({ page, s, H }) {
   await s.settle(300);
   await s.shot('sprite-frames');
 
+  await page.locator('.se-root .chip', { hasText: 'Animations' }).click();
+  await page.locator('.se-root button', { hasText: 'Animation' }).last().click();
+  await page.locator('.se-anim-name').first().fill('Squash');
+  await page.locator('.se-anim-name').first().blur();
+  await page.locator('.se-anim .se-num-in').nth(1).fill('3');
+  await page.locator('.se-anim .se-num-in').nth(1).blur();
+  await s.settle(300);
+  await s.shot('sprite-animations');
+
   await page.locator('.se-root .chip', { hasText: 'Origin' }).click();
   await page.locator('.se-preset').nth(7).click();
   await s.settle(300);

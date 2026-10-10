@@ -330,7 +330,7 @@
           "kind": "method",
           "sig": "(name: string, loop = true)",
           "type": "void",
-          "doc": "Play a clip of the 3D model, e.g. \"walk\" or \"jump\". loop=false plays once and holds the last frame."
+          "doc": "Play a clip of the 3D model, or an animation of a sprite, e.g. \"walk\" or \"jump\". loop=false plays once and holds the last frame. Asking for the clip already playing keeps it going."
         },
         {
           "name": "stopAnimation",
@@ -358,14 +358,14 @@
           "kind": "method",
           "sig": "()",
           "type": "string[]",
-          "doc": "All clip names of the model."
+          "doc": "All clip names of the model, or the animations of a sprite."
         },
         {
           "name": "hasAnimation",
           "kind": "method",
           "sig": "(name: string)",
           "type": "boolean",
-          "doc": "True if the model has this clip."
+          "doc": "True if the model (or sprite) has this clip."
         },
         {
           "name": "setAnimationSpeed",
@@ -379,7 +379,7 @@
           "kind": "method",
           "sig": "(frame: number)",
           "type": "void",
-          "doc": "Sprite: show one frame (0 = the first) and stop its animation. playAnimation() plays the frames again."
+          "doc": "Sprite: show one frame (0 = the first) and stop its animation. playAnimation() plays again."
         },
         {
           "name": "getSpriteFrame",

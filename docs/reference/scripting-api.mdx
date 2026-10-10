@@ -84,14 +84,14 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `setUIPosition(x, y)` | `void` | Move a UI element to this anchored position (canvas px). Leave an axis out (undefined) to keep it. |
 | `refreshUI()` | `void` | Re-apply the UI styles after writing component data directly. |
 | `isPressed()` | `boolean` | True while this UI button is held down. |
-| `playAnimation(name: string, loop = true)` | `void` | Play a clip of the 3D model, e.g. "walk" or "jump". loop=false plays once and holds the last frame. |
+| `playAnimation(name: string, loop = true)` | `void` | Play a clip of the 3D model, or an animation of a sprite, e.g. "walk" or "jump". loop=false plays once and holds the last frame. Asking for the clip already playing keeps it going. |
 | `stopAnimation()` | `void` | Stop the playing model animation. |
 | `getAnimation()` | `string` | Name of the playing clip (empty if none). |
 | `isAnimationBusy()` | `boolean` | True while a play-once animation (loop off) is still running. |
-| `getAnimationNames()` | `string[]` | All clip names of the model. |
-| `hasAnimation(name: string)` | `boolean` | True if the model has this clip. |
+| `getAnimationNames()` | `string[]` | All clip names of the model, or the animations of a sprite. |
+| `hasAnimation(name: string)` | `boolean` | True if the model (or sprite) has this clip. |
 | `setAnimationSpeed(speed: number)` | `void` | 1 = normal, 0.5 = half, 2 = double. |
-| `setSpriteFrame(frame: number)` | `void` | Sprite: show one frame (0 = the first) and stop its animation. playAnimation() plays the frames again. |
+| `setSpriteFrame(frame: number)` | `void` | Sprite: show one frame (0 = the first) and stop its animation. playAnimation() plays again. |
 | `getSpriteFrame()` | `number` | Sprite: the frame being shown (0 = the first). |
 | `getSpriteFrameCount()` | `number` | Sprite: how many frames it has. |
 | `tween(property, to, seconds, ease?)` | `void` | Animate 'x' \| 'y' \| 'z' \| 'angle' \| 'size' \| 'opacity' to a value, e.g. tween('size', 1.5, 0.3, 'back'). Eases: linear, easeIn, easeOut, easeInOut, back, elastic, bounce. |

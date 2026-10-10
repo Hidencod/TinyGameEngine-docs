@@ -21,7 +21,7 @@ Already have a picture? Drag an image file onto the 3D view. It becomes a sprite
 
 ## The sprite editor
 
-The editor has three tabs. **Save** (top right) saves the sprite. Closing with ✕ or Back discards unsaved changes.
+The editor has four tabs. **Save** (top right) saves the sprite. Closing with ✕ or Back discards unsaved changes.
 
 ### Frames
 
@@ -47,6 +47,25 @@ Under the strip:
 - **⬇ Import** puts a picture from your device into this frame, scaled to fit.
 
 You can tap the big picture to draw too. All frames are saved together in one picture (a *sprite sheet*, frames side by side, at most 4096 px wide).
+
+### Animations
+
+One sprite can hold several animations, such as **Idle**, **Walk** and **Jump**: draw all their frames in the strip, then name which frames belong to each one.
+
+<Row>
+  <Phone name="sprite-animations" caption="An animation covering frames 1 to 3" />
+</Row>
+
+Tap **＋ Animation** to add one. It starts as the frame you are on. Each animation has:
+
+| Field | What it does |
+| --- | --- |
+| **Name** | What you call it from events and scripts, e.g. `Walk`. Names are not case-sensitive. |
+| **Frames … to …** | The first and last frame, both included. The strip highlights them. |
+| **fps** | Its own speed. Empty uses the sprite's fps from the Frames tab. |
+| **Loop** | Whether it repeats when the sprite starts with it (see **Play on start** below). |
+
+Select an animation and press **▶** to see just those frames. Inserting or deleting a frame keeps the animations on the same pictures. Moving a frame with **← →** doesn't, so check the numbers after reordering.
 
 ### Origin
 
@@ -92,8 +111,9 @@ In the Inspector the **Sprite** card has:
 | **Face camera** | **No**, **Always** (a billboard, always turned to the camera), or **Upright** (turns around the vertical axis only, so trees don't tilt). |
 | **Sort order** | Higher numbers draw in front of lower ones when sprites overlap. |
 | **Edges** | **Smooth** blends pixels. **Pixel (hard)** keeps pixel art crisp. |
+| **Animation** | Which animation the sprite starts with. **All frames** plays the whole strip. Shown only when the sprite has animations. |
 | **Play on start** | Frames start playing when the game starts. |
-| **Loop** | Start over after the last frame. |
+| **Loop** | Start over after the last frame. An animation's own **Loop** setting wins when the sprite starts with it. |
 | **Speed** | 1 = the fps set in the editor, 2 = twice as fast. |
 | **Start frame** | The frame shown first (0 = first). |
 | **Collider depth (m)** | How thick the collision shape is, front to back. |
@@ -112,9 +132,11 @@ The animation blocks that work on models work on sprites too:
 
 | Block | What it does |
 | --- | --- |
-| **Play animation** / **Stop animation** | Start or stop the frames. |
+| **Play animation** | Plays the animation with that name, e.g. `Walk`. Asking for the one already playing keeps it going, so *Every tick → Play animation Walk* is fine. A sprite without named animations plays all its frames whatever name you give. |
+| **Stop animation** | Freezes on the frame showing. |
 | **Set animation speed** | 1 = normal, 2 = double. |
-| **On animation finished** | A non-looping sprite reached its last frame. |
+| **Is playing animation** | True while that animation plays. |
+| **On animation finished** | A play-once animation reached its last frame. Leave the name empty for any. |
 | **Show frame … of …** | Show one frame and stop. Frame 0 is the first. Use it for states such as a door or a health icon. |
 
 In code:
@@ -124,7 +146,10 @@ entity.setSpriteFrame(2);              // show frame 2 and stop
 entity.getSpriteFrame();               // the frame now showing
 entity.getSpriteFrameCount();          // how many frames
 
-entity.playAnimation();                // play from here
+entity.playAnimation('Walk');          // play the animation called Walk
+entity.playAnimation('Jump', false);   // once, holding the last frame
+entity.getAnimation();                 // 'Jump' while it plays
+entity.getAnimationNames();            // ['Idle', 'Walk', 'Jump']
 entity.setAnimationSpeed(2);
 
 const sprite = entity.component('sprite');
@@ -132,11 +157,11 @@ sprite.flipX = player.vx < 0;          // face the way it walks
 sprite.billboard = 'upright';
 ```
 
-Settings you can change on `component('sprite')`: `flipX`, `flipY`, `color`, `opacity`, `billboard`, `speed` and `loop`.
+Settings you can change on `component('sprite')`: `flipX`, `flipY`, `color`, `opacity`, `billboard`, `speed`, `loop` and `animation` (setting it plays that animation).
 
 ## Good to know
 
-- Each sprite has one animation (all frames). For a character with *walk*, *jump* and *idle*, put the poses in one sprite and switch between them with **Show frame**, or make one sprite object per animation and show and hide them.
-- The collision polygon is one per sprite and convex, and it doesn't change from frame to frame.
+- **Show frame** counts over the whole strip, not inside an animation, and leaves the animation it was playing.
+- The collision polygon is one per sprite and convex, and it doesn't change from frame to frame or between animations.
 - The 3D view shows frame 1 until you press **▶ Preview animation** or Play.
 - Large sprites cost memory: a 2048 × 2048 frame is 16 MB on the GPU. Smaller is faster on phones.
