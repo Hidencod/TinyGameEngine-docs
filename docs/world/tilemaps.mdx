@@ -34,9 +34,7 @@ Tile art usually comes as one picture full of equal squares. Instead of redrawin
 
 The kept pieces go side by side in a new sprite sheet, in reading order (left to right, top to bottom). A sheet can be 4096 pixels wide, so at 64 px that is up to 64 pieces; when the picture has more, it starts with none selected so you can choose. The same works for a character picture: each piece becomes a frame of a [sprite](./sprites).
 
-:::caution
-A tile's number is the **position of its frame** in the sheet. Adding frames at the **end** is always safe. **Inserting, deleting or moving a frame in the middle** changes the numbers of the tiles after it, so cells you already painted would show different pictures. Plan the order first, or add new tiles at the end.
-:::
+A tile's number is the **position of its frame** in the sheet. You can still edit the sheet freely: when you **Save** the sprite editor after inserting, duplicating or moving frames, the editor **renumbers your tilemaps for you**. Painted cells, solid / one-way / climbable settings and auto tile sets all follow their pictures. **New frames count as solid.** If you **delete** a frame that painted cells use, the editor asks first, and then erases those cells (and drops any auto tile set that used the frame).
 
 You can also use the sheet of the **2D Platformer** template (grass and earth pieces, floating platforms, a bush and a mushroom).
 
@@ -106,7 +104,7 @@ Change a tile's kind and its marks change at once on every cell that uses it. Th
 
 Because behavior belongs to the tile number, one tile number can't be solid in one place and one-way in another **inside the same tilemap**. Two easy ways to get both:
 
-- **Put the picture in the sheet twice.** In the [sprite editor](./sprites) (✏ **Edit** on the Tilemap card), **duplicate the frame** (⧉), then move the copy with **→** until it is the **last** frame. Now the sheet has two tiles that look the same, and the other tiles keep their numbers. Make one **Solid** and the other **One-way**. The 2D Platformer template does this idea: the ground tiles are solid, and the platform tiles (their own tile numbers) are one-way.
+- **Put the picture in the sheet twice.** In the [sprite editor](./sprites) (✏ **Edit** on the Tilemap card), **duplicate the frame** (⧉) and save. Now the sheet has two tiles that look the same. Make one **Solid** and the other **One-way**. The 2D Platformer template does this idea: the ground tiles are solid, and the platform tiles (their own tile numbers) are one-way.
 - **Use two tilemaps.** Add a second Tilemap object (for example *Ground* and *Platforms*). The settings belong to each Tilemap object, so the same tile sheet can be solid in one and one-way in the other. Giving them different **Sort order** values keeps the drawing order you want.
 
 ### Solid and one-way tiles in the game
