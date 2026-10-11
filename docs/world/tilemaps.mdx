@@ -165,6 +165,28 @@ Tap a piece in the grid to go back to it, and **Done** when all are filled. Give
 
 How it works: a cell belongs to a set when its tile is one of the set's pieces. Each cell looks at its four neighbours (up, right, down, left) that belong to the same set and picks its piece from that. So you can also **Draw** a piece by hand, **Erase** or **Fill**, and the neighbouring pieces update. A tile that is not a piece of any set is never changed. In events and scripts, *Erase tile* / `removeTile` and `setTile` also update the pieces next to the changed cell, so digging a hole in the ground leaves rounded edges.
 
+## Animated tiles
+
+Water, torches, lava, blinking lights: a tile can play a short animation. The frames are tiles of the same sheet, so there is nothing new to draw.
+
+In the Tilemap card, under **Animated tiles**:
+
+1. Tap **＋ Animated tile**.
+2. Tap the tiles **in the order they should play** (for example the three water frames). Tap **↩ Undo** to take the last one back. You need at least two. Tap **Done**.
+3. Name it. It plays at 6 frames per second; change the number in its row to speed it up or slow it down.
+
+<Row>
+  <Phone name="animtile-setup" caption="Tap the frames in the order they play" />
+</Row>
+
+Now **every cell that shows one of those tiles plays the animation**, whichever frame you painted it with. Paint with the first frame as usual. All animated tiles with the same animation play in step. Delete an animation with 🗑 and the cells go back to showing their own tile.
+
+- The animation plays **in the game**. In the editor the tilemap shows the first frame, so painting doesn't redraw the screen all the time (this saves battery).
+- What a tile *does* (solid, one-way, climbable) follows the tile number you painted, not the frame being shown. Give the animation's first frame the behavior you want.
+- Animated cells cost very little: only their pictures change, the tilemap is not rebuilt.
+- If you edit the tile sheet (insert, delete or move frames), the animations are renumbered with the rest. An animation that lost one of its frames is removed.
+- `setTile` in events and scripts works with them: paint a cell with a frame of an animation and it plays.
+
 ## Climbing
 
 A **Platformer** with **Climb** switched on can climb the tiles you marked **Climbable**: press **up** or **down** next to a ladder to grab it, **up / down** to climb, and let go with **left / right** (to step onto a platform at the top) or **Jump**. Stack climbable tiles for the ladder, and put a one-way platform tile beside its top so the hero can step onto it. Objects tagged `ladder` work the same, for a ladder that is one picture.

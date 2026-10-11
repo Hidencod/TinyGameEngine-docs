@@ -35,6 +35,20 @@ export async function run({ page, s, H }) {
   await card.scrollIntoViewIfNeeded();
   await s.shot('card-tilemap-auto-set', { clip: card, pad: 6 });
 
+  // Animated tile: tap the frames in order.
+  await card.getByRole('button', { name: /Animated tile/ }).click();
+  await H.waitSheet();
+  const pal2 = page.locator('.sheet-layer.open .auto-root .tile-palette .tile-swatch');
+  for (const i of [17, 18, 17]) await pal2.nth(i).click();
+  await s.settle(400);
+  await s.shot('animtile-setup');
+  await page.locator('.sheet-layer.open .sheet-head .btn.primary', { hasText: 'Done' }).click();
+  await s.settle(400);
+  await H.prompt('Torch flame');
+  await s.settle(800);
+  await card.scrollIntoViewIfNeeded();
+  await s.shot('card-tilemap-anim', { clip: card, pad: 6 });
+
   // Paint with the new set: pieces fit themselves.
   const before = await card.locator('button', { hasText: /Clear \(/ }).textContent();
   await card.locator('.auto-pick', { hasText: 'Hills' }).click();
