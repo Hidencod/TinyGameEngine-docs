@@ -8,7 +8,7 @@ export async function run({ page, s, H }) {
   await H.newProject('Empty 3D scene', 'Behaviors');
   const behaviors = [
     ['Platformer', 'platformer'], ['Top-down movement', 'topdown'], ['Car', 'car'], ['Rotate', 'rotate'], ['Bullet', 'bullet'],
-    ['Wave (sine)', 'sine'], ['Follow target', 'follow'], ['Destroy when far', 'destroyOffscreen'], ['Draggable', 'draggable'], ['Health', 'health'], ['Parallax', 'parallax'],
+    ['Wave (sine)', 'sine'], ['Follow target', 'follow'], ['Destroy when far', 'destroyOffscreen'], ['Draggable', 'draggable'], ['Health', 'health'], ['Parallax', 'parallax'], ['Moving platform', 'mover'],
   ];
   for (const [label, id] of behaviors) {
     await page.setViewportSize(PHONE);

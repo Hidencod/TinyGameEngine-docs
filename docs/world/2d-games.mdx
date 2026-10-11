@@ -53,6 +53,10 @@ Side view also works with a 3D model hero: the model turns to face left or right
 - A **one-way platform** can be jumped up through and stood on. Mark platform tiles **⬆ One-way** in a [tilemap](./tilemaps#what-a-tile-does) (the setting is per tile number: every cell with that tile follows), or switch on **One-way platform** on a static object's Collider. To drop down through one, press **Down** and jump (Side view).
 - A **ladder** is made of tiles marked **🪜 Climbable** (or an object tagged `ladder`). Switch on **Climb** on the Platformer. If the hero's sprite has an animation named **Climb**, it plays while climbing and pauses when you stop.
 
+## Moving platforms
+
+Put the **Moving platform** [behavior](../behaviors#moving-platform) on an object with a Collider: it slides between its start and a distance you set, pauses at each end, and carries whatever stands on it. A small tilemap of three one-way platform tiles makes a good one; the 2D Platformer template has one over the wide gap.
+
 ## Build a level
 
 Paint it with a [tilemap](./tilemaps) (use [auto tiles](./tilemaps#auto-tiles) so the edges and corners fit by themselves): grass and earth for the ground, a few wooden tiles for stepping stones, and **gaps** for the player to jump. Put pickups, enemies and the goal on top as sprites. Falling off the bottom is an event: *Player y < −8 → Restart scene* (the template does this).

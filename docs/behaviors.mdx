@@ -173,6 +173,26 @@ Put it on a **background layer** (hills, clouds, a far wall): it scrolls slower 
 
 The layer starts where you put it and moves relative to that. Put background layers farther from the camera than the level (a smaller Z) and give them a lower **Sort order**.
 
+## ↔️ Moving platform {/* #moving-platform */}
+
+<Side shot="behavior-mover" crop>
+
+Slides the object from where it starts by a distance and back again, pausing at each end: lifts, bridges across a gap, platforms that sweep a pit. **Whatever stands on it is carried along.**
+
+| Setting | Default | What it does |
+| --- | --- | --- |
+| **Move X / Y / Z** | 4, 0, 0 | How far it travels from its starting place, in meters. `4, 0, 0` slides 4 m to the right and back; `0, 3, 0` is a lift going up 3 m. Negative numbers go the other way. |
+| **Speed** | 2 | How fast it moves (m/s). |
+| **Pause** | 0.5 | Seconds it waits at each end, so the player can step on and off. |
+
+</Side>
+
+Put it on any object with a **Collider** (a sprite, a model, a tilemap). If the object has no Physics body, or a *static* one, the behavior makes it a *kinematic* one for you: it moves by itself, pushes things out of its way and is never pushed. Put it on a **tilemap** and the whole tilemap moves, so a small tilemap of three platform tiles is a handy moving platform. Tick **One-way platform** on its Collider (or use one-way tiles) so the player can also jump up through it from below.
+
+**How riders are carried.** A character that stands on the platform moves with it: sideways, up and down, and the character's own walking and jumping still work on top. A character that is *not* on it (jumping, or beside it) is only pushed if the platform runs into it. When you jump off, the jump starts from the character's own speed (it doesn't inherit the platform's).
+
+You can turn it on and off with events (**Enable / disable behavior**, `mover`), for example a lift that only runs after a switch is pressed. The 2D Platformer template has one over the wide gap.
+
 ## 🔄 Rotate {/* #rotate */}
 
 <Side shot="behavior-rotate" crop>
