@@ -126,7 +126,7 @@ Sprites aren't lit: they always show their own colors, whatever the lights are d
 
 ## Physics and collisions
 
-Give the object a **Rigid body** and set the collider to **Auto**. Auto uses the collision polygon you drew (as a convex shape; a concave outline is wrapped in its smallest convex shape). There is one polygon per sprite, the same for all frames.
+Give the object a **Rigid body** and set the collider to **Auto**. Auto uses the collision polygon you drew. On an object that never moves (no Rigid body, or a Static one), a concave outline keeps its shape: an L, an arch or a ramp with a hollow underneath is solid only where you drew it. On a moving (Dynamic) body, or when the collider is a trigger, a concave outline is wrapped in its smallest convex shape. There is one polygon per sprite, the same for all frames.
 
 ## Levels and 2D games
 
@@ -168,6 +168,6 @@ Settings you can change on `component('sprite')`: `flipX`, `flipY`, `color`, `op
 ## Good to know
 
 - **Show frame** counts over the whole strip, not inside an animation, and leaves the animation it was playing.
-- The collision polygon is one per sprite and convex, and it doesn't change from frame to frame or between animations.
+- The collision polygon is one per sprite (concave only for objects that never move), and it doesn't change from frame to frame or between animations.
 - The 3D view shows one still frame (the **Start frame**, or the first frame of the chosen animation) until you press **▶ Preview animation** or Play.
 - Large sprites cost memory: a 2048 × 2048 frame is 16 MB on the GPU. Smaller is faster on phones.

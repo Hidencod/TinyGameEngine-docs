@@ -105,7 +105,7 @@ Change a tile's kind and its marks change at once on every cell that uses it. Th
 Because behavior belongs to the tile number, one tile number can't be solid in one place and one-way in another **inside the same tilemap**. Two easy ways to get both:
 
 - **Put the picture in the sheet twice.** In the [sprite editor](./sprites) (✏ **Edit** on the Tilemap card), **duplicate the frame** (⧉) and save. Now the sheet has two tiles that look the same. Make one **Solid** and the other **One-way**. The 2D Platformer template does this idea: the ground tiles are solid, and the platform tiles (their own tile numbers) are one-way.
-- **Use two tilemaps.** Add a second Tilemap object (for example *Ground* and *Platforms*). The settings belong to each Tilemap object, so the same tile sheet can be solid in one and one-way in the other. Giving them different **Sort order** values keeps the drawing order you want.
+- **Use two tilemaps** (see *Layers* below). Add a second Tilemap object (for example *Ground* and *Platforms*). The settings belong to each Tilemap object, so the same tile sheet can be solid in one and one-way in the other. Giving them different **Sort order** values keeps the drawing order you want.
 
 ### Solid and one-way tiles in the game
 
@@ -179,13 +179,17 @@ In the Tilemap card, under **Animated tiles**:
   <Phone name="animtile-setup" caption="Tap the frames in the order they play" />
 </Row>
 
-The animation's row shows **all its frames in the order they play**, and in the palette every tile that belongs to an animation has a small **▶** mark, so you can always see which tiles are animated and what plays. Now **every cell that shows one of those tiles plays the animation**, whichever frame you painted it with. Paint with the first frame as usual. All animated tiles with the same animation play in step. Delete an animation with 🗑 and the cells go back to showing their own tile.
+The animation's row shows **all its frames in the order they play**, and in the palette every tile that belongs to an animation has a small **▶** mark, so you can always see which tiles are animated and what plays. Now **every cell that shows one of those tiles plays the animation**, whichever frame you painted it with. Paint with the first frame as usual. All cells with the same animation play in step. Turn on **🎲 Offset** in the animation's row to start every cell at its own frame, so a row of torches flickers out of step. The offset is fixed per cell, so it looks the same every time. Delete an animation with 🗑 and the cells go back to showing their own tile.
 
 - The animation plays **in the game**. In the editor the tilemap shows the first frame, so painting doesn't redraw the screen all the time (this saves battery).
 - What a tile *does* (solid, one-way, climbable) follows the tile number you painted, not the frame being shown. Give the animation's first frame the behavior you want.
 - Animated cells cost very little: only their pictures change, the tilemap is not rebuilt.
 - If you edit the tile sheet (insert, delete or move frames), the animations are renumbered with the rest. An animation that lost one of its frames is removed.
 - `setTile` in events and scripts works with them: paint a cell with a frame of an animation and it plays.
+
+## Layers
+
+Every Tilemap object is a layer: *Background*, *Ground*, *Foreground*. In the Tilemap card, a row of buttons lists all the tilemaps of the scene. Tap one to select it and paint on it, with **Paint tiles** staying on while you switch. **＋ Layer** adds a new tilemap next to the current one with the same tile sheet, tile size, edges, auto tiles, animated tiles and tile kinds, empty, drawn one **Sort order** above the highest layer. It has no Collider, so it is scenery: give it a lower **Sort order** to put it behind the player, or a higher one to draw it in front (grass over the player's feet, tree tops). Add a Collider to a layer that should block.
 
 ## Climbing
 
@@ -228,4 +232,4 @@ A negative tile number erases the cell. Use `cellAt` to find the cell under a he
 
 - **Doors and blocks:** a switch calls `removeTile` on a wall, and the way is open.
 - **Digging:** on tap, find the cell with `cellAt` and erase it.
-- **Two layers:** add a second tilemap with a lower **Sort order** for scenery that does not block (give it no Collider).
+- **Two layers:** tap **＋ Layer** and give it a lower **Sort order** for scenery that does not block.
