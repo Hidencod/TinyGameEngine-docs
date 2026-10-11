@@ -54,6 +54,11 @@ export async function run({ page, s, H }) {
   await s.settle(800);
   await s.shot('tilemap-marks');
 
+  // Selecting the camera shows its preview in the corner of the 3D view.
+  await H.select('Camera');
+  await s.settle(1200);
+  await s.shot('camera-preview');
+
   // Side view on the hero's Platformer card.
   await H.inspect('Player');
   await page.setViewportSize(TALL);
