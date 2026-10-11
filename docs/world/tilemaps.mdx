@@ -34,6 +34,10 @@ Tile art usually comes as one picture full of equal squares. Instead of redrawin
 
 The kept pieces go side by side in a new sprite sheet, in reading order (left to right, top to bottom). A sheet can be 4096 pixels wide, so at 64 px that is up to 64 pieces; when the picture has more, it starts with none selected so you can choose. The same works for a character picture: each piece becomes a frame of a [sprite](./sprites).
 
+:::caution
+A tile's number is the **position of its frame** in the sheet. Adding frames at the **end** is always safe. **Inserting, deleting or moving a frame in the middle** changes the numbers of the tiles after it, so cells you already painted would show different pictures. Plan the order first, or add new tiles at the end.
+:::
+
 You can also use the sheet of the **2D Platformer** template (grass and earth pieces, floating platforms, a bush and a mushroom).
 
 ## Add a tilemap
@@ -56,23 +60,87 @@ Tap **2D** in the 3D view's toolbar first: it gives a flat front view with a ver
 
 The **palette** shows every tile of the sheet; tap one to choose it (the chosen tile has a blue frame). One drag is one **Undo** step.
 
-## Solid tiles
+## What a tile does
 
-Right under the palette, a button (**Tile 0: 🧱 Solid ⟳**) shows what the **chosen tile** does; it follows the tile you choose in the palette. Tap it to go to the next kind:
+Every tile of the sheet has a **behavior**: does it block, can you stand on it, can you climb it, or is it only a picture? You set this **per tile number**, not per painted cell.
 
-| Kind | What it does |
+That is the one idea to remember:
+
+> **Tile 6 is one-way** means *every* cell in this tilemap that shows Tile 6 is one-way: the ones you already painted, and the ones you paint later.
+
+Think of the palette as a list of building blocks. You decide once what each block does, and then every place you used that block follows. You don't have to go back and fix cells.
+
+### Set it
+
+1. Tap a tile in the **palette** (it gets a blue frame). The tile's number is in the button right under the palette.
+2. Tap the button under the palette, **All tile 6: 🧱 Solid ⟳**. Each tap goes to the next kind: **Solid → One-way → Walkthrough → Solid**.
+3. Tap **🪜 Climbable** beside it to turn climbing on or off for that tile. It is separate from the three kinds above.
+
+The button always talks about the tile you chose in the palette: choose another tile and the button changes to show that tile's behavior.
+
+| Kind | What it does | Use it for |
+| --- | --- | --- |
+| **🧱 Solid** | Blocks from every side. This is the default for every tile. | Ground, walls, blocks. |
+| **⬆ One-way** | Blocks only from above. A character can **jump up through it** from below and **land on it**, walks through it sideways, and can **drop down** through it (see below). | Floating platforms, ledges, the top of a ladder. |
+| **◻ Walkthrough** | Does nothing: the tile is only a picture. | Bushes, flowers, background, signs. |
+| **🪜 Climbable** | A character with **Climb** on can grab it and climb up and down. Usually a *Walkthrough* tile. | Ladders, vines, ropes. |
+
+### See what each tile does
+
+While a tilemap is selected, the 3D view draws a small mark on every cell, so you can see what each placed tile does without guessing. The marks only show in the editor, never in the game.
+
+<Row>
+  <Phone name="tilemap-marks" caption="Yellow lines on top: one-way. Cyan ladder: climbable. Small ring: walkthrough. Solid tiles have no mark." />
+</Row>
+
+| Mark | Means |
 | --- | --- |
-| **🧱 Solid** | Blocks from every side (ground, walls). This is the default. |
-| **⬆ One-way platform** | Blocks only from above: a character jumps up through it and lands on it. It has a yellow line on top of its thumbnail. |
-| **◻ Walkthrough** | Nothing happens: flowers, backgrounds. It has a small ring in the corner of its thumbnail. |
+| Yellow lines along the top of the tile | One-way platform |
+| Cyan ladder drawn on the tile | Climbable |
+| Small white ring in the middle | Walkthrough |
+| Nothing | Solid |
 
-A second button, **🪜 Climbable**, marks the tile as a ladder or vine (a small ladder shows on its thumbnail): see [Climbing](#climbing). A ladder is usually also *Walkthrough*.
+Change a tile's kind and its marks change at once on every cell that uses it. This is the fastest way to check that you set the right tile.
 
-Solid tiles that touch are merged into as few boxes as possible, so a long floor is one collider: the player never catches on the seam between two tiles. The boxes are as deep as **Collider depth** says (front to back, in meters).
+### Two spots, two behaviors
+
+Because behavior belongs to the tile number, one tile number can't be solid in one place and one-way in another **inside the same tilemap**. Two easy ways to get both:
+
+- **Put the picture in the sheet twice.** In the [sprite editor](./sprites) (✏ **Edit** on the Tilemap card), **duplicate the frame** (⧉), then move the copy with **→** until it is the **last** frame. Now the sheet has two tiles that look the same, and the other tiles keep their numbers. Make one **Solid** and the other **One-way**. The 2D Platformer template does this idea: the ground tiles are solid, and the platform tiles (their own tile numbers) are one-way.
+- **Use two tilemaps.** Add a second Tilemap object (for example *Ground* and *Platforms*). The settings belong to each Tilemap object, so the same tile sheet can be solid in one and one-way in the other. Giving them different **Sort order** values keeps the drawing order you want.
+
+### Solid and one-way tiles in the game
+
+Solid and one-way tiles that touch are merged into as few collision boxes as possible, so a long floor is one collider: the player never catches on the seam between two tiles. The boxes are as deep as **Collider depth** says (front to back, in meters).
 
 :::note
-Solid tiles block only when the object has a **Collider** component (set to *Auto*). Without it the tilemap is only a picture.
+Tiles block only when the object has a **Collider** component (set to *Auto*). Without it the tilemap is only a picture, and **Walkthrough** looks the same as **Solid**.
 :::
+
+How a **one-way** tile behaves:
+
+- Standing on it works like any floor.
+- **From below**, a character that is moving up passes straight through. Once it is on top and falling, it lands.
+- **Sideways**, a character walks through the edge of the tile if its feet are below the top.
+- **Drop down:** with a Platformer in **Side view**, press **Down** and jump to fall through the platform you stand on.
+- A one-way tile does not move or turn. For a moving platform use a separate object.
+
+### Questions
+
+**I changed a tile and cells I painted before changed too. Is that a bug?**
+No. The kind belongs to the tile, so every cell with that tile follows. Look at the marks to see which cells use the tile.
+
+**I want only some ground tiles to be one-way.**
+Use a different tile number for them: duplicate the frame in the sheet, or use a second Tilemap. See *Two spots, two behaviors* above.
+
+**Another tilemap uses the same sheet. Does it change too?**
+No. The kinds are saved on each Tilemap object, so each tilemap has its own settings for the same sheet.
+
+**Do auto tiles follow this?**
+Yes. An auto tile set only paints tile numbers, so each of its pieces behaves as its tile number is set.
+
+**Coming from Unity or Godot?**
+In Unity a tile asset has its own collider type, and a one-way platform is usually done for a *whole tilemap* with a Platform Effector, so people keep a separate "Platforms" tilemap. In Godot the tile set holds each tile's collision, including a one-way checkbox, and every tilemap that uses the set shares it. Here the setting is per tile number like those, but saved on each Tilemap object.
 
 ## Auto tiles
 

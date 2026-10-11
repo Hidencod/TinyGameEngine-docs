@@ -25,6 +25,10 @@ export async function run({ page, s, H }) {
   await card.scrollIntoViewIfNeeded();
   await s.shot('card-tilemap-painting', { clip: card, pad: 6 });
 
+  // Painting off again, so dragging the view doesn't paint.
+  await card.getByRole('button', { name: /Stop painting/ }).click();
+  await s.settle(300);
+
   // The 3D view with the level selected.
   await page.setViewportSize(PHONE);
   await H.split(70);
@@ -35,6 +39,20 @@ export async function run({ page, s, H }) {
   await page.locator('.vp-btn[aria-label="2D view"]').click();
   await s.settle(1200);
   await s.shot('tilemap-2d');
+
+  // Zoom out and move to the ladder and platforms: yellow lines = one-way, cyan ladder = climbable, ring = walkthrough.
+  const vp = await page.locator('.split-viewport').boundingBox();
+  await page.mouse.move(vp.x + vp.width / 2, vp.y + vp.height / 2);
+  await page.mouse.wheel(0, 500);
+  await s.settle(400);
+  await page.mouse.move(vp.x + vp.width * 0.8, vp.y + vp.height * 0.8);
+  await page.keyboard.down('Shift');
+  await page.mouse.down();
+  await page.mouse.move(vp.x + vp.width * 0.1, vp.y + vp.height * 0.8, { steps: 10 });
+  await page.mouse.up();
+  await page.keyboard.up('Shift');
+  await s.settle(800);
+  await s.shot('tilemap-marks');
 
   // Side view on the hero's Platformer card.
   await H.inspect('Player');
