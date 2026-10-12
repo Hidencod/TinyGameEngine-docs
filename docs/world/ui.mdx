@@ -138,6 +138,16 @@ For sliders, and for anything with a **Button** component (see [Buttons](#button
 | **Interactable** | Off greys it out and it takes no input. |
 | **Transition** | How it reacts: **None**, **Color tint** (colors for normal, highlighted, pressed and disabled, with a **Color multiplier** and **Fade duration**) or **Sprite swap** (a different picture for highlighted, pressed and disabled). |
 
+### Sprite sheets in an Image
+
+If the **Source image** is a picture made in the [sprite editor](./sprites) with several frames, the Image card shows a **Frame** field (which frame to show), and **Play frames** with an **Animation** (all frames, or one of the sprite's named animations), **Loop** and **Speed**. Size the Image to one frame's proportions; the frame fills the element. Frame settings apply to *Simple* and *Filled* images, not to sliced or tiled ones.
+
+From events and scripts the same actions as for a Sprite work on an Image: *Show frame … of …*, *Play animation*, *Stop animation*, *Set animation speed* and the *Is playing animation* condition; in code `setSpriteFrame(n)`, `playAnimation('spin')`, `stopAnimation()`.
+
+### Pictures load with the scene
+
+Every picture an element uses (its image, mask, a Button's sprite-swap pictures) is loaded and decoded while the scene loads, so a menu never opens with blank boxes. A picture that only an event or script puts on screen (*Set image to…*, `setUIImage('Coin')`) is found by its name or id in your events and scripts and loaded with the scene too. When you change scenes, the new scene appears once its pictures, models and sounds have loaded; use a loading screen scene to show progress meanwhile.
+
 ## Buttons {/* #buttons */}
 
 As in Unity, a **Button** is a *component* you add to a UI element, not a type of element. **＋ Add → UI → Button** makes an Image with a Button component and a Text for its label. To turn something else into a button, select an Image, Panel or Text and tap **Add component → Button**. Anything that has a Button can be tapped, tinted or swapped when pressed, and used with the *On clicked* event.
