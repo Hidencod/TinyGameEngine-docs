@@ -261,6 +261,8 @@ export async function findArrow(page, axis = 'x') {
   const red = [], blue = [];
   for (let y = 0; y < info.height; y += 2) for (let x = 0; x < info.width; x += 2) {
     const i = (y * info.width + x) * info.channels;
+    // The orientation gizmo in the top-right corner has red and blue bubbles of its own.
+    if (x / sc > vp.width - 110 && y / sc < 130) continue;
     const r = data[i], g = data[i + 1], b = data[i + 2];
     if (r > 215 && g < 110 && b < 120) red.push([x, y]);
     else if (b > 215 && r < 110 && g > 100 && g < 175) blue.push([x, y]);

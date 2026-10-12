@@ -117,7 +117,7 @@ export async function run({ page, s, H }) {
 
   await waitTitle(page, /DO destroy/);
   await s.shot('tut1-15-add-action');
-  await page.locator('.es-add-act').first().click();
+  await page.locator('.es-add-act').last().click();
   await s.settle(700);
   const coin = await page.locator('.es-sheet-overlay.open .es-pick-item .es-pick-label').allTextContents();
   await esPickItem(page, coin.find((c) => /Cylinder|Coin/.test(c)) ?? 'Cylinder');
@@ -163,24 +163,28 @@ export async function run({ page, s, H }) {
   await waitTitle(page, /Spread them out/);
   await s.settle(1500);
   await s.shot('tut2-04-spread');
-  for (let i = 0; i < 6; i++) {
+  // Type a Position for each copy: dragging arrows depends on where the camera happens to look.
+  const spots = [[4, 3], [-4, -3], [3, -5], [-5, 4]];
+  const coins = page.locator('.tree-row').filter({ has: page.locator('.tree-name', { hasText: /^(Cylinder|Coin)/ }) });
+  const n = await coins.count();
+  for (let i = 0; i < n - 1 && i < spots.length; i++) { // the last copy can stay where it is
     if (!/Spread them out/.test(await title(page).textContent())) break;
-    const ring = page.locator('.tut-ring');
-    if (await page.locator('.tut-tip').isVisible().catch(() => false)) {
-      const b = await ring.boundingBox();
-      if (b) { await page.mouse.click(b.x + b.width / 2, b.y + b.height / 2); await s.settle(900); }
-    }
     if (await page.locator('.tut-icon[aria-label="Minimize"]').isVisible()) await page.locator('.tut-icon[aria-label="Minimize"]').click();
+    await H.tab('objects');
+    await coins.nth(i).locator('.tree-name').click();
     await s.settle(400);
-    const moves = [['x', 0.9], ['z', 0.9], ['x', -1.4], ['z', -1.4], ['x', 1.8], ['z', 1.8]];
-    try { await dragArrow(page, moves[i][0], moves[i][1]); } catch (e) { console.warn(e.message); }
-    await s.settle(900);
+    await H.tab('inspector');
+    const pos = page.locator('.inspector .num-input'); // the first three are Position X, Y, Z
+    await pos.first().scrollIntoViewIfNeeded();
+    await pos.nth(0).fill(String(spots[i][0])); await pos.nth(0).blur();
+    await pos.nth(2).fill(String(spots[i][1])); await pos.nth(2).blur();
+    await s.settle(700);
   }
 
-  await waitTitle(page, /A label for the score/);
+  await waitTitle(page, /A text for the score/);
   await s.shot('tut2-05-label');
-  await H.addObject('Label');
-  await waitTitle(page, /Write on the label/);
+  await H.addObject('Text');
+  await waitTitle(page, /Write the score/);
   await H.tab('inspector');
   await s.shot('tut2-06-label-text');
   const text = page.locator('.inspector .field-row').filter({ has: page.locator('.field-label', { hasText: /^Text$/ }) }).locator('textarea, input').first();
@@ -194,7 +198,7 @@ export async function run({ page, s, H }) {
   await s.settle(1000);
   await waitTitle(page, /Count the coins/);
   await s.shot('tut2-07-count');
-  await page.locator('.es-add-act').first().click();
+  await page.locator('.es-add-act').last().click();
   await s.settle(700);
   await page.locator('.es-sheet-overlay.open .es-pick-tile').filter({ hasText: 'System' }).click();
   await s.settle(600);
@@ -208,7 +212,8 @@ export async function run({ page, s, H }) {
   if (await sel.count()) {
     const opts = await sel.locator('option').allTextContents();
     const create = opts.find((o) => /New/.test(o));
-    if (!opts.includes('Score') && create) {
+    if (opts.includes('Score')) await sel.selectOption({ label: 'Score' });
+    else if (create) {
       await sel.selectOption({ label: create });
       await s.settle(600);
       await s.shot('tut2-10-new-variable');
@@ -224,9 +229,9 @@ export async function run({ page, s, H }) {
 
   await waitTitle(page, /Show the score/);
   await s.shot('tut2-12-show-score');
-  await page.locator('.es-add-act').first().click();
+  await page.locator('.es-add-act').last().click();
   await s.settle(600);
-  await esPickItem(page, 'Label');
+  await esPickItem(page, 'Text');
   await esCard(page, 'Set label');
   const textF = (await esField(page, 'Text')).locator('input, textarea').first();
   await textF.fill('"Score: " + Score');
@@ -252,7 +257,7 @@ export async function run({ page, s, H }) {
   await waitTitle(page, /You win/);
   await page.locator('.es-add-act').last().click();
   await s.settle(600);
-  await esPickItem(page, 'Label');
+  await esPickItem(page, 'Text');
   await esCard(page, 'Set label');
   await (await esField(page, 'Text')).locator('input, textarea').first().fill('"You win!"');
   await s.settle(800);

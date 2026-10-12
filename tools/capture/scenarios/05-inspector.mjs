@@ -61,7 +61,7 @@ export async function run({ page, s, H }) {
   await H.sheet().locator('.sheet-body').evaluate((el) => { el.scrollTop = el.scrollHeight; });
   await s.shot('add-behavior-menu-end');
   await H.closeSheet();
-  await H.card('Shape & look').locator('.card-actions .icon-btn').click();
+  await H.card('Shape & look').locator('.card-actions .icon-btn').last().click();
   await H.waitSheet();
   await s.shot('component-menu');
   await H.closeSheet();

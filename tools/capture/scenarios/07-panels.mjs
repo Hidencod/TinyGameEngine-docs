@@ -162,7 +162,7 @@ export async function run({ page, s, H }) {
   await H.waitSheet();
   await s.shot('sounds-library');
   await H.closeSheet();
-  await page.getByRole('button', { name: /Free models/ }).click();
+  await page.getByRole('button', { name: /Free assets/ }).click();
   await s.settle(4000);
   await s.shot('models-library');
   await page.locator('.library-search').fill('car');

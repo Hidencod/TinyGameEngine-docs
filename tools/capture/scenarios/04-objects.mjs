@@ -16,7 +16,7 @@ export async function run({ page, s, H }) {
   await H.waitSheet();
   await s.shot('add-menu-1');
   const body = H.sheet().locator('.sheet-body');
-  const groups = ['UI (on screen)', 'Particles', 'Lights', '3D models'];
+  const groups = ['UI', 'Effects', 'Lights', '3D models'];
   for (let i = 0; i < groups.length; i++) {
     await H.scrollTo(H.sheet().locator('.pick-group', { hasText: groups[i] }), 0);
     await s.shot('add-menu-' + (i + 2));
@@ -69,9 +69,12 @@ export async function run({ page, s, H }) {
   await H.waitSheet();
   await H.pick('Make prefab');
   await s.settle(600);
+  // Prefabs live in the Files tab, under the Prefabs filter.
+  await H.tab('assets');
+  await page.locator('.tab-toolbar .chip', { hasText: /^Prefabs$/ }).click();
+  await s.settle(500);
+  await s.shot('objects-prefabs', { hl: { target: page.locator('.prefab-card').first() } });
   await H.tab('objects');
-  await H.scrollTo(page.locator('.objects-tab .section-title', { hasText: 'Prefabs' }), 0);
-  await s.shot('objects-prefabs', { hl: { target: page.locator('.objects-tab .section-title', { hasText: 'Prefabs' }).locator('xpath=following-sibling::div[1]') } });
 
   // Scene chip opens the Scenes panel.
   await page.locator('.objects-tab').evaluate((el) => { el.scrollTop = 0; });
