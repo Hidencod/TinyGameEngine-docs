@@ -20,7 +20,7 @@ The UI follows Unity's uGUI on purpose, with the same names: **Canvas**, **Canva
 | Item | Use for |
 | --- | --- |
 | 🏷️ **Text** | Text on screen: score, lives, messages. |
-| 🔲 **Button** | A tappable button: Start, Pause, Retry… Its label is a Text inside it. |
+| 🔲 **Button** | A tappable button: Start, Pause, Retry… An Image with a **Button** component and a Text inside it for the label. |
 | 🖼️ **Image** | An icon or picture. |
 | 📊 **Slider** | A bar, or a value you can drag: health, energy, volume. |
 | 🪟 **Panel** | A box that holds other UI elements. |
@@ -91,13 +91,12 @@ A UI element is placed by its **Rect Transform**, exactly as in Unity.
 
 Y counts **up**, as in Unity: a Pos Y of −16 is 16 pixels below the anchor.
 
-## Text, Button, Image, Slider and Panel
+## Text, Image, Slider and Panel
 
 The card shows the fields of the **Type** you picked. You can change the type later.
 
 <Row>
   <Crop name="card-ui-text" caption="Text" width={300} />
-  <Crop name="card-ui-button" caption="Button" width={300} />
   <Crop name="card-ui-image" caption="Image" width={300} />
 </Row>
 
@@ -132,12 +131,40 @@ The card shows the fields of the **Type** you picked. You can change the type la
 
 ### Interaction
 
-For buttons and sliders:
+For sliders, and for anything with a **Button** component (see [Buttons](#buttons)):
 
 | Field | What it does |
 | --- | --- |
 | **Interactable** | Off greys it out and it takes no input. |
 | **Transition** | How it reacts: **None**, **Color tint** (colors for normal, highlighted, pressed and disabled, with a **Color multiplier** and **Fade duration**) or **Sprite swap** (a different picture for highlighted, pressed and disabled). |
+
+## Buttons {/* #buttons */}
+
+As in Unity, a **Button** is a *component* you add to a UI element, not a type of element. **＋ Add → UI → Button** makes an Image with a Button component and a Text for its label. To turn something else into a button, select an Image, Panel or Text and tap **Add component → Button**. Anything that has a Button can be tapped, tinted or swapped when pressed, and used with the *On clicked* event.
+
+The Button card has two parts:
+
+- **Interaction** — Interactable and Transition, as above.
+- **On Click ()** — what a tap does, a list run in order. Tap **＋ Add** and choose:
+
+| Field | What it does |
+| --- | --- |
+| **Object** | The object it acts on: this one, or any other object of the scene. |
+| **Do** | **Run function**, **Set active** or **Set visible**. |
+| **Script**, **Function** | (Run function) One of the code scripts on that object, and a function written in it. Every function at the top level of the script is listed; hooks such as `update` and names that start with `_` are not. |
+| **Argument** | (Run function) Optional: a number (`5`), `true` / `false`, or text. It is handed to the function. |
+| **Active** / **Visible** | (Set active / Set visible) Turns the object on or off, so a menu opens and closes with no code. |
+
+```js
+// On the Door object's code script
+function openDoor(speed) {
+  entity.tween('y', 4, speed);
+}
+```
+
+Choose *Door → Door script → openDoor()* with the argument `2` and the button opens the door. The same click still triggers *On clicked* events and the script's own `onClick()`.
+
+Old projects are converted when they open: each button becomes an Image with a Button component, and a label it drew itself becomes a child Text.
 
 ## Layout groups
 
@@ -153,6 +180,8 @@ A **Layout group** arranges the children of a panel for you, like Unity's Horizo
 | **Reverse order** | Lay them out from the other end. |
 | **Cell size**, **Constraint**, **Count** | (Grid) The size of each cell, and whether to fix the number of columns or rows. |
 | **Child controls size**, **Child force expand** | Whether the group sets each child's width and height, and whether children grow to fill the spare room. |
+
+A child that should not be arranged (a close button in a panel's corner, a badge on an icon) has **Ignore layout** in its Rect Transform. The group leaves it where its own anchors put it, like Unity's Layout Element → Ignore Layout.
 
 ## Masks and effects
 
