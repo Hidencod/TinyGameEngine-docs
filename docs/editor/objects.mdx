@@ -95,6 +95,28 @@ Uses: a car body with wheels, a character holding a sword, a group of walls you 
 
 <Phone name="object-set-parent" size="small" caption="Set parent… lists the objects it can be attached to" />
 
+## Model parts {/* #model-parts */}
+
+An imported 3D model is made of **parts** (meshes, groups and, for animated characters, bones). Under every model object there is a **🧩 Model parts** row; tap it to unfold the model's parts.
+
+| Control | What it does |
+| --- | --- |
+| **Tap a part** | Selects it. The Inspector then shows a card for the part: **Visible**, **Material** (a material from your project, or *From the model file*), and its **Position, Rotation and Scale**. **↺** puts the part back as the file has it, **×** returns to the object. |
+| **👁** | Hides or shows just that part, e.g. a helmet or a weapon on the model. |
+| **⋮ → Attach object here…** | Picks another object of the scene and attaches it to the part. It keeps its place in the world, then follows the part. |
+| **⋮ → Reset part** | Removes all changes made to that part. |
+
+Only parts you change are saved in the project, so an untouched model costs nothing. A part with its own material is drawn with that material; all other parts keep the model's own.
+
+**Holding things.** Attach a sword to a hand bone and it moves with the animation. The attached row shows a small *→ part name* tag. Its position and rotation are relative to the part, so move it in the Inspector to fit the hand. To detach it, use **Unparent** in the object menu.
+
+:::note
+- An attached object **cannot push** the object that holds it: while attached its colliders only detect overlaps (they are *triggers*), so a held shovel never shoves the character around.
+- Moving or turning a part that an animation also drives has no visible effect while the animation plays, because the animation sets it every frame. Hide it or give it a material instead.
+:::
+
+From a script, `attachTo(parent, "hand_R")` attaches an object to the part with that name, and `detach()` lets go (see the [scripting API](../reference/scripting-api)).
+
 ## Prefabs
 
 <Side shot="objects-prefabs">

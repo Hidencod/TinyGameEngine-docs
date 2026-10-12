@@ -447,9 +447,9 @@
         {
           "name": "attachTo",
           "kind": "method",
-          "sig": "(parent)",
+          "sig": "(parent, part?)",
           "type": "void",
-          "doc": "Carry this object along with another (keeps its place in the world), e.g. a picked-up key."
+          "doc": "Carry this object along with another (keeps its place in the world), e.g. a picked-up key. part: the name of a part of the 3D model of the other object, such as a hand bone."
         },
         {
           "name": "detach",
