@@ -2073,6 +2073,14 @@
             {
               "value": "max",
               "label": "max"
+            },
+            {
+              "value": "width",
+              "label": "width"
+            },
+            {
+              "value": "height",
+              "label": "height"
             }
           ],
           "default": "y",
@@ -5963,7 +5971,7 @@
       "kind": "action",
       "category": "UI",
       "label": "Set position",
-      "hint": "Move it on the screen",
+      "hint": "Offset from its anchors. To land on another element, use Move to element",
       "display": "Set {object} position to ({x}, {y})",
       "displayNoObject": null,
       "icon": "📍",

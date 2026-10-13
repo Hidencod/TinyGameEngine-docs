@@ -135,8 +135,8 @@ Write the object’s name (or `Self` inside an action on that object), a dot, th
 
 | Property | What it gives |
 | --- | --- |
-| `.x` | X position |
-| `.y` | Y position (height) |
+| `.x` | X position (a UI element: its offset from its anchors, what Set position sets) |
+| `.y` | Y position, the height (a UI element: its offset from its anchors, Y up) |
 | `.z` | Z position |
 | `.angle` | Turn angle around Y (degrees) |
 | `.rotX` | Rotation X (degrees) |
@@ -159,6 +159,10 @@ Write the object’s name (or `Self` inside an action on that object), a dot, th
 | `.name` | Object name |
 | `.id` | Unique id of the instance |
 | `.value` | Slider / bar value (UI) |
+| `.width` | Width of a UI element (what Set size sets) |
+| `.height` | Height of a UI element (what Set size sets) |
+| `.anchoredX` | UI element: X offset from its anchors, the same as X |
+| `.anchoredY` | UI element: Y offset from its anchors, the same as Y |
 | `.min` | Slider / bar minimum (UI) |
 | `.max` | Slider / bar maximum (UI) |
 | `.pressed` | UI button is held down |

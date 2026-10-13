@@ -438,11 +438,11 @@
   "objectProps": [
     {
       "name": "x",
-      "description": "X position"
+      "description": "X position (a UI element: its offset from its anchors, what Set position sets)"
     },
     {
       "name": "y",
-      "description": "Y position (height)"
+      "description": "Y position, the height (a UI element: its offset from its anchors, Y up)"
     },
     {
       "name": "z",
@@ -533,6 +533,22 @@
       "description": "Slider / bar value (UI)"
     },
     {
+      "name": "width",
+      "description": "Width of a UI element (what Set size sets)"
+    },
+    {
+      "name": "height",
+      "description": "Height of a UI element (what Set size sets)"
+    },
+    {
+      "name": "anchoredX",
+      "description": "UI element: X offset from its anchors, the same as X"
+    },
+    {
+      "name": "anchoredY",
+      "description": "UI element: Y offset from its anchors, the same as Y"
+    },
+    {
       "name": "min",
       "description": "Slider / bar minimum (UI)"
     },
@@ -602,6 +618,8 @@
     "text",
     "value",
     "min",
-    "max"
+    "max",
+    "width",
+    "height"
   ]
 }

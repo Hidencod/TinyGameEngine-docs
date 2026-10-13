@@ -285,6 +285,7 @@ Screens that start hidden are still shown in the editor when you select them or 
   - **Move to element** puts the object's pivot on the middle of another element, plus an offset: a tooltip next to the slot you pressed, a marker on a map icon. It works from where both are drawn, so any anchors and scaling are fine.
   - **Put inside** moves an element into another (a slot into a panel, an item into a list). **Attach to** and **Detach** also work on UI elements.
 - Expressions: `HealthBar.value`, `HealthBar.min`, `HealthBar.max`, `PlayButton.pressed`, `ScoreText.text`.
+- On a UI element `Panel.x` and `Panel.y` are its **offset from its anchors** (what **Set position** sets, Y up) and `Panel.width` and `Panel.height` its size (what **Set size** sets). Copying one element's `x` and `y` onto another only lines them up when both have the **same parent and anchors**. To put an element where another one is drawn, use **Move to element**.
 
 See the [UI conditions](../reference/conditions#ui) and [UI actions](../reference/actions#ui).
 

@@ -312,6 +312,13 @@
           "doc": "Move a UI element to this anchored position (canvas px). Leave an axis out (undefined) to keep it."
         },
         {
+          "name": "isUI",
+          "kind": "method",
+          "sig": "()",
+          "type": "boolean",
+          "doc": "Is this object a UI element (has a Rect Transform)?"
+        },
+        {
           "name": "getUISize",
           "kind": "method",
           "sig": "()",
