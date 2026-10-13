@@ -161,12 +161,10 @@ Write the object’s name (or `Self` inside an action on that object), a dot, th
 | `.value` | Slider / bar value (UI) |
 | `.width` | Width of a UI element (what Set size sets) |
 | `.height` | Height of a UI element (what Set size sets) |
-| `.centerX` | UI element: where the middle of its box is drawn, in canvas px from the left (differs from screenX when the pivot is not the centre) |
-| `.centerY` | UI element: where the middle of its box is drawn, in canvas px from the bottom |
-| `.screenX` | UI element: where its pivot is drawn, in canvas px from the left (works across parents, unlike X) |
-| `.screenY` | UI element: where its pivot is drawn, in canvas px from the bottom |
-| `.anchoredX` | UI element: X offset from its anchors, the same as X |
-| `.anchoredY` | UI element: Y offset from its anchors, the same as Y |
+| `.centerX` | UI element: where the MIDDLE of its box is drawn, in canvas px from the left. Use it to put something on top of this element |
+| `.centerY` | UI element: where the MIDDLE of its box is drawn, in canvas px from the bottom |
+| `.screenX` | UI element: where its PIVOT is drawn, in canvas px from the left, whatever its parent. Use it to place something relative to this element (screenX + 40) |
+| `.screenY` | UI element: where its PIVOT is drawn, in canvas px from the bottom |
 | `.min` | Slider / bar minimum (UI) |
 | `.max` | Slider / bar maximum (UI) |
 | `.pressed` | UI button is held down |

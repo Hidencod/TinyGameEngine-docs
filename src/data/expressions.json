@@ -542,27 +542,19 @@
     },
     {
       "name": "centerX",
-      "description": "UI element: where the middle of its box is drawn, in canvas px from the left (differs from screenX when the pivot is not the centre)"
+      "description": "UI element: where the MIDDLE of its box is drawn, in canvas px from the left. Use it to put something on top of this element"
     },
     {
       "name": "centerY",
-      "description": "UI element: where the middle of its box is drawn, in canvas px from the bottom"
+      "description": "UI element: where the MIDDLE of its box is drawn, in canvas px from the bottom"
     },
     {
       "name": "screenX",
-      "description": "UI element: where its pivot is drawn, in canvas px from the left (works across parents, unlike X)"
+      "description": "UI element: where its PIVOT is drawn, in canvas px from the left, whatever its parent. Use it to place something relative to this element (screenX + 40)"
     },
     {
       "name": "screenY",
-      "description": "UI element: where its pivot is drawn, in canvas px from the bottom"
-    },
-    {
-      "name": "anchoredX",
-      "description": "UI element: X offset from its anchors, the same as X"
-    },
-    {
-      "name": "anchoredY",
-      "description": "UI element: Y offset from its anchors, the same as Y"
+      "description": "UI element: where its PIVOT is drawn, in canvas px from the bottom"
     },
     {
       "name": "min",
