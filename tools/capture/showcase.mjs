@@ -29,6 +29,7 @@ const DESKTOP = { width: 1280, height: 720 };
 /** module: file in TinyGameEngine/showcase/ exporting createShowcase(). */
 const GAMES = [
   { module: 'streetRacer', slug: 'street-racer', shots: streetRacerShots },
+  { module: 'lootRoom', slug: 'loot-room', shots: lootRoomShots },
 ];
 
 const filter = process.argv.slice(2).filter((a) => !a.startsWith('--'));
@@ -127,4 +128,51 @@ async function streetRacerShots({ page, shot, tge, module }) {
   await page.waitForSelector('.es-root', { timeout: 30000 });
   await page.waitForTimeout(1500);
   await shot('events');
+}
+
+async function lootRoomShots({ page, shot, tge, module }) {
+  await page.goto(`${TGE}/showcase/dev.html?game=${module}`, { timeout: 120000 });
+  await page.waitForFunction(() => window.__tgeReady, null, { timeout: 120000 });
+  await page.waitForFunction(() => window.__tgeGame.select('#loot').length === 12, null, { timeout: 120000 });
+  await page.waitForTimeout(1500);
+  await shot('room');
+  // Walk over a few things (the player is moved straight onto them; the pick-up code is the game's own).
+  await page.evaluate(async () => {
+    const g = window.__tgeGame;
+    const p = g.first('Player');
+    for (const [item, n] of [['Sword', 1], ['Heal Potion', 3], ['Apple', 2], ['Gold Key', 1], ['Diamond', 1]]) {
+      for (const l of g.select('#loot').filter((e) => e.getVar('item') === item).slice(0, n)) {
+        p.setPosition(l.position.x, 0.6, l.position.z);
+        await new Promise((r) => setTimeout(r, 250));
+      }
+    }
+  });
+  await page.waitForTimeout(500);
+  await page.getByText(/🎒/).first().click({ force: true });
+  await page.waitForTimeout(500);
+  // Drag the Sword (slot 0) to slot 5, then select the potions.
+  const box = async (name) => (await page.locator(`[data-entity-id="${await page.evaluate((n) => window.__tgeGame.find(n).id, name)}"]`).boundingBox());
+  const a = await box('Slot0'), b = await box('Slot5');
+  await page.mouse.move(a.x + a.width / 2, a.y + a.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(b.x + b.width / 2, b.y + b.height / 2, { steps: 12 });
+  await page.mouse.up();
+  const c = await box('Slot1');
+  await page.mouse.click(c.x + c.width / 2, c.y + c.height / 2);
+  await page.waitForTimeout(600);
+  await shot('bag');
+  await page.getByText('✕').first().click({ force: true });
+  await page.getByText(/Items/).first().click({ force: true });
+  await page.waitForTimeout(800);
+  await shot('book');
+  // The project in the editor, with its data table open.
+  await page.goto(TGE + '/', { timeout: 120000 });
+  await page.waitForSelector('.home', { timeout: 30000 });
+  const chooser = page.waitForEvent('filechooser');
+  await page.getByRole('button', { name: /Import \.tge/ }).click();
+  await (await chooser).setFiles(tge);
+  await page.locator('.project-card', { hasText: 'Loot Room' }).first().click({ timeout: 60000 });
+  await page.waitForSelector('.editor.desktop', { timeout: 60000 });
+  await page.waitForTimeout(5000);
+  await shot('editor');
 }

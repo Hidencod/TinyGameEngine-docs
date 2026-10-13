@@ -9,6 +9,28 @@ Walk around a small room and pick things up. Open the **backpack**: tap a slot t
 
 It is an inventory in about 150 lines of TypeScript, and every piece of it is an ordinary engine feature. There are no behaviors beyond the player's walking and the camera.
 
+<PlayEmbed
+  src="https://hidencod.github.io/tge-assets/showcase/loot-room/"
+  poster="/img/showcase/loot-room-room.webp"
+  title="Loot Room"
+  size="6 MB"
+/>
+
+**Controls:** walk with the joystick, or **WASD** / the **arrow keys** on a computer. Tap **🎒** for the backpack and **📖 Items** for the item book.
+
+![The backpack open, with the potions selected and the Use and Drop buttons](/img/showcase/loot-room-bag.webp)
+
+## Open it in the editor
+
+1. Download **[loot-room.tge](https://hidencod.github.io/tge-assets/showcase/loot-room/loot-room.tge)** (60 KB).
+2. Open the editor: **[editor.jeevagames.com](https://editor.jeevagames.com)** on a computer, or the Android app.
+3. On the home screen tap **Import .tge** and pick the file, then open **Loot Room (imported)**.
+4. Open **Files → Tables → Item** to see the data, or **Logic → Code scripts** to read the three scripts. They are TypeScript.
+
+![Loot Room in the editor's desktop layout](/img/showcase/loot-room-editor.webp)
+
+The room, the pickups and the interface were put together by a small build script, but the result is a normal project: every wall, pickup and slot is an object you can select and change.
+
 ## What it is made of
 
 | Piece | What it does |
@@ -68,6 +90,8 @@ function onDrop() { Bag.dropOn(me); }
 The slot itself stays where it is. A **ghost** icon (a text element with *Raycast target* off) is put on the slot with `moveUITo`, shown, and moved by each `event.delta`. The slot the finger is over when it lets go gets `onDrop`, and the Bag swaps the stacks, or merges them when it is the same item.
 
 ## The item book
+
+![The item book, a list that scrolls](/img/showcase/loot-room-book.webp)
 
 The book is a [Scroll View](../world/ui#scroll-view): a panel with a scroll rect, holding a vertical list that fits its content. The rows are **spawned** the first time the book opens, one for each row of the table, from a prefab into the list:
 
