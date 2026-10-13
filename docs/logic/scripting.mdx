@@ -85,6 +85,102 @@ function update(dt) {
 
 Full list: [Scripting API](../reference/scripting-api).
 
+## Fields in the Inspector {/* #fields */}
+
+Declare a `properties` object at the top of a script and every object that uses the script shows those fields in the Inspector, each with its own value. The script reads them as `props`.
+
+```js
+const properties = {
+  speed: 2,                                // number, text or true / false
+  target: object(),                        // another object in the scene (props.target is the object, or null)
+  icon: image(),                           // a picture from Files (props.icon is its id)
+  hit: sound(),                            // a sound from Files
+  drop: prefab(),                          // a prefab: game.spawn(props.drop)
+  kind: choice('Sword', 'Potion', 'Key'),  // a dropdown (props.kind is the chosen word)
+  tint: color('#ff8800'),                  // a colour
+  loot: data('Item'),                      // a row of a data table (props.loot is the row)
+  items: list(Item),                       // a list you add to, remove from and reorder in the Inspector
+};
+```
+
+`image()`, `sound()` and `prefab()` give you the **id** of the file. `entity.setUIImage(props.icon)` shows the picture, `audio.play(props.hit)` plays the sound, and `game.spawn(props.drop)` creates the prefab.
+
+### Your own types
+
+A field can be a **class** written in the script. Its fields become the fields of every list row, like a serializable class in Unity:
+
+```js
+class Item {
+  name = 'Item';
+  icon = image();
+  kind = choice('Weapon', 'Potion', 'Key');
+  stack = 1;
+  use() { return this.name + ' x' + this.stack; }
+}
+
+const properties = { bag: list(Item), best: Item };
+
+function start() {
+  for (const item of props.bag) game.log(item.use());   // real Item objects: methods work
+}
+```
+
+Write the class at the top of the script (starting in the first column), or put it in a [library](#libraries) and `import { Item } from 'Items'`. The Inspector builds one `new Item()` to read the fields, so keep the class light. Classes and lists nest up to five levels.
+
+### Saving lists and objects
+
+Variables (`game.setVar`, `entity.setVar`, `vars`) and `game.save` / `game.load` hold numbers, text, true / false **and** lists and objects of those, so a whole backpack can be one variable or one save:
+
+```js
+game.save('bag', [{ id: 'Sword', n: 1 }, { id: 'Potion', n: 3 }]);
+const bag = game.load('bag');          // plain objects: Object.assign(new Item(), bag[0]) rebuilds a class
+```
+
+Event sheets see such a variable as its JSON text.
+
+## Pick objects {/* #picking */}
+
+`game.select('Enemy')` or `game.select('#enemy')` gives every live object with that name or tag. `game.query(…)` takes the same selector (or a list of objects) and gives a **set** you narrow step by step, the way picking works in an event sheet. Each step returns a new set, so you can keep one and filter it two ways.
+
+```js
+const target = game.query('#enemy')
+  .withVar('hp', '>', 0)       // an instance variable test: ==, !=, <, <=, >, >=   (two arguments means ==)
+  .within(entity, 12)          // closer than 12 m
+  .nearest(entity)             // the closest one
+  .first();                    // an object, or null
+
+game.query('Coin').each((c) => c.setVar('taken', true));
+game.query('Slot').withVar('empty', true).random();
+```
+
+| Step | Gives |
+| --- | --- |
+| `where(fn)`, `withTag(tag)`, `withVar(name, op?, value)`, `within(object, metres)` | Fewer objects. |
+| `nearest(to, count = 1)`, `farthest(to, count = 1)` | The closest or furthest, in that order. |
+| `sortBy(variable or fn)`, `take(n)` | Reordered or shortened. |
+| `each(fn)` | Does something to each, then gives the set back. |
+| `first()`, `last()`, `nth(i)`, `random()` | One object, or `null`. |
+| `toArray()`, `length`, `map(fn)`, `some(fn)`, `for (const e of set)` | Plain JavaScript. |
+
+`game.first('Player')` is the short form of `game.query('Player').first()`. A **tag** is how objects form a family: give every kind of enemy the tag `enemy` and `#enemy` picks them all.
+
+## TypeScript {/* #typescript */}
+
+Write a script in **TypeScript** by choosing it when you make the script (**+ New script → Language**), or use **Convert to TypeScript** in the script's ⋯ menu. Interfaces, enums, type annotations, generics and `as` all work, and the editor colours them.
+
+```ts
+interface Stack { id: string; n: number }
+const slots: (Stack | null)[] = Array(12).fill(null);
+
+export function add(id: string, n: number = 1): number { /* … */ return 0; }
+```
+
+The types are **removed, not checked**. Before the game runs, and when you export it, every TypeScript script becomes plain JavaScript with each line where it was, so an error still points at the line you wrote, and the game runs exactly as a JavaScript one does. A wrong type is not an error; a syntax mistake is, and the editor shows it as you type. **Convert to JavaScript** removes the types for good.
+
+The converter is a small download the editor fetches only when a project has a TypeScript script, and a player's phone never loads it.
+
+Completion fills in what it can work out without a type checker: `props.` lists the fields the script declares, and `data('Item').get('Sword').` (or a variable that holds that row) lists the table's columns.
+
 ## Share code with libraries {/* #libraries */}
 
 As a game grows, several scripts need the same code: a damage formula, a "find the nearest enemy" helper, the settings of every level. Put it in a **library** once and use it everywhere.

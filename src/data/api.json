@@ -312,6 +312,41 @@
           "doc": "Move a UI element to this anchored position (canvas px). Leave an axis out (undefined) to keep it."
         },
         {
+          "name": "getUISize",
+          "kind": "method",
+          "sig": "()",
+          "type": "{x, y}",
+          "doc": "Size of a UI element (sizeDelta)."
+        },
+        {
+          "name": "setUISize",
+          "kind": "method",
+          "sig": "(width, height)",
+          "type": "void",
+          "doc": "Set a UI element's width and height. Leave one out (undefined) to keep it."
+        },
+        {
+          "name": "setUIAnchors",
+          "kind": "method",
+          "sig": "(minX, minY, maxX, maxY)",
+          "type": "void",
+          "doc": "Anchors as fractions of the parent (0,0 is bottom-left). Same corner: fixed size; apart: stretch."
+        },
+        {
+          "name": "setUIPivot",
+          "kind": "method",
+          "sig": "(x, y)",
+          "type": "void",
+          "doc": "The point of the element that its position, rotation and scale refer to, as a fraction of its own box."
+        },
+        {
+          "name": "moveUITo",
+          "kind": "method",
+          "sig": "(target, offsetX, offsetY)",
+          "type": "void",
+          "doc": "Put this UI element's pivot on the middle of another UI element, plus an offset in canvas px. attachTo(parent) / detach() also work for UI elements and move them inside the new parent."
+        },
+        {
           "name": "refreshUI",
           "kind": "method",
           "sig": "()",
@@ -834,6 +869,20 @@
           "doc": "First entity with that name/id: game.find(\"Player\")"
         },
         {
+          "name": "query",
+          "kind": "method",
+          "sig": "(selector)",
+          "type": "EntitySet",
+          "doc": "Pick objects Construct-style, chained: game.query(\"Enemy\").withVar(\"hp\", \"<\", 10).nearest(player).first(). Steps: where, withTag, withVar, within, nearest, farthest, sortBy, take, each, map, some; read with first, last, nth, random, toArray, length. Each step returns a new set."
+        },
+        {
+          "name": "first",
+          "kind": "method",
+          "sig": "(selector)",
+          "type": "entity|null",
+          "doc": "First live entity matching a selector: game.first(\"#enemy\")"
+        },
+        {
           "name": "getAllEntities",
           "kind": "method",
           "sig": "()",
@@ -843,9 +892,9 @@
         {
           "name": "spawn",
           "kind": "method",
-          "sig": "(name, position?, rotation?)",
+          "sig": "(name, position?, rotation?, parent?)",
           "type": "entity|null",
-          "doc": "Create a prefab / clone: game.spawn(\"Coin\", {x:0,y:5,z:0})"
+          "doc": "Create a prefab / clone: game.spawn(\"Coin\", {x:0,y:5,z:0}). With a parent it is created inside it (a row in a list): game.spawn(\"Row\", undefined, undefined, list)"
         },
         {
           "name": "create",
@@ -1172,6 +1221,55 @@
           "sig": "()",
           "type": "property",
           "doc": "In const properties = { … }: a field where each object picks another object in the Inspector, e.g. target: object(). Read it as props.target."
+        },
+        {
+          "name": "image",
+          "kind": "method",
+          "sig": "()",
+          "type": "property",
+          "doc": "In const properties = { … }: a picture picked from the project files, e.g. icon: image(). props.icon is its id; entity.setUIImage(props.icon) shows it."
+        },
+        {
+          "name": "sound",
+          "kind": "method",
+          "sig": "()",
+          "type": "property",
+          "doc": "In const properties = { … }: a sound picked from the project files, e.g. hit: sound(). audio.play(props.hit) plays it."
+        },
+        {
+          "name": "prefab",
+          "kind": "method",
+          "sig": "()",
+          "type": "property",
+          "doc": "In const properties = { … }: a prefab picked from the project, e.g. drop: prefab(). game.spawn(props.drop) creates it."
+        },
+        {
+          "name": "choice",
+          "kind": "method",
+          "sig": "(...words)",
+          "type": "property",
+          "doc": "In const properties = { … }: a dropdown of fixed words, e.g. kind: choice('Sword', 'Potion'). props.kind is the chosen word; the first is the default."
+        },
+        {
+          "name": "list",
+          "kind": "method",
+          "sig": "(of)",
+          "type": "property",
+          "doc": "In const properties = { … }: a list the Inspector edits (add, remove, reorder). list(Item) is a list of your own class Item; list(image()) or list(0) work too. props.items is an array."
+        },
+        {
+          "name": "data",
+          "kind": "method",
+          "sig": "(table)",
+          "type": "property",
+          "doc": "A data table made in Files. In const properties = { … }: data(\"Item\") is a row picker (props.pick is the row). In the script: data(\"Item\").get(\"Sword\"), .all(), .where(r => r.damage > 5), .ids(), .has(name)."
+        },
+        {
+          "name": "color",
+          "kind": "method",
+          "sig": "(default?)",
+          "type": "property",
+          "doc": "In const properties = { … }: a colour picker, e.g. tint: color('#ff8800'). props.tint is '#rrggbb'."
         }
       ]
     },
@@ -1572,6 +1670,51 @@
       "doc": "This UI button was clicked."
     },
     {
+      "name": "onPointerDown",
+      "args": "event",
+      "doc": "The player pressed this UI element (needs Raycast Target). event: { x, y, entity }."
+    },
+    {
+      "name": "onPointerUp",
+      "args": "event",
+      "doc": "The player let go of this UI element without dragging it."
+    },
+    {
+      "name": "onPointerEnter",
+      "args": "event",
+      "doc": "A mouse moved onto this UI element (touch screens have no hover)."
+    },
+    {
+      "name": "onPointerExit",
+      "args": "event",
+      "doc": "A mouse moved off this UI element."
+    },
+    {
+      "name": "onLongPress",
+      "args": "event",
+      "doc": "The player held this UI element for half a second without moving."
+    },
+    {
+      "name": "onBeginDrag",
+      "args": "event",
+      "doc": "The player started dragging this UI element (moved more than a few pixels)."
+    },
+    {
+      "name": "onDrag",
+      "args": "event",
+      "doc": "Every move while dragging. event.delta = [dx, dy] since the last one, in the element's reference px with Y up: add it to component('ui').anchoredPosition to follow the finger."
+    },
+    {
+      "name": "onEndDrag",
+      "args": "event",
+      "doc": "The player let go after dragging this UI element."
+    },
+    {
+      "name": "onDrop",
+      "args": "event",
+      "doc": "Something was dropped on this UI element. event.dragged is the element that was dragged; event.entity is this one."
+    },
+    {
       "name": "onArrived",
       "args": "",
       "doc": "It reached the point of entity.moveTo() (or got as close as it could)."
@@ -1624,6 +1767,55 @@
       "sig": "()",
       "type": "property",
       "doc": "In const properties = { … }: a field where each object picks another object in the Inspector, e.g. target: object(). Read it as props.target."
+    },
+    {
+      "name": "image",
+      "kind": "method",
+      "sig": "()",
+      "type": "property",
+      "doc": "In const properties = { … }: a picture picked from the project files, e.g. icon: image(). props.icon is its id; entity.setUIImage(props.icon) shows it."
+    },
+    {
+      "name": "sound",
+      "kind": "method",
+      "sig": "()",
+      "type": "property",
+      "doc": "In const properties = { … }: a sound picked from the project files, e.g. hit: sound(). audio.play(props.hit) plays it."
+    },
+    {
+      "name": "prefab",
+      "kind": "method",
+      "sig": "()",
+      "type": "property",
+      "doc": "In const properties = { … }: a prefab picked from the project, e.g. drop: prefab(). game.spawn(props.drop) creates it."
+    },
+    {
+      "name": "choice",
+      "kind": "method",
+      "sig": "(...words)",
+      "type": "property",
+      "doc": "In const properties = { … }: a dropdown of fixed words, e.g. kind: choice('Sword', 'Potion'). props.kind is the chosen word; the first is the default."
+    },
+    {
+      "name": "list",
+      "kind": "method",
+      "sig": "(of)",
+      "type": "property",
+      "doc": "In const properties = { … }: a list the Inspector edits (add, remove, reorder). list(Item) is a list of your own class Item; list(image()) or list(0) work too. props.items is an array."
+    },
+    {
+      "name": "data",
+      "kind": "method",
+      "sig": "(table)",
+      "type": "property",
+      "doc": "A data table made in Files. In const properties = { … }: data(\"Item\") is a row picker (props.pick is the row). In the script: data(\"Item\").get(\"Sword\"), .all(), .where(r => r.damage > 5), .ids(), .has(name)."
+    },
+    {
+      "name": "color",
+      "kind": "method",
+      "sig": "(default?)",
+      "type": "property",
+      "doc": "In const properties = { … }: a colour picker, e.g. tint: color('#ff8800'). props.tint is '#rrggbb'."
     }
   ],
   "globals": [

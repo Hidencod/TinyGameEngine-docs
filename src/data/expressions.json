@@ -246,6 +246,27 @@
       "insert": "pad("
     },
     {
+      "name": "table",
+      "signature": "table(\"Item\", \"Sword\", \"damage\")",
+      "description": "A cell of a data table: the table, the row name, the column",
+      "category": "Game",
+      "insert": "table(\"\", \"\", \"\")"
+    },
+    {
+      "name": "tablerow",
+      "signature": "tablerow(\"Item\", index)",
+      "description": "The name of a row of a data table by number (0 is the first), to go through every row with a loop",
+      "category": "Game",
+      "insert": "tablerow(\"\", loopIndex)"
+    },
+    {
+      "name": "tablecount",
+      "signature": "tablecount(\"Item\")",
+      "description": "How many rows a data table has",
+      "category": "Game",
+      "insert": "tablecount(\"\")"
+    },
+    {
       "name": "time",
       "signature": "time",
       "description": "Seconds since the scene started",

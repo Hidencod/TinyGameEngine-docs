@@ -7,7 +7,7 @@
   {
     "id": "button",
     "name": "Button",
-    "kind": "button"
+    "kind": "image"
   },
   {
     "id": "image",

@@ -28,6 +28,15 @@ Define any of these in a script; the engine calls them.
 | `onParticleSystemStopped()` | Its Particle System stopped and the last particle died (Stop Action: Callback). | ✔ |  |
 | `onTap()` | The player tapped this entity. | ✔ |  |
 | `onClick()` | This UI button was clicked. | ✔ |  |
+| `onPointerDown(event)` | The player pressed this UI element (needs Raycast Target). event: &#123; x, y, entity &#125;. | ✔ |  |
+| `onPointerUp(event)` | The player let go of this UI element without dragging it. | ✔ |  |
+| `onPointerEnter(event)` | A mouse moved onto this UI element (touch screens have no hover). | ✔ |  |
+| `onPointerExit(event)` | A mouse moved off this UI element. | ✔ |  |
+| `onLongPress(event)` | The player held this UI element for half a second without moving. | ✔ |  |
+| `onBeginDrag(event)` | The player started dragging this UI element (moved more than a few pixels). | ✔ |  |
+| `onDrag(event)` | Every move while dragging. event.delta = [dx, dy] since the last one, in the element's reference px with Y up: add it to component('ui').anchoredPosition to follow the finger. | ✔ |  |
+| `onEndDrag(event)` | The player let go after dragging this UI element. | ✔ |  |
+| `onDrop(event)` | Something was dropped on this UI element. event.dragged is the element that was dragged; event.entity is this one. | ✔ |  |
 | `onArrived()` | It reached the point of entity.moveTo() (or got as close as it could). | ✔ |  |
 | `onDestroy()` | This entity is about to be destroyed. | ✔ |  |
 
@@ -82,6 +91,11 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `setUIInteractable(on)` | `void` | Grey a button or slider out, or turn it back on (Interactable). |
 | `getUIPosition()` | `{x, y}` | Where a UI element sits: its anchored position in canvas pixels from its anchor. |
 | `setUIPosition(x, y)` | `void` | Move a UI element to this anchored position (canvas px). Leave an axis out (undefined) to keep it. |
+| `getUISize()` | `{x, y}` | Size of a UI element (sizeDelta). |
+| `setUISize(width, height)` | `void` | Set a UI element's width and height. Leave one out (undefined) to keep it. |
+| `setUIAnchors(minX, minY, maxX, maxY)` | `void` | Anchors as fractions of the parent (0,0 is bottom-left). Same corner: fixed size; apart: stretch. |
+| `setUIPivot(x, y)` | `void` | The point of the element that its position, rotation and scale refer to, as a fraction of its own box. |
+| `moveUITo(target, offsetX, offsetY)` | `void` | Put this UI element's pivot on the middle of another UI element, plus an offset in canvas px. attachTo(parent) / detach() also work for UI elements and move them inside the new parent. |
 | `refreshUI()` | `void` | Re-apply the UI styles after writing component data directly. |
 | `isPressed()` | `boolean` | True while this UI button is held down. |
 | `playAnimation(name: string, loop = true)` | `void` | Play a clip of the 3D model, or an animation of a sprite, e.g. "walk" or "jump". loop=false plays once and holds the last frame. Asking for the clip already playing keeps it going. |
@@ -165,8 +179,10 @@ The running game.
 | `screen` | `{width,height}` | Screen size in pixels. |
 | `select(selector)` | `entity[]` | All entities by name or #tag: game.select("#enemy") |
 | `find(nameOrId)` | `entity\|null` | First entity with that name/id: game.find("Player") |
+| `query(selector)` | `EntitySet` | Pick objects Construct-style, chained: game.query("Enemy").withVar("hp", "&lt;", 10).nearest(player).first(). Steps: where, withTag, withVar, within, nearest, farthest, sortBy, take, each, map, some; read with first, last, nth, random, toArray, length. Each step returns a new set. |
+| `first(selector)` | `entity\|null` | First live entity matching a selector: game.first("#enemy") |
 | `getAllEntities()` | `entity[]` | Every live entity. |
-| `spawn(name, position?, rotation?)` | `entity\|null` | Create a prefab / clone: game.spawn("Coin", &#123;x:0,y:5,z:0&#125;) |
+| `spawn(name, position?, rotation?, parent?)` | `entity\|null` | Create a prefab / clone: game.spawn("Coin", &#123;x:0,y:5,z:0&#125;). With a parent it is created inside it (a row in a list): game.spawn("Row", undefined, undefined, list) |
 | `create(spec?)` | `entity\|null` | Make a brand-new object other scripts and event sheets can find: game.create(&#123;name:"Portal", shape:"torus", position:&#123;x:0,y:2,z:0&#125;, color:"#8f6fff"&#125;). Put your own three.js meshes inside its .object3d. |
 | `destroy(entity)` | `void` | Destroy an entity. |
 | `pick(screenX, screenY)` | `entity\|null` | Entity at a screen point. |
@@ -233,6 +249,13 @@ Handy math functions available everywhere.
 | `randomInt(min, max)` | `number` | Random whole number between min and max (inclusive). |
 | `deg2rad(degrees)` | `number` | Degrees to radians (for Math.sin etc.). |
 | `object()` | `property` | In const properties = &#123; … &#125;: a field where each object picks another object in the Inspector, e.g. target: object(). Read it as props.target. |
+| `image()` | `property` | In const properties = &#123; … &#125;: a picture picked from the project files, e.g. icon: image(). props.icon is its id; entity.setUIImage(props.icon) shows it. |
+| `sound()` | `property` | In const properties = &#123; … &#125;: a sound picked from the project files, e.g. hit: sound(). audio.play(props.hit) plays it. |
+| `prefab()` | `property` | In const properties = &#123; … &#125;: a prefab picked from the project, e.g. drop: prefab(). game.spawn(props.drop) creates it. |
+| `choice(...words)` | `property` | In const properties = &#123; … &#125;: a dropdown of fixed words, e.g. kind: choice('Sword', 'Potion'). props.kind is the chosen word; the first is the default. |
+| `list(of)` | `property` | In const properties = &#123; … &#125;: a list the Inspector edits (add, remove, reorder). list(Item) is a list of your own class Item; list(image()) or list(0) work too. props.items is an array. |
+| `data(table)` | `property` | A data table made in Files. In const properties = &#123; … &#125;: data("Item") is a row picker (props.pick is the row). In the script: data("Item").get("Sword"), .all(), .where(r =&gt; r.damage &gt; 5), .ids(), .has(name). |
+| `color(default?)` | `property` | In const properties = &#123; … &#125;: a colour picker, e.g. tint: color('#ff8800'). props.tint is '#rrggbb'. |
 
 ## `collision` — collision {/* #collision */}
 

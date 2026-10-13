@@ -21,7 +21,7 @@ const sidebars: SidebarsConfig = {
     'behaviors',
     {
       type: 'category', label: 'Game logic',
-      items: ['logic/event-sheets', 'logic/event-editor', 'logic/variables', 'logic/advanced-events', 'logic/scripting'],
+      items: ['logic/event-sheets', 'logic/event-editor', 'logic/variables', 'logic/data-tables', 'logic/advanced-events', 'logic/scripting'],
     },
     {
       type: 'category', label: 'Share your game',
@@ -30,7 +30,7 @@ const sidebars: SidebarsConfig = {
     'templates',
     {
       type: 'category', label: 'Showcase',
-      items: ['showcase/street-racer'],
+      items: ['showcase/street-racer', 'showcase/loot-room'],
     },
     {
       type: 'category', label: 'Help',

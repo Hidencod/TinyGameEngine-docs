@@ -193,6 +193,63 @@ A **Layout group** arranges the children of a panel for you, like Unity's Horizo
 
 A child that should not be arranged (a close button in a panel's corner, a badge on an icon) has **Ignore layout** in its Rect Transform. The group leaves it where its own anchors put it, like Unity's Layout Element → Ignore Layout.
 
+## Scroll View {/* #scroll-view */}
+
+A **Scroll rect** turns an element into a scrolling window, like Unity's Scroll Rect: the element is the **viewport** (whatever sticks out of it is cut off) and its **first child** is the **content**, which a drag or the mouse wheel moves. Use it for a long list, an item shop or a log.
+
+1. Add a **Panel** for the viewport and give it a **Scroll rect** (Inspector → Scroll rect → Enabled).
+2. Put a **Panel** inside it as the content. Give the content a **Vertical** or **Grid layout group** and turn on **Height fits content** so it grows with what is in it.
+3. Add the rows or items inside the content.
+
+| Field | What it does |
+| --- | --- |
+| **Horizontal**, **Vertical** | Which directions it scrolls. |
+| **Movement** | **Elastic** springs back from the edge, **Clamped** stops at it, **Unrestricted** goes anywhere. |
+| **Elasticity** | How quickly it springs back (seconds). |
+| **Inertia**, **Deceleration** | Keep gliding after you let go, and how much speed is left after a second. |
+| **Wheel (px)** | How far one notch of the mouse wheel scrolls. |
+
+A drag that starts on a button inside still scrolls, and a tap still presses the button. If something under the finger has its own drag hooks (see [Drag and drop](#drag-and-drop)), that thing takes the drag instead and the scroll view stays still.
+
+A script can move the content too: it is an ordinary element, so `content.setUIPosition(0, 120)` scrolls it.
+
+## Drag and drop and pointer events {/* #drag-and-drop */}
+
+An element with **Raycast target** on and a code script can define these functions, named like Unity's EventSystem handlers. Each is called with an event: `event.x`, `event.y` (screen position), `event.delta` (how far the pointer moved, in the element's reference pixels with Y up, so you can add it to `anchoredPosition` as it is), and for a drop, `event.dragged`.
+
+| Function | When |
+| --- | --- |
+| `onPointerDown`, `onPointerUp` | A finger or mouse button goes down on the element, and comes up (a tap is a down and an up with no drag between). |
+| `onPointerEnter`, `onPointerExit` | The mouse moves onto or off the element. |
+| `onLongPress` | Held for half a second without moving. |
+| `onBeginDrag`, `onDrag`, `onEndDrag` | The pointer moved more than a few pixels while down on the element. |
+| `onDrop` | Something was dropped here: `event.dragged` is the element that was being dragged. |
+
+```js
+// On every inventory slot
+const me = Number(entity.name.slice(4));          // "Slot3" → 3
+function onBeginDrag() { Bag.beginDrag(me); }
+function onDrag(e)     { Bag.dragBy(e.delta); }
+function onEndDrag()   { Bag.endDrag(); }
+function onDrop(e)     { Bag.move(Number(e.dragged.name.slice(4)), me); }
+```
+
+A drag is not a click, so a button that is dragged does not also press. `game.uiAt(x, y)` lists the elements under a screen point, topmost first. The [Loot Room](../showcase/loot-room) showcase is a backpack built on exactly this.
+
+## Lists that grow
+
+To add rows while the game runs, make the row a **prefab** and spawn it **into** the list:
+
+```js
+const list = game.find('BookList');
+for (const item of data('Item').all()) {
+  const row = game.spawn('BookRow', undefined, undefined, list);   // the 4th argument is the parent
+  row.getChildren()[0].setText(item.title);
+}
+```
+
+A UI element needs a Canvas above it to be drawn, which is why it is spawned inside a parent that has one. A layout group lays the new row out at once.
+
 ## Masks and effects
 
 <Crop name="card-ui-fx" caption="Mask & effects" width={340} />
@@ -224,7 +281,9 @@ Screens that start hidden are still shown in the editor when you select them or 
 ## UI in events and expressions
 
 - Conditions: **On clicked** ⚡, **Is held down**, **Compare slider value**, **On value changed** ⚡.
-- Actions: **Show**, **Hide**, **Show / hide**, **Set label**, **Set position**, **Set slider value**, **Add to slider value**, **Set slider maximum / minimum**, **Enable / disable**, **Set image**, **Set background color**, **Set text color**, **Set bar color**.
+- Actions: **Show**, **Hide**, **Show / hide**, **Set label**, **Set position**, **Set size**, **Set anchors**, **Set pivot**, **Move to element**, **Put inside**, **Set slider value**, **Add to slider value**, **Set slider maximum / minimum**, **Enable / disable**, **Set image**, **Set background color**, **Set text color**, **Set bar color**.
+  - **Move to element** puts the object's pivot on the middle of another element, plus an offset: a tooltip next to the slot you pressed, a marker on a map icon. It works from where both are drawn, so any anchors and scaling are fine.
+  - **Put inside** moves an element into another (a slot into a panel, an item into a list). **Attach to** and **Detach** also work on UI elements.
 - Expressions: `HealthBar.value`, `HealthBar.min`, `HealthBar.max`, `PlayButton.pressed`, `ScoreText.text`.
 
 See the [UI conditions](../reference/conditions#ui) and [UI actions](../reference/actions#ui).
@@ -242,6 +301,12 @@ rect.anchorMin = [0, 1]; rect.anchorMax = [0, 1]; rect.pivot = [0, 1];   // top-
 rect.anchoredPosition = [16, -16];
 rect.sizeDelta = [200, 40];
 rect.rotation = 8;                             // degrees, counter-clockwise
+
+entity.setUISize(200, 40);                     // width and height; leave one out to keep it
+entity.setUIAnchors(0, 1, 0, 1);               // min x, min y, max x, max y
+entity.setUIPivot(0.5, 0.5);
+entity.moveUITo(game.find('Slot3'), 0, -40);   // pivot onto another element, plus an offset
+entity.attachTo(game.find('Panel'));           // put it inside another element
 ```
 
 See the [scripting API](../reference/scripting-api) for the rest.

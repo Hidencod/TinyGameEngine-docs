@@ -1,0 +1,87 @@
+---
+title: Loot Room
+description: A small room full of things to pick up, with a backpack you drag between slots and an item book that scrolls. See how an inventory is built from data tables, a library script, drag and drop and a scroll view.
+---
+
+# Loot Room
+
+Walk around a small room and pick things up. Open the **backpack**: tap a slot to read about the item, drag one onto another to move or merge stacks, **Use** a potion to heal, **Drop** something to put it back in the room. The **item book** lists every item in a list you scroll.
+
+It is an inventory in about 150 lines of TypeScript, and every piece of it is an ordinary engine feature. There are no behaviors beyond the player's walking and the camera.
+
+## What it is made of
+
+| Piece | What it does |
+| --- | --- |
+| The **Item** [data table](../logic/data-tables) | Twelve rows (Sword, Heal Potion, Apple, Diamond…) with a glyph, a name, a kind, a description, a price, a stack size and how much it heals. Change a number in the table and the game changes. |
+| The **Bag** library script | The inventory itself: twelve slots, adding with stacking, moving and merging, selecting, and redrawing the interface from the slots. A library runs once, so every script that imports it shares the same slots. |
+| The **Slot** object script | Sits on each of the twelve slot elements and does nothing but hand [pointer events](../world/ui#drag-and-drop) to the Bag. |
+| The **Loot** game script | Picks things up, runs the buttons, heals, drops, and fills the item book. |
+| A **grid layout group** | Lays the twelve slots out in four columns. |
+| A **Scroll View** | The item book: a viewport over a vertical list. |
+
+## Picking things up
+
+Every pickup in the room is an object tagged `#loot` with an `item` variable naming its row. Once a frame the game script asks for the closest ones near the player and puts them in the bag:
+
+```ts
+game.query('#loot').within(player, 1.4).nearest(player, 3).each((loot) => {
+  const id = loot.getVar('item');
+  if (Bag.add(id, 1) > 0) { toast('The bag is full'); return; }   // add() returns what did not fit
+  game.destroy(loot);
+});
+```
+
+[`game.query`](../logic/scripting#picking) picks the way an event sheet does, in one chain. Dropping an item is the same in reverse: `game.spawn('Loot', …)` and `setVar('item', id)`.
+
+## The bag
+
+The slots are a plain array of `null` or `{ id, n }`. Adding tops up existing stacks first, up to the stack size in the table, then fills empty slots:
+
+```ts
+const slots: (Stack | null)[] = Array(SIZE).fill(null);
+
+export function add(id: string, n: number = 1): number {
+  const max = data('Item').get(id)?.stack ?? 1;
+  for (const s of slots) if (n > 0 && s && s.id === id && s.n < max) { /* top up */ }
+  for (let i = 0; i < SIZE && n > 0; i++) if (!slots[i]) { /* new stack */ }
+  refresh();
+  return n;
+}
+```
+
+`refresh()` writes the glyphs and counts into the slot elements by name and greys **Use** and **Drop** out when nothing useful is selected.
+
+## Drag and drop
+
+Each slot has a small [object script](../logic/scripting) with the pointer hooks:
+
+```ts
+const me: number = Bag.slotName(entity);        // "Slot3" → 3
+function onPointerUp() { Bag.select(me); }       // a tap
+function onBeginDrag() { Bag.beginDrag(me); }
+function onDrag(e: { delta: [number, number] }) { Bag.dragBy(e.delta); }
+function onEndDrag() { Bag.endDrag(); }
+function onDrop() { Bag.dropOn(me); }
+```
+
+The slot itself stays where it is. A **ghost** icon (a text element with *Raycast target* off) is put on the slot with `moveUITo`, shown, and moved by each `event.delta`. The slot the finger is over when it lets go gets `onDrop`, and the Bag swaps the stacks, or merges them when it is the same item.
+
+## The item book
+
+The book is a [Scroll View](../world/ui#scroll-view): a panel with a scroll rect, holding a vertical list that fits its content. The rows are **spawned** the first time the book opens, one for each row of the table, from a prefab into the list:
+
+```ts
+for (const it of data('Item').all()) {
+  const row = game.spawn('BookRow', undefined, undefined, list);   // into the list
+  const [glyph, title, info] = row.getChildren();
+  glyph.setText(it.glyph);
+  title.setText(it.title);
+}
+```
+
+## Take it further
+
+- Add a column to the table (an *attack* number, a picture) and show it in the details panel.
+- Save the bag with `game.save('bag', slots)` and load it with `game.load('bag')`; lists and objects save as they are.
+- Make a shop: a second list of rows with a price and a **Buy** button that calls `Bag.add`.

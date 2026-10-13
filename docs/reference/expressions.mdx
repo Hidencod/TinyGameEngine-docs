@@ -45,6 +45,9 @@ If you mistype a name, the game keeps running: it shows a friendly message once 
 | Function | What it does |
 | --- | --- |
 | `loopindex("i")` | Current number of the loop called "i" (For loop), or of the innermost loop without a name |
+| `table("Item", "Sword", "damage")` | A cell of a data table: the table, the row name, the column |
+| `tablerow("Item", index)` | The name of a row of a data table by number (0 is the first), to go through every row with a loop |
+| `tablecount("Item")` | How many rows a data table has |
 | `time` | Seconds since the scene started |
 | `dt` | Seconds since the last frame (multiply speeds by dt) |
 | `fps` | Frames per second |

@@ -50,6 +50,11 @@
       "title": "Code script",
       "desc": "Custom JavaScript for advanced logic"
     },
+    "button": {
+      "icon": "🔘",
+      "title": "Button",
+      "desc": ""
+    },
     "particles": {
       "icon": "✨",
       "title": "Particles",

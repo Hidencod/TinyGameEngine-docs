@@ -1,0 +1,71 @@
+---
+title: Data tables
+description: Keep items, enemies and levels in a table you edit like a spreadsheet, and read it by name from scripts and events.
+---
+
+# Data tables
+
+A **data table** keeps the facts about your game in one place: what every item is, how strong every enemy is, which levels there are. It is a file in the **Files** tab, like Unity's ScriptableObjects, but edited as a spreadsheet.
+
+Each **column** is a field every row has (a name, a price, a picture) and each **row** is one thing (a Sword, a Potion). Change a price in the table and everything that reads it changes, with no event or script edited.
+
+A table holds what is **fixed** when the game is made. What changes while playing, such as how many Potions the player holds, belongs in [variables](variables) or `game.save`, which can keep lists and objects.
+
+## Make a table
+
+1. **Files → ＋ New → Data table**, name it (for example `Item`). It opens in the table editor. The **Tables** chip in Files shows only tables.
+2. **Columns**: add one for each field. Give it a name (letters, digits and `_`; it is read as `row.damage`) and a type:
+
+   | Type | Holds |
+   | --- | --- |
+   | Text, Number, True / false | What you type. |
+   | Choice | One of the words you list (`Weapon, Potion, Key`), as a dropdown. |
+   | Color | A colour. |
+   | Image, Sound, Prefab | A file from Files. |
+   | Row of a table | A row of another table (or the same one): an item's upgrade, an enemy's loot. |
+
+   *New rows start as* sets what a new row holds in that column.
+3. **+ Row** adds a row. Give it a **Name**, the word you look it up by (`Sword`); no two rows share a name. The ⋯ menu moves, duplicates and deletes a row.
+
+You can rename, duplicate and delete a table from its card's menu, and drag it into folders like any file.
+
+## Read it in a script
+
+```js
+const sword = data('Item').get('Sword');   // the row, or null
+sword.title;                               // 'Iron Sword'
+sword.damage;                              // 7
+sword.id;                                  // 'Sword', the row's name
+
+data('Item').all();                        // every row, in the table's order
+data('Item').where((r) => r.kind === 'Potion');
+data('Item').ids();                        // ['Sword', 'Heal Potion', …]
+data('Item').has('Axe');
+```
+
+A row is read-only. A *Row of a table* column reads as that row's object, so `sword.next.title` goes on to the next item.
+
+A script field can point at a row, and the Inspector shows a **picker** for it:
+
+```js
+const properties = { loot: data('Item'), shop: list(data('Item')) };
+// props.loot is the row (or null); props.shop is an array of rows
+```
+
+In the code editor, `data('Item').get('Sword').` suggests the table's columns.
+
+## Read it in events
+
+Expressions work anywhere an expression does:
+
+| Expression | Gives |
+| --- | --- |
+| `table("Item", "Sword", "damage")` | One cell: the table, the row's name, the column. |
+| `tablecount("Item")` | How many rows. |
+| `tablerow("Item", i)` | The name of row *i*, counting from 0. |
+
+Put `tablerow` inside a **Repeat** or **For** loop and every row is yours:
+
+- *Repeat `tablecount("Item")` times* → *Spawn …*, using `table("Item", tablerow("Item", loopIndex), "title")`.
+
+A missing table, row or column is reported as a friendly error instead of failing silently.

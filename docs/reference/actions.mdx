@@ -16,7 +16,7 @@ Actions are the **DO** part of an event. They run from top to bottom when the ev
 Number and text fields accept expressions, e.g. `Score + 1`, `"Score: " + Score`, `Player.x`, `random(1, 6)`. See [Expressions](./expressions).
 :::
 
-There are **118 actions**, grouped by category as in the action picker.
+There are **123 actions**, grouped by category as in the action picker.
 
 [⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🧱 Physics](#physics) · [❤️ Health](#health) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera)
 
@@ -1207,6 +1207,78 @@ Move a UI element on the screen: x (right) and y (up) are its Rect Transform’s
 | --- | --- | --- | --- |
 | X | Number (expression) |  | *Optional.* |
 | Y | Number (expression) |  | *Optional.* |
+
+### Set size {/* #ui-setsize */}
+
+<span class="tge-ace-display">Set ‹Object› size to (‹Width›, ‹Height›)</span>
+
+
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `ui.setSize` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Width | Number (expression) |  | *Optional.* |
+| Height | Number (expression) |  | *Optional.* |
+
+### Set anchors {/* #ui-setanchors */}
+
+<span class="tge-ace-display">Set ‹Object› anchors to (‹Min X›, ‹Min Y›) – (‹Max X›, ‹Max Y›)</span>
+
+
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `ui.setAnchors` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Min X | Expression | `0.5` |  |
+| Min Y | Expression | `0.5` |  |
+| Max X | Expression | `0.5` |  |
+| Max Y | Expression | `0.5` |  |
+
+### Set pivot {/* #ui-setpivot */}
+
+<span class="tge-ace-display">Set ‹Object› pivot to (‹X›, ‹Y›)</span>
+
+
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `ui.setPivot` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| X | Expression | `0.5` |  |
+| Y | Expression | `0.5` |  |
+
+### Move to element {/* #ui-moveto */}
+
+<span class="tge-ace-display">Move ‹Object› onto ‹Element› (offset ‹Offset X›, ‹Offset Y›)</span>
+
+
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `ui.moveTo` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Element | Object or #tag |  |  |
+| Offset X | Expression | `0` |  |
+| Offset Y | Expression | `0` |  |
+
+### Put inside {/* #ui-setparent */}
+
+<span class="tge-ace-display">Put ‹Object› inside ‹Element›</span>
+
+
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `ui.setParent` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Element | Object or #tag |  |  |
 
 ### Set slider value {/* #ui-setvalue */}
 

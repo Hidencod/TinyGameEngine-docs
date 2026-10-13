@@ -5999,6 +5999,226 @@
       ]
     },
     {
+      "id": "ui.setSize",
+      "kind": "action",
+      "category": "UI",
+      "label": "Set size",
+      "hint": "Width and height",
+      "display": "Set {object} size to ({width}, {height})",
+      "displayNoObject": null,
+      "icon": "↔️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "width",
+          "label": "Width",
+          "type": "number",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "height",
+          "label": "Height",
+          "type": "number",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.setAnchors",
+      "kind": "action",
+      "category": "UI",
+      "label": "Set anchors",
+      "hint": "Where it hangs in its parent (0 to 1)",
+      "display": "Set {object} anchors to ({minX}, {minY}) – ({maxX}, {maxY})",
+      "displayNoObject": null,
+      "icon": "⚓",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "minX",
+          "label": "Min X",
+          "type": "expression",
+          "options": null,
+          "default": "0.5",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "minY",
+          "label": "Min Y",
+          "type": "expression",
+          "options": null,
+          "default": "0.5",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "maxX",
+          "label": "Max X",
+          "type": "expression",
+          "options": null,
+          "default": "0.5",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "maxY",
+          "label": "Max Y",
+          "type": "expression",
+          "options": null,
+          "default": "0.5",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.setPivot",
+      "kind": "action",
+      "category": "UI",
+      "label": "Set pivot",
+      "hint": "The point it turns and sits around (0 to 1)",
+      "display": "Set {object} pivot to ({x}, {y})",
+      "displayNoObject": null,
+      "icon": "📌",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "x",
+          "label": "X",
+          "type": "expression",
+          "options": null,
+          "default": "0.5",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "type": "expression",
+          "options": null,
+          "default": "0.5",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.moveTo",
+      "kind": "action",
+      "category": "UI",
+      "label": "Move to element",
+      "hint": "Put it on another element",
+      "display": "Move {object} onto {target} (offset {x}, {y})",
+      "displayNoObject": null,
+      "icon": "🎯",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "target",
+          "label": "Element",
+          "type": "object",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "x",
+          "label": "Offset X",
+          "type": "expression",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Offset Y",
+          "type": "expression",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.setParent",
+      "kind": "action",
+      "category": "UI",
+      "label": "Put inside",
+      "hint": "Move into another element, e.g. a slot or list",
+      "display": "Put {object} inside {target}",
+      "displayNoObject": null,
+      "icon": "📥",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "target",
+          "label": "Element",
+          "type": "object",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "ui.setValue",
       "kind": "action",
       "category": "UI",
