@@ -287,6 +287,7 @@ Screens that start hidden are still shown in the editor when you select them or 
 - Expressions: `HealthBar.value`, `HealthBar.min`, `HealthBar.max`, `PlayButton.pressed`, `ScoreText.text`.
 - On a UI element `Panel.x` and `Panel.y` are its **offset from its anchors** (what **Set position** sets, Y up) and `Panel.width` and `Panel.height` its size (what **Set size** sets). Copying one element's `x` and `y` onto another only lines them up when both have the **same parent and anchors**. To put an element where another one is drawn, use **Set screen position** with `Other.screenX` and `Other.screenY`, or **Move to element**.
 - `Panel.screenX` and `Panel.screenY` are where an element's pivot is **drawn**, in canvas pixels from the bottom-left corner. This is Unity's `transform.position` (the other one, `x` and `y`, is its `anchoredPosition`): it does not depend on the element's parent or anchors, so `Icon.screenX + 40` is always 40 pixels to the right of the icon.
+- `Panel.centerX` and `Panel.centerY` are where the **middle of its box** is drawn. They differ from `screenX` and `screenY` when the element's **pivot** is not in the centre (a corner-anchored button often has its pivot in the corner). **Move to element** puts the moving element's pivot on the target's middle, so `Set screen position to (Target.centerX, Target.centerY)` does exactly the same.
 
 See the [UI conditions](../reference/conditions#ui) and [UI actions](../reference/actions#ui).
 

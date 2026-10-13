@@ -2083,6 +2083,14 @@
               "label": "screenY"
             },
             {
+              "value": "centerX",
+              "label": "centerX"
+            },
+            {
+              "value": "centerY",
+              "label": "centerY"
+            },
+            {
               "value": "width",
               "label": "width"
             },
@@ -6019,7 +6027,7 @@
       "kind": "action",
       "category": "UI",
       "label": "Set screen position",
-      "hint": "Where it is drawn, even in another parent",
+      "hint": "Puts its pivot there. To land on another element use its centerX, centerY",
       "display": "Set {object} screen position to ({x}, {y})",
       "displayNoObject": null,
       "icon": "🧭",

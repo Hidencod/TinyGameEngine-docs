@@ -541,6 +541,14 @@
       "description": "Height of a UI element (what Set size sets)"
     },
     {
+      "name": "centerX",
+      "description": "UI element: where the middle of its box is drawn, in canvas px from the left (differs from screenX when the pivot is not the centre)"
+    },
+    {
+      "name": "centerY",
+      "description": "UI element: where the middle of its box is drawn, in canvas px from the bottom"
+    },
+    {
       "name": "screenX",
       "description": "UI element: where its pivot is drawn, in canvas px from the left (works across parents, unlike X)"
     },
@@ -629,6 +637,8 @@
     "max",
     "screenX",
     "screenY",
+    "centerX",
+    "centerY",
     "width",
     "height"
   ]

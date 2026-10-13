@@ -326,6 +326,13 @@
           "doc": "Where the pivot of a UI element is drawn, in canvas px from the bottom-left (Unity transform.position). Use it to line two elements up, whatever their parents."
         },
         {
+          "name": "getUICenter",
+          "kind": "method",
+          "sig": "()",
+          "type": "{x, y}",
+          "doc": "Where the middle of a UI element box is drawn (same space as getUIScreenPosition). Differs from the pivot when the pivot is not in the centre."
+        },
+        {
           "name": "setUIScreenPosition",
           "kind": "method",
           "sig": "(x, y)",
