@@ -92,6 +92,8 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `getUIPosition()` | `{x, y}` | Where a UI element sits: its anchored position in canvas pixels from its anchor. |
 | `setUIPosition(x, y)` | `void` | Move a UI element to this anchored position (canvas px). Leave an axis out (undefined) to keep it. |
 | `isUI()` | `boolean` | Is this object a UI element (has a Rect Transform)? |
+| `getUIScreenPosition()` | `{x, y}` | Where the pivot of a UI element is drawn, in canvas px from the bottom-left (Unity transform.position). Use it to line two elements up, whatever their parents. |
+| `setUIScreenPosition(x, y)` | `void` | Put the pivot of a UI element at a canvas position. Leave an axis out (undefined) to keep it. |
 | `getUISize()` | `{x, y}` | Size of a UI element (sizeDelta). |
 | `setUISize(width, height)` | `void` | Set a UI element's width and height. Leave one out (undefined) to keep it. |
 | `setUIAnchors(minX, minY, maxX, maxY)` | `void` | Anchors as fractions of the parent (0,0 is bottom-left). Same corner: fixed size; apart: stretch. |

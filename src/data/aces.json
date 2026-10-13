@@ -2075,6 +2075,14 @@
               "label": "max"
             },
             {
+              "value": "screenX",
+              "label": "screenX"
+            },
+            {
+              "value": "screenY",
+              "label": "screenY"
+            },
+            {
               "value": "width",
               "label": "width"
             },
@@ -5976,6 +5984,46 @@
       "displayNoObject": null,
       "icon": "📍",
       "description": "Move a UI element on the screen: x (right) and y (up) are its Rect Transform’s anchored position, in canvas pixels from its anchor, the same numbers as in the inspector. Leave a field empty to keep that axis. For a smooth slide use Tween (x / y) instead.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "x",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "type": "number",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.setScreenPosition",
+      "kind": "action",
+      "category": "UI",
+      "label": "Set screen position",
+      "hint": "Where it is drawn, even in another parent",
+      "display": "Set {object} screen position to ({x}, {y})",
+      "displayNoObject": null,
+      "icon": "🧭",
+      "description": "",
       "isTrigger": false,
       "objectRequired": true,
       "objectOptional": false,

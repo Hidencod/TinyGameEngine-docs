@@ -285,7 +285,8 @@ Screens that start hidden are still shown in the editor when you select them or 
   - **Move to element** puts the object's pivot on the middle of another element, plus an offset: a tooltip next to the slot you pressed, a marker on a map icon. It works from where both are drawn, so any anchors and scaling are fine.
   - **Put inside** moves an element into another (a slot into a panel, an item into a list). **Attach to** and **Detach** also work on UI elements.
 - Expressions: `HealthBar.value`, `HealthBar.min`, `HealthBar.max`, `PlayButton.pressed`, `ScoreText.text`.
-- On a UI element `Panel.x` and `Panel.y` are its **offset from its anchors** (what **Set position** sets, Y up) and `Panel.width` and `Panel.height` its size (what **Set size** sets). Copying one element's `x` and `y` onto another only lines them up when both have the **same parent and anchors**. To put an element where another one is drawn, use **Move to element**.
+- On a UI element `Panel.x` and `Panel.y` are its **offset from its anchors** (what **Set position** sets, Y up) and `Panel.width` and `Panel.height` its size (what **Set size** sets). Copying one element's `x` and `y` onto another only lines them up when both have the **same parent and anchors**. To put an element where another one is drawn, use **Set screen position** with `Other.screenX` and `Other.screenY`, or **Move to element**.
+- `Panel.screenX` and `Panel.screenY` are where an element's pivot is **drawn**, in canvas pixels from the bottom-left corner. This is Unity's `transform.position` (the other one, `x` and `y`, is its `anchoredPosition`): it does not depend on the element's parent or anchors, so `Icon.screenX + 40` is always 40 pixels to the right of the icon.
 
 See the [UI conditions](../reference/conditions#ui) and [UI actions](../reference/actions#ui).
 
@@ -307,6 +308,8 @@ entity.setUISize(200, 40);                     // width and height; leave one ou
 entity.setUIAnchors(0, 1, 0, 1);               // min x, min y, max x, max y
 entity.setUIPivot(0.5, 0.5);
 entity.moveUITo(game.find('Slot3'), 0, -40);   // pivot onto another element, plus an offset
+const p = game.find('Icon').getUIScreenPosition();           // where it is drawn: canvas px from the bottom-left
+entity.setUIScreenPosition(p.x + 40, p.y);                       // like Unity's transform.position
 entity.attachTo(game.find('Panel'));           // put it inside another element
 ```
 

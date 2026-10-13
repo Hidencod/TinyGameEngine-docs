@@ -319,6 +319,20 @@
           "doc": "Is this object a UI element (has a Rect Transform)?"
         },
         {
+          "name": "getUIScreenPosition",
+          "kind": "method",
+          "sig": "()",
+          "type": "{x, y}",
+          "doc": "Where the pivot of a UI element is drawn, in canvas px from the bottom-left (Unity transform.position). Use it to line two elements up, whatever their parents."
+        },
+        {
+          "name": "setUIScreenPosition",
+          "kind": "method",
+          "sig": "(x, y)",
+          "type": "void",
+          "doc": "Put the pivot of a UI element at a canvas position. Leave an axis out (undefined) to keep it."
+        },
+        {
           "name": "getUISize",
           "kind": "method",
           "sig": "()",

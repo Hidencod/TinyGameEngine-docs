@@ -541,6 +541,14 @@
       "description": "Height of a UI element (what Set size sets)"
     },
     {
+      "name": "screenX",
+      "description": "UI element: where its pivot is drawn, in canvas px from the left (works across parents, unlike X)"
+    },
+    {
+      "name": "screenY",
+      "description": "UI element: where its pivot is drawn, in canvas px from the bottom"
+    },
+    {
       "name": "anchoredX",
       "description": "UI element: X offset from its anchors, the same as X"
     },
@@ -619,6 +627,8 @@
     "value",
     "min",
     "max",
+    "screenX",
+    "screenY",
     "width",
     "height"
   ]
