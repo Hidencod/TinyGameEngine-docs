@@ -6463,6 +6463,36 @@
       ]
     },
     {
+      "id": "ui.setFont",
+      "kind": "action",
+      "category": "UI",
+      "label": "Set font",
+      "hint": "Change the font of its text",
+      "display": "Set {object} font to {font}",
+      "displayNoObject": null,
+      "icon": "🔤",
+      "description": "Change the font of a label or a button's text to a font in Files. Leave it empty for the default font.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "font",
+          "label": "Font",
+          "type": "font",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "ui.setBackground",
       "kind": "action",
       "category": "UI",

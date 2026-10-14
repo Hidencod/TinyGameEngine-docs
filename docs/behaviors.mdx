@@ -14,7 +14,45 @@ A **behavior** is ready-made movement or logic you add to an object in one tap: 
   <Phone name="add-behavior-menu-end" caption="…more" />
 </Row>
 
-Each behavior card has a switch to turn it **on/off** and 🗑 to remove it. Events can do the same while playing (**Enable/disable behavior**) and change any setting (**Set behavior setting**); scripts use `entity.setBehaviorParam('platformer', 'speed', 8)`. In expressions: `Player.behavior("platformer", "speed")`.
+Each behavior card has a switch to turn it **on/off** and 🗑 to remove it. Events can do the same while playing (**Enable/disable behavior**) and change any setting (**Set behavior setting**); scripts use `entity.behavior('platformer').speed = 8` (see [live objects](./logic/scripting#live-objects)). In expressions: `Player.behavior("platformer", "speed")`.
+
+## Changing settings while playing {/* #live-settings */}
+
+**Every setting takes effect while the game runs**, whether an event, a script or the Inspector in Play mode changes it: a Car on ice gets less **Grip** the moment you set it, a Platformer runs faster, a Camera follow moves to its new offset. A few details worth knowing:
+
+| Setting | When it is changed mid-game |
+| --- | --- |
+| Car **Wheels**, **Front wheels** | The car is built again on the newly picked wheels. |
+| Car **Path** | Progress and laps start over on the new path. |
+| Car / Boat **Seat**, **Auto seat**, **Auto camera** | Read when someone gets in: a change applies from the next time, not to a rider already seated. |
+| Bullet **Speed** (with **Gravity** on, on a physics body) | The difference is added along its nose: a thrown object speeds up or slows down instead of being thrown again. |
+| Wave **Property** | The property it was moving goes back to where it started, and the new one waves from there. |
+| Wave **Period** | The wave carries on from where it is, faster or slower. |
+| Health **Max health** | Lowering it below the current health lowers the health to it. Raising it does not heal. |
+| Moving platform **Pause** | Applies from the next stop. |
+
+**Switching a behavior off** while playing lets go of what it was doing:
+
+- A **Car** comes off the gas and rolls to a stop.
+- A **Platformer** or **Top-down** character grips the ground instead of sliding on, and a Platformer lets go of a ladder.
+- **Camera follow** makes anything it had faded solid again. Switched back on, it carries on from wherever the camera is now, so you can move the camera yourself for a cutscene and hand it back.
+- **Health** stops blinking and hides its bar.
+
+## Behaviors in scripts {/* #in-scripts */}
+
+`entity.behavior('car')` gives the behavior as a live object: every setting in its table below is a property to read and write (`entity.behavior('car').grip = 0.3`), `enabled` switches it, and some behaviors add readings and methods of their own:
+
+| Behavior | Readings | Methods |
+| --- | --- | --- |
+| `car` | `speed` (m/s along its nose, negative in reverse), `steerAngle` (degrees), `wheelCount`, `isOnGround`, `progress` (laps along Path, e.g. 1.4), `lap` | `drive(steer, gas, brake)`, `simulateControl(…)`, `resetUpright()` |
+| `platformer` | `isOnGround`, `moveAmount` (0 … 1), `speedY` (read and write), `isSwimming` | `jump(strength?)`, `simulateControl(…)` |
+| `topdown` | `moveAmount`, `isOnGround`, `isSwimming` | `simulateControl(…)` |
+| `boat` | `speed`, `heading` (degrees), `isInWater` | `drive(steer, throttle)`, `simulateControl(…)` |
+| `follow` | `isChasing`, `targetEntity`, `distance` (−1 without a target) | |
+| `health` | `health` (read and write), `fraction` (0 … 1, for bars), `isDead`, `isInvincible` | `damage(amount, from?)`, `heal(amount)`, `reset()` |
+| `draggable` | `isDragging` | `drop()` |
+
+On a Car and a Boat, reading `speed` gives how fast it is going now and writing it sets the top speed.
 
 ## Custom controls {/* #custom-controls */}
 

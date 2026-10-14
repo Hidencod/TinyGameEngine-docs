@@ -87,6 +87,7 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `getUIMin()` | `number` | Slider minimum. |
 | `setUIMin(min)` | `void` | Set the slider minimum. |
 | `setUIImage(assetName)` | `void` | Change the image of a UI element. |
+| `setUIFont(assetName)` | `void` | Change the font of a UI element's text ('' = the default font). |
 | `setUIColors({ background, text, fill })` | `void` | Change UI colors, e.g. &#123; background: "#ff0000" &#125;. |
 | `setUIInteractable(on)` | `void` | Grey a button or slider out, or turn it back on (Interactable). |
 | `getUIPosition()` | `{x, y}` | Where a UI element sits: its anchored position in canvas pixels from its anchor. |
@@ -212,7 +213,10 @@ The running game.
 | `debug` | `{drawLine,drawRay,drawSphere,drawCircle,drawBox,drawPoint,clear}` | Draw shapes over the game to check positions and sizes, like Unity Debug.DrawLine and Gizmos: game.debug.drawSphere(enemy.position, 5, "#ff0000"), drawLine(a, b, color, seconds), drawRay(origin, direction), drawCircle(center, radius), drawBox(center, size), drawPoint(position). Seconds default to 0 = one frame, so call it every update(). |
 | `vibrate(ms)` | `void` | Vibrate the phone, e.g. vibrate(40) on a hit (Android; ignored elsewhere). |
 | `on(event, fn)` | `unsubscribe` | Listen: "sceneStart", "collisionStart", "entityCreated", "waterEnter", ... |
-| `log(...values)` | `void` | Show a message on screen (debugging). |
+| `after(seconds, fn, owner?)` | `cancel` | Run fn once after a delay of game time. In a script, plain after(seconds, fn) belongs to the object of the script already; this one takes the object to belong to, or none. |
+| `every(seconds, fn, owner?)` | `stop` | Run fn every so many seconds of game time until the function it returns is called. In a script, plain every(seconds, fn) belongs to the object of the script already. |
+| `log(...values)` | `void` | Show a message on screen and in the Play console (debugging). |
+| `consoleLog(...values)` | `void` | Write a line to the Play console only, nothing on screen. console.log() in a script does the same. |
 
 ## `input` — input {/* #input */}
 
@@ -252,6 +256,9 @@ Handy math functions available everywhere.
 | `random(min, max)` | `number` | Random decimal number between min and max. |
 | `randomInt(min, max)` | `number` | Random whole number between min and max (inclusive). |
 | `deg2rad(degrees)` | `number` | Degrees to radians (for Math.sin etc.). |
+| `wait(seconds)` | `Promise` | Carry on later, in an async function: async function start() &#123; await wait(2); entity.destroy(); &#125;. Game time: it waits while paused and follows timeScale. If the object is destroyed first, the function stops there. |
+| `after(seconds, fn)` | `cancel` | Run fn once after a delay, e.g. after(2, () =&gt; entity.destroy()). Game time (pause and timeScale count). Returns a function that cancels it; dropped when this object is destroyed. |
+| `every(seconds, fn)` | `stop` | Run fn again and again, e.g. every(1, () =&gt; game.spawn("Coin")). Game time (pause and timeScale count). Returns a function that stops it; stops when this object is destroyed. |
 | `object()` | `property` | In const properties = &#123; … &#125;: a field where each object picks another object in the Inspector, e.g. target: object(). Read it as props.target. |
 | `image()` | `property` | In const properties = &#123; … &#125;: a picture picked from the project files, e.g. icon: image(). props.icon is its id; entity.setUIImage(props.icon) shows it. |
 | `sound()` | `property` | In const properties = &#123; … &#125;: a sound picked from the project files, e.g. hit: sound(). audio.play(props.hit) plays it. |

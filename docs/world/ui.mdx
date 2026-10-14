@@ -116,8 +116,25 @@ The card shows the fields of the **Type** you picked. You can change the type la
 | **Image type** | **Simple**, **Sliced (9-slice)** (corners stay sharp when stretched, with a **Border**), **Tiled**, or **Filled** (a clock-wipe or a bar, driven by **Fill method**, **Fill amount**, **Clockwise**). **Preserve aspect** keeps the picture's proportions. |
 | **Corner radius**, **Border width**, **Border color** | The shape of the box. |
 | **Opacity** | Of the element and everything inside it. |
+| **Font** | The font of the text: one you imported, a free one, or **None** for the default font. See [Fonts](#fonts). |
 | **Font size, Bold, Italic, Text color** | Text style. |
 | **Align**, **Vertical align**, **Wrap**, **Line spacing** | Where the text sits and how it wraps. |
+
+### Fonts {/* #fonts */}
+
+Tap **Font** on anything with text (a Text, a button's label, a slider's caption; the **Text** component has it too) and choose:
+
+- a font already in the project,
+- **Import new…** for a font file from your phone (TTF, OTF, WOFF or WOFF2),
+- **Free fonts…** for the twelve built-in [Kenney](https://kenney.nl/assets/kenney-fonts) fonts, free to use in your games (CC0). Each name in the list is drawn in its own font.
+
+A free font is copied into the project when you pick it, so it works offline and travels with an exported game, like any other file. In the [Files tab](../editor/assets) a font is shown as **Aa** drawn in that font.
+
+Fonts **load with the scene**, so text never appears in the default font first. That includes a font that only an event or a script names (*Set font*, `setUIFont('Kenney Pixel')`).
+
+Most game fonts have one weight; **Bold** and **Italic** on them are made by the browser (thicker and slanted), which suits some fonts better than others.
+
+Change it while playing with the **Set font** action, or `entity.setUIFont('Kenney Pixel')` in a script (`''` goes back to the default font). Deleting a font from Files sets the text that used it back to the default.
 
 ### Slider values
 
@@ -281,7 +298,7 @@ Screens that start hidden are still shown in the editor when you select them or 
 ## UI in events and expressions
 
 - Conditions: **On clicked** ⚡, **Is held down**, **Compare slider value**, **On value changed** ⚡.
-- Actions: **Show**, **Hide**, **Show / hide**, **Set label**, **Set position**, **Set size**, **Set anchors**, **Set pivot**, **Move to element**, **Put inside**, **Set slider value**, **Add to slider value**, **Set slider maximum / minimum**, **Enable / disable**, **Set image**, **Set background color**, **Set text color**, **Set bar color**.
+- Actions: **Show**, **Hide**, **Show / hide**, **Set label**, **Set position**, **Set size**, **Set anchors**, **Set pivot**, **Move to element**, **Put inside**, **Set slider value**, **Add to slider value**, **Set slider maximum / minimum**, **Enable / disable**, **Set image**, **Set font**, **Set background color**, **Set text color**, **Set bar color**.
   - **Move to element** puts the object's pivot on the middle of another element, plus an offset: a tooltip next to the slot you pressed, a marker on a map icon. It works from where both are drawn, so any anchors and scaling are fine.
   - **Put inside** moves an element into another (a slot into a panel, an item into a list). **Attach to** and **Detach** also work on UI elements.
 - Expressions: `HealthBar.value`, `HealthBar.min`, `HealthBar.max`, `PlayButton.pressed`, `ScoreText.text`.
@@ -295,6 +312,7 @@ See the [UI conditions](../reference/conditions#ui) and [UI actions](../referenc
 
 ```js
 entity.setText('HP');                          // text, or a button's label
+entity.setUIFont('Kenney Pixel');              // a font in Files, by name ('' = the default font)
 entity.setUIValue(entity.getUIValue() - 10);   // a slider's value
 entity.setUIInteractable(false);               // grey a button or slider out
 

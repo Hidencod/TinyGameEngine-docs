@@ -35,12 +35,17 @@ Tap **✏️ Edit code** on the component, or a script in the Logic tab.
   <Phone name="code-api" caption="API help" />
 </Row>
 
-- **Autocomplete** suggests the engine API as you type (`entity.`, `game.`, `input.`…).
+- **Autocomplete** knows the real types: after `entity.behavior('car').` it lists the Car's settings and readings, after `entity.component('light').` the light's, and the same for `props`, data table rows, another script's exports (`getScript('Enemy').`), three.js and Rapier. Parameter hints show while you type a call, and holding on a name shows what it is.
+- **Inside quotes** it offers the names that fit that spot: behaviors, components, events and controls, and your project's objects, tags, scenes, variables, buttons, sounds, images, fonts and tables. `game.find('` lists your objects; `audio.play('` your sounds.
+- **Mistakes are underlined as you type**: a name that doesn't exist, the wrong number of arguments, a missing library. They never stop the game from running. A TypeScript script is checked in full (see [TypeScript](#typescript)).
 - The **key bar** above the phone keyboard has the symbols code needs: `{ } ( ) [ ] ; . = " ' => + - * / < > ! & | , : ?`, Tab, undo, redo and cursor keys.
 - **Snippets** inserts ready-made code (move with the joystick, jump, collect coins, follow the player…).
-- **API** opens the full API help. Everything is also in the [Scripting API reference](../reference/scripting-api).
+- **API** opens the whole script API with a search box. Everything is also in the [Scripting API reference](../reference/scripting-api).
 - Saved automatically as you type.
 - **Syntax errors** show in a yellow bar with the line number as you type. **Runtime errors** (while playing) show in a red bar and highlight the line; tap the bar to jump to it.
+- A runtime error names **the object it happened on**, once per object (the first three objects per script), so one broken enemy out of fifty is easy to find. Errors inside a timer or after an `await` are reported the same way.
+
+The type information is a download the editor fetches the first time you open a script; until it arrives the editor still completes the basic API.
 
 ## Lifecycle functions
 
@@ -69,6 +74,31 @@ function update(dt) {
 }
 ```
 
+## Timers: wait, after, every {/* #timers */}
+
+Three helpers do something later without counting seconds yourself:
+
+```js
+after(2, () => entity.destroy());            // once, 2 seconds from now
+const stop = every(1, () => game.spawn('Coin'));   // again and again; stop() ends it
+
+async function start() {                     // or write it top to bottom
+  entity.setText('3'); await wait(1);
+  entity.setText('2'); await wait(1);
+  entity.setText('1'); await wait(1);
+  entity.setText('GO!');
+}
+```
+
+- They count **game time**: they wait while the game is paused and follow `game.timeScale` (slow motion slows them too).
+- They belong to **the object of the script**: when it is destroyed its timers are dropped, and a function waiting in `await wait(…)` stops there. They wait while the object is disabled, and end with the scene.
+- `after` and `every` return a function that cancels them.
+- In a game script or a library, `game.after(seconds, fn, owner?)` and `game.every(seconds, fn, owner?)` do the same and take the object to belong to (or none).
+
+## Print while testing {/* #console */}
+
+`console.log('hp', hp)`, `console.warn(…)` and `console.error(…)` in a script write to the [**Debug console**](../editor/play-mode) (🐞 in Play mode), which is the only console there is on a phone. `game.log(…)` does the same and also shows the message on screen for a moment; `game.consoleLog(…)` is the console only.
+
 ## What a script can use
 
 | Name | What it is |
@@ -80,6 +110,8 @@ function update(dt) {
 | `props` | The values set in the Inspector on the Code script component. Give defaults: `props.speed ?? 5`. |
 | `vars` | A storage object for the script. |
 | helpers | `lerp`, `clamp`, `random`, `randomInt`, `deg2rad` and JavaScript’s `Math`. |
+| timers | `wait(seconds)`, `after(seconds, fn)`, `every(seconds, fn)`. See [Timers](#timers). |
+| `console` | `console.log()` writes to the Debug console. See [Print while testing](#console). |
 | `THREE` | The [three.js](https://threejs.org/docs/) library, for advanced effects. See [three.js](#threejs). |
 | `import` | Code from your [libraries](#libraries): `import { roll } from 'Dice'`. |
 
@@ -175,11 +207,13 @@ const slots: (Stack | null)[] = Array(12).fill(null);
 export function add(id: string, n: number = 1): number { /* … */ return 0; }
 ```
 
-The types are **removed, not checked**. Before the game runs, and when you export it, every TypeScript script becomes plain JavaScript with each line where it was, so an error still points at the line you wrote, and the game runs exactly as a JavaScript one does. A wrong type is not an error; a syntax mistake is, and the editor shows it as you type. **Convert to JavaScript** removes the types for good.
+The editor **checks the types as you type** and underlines what doesn't fit: a number where text is expected, a setting a behavior doesn't have, a function called with the wrong arguments. A JavaScript script is only told about clear mistakes (a name or member that doesn't exist, the wrong number of arguments, a missing library); a TypeScript script is checked in full.
 
-The converter is a small download the editor fetches only when a project has a TypeScript script, and a player's phone never loads it.
+A problem the editor underlines **never stops the game from running**. Before the game runs, and when you export it, the types are removed and every TypeScript script becomes plain JavaScript with each line where it was, so an error still points at the line you wrote, and the game runs exactly as a JavaScript one does. **Convert to JavaScript** removes the types for good.
 
-Completion fills in what it can work out without a type checker: `props.` lists the fields the script declares, and `data('Item').get('Sword').` (or a variable that holds that row) lists the table's columns.
+The converter and the checker are downloads the editor fetches only when they are needed, and a player's phone never loads them.
+
+Completion knows the fields `props` declares, the columns of a data table row (`data('Item').get('Sword').`), and what another script exports.
 
 ## Share code with libraries {/* #libraries */}
 
@@ -258,15 +292,34 @@ function onCollision(other) {
 - `getScript()` gives `null` when the object has no script of that name (upper/lower case doesn't matter). It works on `entity` too, to reach another script on the same object.
 - Only what is exported can be used; `start`, `update` and the other lifecycle functions stay private.
 
-To **read a component's settings**, use `getComponent()`. It works for components and behaviors:
+### Behaviors and components as live objects {/* #live-objects */}
+
+`entity.behavior('car')` and `entity.component('light')` give the behavior or component itself. Every setting the Inspector shows is a property you can **read and write**, and it takes effect while the game runs:
 
 ```js
-const mass = entity.getComponent('rigidbody').mass;
+const car = entity.behavior('car');
+car.grip = 0.3;                      // ice: the wheels follow at once
+car.speed = 25;                      // a new top speed
+if (car.isOnGround) { /* … */ }      // behaviors add their own readings…
+entity.behavior('platformer').jump();          // …and methods
+other.behavior('health')?.damage(1, entity);
+
+entity.behavior('follow').enabled = false;     // switch a behavior off and on
+entity.component('light').intensity = 2;
+entity.component('rigidbody').mass = 5;
+```
+
+- Both give `null` when the object has no such behavior or component, so `?.` is useful on other objects.
+- What each behavior adds (a Car's `speed` and `steerAngle`, a Platformer's `jump()`, a Health's `damage()`…) is listed in the editor's completion and under [Behaviors in scripts](../behaviors#in-scripts).
+- A few component settings are **structural**: another shape, another model, a different collider. Those need the object built again; `entity.component('mesh').set({ shape: 'sphere' })` sets several at once and rebuilds for you, and `entity.rebuild()` does it by hand.
+- `entity.addBehavior('rotate', { speedY: 180 })`, `removeBehavior('rotate')`, `addComponent(…)` and `removeComponent(…)` add and remove them while playing.
+
+`getComponent()` is the older, read-only way: it gives a **copy** of the settings, so changing it does nothing.
+
+```js
 const maxHp = other.getComponent('health')?.maxHealth;
 if (other.hasComponent('car')) { /* … */ }
 ```
-
-`getComponent()` gives a **copy**: changing it does nothing. To change things, use the methods for them, such as `setBehaviorParam('health', 'maxHealth', 5)`, `setColor()` or `setVelocity()` (see the [Scripting API](../reference/scripting-api)).
 
 ## three.js (advanced) {/* #threejs */}
 
@@ -433,4 +486,5 @@ function onClick() {
 entity.setUIValue(entity.getUIValue() - 10);
 entity.setText('HP');
 entity.setUIColors({ background: '#222', text: '#fff', fill: '#ff5c6c' });
+entity.setUIFont('Kenney Pixel');   // a font in Files, by name ('' = the default font)
 ```

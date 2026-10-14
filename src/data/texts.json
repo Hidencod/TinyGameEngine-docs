@@ -156,6 +156,7 @@
   "ui.setMin": "Set the minimum of a slider (0 by default).",
   "ui.setInteractable": "Grey out a button or slider so it takes no input, or turn it back on (Interactable).",
   "ui.setImage": "Change the picture of an image, button or panel.",
+  "ui.setFont": "Change the font of a label or a button's text to a font in Files. Leave it empty for the default font.",
   "ui.setBackground": "Change the background color of a button, panel or bar.",
   "ui.setTextColor": "Change the text color of a label or button.",
   "ui.setFillColor": "Change the fill color of a slider or bar.",

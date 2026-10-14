@@ -284,6 +284,13 @@
           "doc": "Change the image of a UI element."
         },
         {
+          "name": "setUIFont",
+          "kind": "method",
+          "sig": "(assetName)",
+          "type": "void",
+          "doc": "Change the font of a UI element's text ('' = the default font)."
+        },
+        {
           "name": "setUIColors",
           "kind": "method",
           "sig": "({ background, text, fill })",
@@ -1097,11 +1104,32 @@
           "doc": "Listen: \"sceneStart\", \"collisionStart\", \"entityCreated\", \"waterEnter\", ..."
         },
         {
+          "name": "after",
+          "kind": "method",
+          "sig": "(seconds, fn, owner?)",
+          "type": "cancel",
+          "doc": "Run fn once after a delay of game time. In a script, plain after(seconds, fn) belongs to the object of the script already; this one takes the object to belong to, or none."
+        },
+        {
+          "name": "every",
+          "kind": "method",
+          "sig": "(seconds, fn, owner?)",
+          "type": "stop",
+          "doc": "Run fn every so many seconds of game time until the function it returns is called. In a script, plain every(seconds, fn) belongs to the object of the script already."
+        },
+        {
           "name": "log",
           "kind": "method",
           "sig": "(...values)",
           "type": "void",
-          "doc": "Show a message on screen (debugging)."
+          "doc": "Show a message on screen and in the Play console (debugging)."
+        },
+        {
+          "name": "consoleLog",
+          "kind": "method",
+          "sig": "(...values)",
+          "type": "void",
+          "doc": "Write a line to the Play console only, nothing on screen. console.log() in a script does the same."
         }
       ]
     },
@@ -1242,6 +1270,27 @@
           "sig": "(degrees)",
           "type": "number",
           "doc": "Degrees to radians (for Math.sin etc.)."
+        },
+        {
+          "name": "wait",
+          "kind": "method",
+          "sig": "(seconds)",
+          "type": "Promise",
+          "doc": "Carry on later, in an async function: async function start() { await wait(2); entity.destroy(); }. Game time: it waits while paused and follows timeScale. If the object is destroyed first, the function stops there."
+        },
+        {
+          "name": "after",
+          "kind": "method",
+          "sig": "(seconds, fn)",
+          "type": "cancel",
+          "doc": "Run fn once after a delay, e.g. after(2, () => entity.destroy()). Game time (pause and timeScale count). Returns a function that cancels it; dropped when this object is destroyed."
+        },
+        {
+          "name": "every",
+          "kind": "method",
+          "sig": "(seconds, fn)",
+          "type": "stop",
+          "doc": "Run fn again and again, e.g. every(1, () => game.spawn(\"Coin\")). Game time (pause and timeScale count). Returns a function that stops it; stops when this object is destroyed."
         },
         {
           "name": "object",
@@ -1788,6 +1837,27 @@
       "sig": "(degrees)",
       "type": "number",
       "doc": "Degrees to radians (for Math.sin etc.)."
+    },
+    {
+      "name": "wait",
+      "kind": "method",
+      "sig": "(seconds)",
+      "type": "Promise",
+      "doc": "Carry on later, in an async function: async function start() { await wait(2); entity.destroy(); }. Game time: it waits while paused and follows timeScale. If the object is destroyed first, the function stops there."
+    },
+    {
+      "name": "after",
+      "kind": "method",
+      "sig": "(seconds, fn)",
+      "type": "cancel",
+      "doc": "Run fn once after a delay, e.g. after(2, () => entity.destroy()). Game time (pause and timeScale count). Returns a function that cancels it; dropped when this object is destroyed."
+    },
+    {
+      "name": "every",
+      "kind": "method",
+      "sig": "(seconds, fn)",
+      "type": "stop",
+      "doc": "Run fn again and again, e.g. every(1, () => game.spawn(\"Coin\")). Game time (pause and timeScale count). Returns a function that stops it; stops when this object is destroyed."
     },
     {
       "name": "object",

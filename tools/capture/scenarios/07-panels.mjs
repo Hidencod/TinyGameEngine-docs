@@ -131,7 +131,7 @@ export async function run({ page, s, H }) {
   await page.getByRole('button', { name: 'API help' }).click();
   await s.settle(700);
   await s.shot('code-api');
-  await page.getByRole('button', { name: 'API help' }).click().catch(() => {});
+  await H.closeSheet(); // the API help is a sheet with a search box
   await page.locator('.panel-back').click();
   await s.settle(600);
   await s.shot('logic-with-script');
