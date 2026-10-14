@@ -128,17 +128,33 @@ Declare a `properties` object at the top of a script and every object that uses 
 const properties = {
   speed: 2,                                      // number, text or true / false
   target: field.object(),                        // another object in the scene (props.target is the object, or null)
-  icon: field.image(),                           // a picture from Files (props.icon is its id)
+  icon: field.image(),                           // a picture from Files
   hit: field.sound(),                            // a sound from Files
-  drop: field.prefab(),                          // a prefab: game.spawn(props.drop)
+  drop: field.prefab(),                          // a prefab
   kind: field.choice('Sword', 'Potion', 'Key'),  // a dropdown (props.kind is the chosen word)
   tint: field.color('#ff8800'),                  // a colour
   loot: field.data('Item'),                      // a row of a data table (props.loot is the row)
   items: field.list(Item),                       // a list you add to, remove from and reorder in the Inspector
+  lamp: field.component('light'),                // an object's light (props.lamp is the light itself)
+  hp: field.behavior('health'),                  // an object's Health behavior
+  enemy: field.script('Enemy'),                  // an object's Enemy script
 };
 ```
 
-`field.image()`, `field.sound()` and `field.prefab()` give you the **id** of the file. `entity.setUIImage(props.icon)` shows the picture, `audio.play(props.hit)` plays the sound, and `game.spawn(props.drop)` creates the prefab.
+`field.image()`, `field.sound()` and `field.prefab()` give you the **file**: `props.icon.name` is `"Coin.png"`, and `props.icon` is `null` when nothing is picked. Hand it to anything that takes a file: `entity.setUIImage(props.icon)` shows the picture, `audio.play(props.hit)` plays the sound, and `game.spawn(props.drop)` creates the prefab.
+
+`field.component(…)`, `field.behavior(…)` and `field.script(…)` work like a Unity field of type `Light` or `Health`. In the Inspector you pick an **object** from those that have that component, behavior or script, and the script reads that object's light, behavior or script directly:
+
+```js
+function start() {
+  props.lamp.intensity = 2;            // the light of the object picked in the Inspector
+  props.hp.damage(1);                  // its Health behavior
+  props.enemy.hp = 5;                  // what its Enemy script exports…
+  props.enemy.props.speed = 3;         // …and that script's own fields
+}
+```
+
+Every field can also be assigned from code (`props.target = game.find('Boss')`); from then on it holds what you assigned.
 
 Every kind of field is on `field`, so type `field.` to see them all. Your own variables can be called `image`, `data`, `color` or `list`: those names are yours.
 
@@ -294,8 +310,15 @@ function onCollision(other) {
 
 - Each object has **its own copy**: hitting one enemy doesn't change the others' `hp`.
 - Values are live: `getScript('Enemy').hp` is always the current value.
+- You can **change** them too: `getScript('Enemy').hp = 5` changes the Enemy script's `hp`, as `GetComponent<Enemy>().hp = 5` would in Unity. An exported `const` can't be changed, and neither can a function: both stop with an error that says so.
+- The script's [Inspector fields](#fields) are there as **`props`**: `getScript('Enemy').props.speed = 3`.
 - `getScript()` gives `null` when the object has no script of that name (upper/lower case doesn't matter). It works on `entity` too, to reach another script on the same object.
 - Only what is exported can be used; `start`, `update` and the other lifecycle functions stay private.
+- The editor underlines a name in quotes that names nothing (`getScript('Enemey')`, `component('ligth')`, `game.table('Itme')`) and suggests the one you probably meant.
+
+To point at one particular object's script without looking it up, use a [`field.script('Enemy')`](#fields) field.
+
+`console.log` shows these by name: a file as `Coin.png (image)`, a script as `Enemy (script) {…}` with its values, a behavior or component the same way.
 
 ### Behaviors and components as live objects {/* #live-objects */}
 

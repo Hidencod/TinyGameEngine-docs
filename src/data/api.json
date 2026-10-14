@@ -650,8 +650,8 @@
           "name": "getScript",
           "kind": "method",
           "sig": "(name)",
-          "type": "object|null",
-          "doc": "What a code script on this object exports, e.g. other.getScript(\"Enemy\")?.hit(1). In that script: export function hit(n) { … }"
+          "type": "script|null",
+          "doc": "A code script on this object, live: what it exports and its Inspector fields as props, e.g. other.getScript(\"Enemy\")?.hit(1), .hp = 5, .props.speed = 3. In that script: export function hit(n) { … }, export let hp = 3."
         },
         {
           "name": "behavior",
@@ -1220,7 +1220,7 @@
           "kind": "method",
           "sig": "(nameOrId, {volume, loop, tag}?)",
           "type": "void",
-          "doc": "Play an audio asset, e.g. audio.play(\"coin\")"
+          "doc": "Play an audio asset, e.g. audio.play(\"coin\") or audio.play(props.hit) with a sound field."
         },
         {
           "name": "stop",
@@ -1318,21 +1318,42 @@
           "kind": "method",
           "sig": "()",
           "type": "field",
-          "doc": "A picture picked from the project files, e.g. icon: field.image(). props.icon is its id; entity.setUIImage(props.icon) shows it."
+          "doc": "A picture picked from the project files, e.g. icon: field.image(). props.icon is the file: { id, name, kind } (or null); entity.setUIImage(props.icon) shows it."
         },
         {
           "name": "sound",
           "kind": "method",
           "sig": "()",
           "type": "field",
-          "doc": "A sound picked from the project files, e.g. hit: field.sound(). audio.play(props.hit) plays it."
+          "doc": "A sound picked from the project files, e.g. hit: field.sound(). audio.play(props.hit) plays it; props.hit.name is its file name."
         },
         {
           "name": "prefab",
           "kind": "method",
           "sig": "()",
           "type": "field",
-          "doc": "A prefab picked from the project, e.g. drop: field.prefab(). game.spawn(props.drop) creates it."
+          "doc": "A prefab picked from the project, e.g. drop: field.prefab(). game.spawn(props.drop) creates it; props.drop.name is its name."
+        },
+        {
+          "name": "component",
+          "kind": "method",
+          "sig": "(type)",
+          "type": "field",
+          "doc": "An object that has this component, picked in the Inspector, read as its component: lamp: field.component('light'), then props.lamp.intensity = 2."
+        },
+        {
+          "name": "behavior",
+          "kind": "method",
+          "sig": "(type)",
+          "type": "field",
+          "doc": "An object that has this behavior, read as the behavior: hp: field.behavior('health'), then props.hp.damage(1)."
+        },
+        {
+          "name": "script",
+          "kind": "method",
+          "sig": "(name)",
+          "type": "field",
+          "doc": "An object that has this code script, read as the script: enemy: field.script('Enemy'), then props.enemy.hp = 5 or props.enemy.props.speed = 3."
         },
         {
           "name": "choice",
@@ -1909,7 +1930,7 @@
       "name": "field",
       "kind": "property",
       "type": "fields",
-      "doc": "The kinds of field for const properties = { … }: field.object(), field.image(), field.sound(), field.prefab(), field.choice(…), field.color(), field.list(…), field.data(table)."
+      "doc": "The kinds of field for const properties = { … }: field.object(), field.image(), field.sound(), field.prefab(), field.choice(…), field.color(), field.list(…), field.data(table), field.component(type), field.behavior(type), field.script(name)."
     },
     {
       "name": "vars",
