@@ -205,6 +205,7 @@ The running game.
 | `resume()` | `void` | Resume the game. |
 | `save(key, value)` | `void` | Save a value on the device (high scores...). |
 | `load(key)` | `value` | Load a saved value. |
+| `table(name)` | `table` | A data table made in Files: game.table("Item").get("Sword"), .all(), .where(r =&gt; r.damage &gt; 5), .ids(), .has(name), .length. |
 | `getCamera()` | `entity\|null` | The active camera entity. |
 | `three` | `{renderer,scene,camera}` | Advanced: the three.js renderer, scene and camera behind the game, e.g. game.three.scene.add(mesh). |
 | `rapier` | `{RAPIER,world,gravity,…}` | Advanced: the physics engine behind the game. game.rapier.world is the Rapier World, game.rapier.bodyOf(entity) / collidersOf(entity) its objects, game.rapier.setGravity(x, y, z) the world gravity. Use it with RAPIER. |
@@ -259,14 +260,21 @@ Handy math functions available everywhere.
 | `wait(seconds)` | `Promise` | Carry on later, in an async function: async function start() &#123; await wait(2); entity.destroy(); &#125;. Game time: it waits while paused and follows timeScale. If the object is destroyed first, the function stops there. |
 | `after(seconds, fn)` | `cancel` | Run fn once after a delay, e.g. after(2, () =&gt; entity.destroy()). Game time (pause and timeScale count). Returns a function that cancels it; dropped when this object is destroyed. |
 | `every(seconds, fn)` | `stop` | Run fn again and again, e.g. every(1, () =&gt; game.spawn("Coin")). Game time (pause and timeScale count). Returns a function that stops it; stops when this object is destroyed. |
-| `object()` | `property` | In const properties = &#123; … &#125;: a field where each object picks another object in the Inspector, e.g. target: object(). Read it as props.target. |
-| `image()` | `property` | In const properties = &#123; … &#125;: a picture picked from the project files, e.g. icon: image(). props.icon is its id; entity.setUIImage(props.icon) shows it. |
-| `sound()` | `property` | In const properties = &#123; … &#125;: a sound picked from the project files, e.g. hit: sound(). audio.play(props.hit) plays it. |
-| `prefab()` | `property` | In const properties = &#123; … &#125;: a prefab picked from the project, e.g. drop: prefab(). game.spawn(props.drop) creates it. |
-| `choice(...words)` | `property` | In const properties = &#123; … &#125;: a dropdown of fixed words, e.g. kind: choice('Sword', 'Potion'). props.kind is the chosen word; the first is the default. |
-| `list(of)` | `property` | In const properties = &#123; … &#125;: a list the Inspector edits (add, remove, reorder). list(Item) is a list of your own class Item; list(image()) or list(0) work too. props.items is an array. |
-| `data(table)` | `property` | A data table made in Files. In const properties = &#123; … &#125;: data("Item") is a row picker (props.pick is the row). In the script: data("Item").get("Sword"), .all(), .where(r =&gt; r.damage &gt; 5), .ids(), .has(name). |
-| `color(default?)` | `property` | In const properties = &#123; … &#125;: a colour picker, e.g. tint: color('#ff8800'). props.tint is '#rrggbb'. |
+
+## `field` — field {/* #field */}
+
+The kinds of field a script declares in const properties = &#123; … &#125;.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `object()` | `field` | A field where each object picks another object in the Inspector, e.g. target: field.object(). Read it as props.target. |
+| `image()` | `field` | A picture picked from the project files, e.g. icon: field.image(). props.icon is its id; entity.setUIImage(props.icon) shows it. |
+| `sound()` | `field` | A sound picked from the project files, e.g. hit: field.sound(). audio.play(props.hit) plays it. |
+| `prefab()` | `field` | A prefab picked from the project, e.g. drop: field.prefab(). game.spawn(props.drop) creates it. |
+| `choice(...words)` | `field` | A dropdown of fixed words, e.g. kind: field.choice('Sword', 'Potion'). props.kind is the chosen word; the first is the default. |
+| `color(default?)` | `field` | A colour picker, e.g. tint: field.color('#ff8800'). props.tint is '#rrggbb'. |
+| `list(of)` | `field` | A list the Inspector edits (add, remove, reorder). field.list(Item) is a list of your own class Item; field.list(field.image()) or field.list(0) work too. props.items is an array. |
+| `data(table)` | `field` | A row picked from a data table made in Files, e.g. loot: field.data("Item"). props.loot is the row (or null). |
 
 ## `collision` — collision {/* #collision */}
 
@@ -342,7 +350,8 @@ An object's Particle System, like Unity's ParticleSystem.
 | `game` | `game` | The game: find/spawn entities, variables, scenes... |
 | `input` | `input` | Joystick, buttons, taps and swipes. |
 | `audio` | `audio` | Play sounds. |
-| `props` | `object` | Values set in the Inspector for this object, e.g. props.speed. Declare them with const properties = &#123; speed: 2, target: object() &#125; and every object using the script shows those fields; an object() property is the chosen object itself (or null). |
+| `props` | `object` | Values set in the Inspector for this object, e.g. props.speed. Declare them with const properties = &#123; speed: 2, target: field.object() &#125; and every object using the script shows those fields; a field.object() property is the chosen object itself (or null). |
+| `field` | `fields` | The kinds of field for const properties = &#123; … &#125;: field.object(), field.image(), field.sound(), field.prefab(), field.choice(…), field.color(), field.list(…), field.data(table). |
 | `vars` | `object` | Variables storage for this script. |
 | `THREE` | `three.js` | The three.js library, e.g. game.three.scene.add(new THREE.Mesh(geometry, material)). Same as import * as THREE from "three". |
 | `RAPIER` | `rapier3d` | The physics library (Rapier), e.g. RAPIER.JointData.fixed(…) with game.rapier.world. Same as import * as RAPIER from "rapier". |
@@ -444,8 +453,8 @@ Walk back and forth between two objects you pick in the Inspector (each enemy it
 // (empty objects make good markers). The fields below show up in the Inspector.
 const properties = {
   speed: 2,          // meters per second
-  pointA: object(),  // pick an object in the Inspector
-  pointB: object(),
+  pointA: field.object(),  // pick an object in the Inspector
+  pointB: field.object(),
   wait: 0.5,         // seconds to pause at each end
 };
 

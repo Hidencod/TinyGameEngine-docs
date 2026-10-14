@@ -1051,6 +1051,13 @@
           "doc": "Load a saved value."
         },
         {
+          "name": "table",
+          "kind": "method",
+          "sig": "(name)",
+          "type": "table",
+          "doc": "A data table made in Files: game.table(\"Item\").get(\"Sword\"), .all(), .where(r => r.damage > 5), .ids(), .has(name), .length."
+        },
+        {
           "name": "getCamera",
           "kind": "method",
           "sig": "()",
@@ -1291,62 +1298,69 @@
           "sig": "(seconds, fn)",
           "type": "stop",
           "doc": "Run fn again and again, e.g. every(1, () => game.spawn(\"Coin\")). Game time (pause and timeScale count). Returns a function that stops it; stops when this object is destroyed."
-        },
+        }
+      ]
+    },
+    {
+      "name": "field",
+      "title": "field",
+      "doc": "The kinds of field a script declares in const properties = { … }.",
+      "members": [
         {
           "name": "object",
           "kind": "method",
           "sig": "()",
-          "type": "property",
-          "doc": "In const properties = { … }: a field where each object picks another object in the Inspector, e.g. target: object(). Read it as props.target."
+          "type": "field",
+          "doc": "A field where each object picks another object in the Inspector, e.g. target: field.object(). Read it as props.target."
         },
         {
           "name": "image",
           "kind": "method",
           "sig": "()",
-          "type": "property",
-          "doc": "In const properties = { … }: a picture picked from the project files, e.g. icon: image(). props.icon is its id; entity.setUIImage(props.icon) shows it."
+          "type": "field",
+          "doc": "A picture picked from the project files, e.g. icon: field.image(). props.icon is its id; entity.setUIImage(props.icon) shows it."
         },
         {
           "name": "sound",
           "kind": "method",
           "sig": "()",
-          "type": "property",
-          "doc": "In const properties = { … }: a sound picked from the project files, e.g. hit: sound(). audio.play(props.hit) plays it."
+          "type": "field",
+          "doc": "A sound picked from the project files, e.g. hit: field.sound(). audio.play(props.hit) plays it."
         },
         {
           "name": "prefab",
           "kind": "method",
           "sig": "()",
-          "type": "property",
-          "doc": "In const properties = { … }: a prefab picked from the project, e.g. drop: prefab(). game.spawn(props.drop) creates it."
+          "type": "field",
+          "doc": "A prefab picked from the project, e.g. drop: field.prefab(). game.spawn(props.drop) creates it."
         },
         {
           "name": "choice",
           "kind": "method",
           "sig": "(...words)",
-          "type": "property",
-          "doc": "In const properties = { … }: a dropdown of fixed words, e.g. kind: choice('Sword', 'Potion'). props.kind is the chosen word; the first is the default."
-        },
-        {
-          "name": "list",
-          "kind": "method",
-          "sig": "(of)",
-          "type": "property",
-          "doc": "In const properties = { … }: a list the Inspector edits (add, remove, reorder). list(Item) is a list of your own class Item; list(image()) or list(0) work too. props.items is an array."
-        },
-        {
-          "name": "data",
-          "kind": "method",
-          "sig": "(table)",
-          "type": "property",
-          "doc": "A data table made in Files. In const properties = { … }: data(\"Item\") is a row picker (props.pick is the row). In the script: data(\"Item\").get(\"Sword\"), .all(), .where(r => r.damage > 5), .ids(), .has(name)."
+          "type": "field",
+          "doc": "A dropdown of fixed words, e.g. kind: field.choice('Sword', 'Potion'). props.kind is the chosen word; the first is the default."
         },
         {
           "name": "color",
           "kind": "method",
           "sig": "(default?)",
-          "type": "property",
-          "doc": "In const properties = { … }: a colour picker, e.g. tint: color('#ff8800'). props.tint is '#rrggbb'."
+          "type": "field",
+          "doc": "A colour picker, e.g. tint: field.color('#ff8800'). props.tint is '#rrggbb'."
+        },
+        {
+          "name": "list",
+          "kind": "method",
+          "sig": "(of)",
+          "type": "field",
+          "doc": "A list the Inspector edits (add, remove, reorder). field.list(Item) is a list of your own class Item; field.list(field.image()) or field.list(0) work too. props.items is an array."
+        },
+        {
+          "name": "data",
+          "kind": "method",
+          "sig": "(table)",
+          "type": "field",
+          "doc": "A row picked from a data table made in Files, e.g. loot: field.data(\"Item\"). props.loot is the row (or null)."
         }
       ]
     },
@@ -1858,62 +1872,6 @@
       "sig": "(seconds, fn)",
       "type": "stop",
       "doc": "Run fn again and again, e.g. every(1, () => game.spawn(\"Coin\")). Game time (pause and timeScale count). Returns a function that stops it; stops when this object is destroyed."
-    },
-    {
-      "name": "object",
-      "kind": "method",
-      "sig": "()",
-      "type": "property",
-      "doc": "In const properties = { … }: a field where each object picks another object in the Inspector, e.g. target: object(). Read it as props.target."
-    },
-    {
-      "name": "image",
-      "kind": "method",
-      "sig": "()",
-      "type": "property",
-      "doc": "In const properties = { … }: a picture picked from the project files, e.g. icon: image(). props.icon is its id; entity.setUIImage(props.icon) shows it."
-    },
-    {
-      "name": "sound",
-      "kind": "method",
-      "sig": "()",
-      "type": "property",
-      "doc": "In const properties = { … }: a sound picked from the project files, e.g. hit: sound(). audio.play(props.hit) plays it."
-    },
-    {
-      "name": "prefab",
-      "kind": "method",
-      "sig": "()",
-      "type": "property",
-      "doc": "In const properties = { … }: a prefab picked from the project, e.g. drop: prefab(). game.spawn(props.drop) creates it."
-    },
-    {
-      "name": "choice",
-      "kind": "method",
-      "sig": "(...words)",
-      "type": "property",
-      "doc": "In const properties = { … }: a dropdown of fixed words, e.g. kind: choice('Sword', 'Potion'). props.kind is the chosen word; the first is the default."
-    },
-    {
-      "name": "list",
-      "kind": "method",
-      "sig": "(of)",
-      "type": "property",
-      "doc": "In const properties = { … }: a list the Inspector edits (add, remove, reorder). list(Item) is a list of your own class Item; list(image()) or list(0) work too. props.items is an array."
-    },
-    {
-      "name": "data",
-      "kind": "method",
-      "sig": "(table)",
-      "type": "property",
-      "doc": "A data table made in Files. In const properties = { … }: data(\"Item\") is a row picker (props.pick is the row). In the script: data(\"Item\").get(\"Sword\"), .all(), .where(r => r.damage > 5), .ids(), .has(name)."
-    },
-    {
-      "name": "color",
-      "kind": "method",
-      "sig": "(default?)",
-      "type": "property",
-      "doc": "In const properties = { … }: a colour picker, e.g. tint: color('#ff8800'). props.tint is '#rrggbb'."
     }
   ],
   "globals": [
@@ -1945,7 +1903,13 @@
       "name": "props",
       "kind": "property",
       "type": "object",
-      "doc": "Values set in the Inspector for this object, e.g. props.speed. Declare them with const properties = { speed: 2, target: object() } and every object using the script shows those fields; an object() property is the chosen object itself (or null)."
+      "doc": "Values set in the Inspector for this object, e.g. props.speed. Declare them with const properties = { speed: 2, target: field.object() } and every object using the script shows those fields; a field.object() property is the chosen object itself (or null)."
+    },
+    {
+      "name": "field",
+      "kind": "property",
+      "type": "fields",
+      "doc": "The kinds of field for const properties = { … }: field.object(), field.image(), field.sound(), field.prefab(), field.choice(…), field.color(), field.list(…), field.data(table)."
     },
     {
       "name": "vars",

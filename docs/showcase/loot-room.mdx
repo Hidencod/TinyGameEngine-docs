@@ -64,7 +64,7 @@ The slots are a plain array of `null` or `{ id, n }`. Adding tops up existing st
 const slots: (Stack | null)[] = Array(SIZE).fill(null);
 
 export function add(id: string, n: number = 1): number {
-  const max = data('Item').get(id)?.stack ?? 1;
+  const max = game.table('Item').get(id)?.stack ?? 1;
   for (const s of slots) if (n > 0 && s && s.id === id && s.n < max) { /* top up */ }
   for (let i = 0; i < SIZE && n > 0; i++) if (!slots[i]) { /* new stack */ }
   refresh();
@@ -96,7 +96,7 @@ The slot itself stays where it is. A **ghost** icon (a text element with *Raycas
 The book is a [Scroll View](../world/ui#scroll-view): a panel with a scroll rect, holding a vertical list that fits its content. The rows are **spawned** the first time the book opens, one for each row of the table, from a prefab into the list:
 
 ```ts
-for (const it of data('Item').all()) {
+for (const it of game.table('Item').all()) {
   const row = game.spawn('BookRow', undefined, undefined, list);   // into the list
   const [glyph, title, info] = row.getChildren();
   glyph.setText(it.glyph);

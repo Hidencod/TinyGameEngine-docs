@@ -259,7 +259,7 @@ To add rows while the game runs, make the row a **prefab** and spawn it **into**
 
 ```js
 const list = game.find('BookList');
-for (const item of data('Item').all()) {
+for (const item of game.table('Item').all()) {
   const row = game.spawn('BookRow', undefined, undefined, list);   // the 4th argument is the parent
   row.getChildren()[0].setText(item.title);
 }

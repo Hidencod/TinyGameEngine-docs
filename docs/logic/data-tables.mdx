@@ -32,15 +32,17 @@ You can rename, duplicate and delete a table from its card's menu, and drag it i
 ## Read it in a script
 
 ```js
-const sword = data('Item').get('Sword');   // the row, or null
+const items = game.table('Item');
+const sword = items.get('Sword');          // the row, or null
 sword.title;                               // 'Iron Sword'
 sword.damage;                              // 7
 sword.id;                                  // 'Sword', the row's name
 
-data('Item').all();                        // every row, in the table's order
-data('Item').where((r) => r.kind === 'Potion');
-data('Item').ids();                        // ['Sword', 'Heal Potion', …]
-data('Item').has('Axe');
+items.all();                               // every row, in the table's order
+items.where((r) => r.kind === 'Potion');
+items.ids();                               // ['Sword', 'Heal Potion', …]
+items.has('Axe');
+items.length;                              // how many rows
 ```
 
 A row is read-only. A *Row of a table* column reads as that row's object, so `sword.next.title` goes on to the next item.
@@ -48,11 +50,11 @@ A row is read-only. A *Row of a table* column reads as that row's object, so `sw
 A script field can point at a row, and the Inspector shows a **picker** for it:
 
 ```js
-const properties = { loot: data('Item'), shop: list(data('Item')) };
+const properties = { loot: field.data('Item'), shop: field.list(field.data('Item')) };
 // props.loot is the row (or null); props.shop is an array of rows
 ```
 
-In the code editor, `data('Item').get('Sword').` suggests the table's columns.
+In the code editor, `game.table('Item').get('Sword').` suggests the table's columns.
 
 ## Read it in events
 

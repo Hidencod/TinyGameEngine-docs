@@ -104,16 +104,19 @@ async function start() {                     // or write it top to bottom
 | Name | What it is |
 | --- | --- |
 | `entity` | The object this script is on (object scripts). Also the type of `other` in collisions and of results from `game.find()`. |
-| `game` | The running game: find/spawn/destroy objects, variables, scenes, camera, raycasts, saving. |
+| `game` | The running game: find/spawn/destroy objects, variables, scenes, camera, raycasts, saving, [data tables](data-tables) (`game.table('Item')`). |
 | `input` | Joystick (`input.axis`), buttons (`input.isDown('jump')`), touches, swipes, keys. |
 | `audio` | `audio.play('Coin')`, `audio.stop()`. |
 | `props` | The values set in the Inspector on the Code script component. Give defaults: `props.speed ?? 5`. |
 | `vars` | A storage object for the script. |
+| `field` | The kinds of [field](#fields) for `properties`: `field.object()`, `field.image()`, `field.list(…)`… |
 | helpers | `lerp`, `clamp`, `random`, `randomInt`, `deg2rad` and JavaScript’s `Math`. |
 | timers | `wait(seconds)`, `after(seconds, fn)`, `every(seconds, fn)`. See [Timers](#timers). |
 | `console` | `console.log()` writes to the Debug console. See [Print while testing](#console). |
 | `THREE` | The [three.js](https://threejs.org/docs/) library, for advanced effects. See [three.js](#threejs). |
 | `import` | Code from your [libraries](#libraries): `import { roll } from 'Dice'`. |
+
+A variable of your own with one of these names hides the engine's in that part of the script: `const wait = wait(1)` stops with an error, and the editor underlines it. Give yours another name.
 
 Full list: [Scripting API](../reference/scripting-api).
 
@@ -123,19 +126,21 @@ Declare a `properties` object at the top of a script and every object that uses 
 
 ```js
 const properties = {
-  speed: 2,                                // number, text or true / false
-  target: object(),                        // another object in the scene (props.target is the object, or null)
-  icon: image(),                           // a picture from Files (props.icon is its id)
-  hit: sound(),                            // a sound from Files
-  drop: prefab(),                          // a prefab: game.spawn(props.drop)
-  kind: choice('Sword', 'Potion', 'Key'),  // a dropdown (props.kind is the chosen word)
-  tint: color('#ff8800'),                  // a colour
-  loot: data('Item'),                      // a row of a data table (props.loot is the row)
-  items: list(Item),                       // a list you add to, remove from and reorder in the Inspector
+  speed: 2,                                      // number, text or true / false
+  target: field.object(),                        // another object in the scene (props.target is the object, or null)
+  icon: field.image(),                           // a picture from Files (props.icon is its id)
+  hit: field.sound(),                            // a sound from Files
+  drop: field.prefab(),                          // a prefab: game.spawn(props.drop)
+  kind: field.choice('Sword', 'Potion', 'Key'),  // a dropdown (props.kind is the chosen word)
+  tint: field.color('#ff8800'),                  // a colour
+  loot: field.data('Item'),                      // a row of a data table (props.loot is the row)
+  items: field.list(Item),                       // a list you add to, remove from and reorder in the Inspector
 };
 ```
 
-`image()`, `sound()` and `prefab()` give you the **id** of the file. `entity.setUIImage(props.icon)` shows the picture, `audio.play(props.hit)` plays the sound, and `game.spawn(props.drop)` creates the prefab.
+`field.image()`, `field.sound()` and `field.prefab()` give you the **id** of the file. `entity.setUIImage(props.icon)` shows the picture, `audio.play(props.hit)` plays the sound, and `game.spawn(props.drop)` creates the prefab.
+
+Every kind of field is on `field`, so type `field.` to see them all. Your own variables can be called `image`, `data`, `color` or `list`: those names are yours.
 
 ### Your own types
 
@@ -144,13 +149,13 @@ A field can be a **class** written in the script. Its fields become the fields o
 ```js
 class Item {
   name = 'Item';
-  icon = image();
-  kind = choice('Weapon', 'Potion', 'Key');
+  icon = field.image();
+  kind = field.choice('Weapon', 'Potion', 'Key');
   stack = 1;
   use() { return this.name + ' x' + this.stack; }
 }
 
-const properties = { bag: list(Item), best: Item };
+const properties = { bag: field.list(Item), best: Item };
 
 function start() {
   for (const item of props.bag) game.log(item.use());   // real Item objects: methods work
@@ -213,7 +218,7 @@ A problem the editor underlines **never stops the game from running**. Before th
 
 The converter and the checker are downloads the editor fetches only when they are needed, and a player's phone never loads them.
 
-Completion knows the fields `props` declares, the columns of a data table row (`data('Item').get('Sword').`), and what another script exports.
+Completion knows the fields `props` declares, the columns of a data table row (`game.table('Item').get('Sword').`), and what another script exports.
 
 ## Share code with libraries {/* #libraries */}
 
