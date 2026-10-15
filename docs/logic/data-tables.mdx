@@ -50,8 +50,8 @@ A row is read-only. A *Row of a table* column reads as that row's object, so `sw
 A script field can point at a row, and the Inspector shows a **picker** for it:
 
 ```js
-const properties = { loot: field.data('Item'), shop: field.list(field.data('Item')) };
-// props.loot is the row (or null); props.shop is an array of rows
+export let loot = field.data('Item');              // the row (or null)
+export let shop = field.list(field.data('Item'));  // an array of rows
 ```
 
 In the code editor, `game.table('Item').get('Sword').` suggests the table's columns.

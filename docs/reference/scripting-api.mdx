@@ -139,7 +139,7 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `removeComponent(type)` | `boolean` | Remove a component and rebuild. |
 | `rebuild()` | `void` | Rebuild the object from its components (3D content, body, text, UI, particles, behaviors), keeping where it is and its variables. |
 | `hasComponent(type)` | `boolean` | Does it have this component or behavior? e.g. other.hasComponent("health") |
-| `getScript(name)` | `script\|null` | A code script on this object, live: what it exports and its Inspector fields as props, e.g. other.getScript("Enemy")?.hit(1), .hp = 5, .props.speed = 3. In that script: export function hit(n) &#123; … &#125;, export let hp = 3. |
+| `getScript(name)` | `script\|null` | A code script on this object, live: what it exports (its fields among them), e.g. other.getScript("Enemy")?.hit(1), .hp = 5. In that script: export function hit(n) &#123; … &#125;, export let hp = 3. |
 | `behavior(type)` | `behavior\|null` | A behavior as a live object: its settings are properties (behavior("platformer").speed = 8) and it has its own readings and methods, e.g. behavior("car").speed, behavior("platformer").jump(), behavior("health").health. Null without that behavior. |
 | `getBehaviors()` | `string[]` | Behavior types on this object. |
 | `addBehavior(type, params?)` | `behavior\|null` | Add a behavior and start it now, e.g. addBehavior("bullet", &#123; speed: 20 &#125;) |
@@ -242,7 +242,7 @@ Sound playback.
 
 | Member | Type | Description |
 | --- | --- | --- |
-| `play(nameOrId, {volume, loop, tag}?)` | `void` | Play an audio asset, e.g. audio.play("coin") or audio.play(props.hit) with a sound field. |
+| `play(nameOrId, {volume, loop, tag}?)` | `void` | Play an audio asset, e.g. audio.play("coin") or audio.play(hit) with a sound field. |
 | `stop(tag?)` | `void` | Stop sounds with a tag (or all). |
 | `setMasterVolume(0..1)` | `void` | Global volume. |
 
@@ -263,21 +263,21 @@ Handy math functions available everywhere.
 
 ## `field` — field {/* #field */}
 
-The kinds of field a script declares in const properties = &#123; … &#125;.
+The kinds of field a script declares with export let speed = 2.
 
 | Member | Type | Description |
 | --- | --- | --- |
-| `object()` | `field` | A field where each object picks another object in the Inspector, e.g. target: field.object(). Read it as props.target. |
-| `image()` | `field` | A picture picked from the project files, e.g. icon: field.image(). props.icon is the file: &#123; id, name, kind &#125; (or null); entity.setUIImage(props.icon) shows it. |
-| `sound()` | `field` | A sound picked from the project files, e.g. hit: field.sound(). audio.play(props.hit) plays it; props.hit.name is its file name. |
-| `prefab()` | `field` | A prefab picked from the project, e.g. drop: field.prefab(). game.spawn(props.drop) creates it; props.drop.name is its name. |
-| `component(type)` | `field` | An object that has this component, picked in the Inspector, read as its component: lamp: field.component('light'), then props.lamp.intensity = 2. |
-| `behavior(type)` | `field` | An object that has this behavior, read as the behavior: hp: field.behavior('health'), then props.hp.damage(1). |
-| `script(name)` | `field` | An object that has this code script, read as the script: enemy: field.script('Enemy'), then props.enemy.hp = 5 or props.enemy.props.speed = 3. |
-| `choice(...words)` | `field` | A dropdown of fixed words, e.g. kind: field.choice('Sword', 'Potion'). props.kind is the chosen word; the first is the default. |
-| `color(default?)` | `field` | A colour picker, e.g. tint: field.color('#ff8800'). props.tint is '#rrggbb'. |
-| `list(of)` | `field` | A list the Inspector edits (add, remove, reorder). field.list(Item) is a list of your own class Item; field.list(field.image()) or field.list(0) work too. props.items is an array. |
-| `data(table)` | `field` | A row picked from a data table made in Files, e.g. loot: field.data("Item"). props.loot is the row (or null). |
+| `object()` | `field` | A field where each object picks another object in the Inspector: export let target = field.object(). target is that object, or null. |
+| `image()` | `field` | A picture picked from the project files: export let icon = field.image(). icon is the file, &#123; id, name, kind &#125; (or null); entity.setUIImage(icon) shows it. |
+| `sound()` | `field` | A sound picked from the project files: export let hit = field.sound(). audio.play(hit) plays it; hit.name is its file name. |
+| `prefab()` | `field` | A prefab picked from the project: export let drop = field.prefab(). game.spawn(drop) creates it; drop.name is its name. |
+| `component(type)` | `field` | An object that has this component, picked in the Inspector, read as its component: export let lamp = field.component('light'), then lamp.intensity = 2. |
+| `behavior(type)` | `field` | An object that has this behavior, read as the behavior: export let hp = field.behavior('health'), then hp.damage(1). |
+| `script(name)` | `field` | An object that has this code script, read as the script: export let enemy = field.script('Enemy'), then enemy.hp = 5. |
+| `choice(...words)` | `field` | A dropdown of fixed words: export let kind = field.choice('Sword', 'Potion'). kind is the chosen word; the first is the default. |
+| `color(default?)` | `field` | A colour picker: export let tint = field.color('#ff8800'). tint is '#rrggbb'. |
+| `list(of)` | `field` | A list the Inspector edits (add, remove, reorder). field.list(Item) is a list of your own class Item; field.list(field.image()) or field.list(0) work too. The variable is an array. |
+| `data(table)` | `field` | A row picked from a data table made in Files: export let loot = field.data("Item"). loot is the row (or null). |
 
 ## `collision` — collision {/* #collision */}
 
@@ -353,8 +353,7 @@ An object's Particle System, like Unity's ParticleSystem.
 | `game` | `game` | The game: find/spawn entities, variables, scenes... |
 | `input` | `input` | Joystick, buttons, taps and swipes. |
 | `audio` | `audio` | Play sounds. |
-| `props` | `object` | Values set in the Inspector for this object, e.g. props.speed. Declare them with const properties = &#123; speed: 2, target: field.object() &#125; and every object using the script shows those fields; a field.object() property is the chosen object itself (or null). |
-| `field` | `fields` | The kinds of field for const properties = &#123; … &#125;: field.object(), field.image(), field.sound(), field.prefab(), field.choice(…), field.color(), field.list(…), field.data(table), field.component(type), field.behavior(type), field.script(name). |
+| `field` | `fields` | The kinds of field for export let: field.object(), field.image(), field.sound(), field.prefab(), field.choice(…), field.color(), field.list(…), field.data(table), field.component(type), field.behavior(type), field.script(name). |
 | `vars` | `object` | Variables storage for this script. |
 | `THREE` | `three.js` | The three.js library, e.g. game.three.scene.add(new THREE.Mesh(geometry, material)). Same as import * as THREE from "three". |
 | `RAPIER` | `rapier3d` | The physics library (Rapier), e.g. RAPIER.JointData.fixed(…) with game.rapier.world. Same as import * as RAPIER from "rapier". |
@@ -379,8 +378,9 @@ Walk around with the on-screen joystick (or WASD / arrow keys).
 
 ```js
 // Move with the joystick and face the walking direction.
+export let speed = 5;   // meters per second, set per object in the Inspector
+
 function update(dt) {
-  const speed = props.speed ?? 5;
   const x = input.axis.x;
   const y = input.axis.y;
   entity.translate(x * speed * dt, 0, -y * speed * dt);
@@ -396,10 +396,12 @@ Press the "jump" button to jump. Needs a RigidBody + Collider.
 
 ```js
 // Jump when the "jump" button is pressed (needs a RigidBody).
+export let jumpStrength = 7;
+
 function update(dt) {
   if (input.wasPressed('jump') && entity.isOnGround()) {
     const v = entity.getVelocity();
-    entity.setVelocity(v.x, props.jumpStrength ?? 7, v.z);
+    entity.setVelocity(v.x, jumpStrength, v.z);
   }
 }
 ```
@@ -410,10 +412,12 @@ Tap the ground and walk there, around walls.
 
 ```js
 // Tap (or click) the ground: walk there, going around walls.
+export let speed = 4;
+
 function update(dt) {
   if (input.tapped) {
     const p = game.touchWorld();
-    entity.moveTo(p.x, p.z, props.speed ?? 4);
+    entity.moveTo(p.x, p.z, speed);
   }
 }
 ```
@@ -424,8 +428,10 @@ Rotate constantly around the up axis.
 
 ```js
 // Spin around the Y axis.
+export let speed = 90;   // degrees per second
+
 function update(dt) {
-  entity.rotate(0, (props.speed ?? 90) * dt, 0);
+  entity.rotate(0, speed * dt, 0);
 }
 ```
 
@@ -435,13 +441,15 @@ Chase the entity named "Player" and stop when close.
 
 ```js
 // Chase the Player.
+export let speed = 2;
+
 function update(dt) {
   const player = game.find('Player');
   if (!player) return;
   const target = player.getWorldPosition();
   entity.lookAt(target.x, entity.position.y, target.z);
   if (entity.distanceTo(player) > 1.5) {
-    entity.moveToward(target.x, entity.position.y, target.z, (props.speed ?? 2) * dt);
+    entity.moveToward(target.x, entity.position.y, target.z, speed * dt);
   }
 }
 ```
@@ -454,27 +462,25 @@ Walk back and forth between two objects you pick in the Inspector (each enemy it
 // Walk back and forth between two objects picked in the Inspector.
 // Put this script on any number of enemies and give each its own Point A and Point B
 // (empty objects make good markers). The fields below show up in the Inspector.
-const properties = {
-  speed: 2,          // meters per second
-  pointA: field.object(),  // pick an object in the Inspector
-  pointB: field.object(),
-  wait: 0.5,         // seconds to pause at each end
-};
+export let speed = 2;               // meters per second
+export let pointA = field.object(); // pick an object in the Inspector
+export let pointB = field.object();
+export let pause = 0.5;             // seconds to wait at each end
 
 let goingToB = true;
 let waitLeft = 0;
 
 function update(dt) {
-  const target = goingToB ? props.pointB : props.pointA;
+  const target = goingToB ? pointB : pointA;
   if (!target) return;                       // not picked yet
   if (waitLeft > 0) { waitLeft -= dt; return; }
   const me = entity.getWorldPosition();
   const p = target.getWorldPosition();
   entity.lookAt(p.x, me.y, p.z);             // face it, staying upright
-  entity.moveToward(p.x, me.y, p.z, props.speed * dt);
+  entity.moveToward(p.x, me.y, p.z, speed * dt);
   if (Math.hypot(p.x - me.x, p.z - me.z) < 0.2) {
     goingToB = !goingToB;                    // turn around
-    waitLeft = props.wait;
+    waitLeft = pause;
   }
 }
 ```

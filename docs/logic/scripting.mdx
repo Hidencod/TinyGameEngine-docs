@@ -22,7 +22,7 @@ Most games can be made with **behaviors** and **event sheets** alone. When you w
   <Phone name="script-choose" caption="Choose or create the script" />
 </Row>
 
-**Properties** on the Code script component are values you can set per object in the Inspector and read in the script as `props` (e.g. a different `speed` per enemy).
+**Fields** on the Code script component are values you can set per object in the Inspector (e.g. a different `speed` per enemy). A script declares them with `export let speed = 2` and reads them as its own variables; see [Fields in the Inspector](#fields).
 
 ## The code editor
 
@@ -35,7 +35,7 @@ Tap **✏️ Edit code** on the component, or a script in the Logic tab.
   <Phone name="code-api" caption="API help" />
 </Row>
 
-- **Autocomplete** knows the real types: after `entity.behavior('car').` it lists the Car's settings and readings, after `entity.component('light').` the light's, and the same for `props`, data table rows, another script's exports (`getScript('Enemy').`), three.js and Rapier. Parameter hints show while you type a call, and holding on a name shows what it is.
+- **Autocomplete** knows the real types: after `entity.behavior('car').` it lists the Car's settings and readings, after `entity.component('light').` the light's, and the same for your fields, data table rows, another script's exports (`getScript('Enemy').`), three.js and Rapier. Parameter hints show while you type a call, and holding on a name shows what it is.
 - **Inside quotes** it offers the names that fit that spot: behaviors, components, events and controls, and your project's objects, tags, scenes, variables, buttons, sounds, images, fonts and tables. `game.find('` lists your objects; `audio.play('` your sounds.
 - **Mistakes are underlined as you type**: a name that doesn't exist, the wrong number of arguments, a missing library. They never stop the game from running. A TypeScript script is checked in full (see [TypeScript](#typescript)).
 - The **key bar** above the phone keyboard has the symbols code needs: `{ } ( ) [ ] ; . = " ' => + - * / < > ! & | , : ?`, Tab, undo, redo and cursor keys.
@@ -107,9 +107,8 @@ async function start() {                     // or write it top to bottom
 | `game` | The running game: find/spawn/destroy objects, variables, scenes, camera, raycasts, saving, [data tables](data-tables) (`game.table('Item')`). |
 | `input` | Joystick (`input.axis`), buttons (`input.isDown('jump')`), touches, swipes, keys. |
 | `audio` | `audio.play('Coin')`, `audio.stop()`. |
-| `props` | The values set in the Inspector on the Code script component. Give defaults: `props.speed ?? 5`. |
 | `vars` | A storage object for the script. |
-| `field` | The kinds of [field](#fields) for `properties`: `field.object()`, `field.image()`, `field.list(…)`… |
+| `field` | The kinds of [field](#fields): `export let target = field.object()`, `field.image()`, `field.list(…)`… |
 | helpers | `lerp`, `clamp`, `random`, `randomInt`, `deg2rad` and JavaScript’s `Math`. |
 | timers | `wait(seconds)`, `after(seconds, fn)`, `every(seconds, fn)`. See [Timers](#timers). |
 | `console` | `console.log()` writes to the Debug console. See [Print while testing](#console). |
@@ -122,41 +121,51 @@ Full list: [Scripting API](../reference/scripting-api).
 
 ## Fields in the Inspector {/* #fields */}
 
-Declare a `properties` object at the top of a script and every object that uses the script shows those fields in the Inspector, each with its own value. The script reads them as `props`.
+What a script **exports** with `export let` at its top is a **field**, like a `public` field in Unity: every object that uses the script shows it in the Inspector with its own value, and the script reads it as its own variable.
 
 ```js
-const properties = {
-  speed: 2,                                      // number, text or true / false
-  target: field.object(),                        // another object in the scene (props.target is the object, or null)
-  icon: field.image(),                           // a picture from Files
-  hit: field.sound(),                            // a sound from Files
-  drop: field.prefab(),                          // a prefab
-  kind: field.choice('Sword', 'Potion', 'Key'),  // a dropdown (props.kind is the chosen word)
-  tint: field.color('#ff8800'),                  // a colour
-  loot: field.data('Item'),                      // a row of a data table (props.loot is the row)
-  items: field.list(Item),                       // a list you add to, remove from and reorder in the Inspector
-  lamp: field.component('light'),                // an object's light (props.lamp is the light itself)
-  hp: field.behavior('health'),                  // an object's Health behavior
-  enemy: field.script('Enemy'),                  // an object's Enemy script
-};
-```
+export let speed = 2;                            // number, text or true / false
+export let target = field.object();              // another object in the scene (or null)
+export let icon = field.image();                 // a picture from Files
+export let hit = field.sound();                  // a sound from Files
+export let drop = field.prefab();                // a prefab
+export let kind = field.choice('Sword', 'Potion', 'Key');  // a dropdown: the chosen word
+export let tint = field.color('#ff8800');        // a colour
+export let loot = field.data('Item');            // a row of a data table (or null)
+export let items = field.list(Item);             // a list you add to, remove from and reorder in the Inspector
+export let lamp = field.component('light');      // an object's light
+export let hp = field.behavior('health');        // an object's Health behavior
+export let enemy = field.script('Enemy');        // an object's Enemy script
 
-`field.image()`, `field.sound()` and `field.prefab()` give you the **file**: `props.icon.name` is `"Coin.png"`, and `props.icon` is `null` when nothing is picked. Hand it to anything that takes a file: `entity.setUIImage(props.icon)` shows the picture, `audio.play(props.hit)` plays the sound, and `game.spawn(props.drop)` creates the prefab.
-
-`field.component(…)`, `field.behavior(…)` and `field.script(…)` work like a Unity field of type `Light` or `Health`. In the Inspector you pick an **object** from those that have that component, behavior or script, and the script reads that object's light, behavior or script directly:
-
-```js
-function start() {
-  props.lamp.intensity = 2;            // the light of the object picked in the Inspector
-  props.hp.damage(1);                  // its Health behavior
-  props.enemy.hp = 5;                  // what its Enemy script exports…
-  props.enemy.props.speed = 3;         // …and that script's own fields
+function update(dt) {
+  entity.translate(0, 0, speed * dt);            // the value set on this object
 }
 ```
 
-Every field can also be assigned from code (`props.target = game.find('Boss')`); from then on it holds what you assigned.
+As the script starts, each field gets the value set on its object, in place of the one written in the code. After that it is an ordinary variable: change it, and other scripts can read and change it through [`getScript()`](#components).
 
-Every kind of field is on `field`, so type `field.` to see them all. Your own variables can be called `image`, `data`, `color` or `list`: those names are yours.
+`field.image()`, `field.sound()` and `field.prefab()` give you the **file**: `icon.name` is `"Coin.png"`, and `icon` is `null` when nothing is picked. Hand it to anything that takes a file: `entity.setUIImage(icon)` shows the picture, `audio.play(hit)` plays the sound, and `game.spawn(drop)` creates the prefab.
+
+`field.component(…)`, `field.behavior(…)` and `field.script(…)` work like a Unity field of type `Light` or `Health`. In the Inspector you pick an **object** from those that have that component, behavior or script, and the script gets that object's light, behavior or script directly:
+
+```js
+function start() {
+  lamp.intensity = 2;                  // the light of the object picked in the Inspector
+  hp.damage(1);                        // its Health behavior
+  enemy.hp = 5;                        // what its Enemy script exports, its fields among them
+}
+```
+
+A field that holds an object keeps holding it after the object is destroyed: check `target.destroyed` before using one that may be gone.
+
+**Not a field:**
+- `export const`: a constant.
+- A name that starts with `_` (`export let _hp = 3`).
+- A value worked out when the script starts (`export let hp = game.getVar('hp')`), and functions and arrays.
+
+These are still exported to other scripts. `let` without `export` is the script's own.
+
+Every kind of field is on `field`, so type `field.` to see them all. Your own variables can be called `image`, `data`, `color`, `list` or `props`: those names are yours.
 
 ### Your own types
 
@@ -171,10 +180,11 @@ class Item {
   use() { return this.name + ' x' + this.stack; }
 }
 
-const properties = { bag: field.list(Item), best: Item };
+export let bag = field.list(Item);
+export let best = new Item();
 
 function start() {
-  for (const item of props.bag) game.log(item.use());   // real Item objects: methods work
+  for (const item of bag) game.log(item.use());   // real Item objects: methods work
 }
 ```
 
@@ -234,7 +244,7 @@ A problem the editor underlines **never stops the game from running**. Before th
 
 The converter and the checker are downloads the editor fetches only when they are needed, and a player's phone never loads them.
 
-Completion knows the fields `props` declares, the columns of a data table row (`game.table('Item').get('Sword').`), and what another script exports.
+Completion knows what each field holds, the columns of a data table row (`game.table('Item').get('Sword').`), and what another script exports.
 
 ## Share code with libraries {/* #libraries */}
 
@@ -281,7 +291,7 @@ Good to know:
 - **Names:** `import { damage as hit } from 'Combat'` renames; `import * as Combat from 'Combat'` (or `import Combat from 'Combat'`) gives the whole library, used as `Combat.damage(…)`.
 - **One copy:** a library runs **once per game**, the first time something imports it. Its top-level variables are shared by every script that imports it, and keep their values when the scene changes, so a library is also a good place for game-wide state.
 - **Libraries can import libraries**, but not in a circle (A imports B imports A).
-- Libraries get `game`, `input`, `audio`, `THREE` and the helpers, like a game script; there is no `entity` or `props`.
+- Libraries get `game`, `input`, `audio`, `THREE` and the helpers, like a game script; there is no `entity`, and their exports are not fields.
 - If the name is wrong, the error lists the libraries that do exist, with the line of the `import`.
 
 ## Talk to other scripts and components {/* #components */}
@@ -311,7 +321,7 @@ function onCollision(other) {
 - Each object has **its own copy**: hitting one enemy doesn't change the others' `hp`.
 - Values are live: `getScript('Enemy').hp` is always the current value.
 - You can **change** them too: `getScript('Enemy').hp = 5` changes the Enemy script's `hp`, as `GetComponent<Enemy>().hp = 5` would in Unity. An exported `const` can't be changed, and neither can a function: both stop with an error that says so.
-- The script's [Inspector fields](#fields) are there as **`props`**: `getScript('Enemy').props.speed = 3`.
+- The script's [fields](#fields) are exports too: `getScript('Enemy').speed = 3`.
 - `getScript()` gives `null` when the object has no script of that name (upper/lower case doesn't matter). It works on `entity` too, to reach another script on the same object.
 - Only what is exported can be used; `start`, `update` and the other lifecycle functions stay private.
 - The editor underlines a name in quotes that names nothing (`getScript('Enemey')`, `component('ligth')`, `game.table('Itme')`) and suggests the one you probably meant.
@@ -402,8 +412,9 @@ Objects you add yourself are not part of the scene in the editor: they exist onl
 ### Move with the joystick
 
 ```js
+export let speed = 5;   // set per object in the Inspector
+
 function update(dt) {
-  const speed = props.speed ?? 5;
   entity.translate(input.axis.x * speed * dt, 0, -input.axis.y * speed * dt);
   if (input.axis.x || input.axis.y) {
     entity.rotation.y = Math.atan2(-input.axis.x, input.axis.y) * 180 / Math.PI;
