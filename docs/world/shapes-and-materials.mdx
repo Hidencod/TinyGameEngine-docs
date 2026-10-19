@@ -39,6 +39,17 @@ Anything you can see has a **Shape & look** component. Add a shape from **Object
   <Crop name="card-mesh-model" caption="3D model: pick a model file" width={320} />
 </Row>
 
+### Extras on a material
+
+| Setting | What it does |
+| --- | --- |
+| **Steps** | With **Cartoon**: how many bands of light (2–8). 2 is a flat comic look. |
+| **Double sided** | Draw both faces. Use it for flat text, planes and leaves you see from behind. |
+| **Outline** | A colored line around the object (0 = off). It works on shapes, 3D text and imported models, including animated characters. **Outline color** picks the color. |
+| **Outline fixed on screen** | On: the line is the same thickness on screen at any distance. Off: it is part of the object and shrinks when it is far away. |
+
+The outline is a second copy of the object drawn slightly bigger behind it, so it costs about one extra object. That is cheap for a few characters; don't put it on hundreds of things.
+
 ## Sizes
 
 Shapes are 1 m across at scale 1 (the plane is 1×1 m; a new Plane is scaled 10×10). Change the size with **Scale** in the Transform card, or the Scale gizmo.

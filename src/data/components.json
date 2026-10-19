@@ -30,6 +30,11 @@
       "title": "Physics body",
       "desc": "Gravity, mass, bouncing (needs a collider)"
     },
+    "joint": {
+      "icon": "🔗",
+      "title": "Joint",
+      "desc": ""
+    },
     "audio": {
       "icon": "🔊",
       "title": "Sound",
@@ -69,6 +74,11 @@
       "icon": "🌊",
       "title": "Water",
       "desc": "Lake or sea: things float, characters swim"
+    },
+    "curve": {
+      "icon": "➰",
+      "title": "Curve",
+      "desc": ""
     },
     "sprite": {
       "icon": "🎞️",

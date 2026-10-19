@@ -10,6 +10,7 @@
     "Object",
     "Physics",
     "Health",
+    "Curve",
     "Text",
     "UI",
     "Behaviors",
@@ -28,6 +29,7 @@
     "Object": "📦",
     "Physics": "🧱",
     "Health": "❤️",
+    "Curve": "➰",
     "Text": "🔤",
     "UI": "🖼️",
     "Behaviors": "🧩",
@@ -1193,6 +1195,91 @@
             }
           ],
           "default": "bump",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.enterFullscreen",
+      "kind": "action",
+      "category": "System",
+      "label": "Enter fullscreen",
+      "hint": "Fill the screen (run it from a Button tap)",
+      "display": "Enter fullscreen",
+      "displayNoObject": null,
+      "icon": "⛶",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "system.exitFullscreen",
+      "kind": "action",
+      "category": "System",
+      "label": "Exit fullscreen",
+      "hint": "Go back to the normal window",
+      "display": "Exit fullscreen",
+      "displayNoObject": null,
+      "icon": "🗗",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "system.lockOrientation",
+      "kind": "action",
+      "category": "System",
+      "label": "Lock orientation",
+      "hint": "Keep the screen landscape or portrait (run it from a Button tap)",
+      "display": "Lock orientation ({orientation})",
+      "displayNoObject": null,
+      "icon": "🔒",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "orientation",
+          "label": "Orientation",
+          "type": "choice",
+          "options": [
+            {
+              "value": "project",
+              "label": "Project setting"
+            },
+            {
+              "value": "landscape",
+              "label": "Landscape"
+            },
+            {
+              "value": "portrait",
+              "label": "Portrait"
+            },
+            {
+              "value": "free",
+              "label": "Free (rotate with the device)"
+            }
+          ],
+          "default": "project",
           "optional": false,
           "hint": null,
           "varScope": null
@@ -2522,6 +2609,86 @@
       "noInvert": false,
       "isWait": false,
       "params": []
+    },
+    {
+      "id": "object.onCurveEnd",
+      "kind": "condition",
+      "category": "Curve",
+      "label": "On reached end of curve",
+      "hint": "Follow curve got to the end",
+      "display": "On {object} reached the end of its curve",
+      "displayNoObject": null,
+      "icon": "➰",
+      "description": "",
+      "isTrigger": true,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.compareCurveProgress",
+      "kind": "condition",
+      "category": "Curve",
+      "label": "Compare curve progress",
+      "hint": "0 = start, 1 = end",
+      "display": "{object} curve progress {op} {value}",
+      "displayNoObject": null,
+      "icon": "➰",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "op",
+          "label": "Comparison",
+          "type": "choice",
+          "options": [
+            {
+              "value": "<",
+              "label": "<"
+            },
+            {
+              "value": "≤",
+              "label": "≤"
+            },
+            {
+              "value": "=",
+              "label": "="
+            },
+            {
+              "value": "≥",
+              "label": "≥"
+            },
+            {
+              "value": ">",
+              "label": ">"
+            }
+          ],
+          "default": "≥",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Progress (0 to 1)",
+          "type": "number",
+          "options": null,
+          "default": "0.5",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
     },
     {
       "id": "object.isMovingTo",
@@ -4464,6 +4631,25 @@
       ]
     },
     {
+      "id": "object.breakJoint",
+      "kind": "action",
+      "category": "Physics",
+      "label": "Break joint",
+      "hint": "Cut its Joint (rope snaps, door torn off)",
+      "display": "Break {object} joint",
+      "displayNoObject": null,
+      "icon": "✂️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
       "id": "object.applyForce",
       "kind": "action",
       "category": "Physics",
@@ -4537,6 +4723,79 @@
           "type": "number",
           "options": null,
           "default": "7",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.setCurveProgress",
+      "kind": "action",
+      "category": "Curve",
+      "label": "Set curve progress",
+      "hint": "Jump to a place on the curve",
+      "display": "Set {object} curve progress to {value}",
+      "displayNoObject": null,
+      "icon": "➰",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "value",
+          "label": "Progress (0 start … 1 end)",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.playCurve",
+      "kind": "action",
+      "category": "Curve",
+      "label": "Play / pause curve",
+      "hint": "Start, stop or restart following",
+      "display": "{object} curve: {mode}",
+      "displayNoObject": null,
+      "icon": "➰",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "mode",
+          "label": "Do",
+          "type": "choice",
+          "options": [
+            {
+              "value": "play",
+              "label": "Play"
+            },
+            {
+              "value": "pause",
+              "label": "Pause"
+            },
+            {
+              "value": "restart",
+              "label": "Restart from the start"
+            }
+          ],
+          "default": "play",
           "optional": false,
           "hint": null,
           "varScope": null
@@ -5581,6 +5840,14 @@
               "label": "cameraFollow"
             },
             {
+              "value": "firstPerson",
+              "label": "firstPerson"
+            },
+            {
+              "value": "followCurve",
+              "label": "followCurve"
+            },
+            {
               "value": "rotate",
               "label": "rotate"
             },
@@ -5660,6 +5927,14 @@
             {
               "value": "cameraFollow",
               "label": "cameraFollow"
+            },
+            {
+              "value": "firstPerson",
+              "label": "firstPerson"
+            },
+            {
+              "value": "followCurve",
+              "label": "followCurve"
             },
             {
               "value": "rotate",

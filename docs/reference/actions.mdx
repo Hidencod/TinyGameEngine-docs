@@ -16,9 +16,9 @@ Actions are the **DO** part of an event. They run from top to bottom when the ev
 Number and text fields accept expressions, e.g. `Score + 1`, `"Score: " + Score`, `Player.x`, `random(1, 6)`. See [Expressions](./expressions).
 :::
 
-There are **125 actions**, grouped by category as in the action picker.
+There are **131 actions**, grouped by category as in the action picker.
 
-[⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🧱 Physics](#physics) · [❤️ Health](#health) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera)
+[⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera)
 
 ## ⚙️ System {/* #system */}
 
@@ -73,6 +73,39 @@ A short buzz you can feel, great with Shake camera. Works on Android phones; ign
 | Parameter | Type | Default | Notes |
 | --- | --- | --- | --- |
 | Strength | Choice | `bump` | Options: Tap (very light), Bump, Hit (strong), Long buzz |
+
+### Enter fullscreen {/* #system-enterfullscreen */}
+
+<span class="tge-ace-display">Enter fullscreen</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `system.enterFullscreen` (as saved in project files)
+- **Parameters:** none
+
+### Exit fullscreen {/* #system-exitfullscreen */}
+
+<span class="tge-ace-display">Exit fullscreen</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `system.exitFullscreen` (as saved in project files)
+- **Parameters:** none
+
+### Lock orientation {/* #system-lockorientation */}
+
+<span class="tge-ace-display">Lock orientation (‹Orientation›)</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `system.lockOrientation` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Orientation | Choice | `project` | Options: Project setting, Landscape, Portrait, Free (rotate with the device) |
 
 ### Pause game {/* #system-pause */}
 
@@ -1051,6 +1084,16 @@ Give the object a sudden push (needs a Rigid body).
 | Y | Number (expression) | `5` |  |
 | Z | Number (expression) | `0` |  |
 
+### Break joint {/* #object-breakjoint */}
+
+<span class="tge-ace-display">Break ‹Object› joint</span>
+
+
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.breakJoint` (as saved in project files)
+- **Parameters:** none
+
 ### Apply force {/* #object-applyforce */}
 
 <span class="tge-ace-display">Apply force (‹X›, ‹Y›, ‹Z›) to ‹Object›</span>
@@ -1107,6 +1150,34 @@ Give the object health back, up to its Max health (it needs the Health behavior)
 | Parameter | Type | Default | Notes |
 | --- | --- | --- | --- |
 | Amount | Number (expression) | `1` |  |
+
+## ➰ Curve {/* #curve */}
+
+### Set curve progress {/* #object-setcurveprogress */}
+
+<span class="tge-ace-display">Set ‹Object› curve progress to ‹Progress (0 start … 1 end)›</span>
+
+
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.setCurveProgress` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Progress (0 start … 1 end) | Number (expression) | `0` |  |
+
+### Play / pause curve {/* #object-playcurve */}
+
+<span class="tge-ace-display">‹Object› curve: ‹Do›</span>
+
+
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.playCurve` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Do | Choice | `play` | Options: Play, Pause, Restart from the start |
 
 ## 🔤 Text {/* #text */}
 
@@ -1437,7 +1508,7 @@ Turn one of the object's behaviors on or off.
 
 | Parameter | Type | Default | Notes |
 | --- | --- | --- | --- |
-| Behavior | Behavior | `platformer` | Options: platformer, topdown, car, cameraFollow, rotate, bullet, sine, follow, destroyOffscreen, draggable |
+| Behavior | Behavior | `platformer` | Options: platformer, topdown, car, cameraFollow, firstPerson, followCurve, rotate, bullet, sine, follow, destroyOffscreen, draggable |
 | Enabled | Yes / No (expression) | `true` |  |
 
 ### Set behavior setting {/* #object-setbehaviorparam */}
@@ -1451,7 +1522,7 @@ Change a behavior setting, e.g. platformer speed.
 
 | Parameter | Type | Default | Notes |
 | --- | --- | --- | --- |
-| Behavior | Behavior | `platformer` | Options: platformer, topdown, car, cameraFollow, rotate, bullet, sine, follow, destroyOffscreen, draggable |
+| Behavior | Behavior | `platformer` | Options: platformer, topdown, car, cameraFollow, firstPerson, followCurve, rotate, bullet, sine, follow, destroyOffscreen, draggable |
 | Setting | Text | `speed` |  |
 | Value | Expression | `5` |  |
 

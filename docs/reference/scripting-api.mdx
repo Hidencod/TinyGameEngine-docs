@@ -38,6 +38,7 @@ Define any of these in a script; the engine calls them.
 | `onEndDrag(event)` | The player let go after dragging this UI element. | ✔ |  |
 | `onDrop(event)` | Something was dropped on this UI element. event.dragged is the element that was dragged; event.entity is this one. | ✔ |  |
 | `onArrived()` | It reached the point of entity.moveTo() (or got as close as it could). | ✔ |  |
+| `onCurveEnd()` | This entity (with Follow curve) reached the end of its curve: each time round when it loops, each end when it ping-pongs. | ✔ |  |
 | `onDestroy()` | This entity is about to be destroyed. | ✔ |  |
 
 ## `entity` — entity {/* #entity */}
@@ -74,6 +75,7 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `getVelocity()` | `{x,y,z}` | Physics velocity (m/s). |
 | `setVelocity(x, y, z)` | `void` | Set physics velocity. |
 | `applyImpulse(x, y, z)` | `void` | Instant push, e.g. a jump: applyImpulse(0, 5, 0) |
+| `breakJoint()` | `void` | Cut this object's Joint component (a rope snaps, a door is torn off). |
 | `applyForce(x, y, z)` | `void` | Continuous push (call every frame). |
 | `isOnGround()` | `boolean` | True if a dynamic body rests on something. |
 | `setColor(hex)` | `void` | Change material color, e.g. setColor("#ff0000") |
@@ -213,6 +215,9 @@ The running game.
 | `shakeCamera(intensity, duration)` | `void` | Shake the camera. |
 | `debug` | `{drawLine,drawRay,drawSphere,drawCircle,drawBox,drawPoint,clear}` | Draw shapes over the game to check positions and sizes, like Unity Debug.DrawLine and Gizmos: game.debug.drawSphere(enemy.position, 5, "#ff0000"), drawLine(a, b, color, seconds), drawRay(origin, direction), drawCircle(center, radius), drawBox(center, size), drawPoint(position). Seconds default to 0 = one frame, so call it every update(). |
 | `vibrate(ms)` | `void` | Vibrate the phone, e.g. vibrate(40) on a hit (Android; ignored elsewhere). |
+| `enterFullscreen()` | `Promise<void>` | Fill the screen. Browsers only allow it inside a tap, so call it from a Button's On Click. |
+| `exitFullscreen()` | `Promise<void>` | Leave fullscreen. |
+| `lockOrientation(mode?)` | `Promise<void>` | Keep the screen 'landscape' or 'portrait'. 'project' (default) uses the project setting, 'free' lets it rotate. Call from a tap. |
 | `on(event, fn)` | `unsubscribe` | Listen: "sceneStart", "collisionStart", "entityCreated", "waterEnter", ... |
 | `after(seconds, fn, owner?)` | `cancel` | Run fn once after a delay of game time. In a script, plain after(seconds, fn) belongs to the object of the script already; this one takes the object to belong to, or none. |
 | `every(seconds, fn, owner?)` | `stop` | Run fn every so many seconds of game time until the function it returns is called. In a script, plain every(seconds, fn) belongs to the object of the script already. |

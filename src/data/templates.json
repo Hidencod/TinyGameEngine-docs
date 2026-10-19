@@ -48,6 +48,12 @@
     "icon": "⛰️"
   },
   {
+    "id": "firstPerson",
+    "name": "First person",
+    "description": "Walk and look around an arena in first person, jump onto the blocks and collect every coin.",
+    "icon": "👁️"
+  },
+  {
     "id": "racing",
     "name": "Kart racing",
     "description": "Race 3 laps around an oval against the clock. Beat your best lap!",

@@ -1,6 +1,6 @@
 ---
 title: Behaviors
-description: Ready-made movement and logic — platformer, top-down, car, camera follow, rotate, bullet, wave, follow, destroy when far, draggable, health.
+description: Ready-made movement and logic — platformer, top-down, car, camera follow, rotate, bullet, wave, follow, destroy when far, draggable, health, first person, follow curve.
 ---
 
 # Behaviors
@@ -195,6 +195,40 @@ Put it **on the camera**: it smoothly follows a target.
 | **Limit min X / max X / min Y / max Y** | −10, 10, −5, 10 | The box in world meters: the left and right edges, and the bottom and top. |
 
 </Side>
+
+## 👁️ First person {/* #first-person */}
+
+Put it **on the camera**: the view sits at the eyes of a target (the player) and turns where the player looks. The player's own movement ([Platformer](#platformer) or [Top-down](#topdown)) is relative to the camera, so *forward* goes where you look.
+
+| Setting | Default | What it does |
+| --- | --- | --- |
+| **Target** | Player | The object whose eyes the camera takes. |
+| **Eye height** | 0.6 | How high above the target's middle the eyes are, in meters. |
+| **Look speed** | 1 | How fast the view turns. 2 = twice as fast. |
+| **Invert Y** | off | Swap up and down for looking. |
+| **Min pitch / Max pitch** | −85, 85 | The lowest and highest the player can look, in degrees. |
+| **Turn body** | on | The target turns with the view, so it faces where you look. |
+| **Hide body** | on | The target is hidden from its own camera, so you never see inside it. |
+
+Look input: on a computer, click the game and move the mouse (Esc frees the mouse); with a gamepad, the right stick; on a phone, drag the free side of the screen. The [First person template](./templates#firstperson) is a complete example.
+
+## ➰ Follow curve {/* #follow-curve */}
+
+Travels along a [Curve](./world/curve) at a steady speed. It moves the object every frame, so use it on objects without Physics, or with a kinematic body (a static body is made kinematic for you, as with a moving platform).
+
+| Setting | Default | What it does |
+| --- | --- | --- |
+| **Curve** | (this object) | Which object's curve to follow, picked from a list. Empty = a Curve on the same object. |
+| **Speed** | 4 | Meters per second. |
+| **Mode** | loop | *Loop* starts again at the end, *Ping-pong* goes back and forth, *Once* stops at the end. |
+| **Start at** | 0 | Where it starts, 0 (beginning) to 1 (end). |
+| **Face forward** | on | Turn to look along the curve. This is also what makes the curve's **Tilt** lean the object. |
+| **Upright** | on | Face forward without pitching up or down on slopes. |
+| **Playing** | on | Turn off to pause. |
+
+When the Curve is on its own object, the path stays where it was when the game started, so the object doesn't drag its own track along. When it is on another object, the path moves with that object, so a curve on a moving platform carries its rider.
+
+Events: **On reached end of curve**, **Compare curve progress**, **Set curve progress** and **Play / pause curve** (see [Curve](./world/curve#events)).
 
 ## 🏞️ Parallax {/* #parallax */}
 

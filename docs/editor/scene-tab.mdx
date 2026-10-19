@@ -27,12 +27,14 @@ The cards below can be folded by tapping their title.
 
 | Field | What it does |
 | --- | --- |
-| **Background** | **Color** (a plain color) or **Sky image (360°)**. |
+| **Background** | **Color** (a plain color), **Sky image (360°)** or **Sky (sun and clouds)**. |
 | **Color** | The background color. |
 | **Ambient light** | Color of the soft light that reaches everything, even in shadow. |
 | **Ambient strength** | How strong it is (0–2). Lower it for a darker, moodier scene. |
 | **Fog** | Fades far things into the fog color. Also hides the edge of big worlds and helps performance. |
 | **Fog color / starts at / fully at** | Color, the distance where fog begins, and the distance where it is solid. |
+| **Tone mapping** | Squeezes bright light into a film-like picture: *None*, *ACES (film)*, *Neutral* or *AgX*. Pick one and an **Exposure** slider appears (lower = darker). |
+| **Glow (bloom)** | Bright things glow. See [Glow](#glow). |
 
 ### Sky image
 
@@ -55,6 +57,27 @@ Then:
 | **Sky brightness** | 1 = the image as it is. |
 | **Light with sky** | Objects with the **Realistic** material get reflections and soft light from the sky. |
 | **Loading color** | Shown until the sky has loaded. |
+
+### Sky (sun and clouds)
+
+A sky drawn live, with a sun and clouds, and it lights the scene. No image needed.
+
+| Field | What it does |
+| --- | --- |
+| **Sun from light object** | On: the sun sits where the scene's first **Directional light** points, and the sky follows it as you turn that light. Off: use the two sliders below. |
+| **Sun height / Sun direction** | Where the sun is: degrees above the horizon (0–90) and around you. Low gives a sunset. |
+| **Sun size** | The size of the sun's disc. |
+| **Haze** | More haze whitens the sky and warms the horizon. |
+| **Sky blue** | How blue the clear sky is. |
+| **Clouds / Cloud thickness / Cloud height** | How much of the sky is covered, how dense the clouds are, and how high they drift. |
+| **Light with sky** | The sky lights objects with the **Realistic** material (reflections and soft light). **Sky light** sets how strongly. |
+| **Sun light / Sun light strength** | Only when *Sun from light object* is off: adds a sun that casts light, warms toward sunset and dims as the sun sets. |
+
+Choosing it the first time also turns on **Tone mapping: ACES**, which a bright sky needs to look right.
+
+### Glow
+
+**Glow (bloom)** makes anything brighter than a level glow softly: lamps, fire, neon, the sun. **Glow strength**, **Glow spread** and **Glow above** (how bright something must be before it glows) tune it. It is drawn in the game, not in the editor view, and costs speed on weak phones, so keep it off unless you want it. Materials with a bright **Emissive** color are what glow.
 
 ## Scene variables
 

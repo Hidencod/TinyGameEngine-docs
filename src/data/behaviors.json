@@ -8,13 +8,25 @@
       "sideView": false,
       "climb": false,
       "climbSpeed": 3,
-      "animate": true
+      "animate": true,
+      "controller": "physics",
+      "maxSlope": 50,
+      "slideSlope": 45,
+      "snapDistance": 0.5,
+      "stepHeight": 0.3,
+      "stepWidth": 0.1
     },
     "topdown": {
       "speed": 5,
       "turnToDirection": true,
       "cameraRelative": true,
-      "animate": true
+      "animate": true,
+      "controller": "physics",
+      "maxSlope": 50,
+      "slideSlope": 45,
+      "snapDistance": 0.5,
+      "stepHeight": 0.3,
+      "stepWidth": 0.1
     },
     "boat": {
       "speed": 8,
@@ -61,6 +73,25 @@
       "limitMaxX": 10,
       "limitMinY": -5,
       "limitMaxY": 10
+    },
+    "firstPerson": {
+      "target": "Player",
+      "eyeHeight": 0.6,
+      "lookSpeed": 1,
+      "invertY": false,
+      "minPitch": -85,
+      "maxPitch": 85,
+      "turnBody": true,
+      "hideBody": true
+    },
+    "followCurve": {
+      "curve": "",
+      "speed": 4,
+      "mode": "loop",
+      "startAt": 0,
+      "faceForward": true,
+      "upright": true,
+      "playing": true
     },
     "parallax": {
       "factorX": 0.5,
@@ -137,6 +168,16 @@
       "icon": "🎥",
       "title": "Camera follow",
       "desc": "Put on the camera to follow a target"
+    },
+    "followCurve": {
+      "icon": "➰",
+      "title": "Follow curve",
+      "desc": ""
+    },
+    "firstPerson": {
+      "icon": "👁️",
+      "title": "First person",
+      "desc": ""
     },
     "parallax": {
       "icon": "🏞️",

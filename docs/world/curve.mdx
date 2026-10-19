@@ -1,0 +1,59 @@
+---
+title: Curve
+description: A smooth path through points you drag in the viewport — for roads, rails, flight paths and patrols. Objects ride it with Follow curve.
+---
+
+# Curve
+
+<Art name="island" size={110} />
+
+A **Curve** is a smooth line through a list of points. It draws nothing in the game; it is a path. Put an object on it with the [Follow curve](../behaviors#follow-curve) behavior and it travels along: a train on rails, a patrolling guard, a camera flythrough, a moving platform with a curvy route.
+
+## Add a curve
+
+**Objects → ＋ Add → Curve**. You get a curve with four points. Select it and the points show as dots in the viewport.
+
+- **Drag a dot** to move it.
+- **Tap a dot** to pick it. The move handles appear on it: drag an arrow to slide it along one axis, or a square to slide it in a plane.
+- Switch to the **Rotate** tool with a point picked to **tilt** it (below).
+- **Tap empty space** to let go of the point.
+
+Moving or rotating the curve object moves the whole path, so you can place a finished track anywhere.
+
+## Settings
+
+| Setting | What it does |
+| --- | --- |
+| **Curve type** | *Smooth (centripetal)* is the default and never loops or overshoots at tight corners. *Catmull-Rom (tension)* adds a **Tension** slider (0–1). *Chordal* hugs the points more tightly. |
+| **Closed** | Joins the last point back to the first, for a race track or a patrol circuit. |
+| **Points** | Each point has **X / Y / Z** and **Tilt (°)**. **Add point** puts a new one after the last (up to 64); 🗑 removes one (a curve keeps at least 2). |
+
+## Tilt
+
+Tilt rolls an object around the direction it is travelling, the way a plane banks into a turn or a roller coaster leans on a bend. It is set **per point**, in degrees. **Positive leans to the right**, looking the way the object travels.
+
+- With a point picked, choose the **Rotate** tool: one ring appears around the line's direction. Drag it. **Snap** makes it step by 15°.
+- Or type a value in the point's **Tilt (°)** field.
+- A short cyan stick on every point shows which way is *up* there.
+
+Between two points the tilt eases smoothly from one value to the other, so give a banked corner a tilt and the points on each side 0.
+
+Tilt only affects objects that follow the curve with **Face forward** on.
+
+## Events
+
+| Block | When |
+| --- | --- |
+| **On reached end of curve** | An object with Follow curve got to the end: each time round when it loops, each end when it ping-pongs, once when it plays once. |
+| **Compare curve progress** | *Progress* is 0 at the start and 1 at the end. |
+| **Set curve progress** | Jump to a place on the curve. |
+| **Play / pause curve** | *Play*, *Pause* or *Restart from the start*. |
+
+They show up under the **Curve** group for objects that have the Follow curve behavior.
+
+```text
+On Train reached the end of its curve  →  Add 1 to Laps
+Compare Train curve progress ≥ 0.5     →  Show "Halfway!"
+```
+
+In scripts, `onCurveEnd()` runs on the entity, and `entity.behavior('followCurve')` has `progress`, `distance`, `length`, `isMoving`, `isReversed`, `play()`, `pause()` and `restart()`.
