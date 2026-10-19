@@ -17,8 +17,9 @@ Your players may have much cheaper phones than yours. Check the **fps** counter 
 4. **Antialias** — leave it off for low-end phones.
 5. **Particles** — lower *Max particles* per effect and for the whole project; use fewer, bigger particles.
 6. **Models** — low-poly models and small textures (1024 px or less). Reusing the same model many times is cheap.
-7. **Fog** — hides far-away things and lets you keep worlds small.
-8. **Remove what’s gone** — use *Destroy when far* on bullets and spawned objects, and destroy things behind the player in runners.
+7. **Copies** — the game draws copies of the same shape and material (trees, fence posts, coins, tiles) together in one go, so hundreds are cheap. It does this by itself for objects that only have a Mesh (and maybe a Collider): no Physics, behaviors, animation or script-given own material. Objects that move, hide or are destroyed still work. Watch **calls** in Play mode to see it.
+8. **Fog** — hides far-away things and lets you keep worlds small.
+9. **Remove what’s gone** — use *Destroy when far* on bullets and spawned objects, and destroy things behind the player in runners.
 
 ## Physics
 
