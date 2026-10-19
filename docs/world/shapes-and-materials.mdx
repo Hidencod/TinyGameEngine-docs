@@ -50,6 +50,21 @@ Anything you can see has a **Shape & look** component. Add a shape from **Object
 
 The outline is a second copy of the object drawn slightly bigger behind it, so it costs about one extra object. That is cheap for a few characters; don't put it on hundreds of things.
 
+## 3D text
+
+**Objects → ＋ Add → Text (3D)** puts words in the world as real letters. Select it and use the **Mesh** card (Shape: *Text (3D)*):
+
+| Setting | What it does |
+| --- | --- |
+| **Text** | The words. New lines are allowed; each line is centered. |
+| **Font** | One of your fonts, or the built-in one. |
+| **Depth** | How thick the letters are. **0 makes them flat**: just the shape of the letters, shown from both sides. |
+| **Bevel** | Rounded edges on thick letters. |
+| **Style** | Flat text only: **Filled**, **Lines only** (just the outline of each letter) or **Filled + lines**. |
+| **Line color** | The color of those lines (the material's color if you don't pick one). |
+
+For a see-through blueprint look, make the text flat, set **Style** to *Filled + lines*, and lower the material's **Opacity** to about 0.4. The size of the object (its **Scale**) is the height of the letters in meters. Change the words while playing with **Set text** (or `entity.setText()`).
+
 ## Sizes
 
 Shapes are 1 m across at scale 1 (the plane is 1×1 m; a new Plane is scaled 10×10). Change the size with **Scale** in the Transform card, or the Scale gizmo.
