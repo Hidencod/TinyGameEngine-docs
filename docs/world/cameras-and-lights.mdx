@@ -49,6 +49,10 @@ Add lights from **＋ Add → Lights**. Every scene starts with a **Sun**. Chang
 
 Common fields: **Color**, **Brightness** (0–5), **Casts shadows**.
 
+### Shadow cascades
+
+A **Sun** that casts shadows has **Shadow cascades** (Off, 2, 3 or 4). Off is one shadow map that follows the camera: sharp up close, but it reaches only a short way. With cascades, the shadow is cut into several maps of growing size, so shadows stay sharp near the camera and still reach about 120 m, which suits big outdoor scenes. It works in the game only (the editor view keeps the single map), and only for one Sun per scene. Each cascade is one more shadow draw, so use **2** on phones; Low graphics quality (shadows off) turns cascades off with the rest.
+
 :::tip[Lighting on phones]
 Shadows are the most expensive part of drawing. Keep **one** shadow-casting light (the sun), turn shadows off on lamps, and use **Ambient light** (Scene tab) or a Sky light to brighten dark areas. You can turn all shadows off in [Project settings](../editor/project-settings).
 :::

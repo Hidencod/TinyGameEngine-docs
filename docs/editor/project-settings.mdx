@@ -36,18 +36,18 @@ Open with **⋮ → Project settings** or **Scene tab → ⚙ Project**.
 
 ### Quality levels
 
-Like Unity's Quality Settings, the game has three levels: **Low**, **Medium** and **High**. Each is a set of the fields above (plus **Glow (bloom)** for Low and Medium: off means the scene's glow is not drawn).
+Like Unity's Quality Settings, the game has three levels: **Low**, **Medium** and **High**. Each is a set of the fields above (plus **Screen effects** for Low and Medium: off means the scene's glow, vignette, depth of field and the other [screen effects](./scene-tab#screen-effects) are not drawn).
 
 - **High** is your project's own settings, the ones you had before.
-- **Medium** and **Low** start as lighter versions of High (a lower pixel ratio, no smooth edges; Low also has no shadows and no glow, and fewer particles). Pick **Edit level** and change anything.
-- The scene's own **Glow (bloom)** stays your choice: a level can switch it off but never force it on.
+- **Medium** and **Low** start as lighter versions of High (a lower pixel ratio, no smooth edges; Low also has no shadows and no screen effects, and fewer particles). Pick **Edit level** and change anything.
+- The scene's own screen effects stay your choice: a level can switch them off but never add any.
 
 The game starts at **Starts at quality**, or at the level the player chose last time (it is saved on the device). Let players change it with events or a script:
 
-- Event actions (group **Graphics**): *Set graphics quality*, *Set resolution scale*, *Set shadows*, *Set glow (bloom)*, *Set max particles*, *Set antialiasing (smooth edges)*, and the condition *Graphics quality is*.
-- Scripts: `game.quality.level = "low"`, or one setting: `game.quality.pixelRatio = 1`, `.shadows = false`, `.glow = false`, `.maxParticles = 300`.
+- Event actions (group **Graphics**): *Set graphics quality*, *Set resolution scale*, *Set shadows*, *Set screen effects*, *Set max particles*, *Set antialiasing (smooth edges)*, and the condition *Graphics quality is*.
+- Scripts: `game.quality.level = "low"`, or one setting: `game.quality.pixelRatio = 1`, `.shadows = false`, `.effects = false`, `.maxParticles = 300`.
 
-Setting a level also resets the single settings to that level. **Smooth edges (antialiasing)** can only change when the game starts, so a new value counts from the next start; **glow** can be switched off any time, but switched on again only if the game started with glow allowed. Use **Play → fps** and its draw-call line to see what a level saves.
+Setting a level also resets the single settings to that level. **Smooth edges (antialiasing)** can only change when the game starts, so a new value counts from the next start; **screen effects** can be switched off any time, but switched on again only if the game started with them allowed. Use **Play → fps** and its draw-call line to see what a level saves.
 
 See [Performance tips](../help/performance).
 

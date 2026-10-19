@@ -1204,6 +1204,161 @@
       ]
     },
     {
+      "id": "system.placeDecal",
+      "kind": "action",
+      "category": "Graphics",
+      "label": "Place decal",
+      "hint": "Stick a bullet hole, blood or scorch mark on a surface (from a collision it goes where it hit)",
+      "display": "Place {look} decal at ({x}, {y}, {z})",
+      "displayNoObject": null,
+      "icon": "🕳️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "look",
+          "label": "Look",
+          "type": "choice",
+          "options": [
+            {
+              "value": "bulletHole",
+              "label": "Bullet hole"
+            },
+            {
+              "value": "splat",
+              "label": "Splat"
+            },
+            {
+              "value": "scorch",
+              "label": "Scorch mark"
+            },
+            {
+              "value": "crack",
+              "label": "Crack"
+            },
+            {
+              "value": "footprint",
+              "label": "Footprint"
+            },
+            {
+              "value": "image",
+              "label": "My image"
+            }
+          ],
+          "default": "bulletHole",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "image",
+          "label": "Image (for My image)",
+          "type": "image",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "x",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "hitX",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "type": "number",
+          "options": null,
+          "default": "hitY",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Z",
+          "type": "number",
+          "options": null,
+          "default": "hitZ",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "nx",
+          "label": "Normal X",
+          "type": "number",
+          "options": null,
+          "default": "hitNormalX",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "ny",
+          "label": "Normal Y",
+          "type": "number",
+          "options": null,
+          "default": "hitNormalY",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "nz",
+          "label": "Normal Z",
+          "type": "number",
+          "options": null,
+          "default": "hitNormalZ",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "size",
+          "label": "Size (m)",
+          "type": "number",
+          "options": null,
+          "default": "0.4",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "color",
+          "label": "Color",
+          "type": "color",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "lifetime",
+          "label": "Lifetime (s, 0 = stays)",
+          "type": "number",
+          "options": null,
+          "default": "20",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "system.setQuality",
       "kind": "action",
       "category": "Graphics",
@@ -1359,12 +1514,12 @@
       ]
     },
     {
-      "id": "system.setGlow",
+      "id": "system.setEffects",
       "kind": "action",
       "category": "Graphics",
-      "label": "Set glow (bloom)",
-      "hint": "Switch the glow effect off to save speed",
-      "display": "Set glow {state}",
+      "label": "Set screen effects",
+      "hint": "Glow, vignette, depth of field and the rest: switch them off to save speed",
+      "display": "Set screen effects {state}",
       "displayNoObject": null,
       "icon": "✨",
       "description": "",

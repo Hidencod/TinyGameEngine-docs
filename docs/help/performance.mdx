@@ -11,11 +11,11 @@ Your players may have much cheaper phones than yours. Check the **fps** counter 
 
 ## Biggest wins first
 
-1. **Shadows** — the most expensive thing to draw. Keep one shadow-casting light (the sun); turn *Casts shadows* off on lamps and on small objects; or turn all **Shadows** off in [Project settings](../editor/project-settings).
+1. **Shadows** — the most expensive thing to draw. Keep one shadow-casting light (the sun; its **Shadow cascades** cost one extra shadow draw each, so 2 on phones); turn *Casts shadows* off on lamps and on small objects; or turn all **Shadows** off in [Project settings](../editor/project-settings).
 2. **Quality levels** — set up Low, Medium and High in [Project settings](../editor/project-settings#quality-levels) and let players pick one (event *Set graphics quality*, or `game.quality.level` in a script).
 3. **Max pixel ratio** — `1` to `1.5` is plenty on phones (Project settings). Higher values draw many more pixels for little visible gain.
 3. **Materials** — **Matte (fast)** and **Unlit** are cheapest; use **Realistic** only where it shows.
-4. **Antialias** — leave it off for low-end phones.
+4. **Antialias** — leave it off for low-end phones. If edges look rough, use **Edge smoothing (FXAA)** in the Scene tab: it costs far less. Of the [screen effects](../editor/scene-tab#screen-effects), depth of field and ambient occlusion are the heavy ones.
 5. **Particles** — lower *Max particles* per effect and for the whole project; use fewer, bigger particles.
 6. **Models** — low-poly models and small textures (1024 px or less). Reusing the same model many times is cheap.
 7. **Copies** — the game draws copies of the same shape and material (trees, fence posts, coins, tiles) together in one go, so hundreds are cheap. It does this by itself for objects that only have a Mesh (and maybe a Collider): no Physics, behaviors, animation or script-given own material. Objects that move, hide or are destroyed still work. Watch **calls** in Play mode to see it.

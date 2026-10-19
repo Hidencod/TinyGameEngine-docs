@@ -1,0 +1,44 @@
+---
+title: Decals
+description: Stick a bullet hole, blood splat, scorch mark, crack or footprint onto any surface while the game runs.
+---
+
+# Decals
+
+A **decal** is a picture stuck onto a surface: a bullet hole in a wall, blood on the floor, a scorch mark after an explosion, a footprint in the mud. It bends around bumps and corners, and it rides along with the object it was put on.
+
+Decals are made while the game runs, from an event or a script. There is nothing to place in the editor.
+
+## From an event
+
+Use **Graphics → Place decal**. In a collision event, the defaults already put it where the hit happened (`hitX`, `hitY`, `hitZ`) facing away from the surface (`hitNormalX`, `hitNormalY`, `hitNormalZ`).
+
+```text
+On Bullet collides with Wall  →  Place Bullet hole decal
+```
+
+| Setting | What it does |
+| --- | --- |
+| **Look** | *Bullet hole*, *Splat*, *Scorch mark*, *Crack*, *Footprint*, or *My image* (an image from Files, with see-through parts). |
+| **X / Y / Z** | Where the surface is. |
+| **Normal X / Y / Z** | The way the surface faces. Up for a floor: `0, 1, 0`. |
+| **Size** | Width in meters. Default 0.4. |
+| **Color** | A tint. Empty = the look's own color (dark for holes, red for splats). |
+| **Lifetime** | Seconds before it fades out. 0 keeps it for good. Default 20. |
+
+## From a script
+
+```js
+game.addDecal(hit.point, hit.normal, { image: "bulletHole", size: 0.3 })
+game.addDecal({ x: 0, y: 0, z: 0 }, { x: 0, y: 1, z: 0 }, { image: "Blood", lifetime: 60 })
+```
+
+`image` is a built-in look (`bulletHole`, `splat`, `scorch`, `crack`, `footprint`) or the name of an image in Files. Also `color`, `lifetime` and `roll` (turn on the surface in degrees; random if left out). It returns `false` when there is no surface at that point.
+
+## Good to know
+
+- At most **60** decals exist at once. A new one removes the oldest.
+- A decal is put on the surface just under the point you give (it looks about 0.7 m against the normal).
+- Decals follow a moving object (a door, a crate). On an object stretched unevenly (a wall made by scaling a cube to 10 × 3 × 0.2 and turning it) the decal stays where it was put instead of following.
+- Animated characters (skinned models) don't take decals.
+- A decal goes with the object when that object is destroyed.

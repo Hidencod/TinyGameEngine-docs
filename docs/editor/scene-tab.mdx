@@ -79,6 +79,22 @@ Choosing it the first time also turns on **Tone mapping: ACES**, which a bright 
 
 **Glow (bloom)** makes anything brighter than a level glow softly: lamps, fire, neon, the sun. **Glow strength**, **Glow spread** and **Glow above** (how bright something must be before it glows) tune it. It is drawn in the game, not in the editor view, and costs speed on weak phones, so keep it off unless you want it. Materials with a bright **Emissive** color are what glow.
 
+### Screen effects
+
+Effects drawn over the finished picture, in the game only (not in the editor view). They are all off until you change them, and a player can switch them all off with **Graphics quality** (Low does).
+
+| Field | What it does |
+| --- | --- |
+| **Edge smoothing (FXAA)** | Smooths jagged edges cheaply. Use it instead of **Smooth edges (antialias)** in Project settings, which is slow when a scene also has glow or other effects. |
+| **Vignette** | Darker corners. |
+| **Color fringe** | Red and blue edges drift apart toward the sides, like a cheap lens. |
+| **Saturation** | 1 = as drawn, 0 = grey, 2 = vivid. |
+| **Contrast** | 1 = as drawn; more separates dark from bright. |
+| **Depth of field** | Blurs what is far from the **Focus distance** (meters). **Blur amount** is how fast it blurs; **Blur limit** is the most blur. Draws the scene a second time, so it costs speed. |
+| **Ambient occlusion** | Soft shadow in corners and creases. **Occlusion size** and **Occlusion strength** tune it. Draws the scene a second time, so it costs speed. |
+
+Glow, depth of field and occlusion are the heavy ones on phones. Edge smoothing, vignette, fringe, saturation and contrast cost little.
+
 ## Scene variables
 
 Values that exist only in this scene and **reset every time the scene starts** — e.g. a level timer. See [Variables](../logic/variables).

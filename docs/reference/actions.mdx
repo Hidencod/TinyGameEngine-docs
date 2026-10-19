@@ -16,7 +16,7 @@ Actions are the **DO** part of an event. They run from top to bottom when the ev
 Number and text fields accept expressions, e.g. `Score + 1`, `"Score: " + Score`, `Player.x`, `random(1, 6)`. See [Expressions](./expressions).
 :::
 
-There are **137 actions**, grouped by category as in the action picker.
+There are **138 actions**, grouped by category as in the action picker.
 
 [⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera) · [🎚️ Graphics](#graphics)
 
@@ -1808,6 +1808,29 @@ Move the main camera.
 
 ## 🎚️ Graphics {/* #graphics */}
 
+### Place decal {/* #system-placedecal */}
+
+<span class="tge-ace-display">Place ‹Look› decal at (‹X›, ‹Y›, ‹Z›)</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `system.placeDecal` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Look | Choice | `bulletHole` | Options: Bullet hole, Splat, Scorch mark, Crack, Footprint, My image |
+| Image (for My image) | Image |  | *Optional.* |
+| X | Number (expression) | `hitX` |  |
+| Y | Number (expression) | `hitY` |  |
+| Z | Number (expression) | `hitZ` |  |
+| Normal X | Number (expression) | `hitNormalX` |  |
+| Normal Y | Number (expression) | `hitNormalY` |  |
+| Normal Z | Number (expression) | `hitNormalZ` |  |
+| Size (m) | Number (expression) | `0.4` |  |
+| Color | Color |  | *Optional.* |
+| Lifetime (s, 0 = stays) | Number (expression) | `20` |  |
+
 ### Set graphics quality {/* #system-setquality */}
 
 <span class="tge-ace-display">Set graphics quality to ‹Level›</span>
@@ -1847,14 +1870,14 @@ Move the main camera.
 | --- | --- | --- | --- |
 | State | Choice | `on` | Options: on, off |
 
-### Set glow (bloom) {/* #system-setglow */}
+### Set screen effects {/* #system-seteffects */}
 
-<span class="tge-ace-display">Set glow ‹State›</span>
+<span class="tge-ace-display">Set screen effects ‹State›</span>
 
 
 
 - **Where:** Found under **System** in the picker.
-- **ID:** `system.setGlow` (as saved in project files)
+- **ID:** `system.setEffects` (as saved in project files)
 
 | Parameter | Type | Default | Notes |
 | --- | --- | --- | --- |

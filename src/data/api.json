@@ -1106,8 +1106,15 @@
         {
           "name": "quality",
           "kind": "property",
-          "type": "{level,pixelRatio,shadows,glow,antialias,maxParticles}",
-          "doc": "Graphics quality, like Unity QualitySettings: game.quality.level = \"low\" (or \"medium\", \"high\") applies a whole level; game.quality.pixelRatio = 1, .shadows = false, .glow = false, .maxParticles = 300 change one setting. Saved on the device. antialias counts from the next start; glow can be switched back on only if the game started with glow allowed."
+          "type": "{level,pixelRatio,shadows,effects,antialias,maxParticles}",
+          "doc": "Graphics quality, like Unity QualitySettings: game.quality.level = \"low\" (or \"medium\", \"high\") applies a whole level; game.quality.pixelRatio = 1, .shadows = false, .effects = false, .maxParticles = 300 change one setting. Saved on the device. antialias counts from the next start; effects (the scene glow, vignette and other screen effects) can be switched back on only if the game started with them allowed."
+        },
+        {
+          "name": "addDecal",
+          "kind": "method",
+          "sig": "(at, normal, options?)",
+          "type": "boolean",
+          "doc": "Stick a picture on a surface, like a bullet hole: game.addDecal(hit.point, hit.normal, { image: \"bulletHole\", size: 0.3 }). image is bulletHole, splat, scorch, crack, footprint or the name of an image in Files; also color, lifetime (seconds, 20; 0 stays) and roll. Returns false when no surface is there."
         },
         {
           "name": "vibrate",
