@@ -32,7 +32,8 @@ The cards below can be folded by tapping their title.
 | **Ambient light** | Color of the soft light that reaches everything, even in shadow. |
 | **Ambient strength** | How strong it is (0–2). Lower it for a darker, moodier scene. |
 | **Fog** | Fades far things into the fog color. Also hides the edge of big worlds and helps performance. |
-| **Fog color / starts at / fully at** | Color, the distance where fog begins, and the distance where it is solid. |
+| **Fog type** | *Linear*: clear until **Fog starts at**, solid at **Fog fully at**. *Thick (exponential)*: gets thicker with distance, set by **Fog thickness** (about 0.01 is a light haze, 0.1 is dense). *Ground (height)*: like thick, but densest near the ground and thinner higher up, for morning mist in a valley (below). |
+| **Fog color / starts at / fully at** | Color, the distance where fog begins, and the distance where it is solid (Linear only). |
 | **Tone mapping** | Squeezes bright light into a film-like picture: *None*, *ACES (film)*, *Neutral* or *AgX*. Pick one and an **Exposure** slider appears (lower = darker). |
 | **Glow (bloom)** | Bright things glow. See [Glow](#glow). |
 
@@ -43,7 +44,7 @@ The cards below can be folded by tapping their title.
 Choose **Background → Sky image (360°)** (or tap the sky image) and pick one of:
 
 - **Free skies…** — day, morning, night, space, alien (by Kenney, free).
-- **Import a 360° image…** — a 2:1 panorama (equirectangular) PNG, JPG or WebP.
+- **Import a 360° image…** — a 2:1 panorama (equirectangular) PNG, JPG or WebP, or a high-range **.hdr** or **.exr** panorama (from Poly Haven, say). An HDR sky has real bright sun and sky values, so it lights the scene and reflects in shiny materials much better than a plain picture; use **Tone mapping** (below) so the bright parts don't clip. The Files tab shows a toned-down preview of it.
 - One of your project’s images.
 
 </Side>
@@ -78,6 +79,12 @@ Choosing it the first time also turns on **Tone mapping: ACES**, which a bright 
 ### Glow
 
 **Glow (bloom)** makes anything brighter than a level glow softly: lamps, fire, neon, the sun. **Glow strength**, **Glow spread** and **Glow above** (how bright something must be before it glows) tune it. It is drawn in the game, not in the editor view, and costs speed on weak phones, so keep it off unless you want it. Materials with a bright **Emissive** color are what glow.
+
+### Ground fog
+
+With **Fog type: Ground (height)**, the fog lies low like mist. **Fog level** is the height (world Y, in meters) where it has its **Fog thickness**; above that it thins out, faster the higher **Fog thinning** is (0.15 clears about every 10 m of height, 1 is a thin layer). Below the level it gets thicker still. Looking down through it is thicker than looking along it, so hills poke out above it. Put the level a little above your ground to make a valley fill with mist.
+
+It works on everything lit, the water and particles, in the game and in the editor view. It doesn't tint the sky color (the sky is not fogged), so match the **Fog color** to the horizon.
 
 ### Screen effects
 

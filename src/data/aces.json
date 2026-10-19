@@ -4479,6 +4479,99 @@
       ]
     },
     {
+      "id": "object.setMorph",
+      "kind": "action",
+      "category": "Object",
+      "label": "Set morph target",
+      "hint": "Bend a model: a smile, open mouth, a door bending open",
+      "display": "Set {object} morph target {name} to {value} in {seconds} s",
+      "displayNoObject": null,
+      "icon": "🙂",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "name",
+          "label": "Morph target",
+          "type": "string",
+          "options": null,
+          "default": "Smile",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "To (0 to 1)",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "seconds",
+          "label": "Seconds (0 = at once)",
+          "type": "number",
+          "options": null,
+          "default": "0.3",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.videoControl",
+      "kind": "action",
+      "category": "Object",
+      "label": "Video",
+      "hint": "Play, pause or restart the video on its surface",
+      "display": "{action} the video on {object}",
+      "displayNoObject": null,
+      "icon": "🎞️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "action",
+          "label": "Action",
+          "type": "choice",
+          "options": [
+            {
+              "value": "play",
+              "label": "Play"
+            },
+            {
+              "value": "pause",
+              "label": "Pause"
+            },
+            {
+              "value": "restart",
+              "label": "Restart"
+            }
+          ],
+          "default": "play",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "object.stopTweens",
       "kind": "action",
       "category": "Object",
@@ -5413,6 +5506,36 @@
         {
           "id": "loop",
           "label": "Loop",
+          "type": "boolean",
+          "options": null,
+          "default": "true",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.ragdoll",
+      "kind": "action",
+      "category": "Object",
+      "label": "Ragdoll",
+      "hint": "Make a rigged character limp: it falls and tumbles with physics (use it for a death)",
+      "display": "{object} goes limp (ragdoll: {on})",
+      "displayNoObject": null,
+      "icon": "🤸",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "on",
+          "label": "Ragdoll",
           "type": "boolean",
           "options": null,
           "default": "true",

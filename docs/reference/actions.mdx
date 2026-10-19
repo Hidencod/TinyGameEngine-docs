@@ -16,7 +16,7 @@ Actions are the **DO** part of an event. They run from top to bottom when the ev
 Number and text fields accept expressions, e.g. `Score + 1`, `"Score: " + Score`, `Player.x`, `random(1, 6)`. See [Expressions](./expressions).
 :::
 
-There are **138 actions**, grouped by category as in the action picker.
+There are **141 actions**, grouped by category as in the action picker.
 
 [⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera) · [🎚️ Graphics](#graphics)
 
@@ -849,6 +849,34 @@ Smoothly animate position, angle, size or opacity to a value, e.g. size 1.5 with
 | Seconds | Number (expression) | `0.3` |  |
 | Easing | Choice | `back` | Options: Linear, Ease in (speeds up), Ease out (slows down), Ease in and out, Back (overshoots), Elastic (wobbles), Bounce |
 
+### Set morph target {/* #object-setmorph */}
+
+<span class="tge-ace-display">Set ‹Object› morph target ‹Morph target› to ‹To (0 to 1)› in ‹Seconds (0 = at once)› s</span>
+
+
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.setMorph` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Morph target | Text | `Smile` |  |
+| To (0 to 1) | Number (expression) | `1` |  |
+| Seconds (0 = at once) | Number (expression) | `0.3` |  |
+
+### Video {/* #object-videocontrol */}
+
+<span class="tge-ace-display">‹Action› the video on ‹Object›</span>
+
+
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.videoControl` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Action | Choice | `play` | Options: Play, Pause, Restart |
+
 ### Stop tweens {/* #object-stoptweens */}
 
 <span class="tge-ace-display">Stop ‹Object› tweens</span>
@@ -960,6 +988,19 @@ Play a clip of its 3D model, e.g. "walk", "jump" or "die". Loop off = play once 
 | --- | --- | --- | --- |
 | Animation | Expression | `"walk"` |  |
 | Loop | Yes / No (expression) | `true` |  |
+
+### Ragdoll {/* #object-ragdoll */}
+
+<span class="tge-ace-display">‹Object› goes limp (ragdoll: ‹Ragdoll›)</span>
+
+
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.ragdoll` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Ragdoll | Yes / No (expression) | `true` |  |
 
 ### Stop animation {/* #object-stopanimation */}
 

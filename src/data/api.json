@@ -417,6 +417,13 @@
           "doc": "Stop the playing model animation."
         },
         {
+          "name": "ragdoll",
+          "kind": "method",
+          "sig": "(on = true)",
+          "type": "void",
+          "doc": "Make a rigged 3D character limp with physics, e.g. entity.ragdoll() when it dies; ragdoll(false) brings it back to its animation. The object itself stays where it is, only its bones move. entity.ragdolled says whether it is limp."
+        },
+        {
           "name": "getAnimation",
           "kind": "method",
           "sig": "()",
@@ -520,6 +527,32 @@
           "sig": "()",
           "type": "void",
           "doc": "Stop all tweens where they are."
+        },
+        {
+          "name": "morphTargets",
+          "kind": "property",
+          "type": "string[]",
+          "doc": "Model: the names of its morph targets (blend shapes), e.g. [\"Smile\", \"Blink\"]. Empty while it loads or when it has none."
+        },
+        {
+          "name": "setMorph",
+          "kind": "method",
+          "sig": "(name, value, seconds?)",
+          "type": "boolean",
+          "doc": "Model: bend a morph target, 0 to 1, at once or blended over seconds, e.g. setMorph(\"Smile\", 1, 0.3). false when the model has none of that name."
+        },
+        {
+          "name": "getMorph",
+          "kind": "method",
+          "sig": "(name)",
+          "type": "number",
+          "doc": "Model: how far a morph target is applied, 0 to 1."
+        },
+        {
+          "name": "video",
+          "kind": "property",
+          "type": "{play,pause,restart,playing}|null",
+          "doc": "The video on this object (its material's Video): video.play(), video.pause(), video.restart(), video.playing. Null when it shows no video."
         },
         {
           "name": "attachTo",

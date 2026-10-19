@@ -33,11 +33,46 @@ Anything you can see has a **Shape & look** component. Add a shape from **Object
 | **Realistic** | Physically based: adds **Roughness** and **Metalness** sliders; reflects the sky when *Light with sky* is on. | ⚡ |
 | **Cartoon** | Toon shading in bands. | ⚡⚡ |
 | **Unlit (flat color)** | Ignores lights completely — always the exact color. Good for skies, UI-like objects, glowing things. | ⚡⚡⚡ |
+| **Reflector (Mirror)** | A mirror: shows the scene reflected in it (see [Mirror](#mirror)). | ⚡ per mirror in view |
 
 <Row>
   <Crop name="card-mesh-realistic" caption="Realistic: roughness and metalness" width={320} />
   <Crop name="card-mesh-model" caption="3D model: pick a model file" width={320} />
 </Row>
+
+### Glass and coatings (Realistic)
+
+On a **Realistic** material these sliders turn on the extra looks of a physically based material. All are 0 (off) until you move them.
+
+| Setting | What it does |
+| --- | --- |
+| **Transmission** | Glass: 0 is solid, 1 is clear. What is behind shows through, bent and blurred by the roughness. |
+| **Thickness** | With glass: how thick it is, in meters. A thick glass ball bends and tints more. |
+| **IOR** | With glass: how much it bends light. 1.5 is glass, 1.33 water, 2.4 diamond. |
+| **Clear coat** | A glossy clear layer on top, like car paint or a lacquered table. |
+| **Sheen** | A soft glow at the edges, like velvet or cloth. |
+| **Iridescence** | Rainbow colors that shift with the angle, like a soap bubble or oil on water. |
+
+**Transmission is the costly one.** The game draws the scene a second time to see through the glass, so use it on a few objects (a window, a bottle), not many. For cheap see-through, use **Opacity**.
+
+### Video
+
+Pick a **Video** (an `.mp4` or `.webm` you imported in Files) and it plays on the surface instead of a **Texture**: a TV screen, a cinema, a billboard, a security monitor. Use a **Plane** or a **Cube** and the **Unlit** style, so the picture is as bright as the video.
+
+- The video starts when the game starts, is **muted** and **loops**. Phones only let a game start video by itself when it is muted, and some wait for the first tap.
+- **Play, pause or restart** it while playing with the action **Video** on the object (*Play*, *Pause*, *Restart*), or `entity.video.play()`, `.pause()`, `.restart()` and `entity.video.playing` in a script. Objects showing the same video share it, so pausing one pauses all.
+- It does not work with **Custom shader** materials.
+- Keep videos short and small (a few seconds at 480 p is plenty): the whole file is loaded into the game, and a game exported as one HTML file carries it inside.
+- The editor view only redraws when something changes, so the video moves for sure when you press Play.
+
+### Mirror
+
+Set a **Plane** shape to the **Reflector (Mirror)** style and it reflects the scene: a bathroom mirror, a shiny floor, a pool of still water. The **Color** tints the reflection (white is a perfect mirror), and **Reflection size** (128, 256, 512 or 1024) sets how sharp it is. Tilt the plane to make a wall mirror.
+
+- A mirror draws the scene a second time, but only while it is on screen and facing the camera. Several mirrors in view add up, so keep to one or two, and choose a smaller **Reflection size** on phones. A low *Max pixel ratio* makes the picture smaller by itself.
+- A mirror seen inside another mirror shows what it drew last, not an endless tunnel.
+- In the editor view a mirror is shown as polished metal; you see the real reflection when you play.
+- On a shape that is not a Plane, the Mirror style is polished metal (it reflects the sky when *Light with sky* is on), not a true reflection.
 
 ### Extras on a material
 

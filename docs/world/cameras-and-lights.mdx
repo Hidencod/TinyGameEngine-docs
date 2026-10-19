@@ -56,3 +56,14 @@ A **Sun** that casts shadows has **Shadow cascades** (Off, 2, 3 or 4). Off is on
 :::tip[Lighting on phones]
 Shadows are the most expensive part of drawing. Keep **one** shadow-casting light (the sun), turn shadows off on lamps, and use **Ambient light** (Scene tab) or a Sky light to brighten dark areas. You can turn all shadows off in [Project settings](../editor/project-settings).
 :::
+
+### Lens flare
+
+A **Sun**, **Lamp** or **Spotlight** can have a **Lens flare**: a bright glow, a long thin streak and a string of soft rings across the screen when you look toward the light, like the sun in a camera lens. **Flare size** and **Flare strength** tune it (1 is normal).
+
+- The flare is on the screen only when the light is in front of you, and it fades out toward the edge of the screen.
+- It goes out when something solid is between the camera and the light (a wall, a hill, a building) and comes back softly when the way is clear. Glass, water and effects don't block it.
+- A **Sun**'s flare sits where the sun would be in the sky, as far as the camera sees. A lamp's flare is at the lamp, and fades when the lamp is far away.
+- It works in the game only: the editor view doesn't draw flares. It costs a few extra pictures on the screen, so it is cheap.
+
+

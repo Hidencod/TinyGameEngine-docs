@@ -24,7 +24,18 @@ Tap **Objects → ＋ Add → Free models library…** or **Files → 🌐 Free 
 
 ## Import your own model
 
-Tap **Assets → ⬆ Import** or **＋ Add → Import 3D model (.glb)…** and pick a **.glb** file (a `.gltf` works only if it’s a single file). Free sources: Kenney, Quaternius, Poly Pizza, Sketchfab (check each model’s licence).
+Tap **Assets → ⬆ Import** or **＋ Add → Import 3D model…** and pick a **.glb** file (a `.gltf` works only if it’s a single file). **.obj**, **.fbx** and **.stl** files import too (below). Free sources: Kenney, Quaternius, Poly Pizza, Sketchfab (check each model’s licence).
+
+### Other formats
+
+| Format | What to know |
+| --- | --- |
+| **.glb / .gltf** | The best choice: keeps materials, textures and animations. |
+| **.fbx** | Meshes, materials with embedded textures, and animations (they show up like a glb's). Models made in centimeters (taller than 50 units) are scaled by 0.01 so they are about the right size in meters. |
+| **.obj** | The shape only: it gets a plain grey material, because the `.mtl` material file and external textures are not read. Size is taken as it is. |
+| **.stl** | A single shape in one grey color (3D-printing files). Models bigger than 20 units are taken to be millimeters and scaled by 0.001; the model is stood up (STL files are usually Z-up), centered, and put on the floor. |
+
+If the size or direction is not what you want, change the object's **Scale** and **Rotation**. The file's kind is read from its content, not its name. A textured FBX or OBJ that needs other files next to it won't find them: bake the textures into the file, or use **.glb**.
 
 Compressed models work too: **Draco** and **Meshopt** compressed meshes and **KTX2** textures (many downloads from Sketchfab and Poly Haven use them) load like any other, with no setting to change and no internet needed. They are smaller files, so they download and start faster.
 
@@ -45,12 +56,44 @@ Put a model on an object with **Shape & look → Shape: 3D model (file)** and ch
 | **Animation** | The animation clip to play (models with clips only), with **▶ preview** in the editor. *None (still)* = no animation. |
 | **Play on start** | Loop the chosen clip from the start of the game. |
 | **Animation speed** | 1 = normal, 2 = twice as fast. |
+| **Far model** | A lighter version of the model (a low-poly model from Files) that takes over from far away. See [Distance and detail](#distance-and-detail). |
+| **Switch distance** | Meters from the camera where the **Far model** takes over (default 30). Shown once a **Far model** is picked. |
+| **Hide beyond** | Meters from the camera past which the model is not drawn at all. 0 = never. |
+| *(one slider per blend shape)* | Only for models that have **morph targets**: see [Morph targets](#morph-targets). |
+
+## Morph targets
+
+Some models carry **morph targets** (also called blend shapes or shape keys): a face that smiles or blinks, a door that bends open, a balloon that inflates. If your model has them, the **Mesh** card shows a slider for each one, from 0 (as in the file) to 1 (fully bent). Set them in the editor to choose how the model starts.
+
+While playing:
+
+- Action **Set morph target**: the *Morph target* name (exactly as the slider is named), the value 0 to 1, and **Seconds** to blend over (0 = at once).
+- Scripts: `entity.morphTargets` (the names), `entity.setMorph('Smile', 1, 0.3)` (name, value, seconds), `entity.getMorph('Smile')`.
+
+A name the model doesn't have is reported in the console instead of silently doing nothing. If the model also plays an animation clip that moves the same morph target, the clip wins while it plays.
+
+## Distance and detail
+
+A model with many triangles is slow to draw, and from far away you can't see the detail anyway. Two settings on the **Mesh** card help:
+
+- **Far model**: a second, lighter model. Past **Switch distance** the object shows it instead. It is the same object with the same color, material and size, only a cheaper mesh. Pick it in the same way as the **Model**.
+- **Hide beyond**: past this distance the object is not drawn at all.
+
+The camera's distance is checked a few times a second, and the switch has a little slack on both sides, so an object right at the distance does not flicker. The Far model is not animated and does not move the collider (the collider always follows the main model). An object with a Far model or a **Hide beyond** distance is drawn on its own, not grouped with copies (see [Performance](../help/performance)).
 
 ## Animations while playing
 
 - The **Platformer**, **Top-down** and **Follow target** behaviors animate characters automatically (with *Animate* on): **idle** when standing, **walk** / **sprint** when moving, **jump** / **fall** in the air — using whichever of these clips the model has.
 - Actions: **Play animation** (loop or once), **Stop animation**, **Set animation speed**. Condition: **On animation finished**, **Is playing animation**.
 - Scripts: `entity.playAnimation('wave', false)`, `entity.getAnimationNames()`.
+
+## Ragdoll
+
+A rigged character can go limp with physics, like a death animation that falls and tumbles where it stands. Use the **Ragdoll** action on the object (turn it on or off), or in a script `entity.ragdoll()` and `entity.ragdoll(false)`. The model must have a skeleton: the engine makes a loose body for each bone chain, joins them, and lets physics move the bones. The character keeps the speed it had.
+
+- The object itself stays where it was; only its bones move.
+- Turning it off brings the character back to its animation (and its physics body back) from where it lies.
+- Joints have no limits and the limbs don't bump each other, so it is loose rather than realistic. Characters with clean bones for the body, arms and legs look best.
 
 ## Parts of a model
 

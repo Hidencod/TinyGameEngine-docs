@@ -107,6 +107,7 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `isPressed()` | `boolean` | True while this UI button is held down. |
 | `playAnimation(name: string, loop = true)` | `void` | Play a clip of the 3D model, or an animation of a sprite, e.g. "walk" or "jump". loop=false plays once and holds the last frame. Asking for the clip already playing keeps it going. |
 | `stopAnimation()` | `void` | Stop the playing model animation. |
+| `ragdoll(on = true)` | `void` | Make a rigged 3D character limp with physics, e.g. entity.ragdoll() when it dies; ragdoll(false) brings it back to its animation. The object itself stays where it is, only its bones move. entity.ragdolled says whether it is limp. |
 | `getAnimation()` | `string` | Name of the playing clip (empty if none). |
 | `isAnimationBusy()` | `boolean` | True while a play-once animation (loop off) is still running. |
 | `getAnimationNames()` | `string[]` | All clip names of the model, or the animations of a sprite. |
@@ -122,6 +123,10 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `tween(property, to, seconds, ease?)` | `void` | Animate 'x' \| 'y' \| 'z' \| 'angle' \| 'size' \| 'opacity' to a value, e.g. tween('size', 1.5, 0.3, 'back'). Eases: linear, easeIn, easeOut, easeInOut, back, elastic, bounce. |
 | `isTweening(property?)` | `boolean` | A tween is running (of that property, or any). |
 | `stopTweens()` | `void` | Stop all tweens where they are. |
+| `morphTargets` | `string[]` | Model: the names of its morph targets (blend shapes), e.g. ["Smile", "Blink"]. Empty while it loads or when it has none. |
+| `setMorph(name, value, seconds?)` | `boolean` | Model: bend a morph target, 0 to 1, at once or blended over seconds, e.g. setMorph("Smile", 1, 0.3). false when the model has none of that name. |
+| `getMorph(name)` | `number` | Model: how far a morph target is applied, 0 to 1. |
+| `video` | `{play,pause,restart,playing}\|null` | The video on this object (its material's Video): video.play(), video.pause(), video.restart(), video.playing. Null when it shows no video. |
 | `attachTo(parent, part?)` | `void` | Carry this object along with another (keeps its place in the world), e.g. a picked-up key. part: the name of a part of the 3D model of the other object, such as a hand bone. |
 | `detach()` | `void` | Let go: back to the top level where it is now. |
 | `particleSystem` | `ParticleSystem\|null` | The Particle System (like Unity's): every module live — particleSystem.main.startSpeed = 8, particleSystem.noise.enabled = true — plus play(), pause(), stop(), emit(count, params), simulate(t), getParticles() / setParticles(). Null without a Particles component. |

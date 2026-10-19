@@ -1,6 +1,6 @@
 ---
 title: Behaviors
-description: Ready-made movement and logic — platformer, top-down, car, camera follow, rotate, bullet, wave, follow, destroy when far, draggable, health, first person, follow curve.
+description: Ready-made movement and logic — platformer, top-down, car, camera follow, rotate, bullet, wave, follow, destroy when far, draggable, health, first person, look at target, follow curve.
 ---
 
 # Behaviors
@@ -211,6 +211,21 @@ Put it **on the camera**: the view sits at the eyes of a target (the player) and
 | **Hide body** | on | The target is hidden from its own camera, so you never see inside it. |
 
 Look input: on a computer, click the game and move the mouse (Esc frees the mouse); with a gamepad, the right stick; on a phone, drag the free side of the screen. The [First person template](./templates#firstperson) is a complete example.
+
+## 👀 Look at target {/* #look-at-target */}
+
+Turns a part of the object toward another object: a character's head that follows the player, a turret that tracks an enemy. It works **after** the animation each frame, so the animation still plays and the turn is added on top of it.
+
+| Setting | Default | What it does |
+| --- | --- | --- |
+| **Target** | Player | The object to look at (it aims at the middle of it). |
+| **Bone** | (whole object) | The part to turn: pick a bone of the object's model (for example the head), or leave it to turn the whole object. |
+| **Axis** | +Z | Which way that part faces in itself. If the head turns the wrong way, try *-Z* or another axis. |
+| **Max angle** | 70 | The most it turns away from the animated pose, in degrees. |
+| **Speed** | 8 | How quickly it follows: higher catches up faster, lower is smoother. |
+| **Weight** | 1 | How much of the turn to use: 0 = none, 0.5 = half, 1 = all the way. Change it from a script or an event to blend the look in and out. |
+
+For a turret, leave **Bone** empty and set **Max angle** to 180.
 
 ## ➰ Follow curve {/* #follow-curve */}
 
