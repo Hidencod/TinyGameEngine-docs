@@ -31,11 +31,20 @@ Tap **Assets → ⬆ Import** or **＋ Add → Import 3D model…** and pick a *
 | Format | What to know |
 | --- | --- |
 | **.glb / .gltf** | The best choice: keeps materials, textures and animations. |
-| **.fbx** | Meshes, materials with embedded textures, and animations (they show up like a glb's). Models made in centimeters (taller than 50 units) are scaled by 0.01 so they are about the right size in meters. |
-| **.obj** | The shape only: it gets a plain grey material, because the `.mtl` material file and external textures are not read. Size is taken as it is. |
+| **.fbx** | Meshes, materials, textures and animations (they show up like a glb's). Models made in centimeters (taller than 50 units) are scaled by 0.01 so they are about the right size in meters. |
+| **.obj** | The shape, with the materials and textures of its `.mtl` file when you import them together (below); without it, a plain grey material. Size is taken as it is. |
 | **.stl** | A single shape in one grey color (3D-printing files). Models bigger than 20 units are taken to be millimeters and scaled by 0.001; the model is stood up (STL files are usually Z-up), centered, and put on the floor. |
 
-If the size or direction is not what you want, change the object's **Scale** and **Rotation**. The file's kind is read from its content, not its name. A textured FBX or OBJ that needs other files next to it won't find them: bake the textures into the file, or use **.glb**.
+If the size or direction is not what you want, change the object's **Scale** and **Rotation**. The file's kind is read from its content, not its name.
+
+#### Models with textures
+
+Many FBX and OBJ files do not contain their pictures: they only name them (`Leaves.png`, a `.mtl` file). When you import, **select the model and its `.mtl` and picture files together** in the file chooser. They are put into the model, which is stored as a single **.glb**, so the pictures are not added to Files separately. A picture you imported earlier is found by its name too, so importing the textures first works as well.
+
+- If a picture can't be found, a message names it and the model is imported with its own color (soft grey when the file's color is black). It never shows up black.
+- Pictures with see-through parts (leaves, fences) are cut out and show both sides.
+- Pictures are matched by name, ignoring folders and capital letters (`Leaves.PNG` and `leaves.png` are the same).
+- The converted model is a normal glb: you don't need the original files again.
 
 Compressed models work too: **Draco** and **Meshopt** compressed meshes and **KTX2** textures (many downloads from Sketchfab and Poly Haven use them) load like any other, with no setting to change and no internet needed. They are smaller files, so they download and start faster.
 

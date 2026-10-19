@@ -16,7 +16,7 @@ Actions are the **DO** part of an event. They run from top to bottom when the ev
 Number and text fields accept expressions, e.g. `Score + 1`, `"Score: " + Score`, `Player.x`, `random(1, 6)`. See [Expressions](./expressions).
 :::
 
-There are **141 actions**, grouped by category as in the action picker.
+There are **144 actions**, grouped by category as in the action picker.
 
 [⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera) · [🎚️ Graphics](#graphics)
 
@@ -1923,6 +1923,49 @@ Move the main camera.
 | Parameter | Type | Default | Notes |
 | --- | --- | --- | --- |
 | State | Choice | `off` | Options: on, off |
+
+### Set screen effect {/* #system-setscreeneffect */}
+
+<span class="tge-ace-display">Set ‹Setting› to ‹Value› over ‹Seconds to glide (0 = at once)› s</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `system.setScreenEffect` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Setting | Choice | `vignette` | Options: Vignette (0 to 1), Color fringe (0 to 1), Saturation (0 to 2), Contrast (0.5 to 1.5), Glow strength (0 to 2), Glow spread (0 to 1), Glow above (0 to 3), Focus distance (m), Blur amount (0 to 0.1), Blur limit (0 to 0.05), Occlusion size (0.1 to 2), Occlusion strength (0.2 to 3) |
+| Value | Number (expression) | `0.5` |  |
+| Seconds to glide (0 = at once) | Number (expression) | `0` |  |
+
+### Switch screen effect on or off {/* #system-togglescreeneffect */}
+
+<span class="tge-ace-display">Switch ‹Effect› ‹State›</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `system.toggleScreenEffect` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Effect | Choice | `glow` | Options: Edge smoothing (FXAA), Glow (bloom), Depth of field, Ambient occlusion |
+| State | Choice | `on` | Options: on, off |
+
+### Set graphics option {/* #system-setgraphicsoption */}
+
+<span class="tge-ace-display">Set graphics ‹Option› to ‹Value›</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `system.setGraphicsOption` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Option | Choice | `pixelRatio` | Options: Resolution scale (pixel ratio), Shadows (1 or 0), Shadow picture size (512, 1024, 2048), Shadow cascades (0, 2, 3, 4), Glow (1 or 0), Depth of field (1 or 0), Ambient occlusion (1 or 0), Edge smoothing (1 or 0), Color finish (1 or 0), Mirror picture size (0 = off, 128 to 1024), Glass (1 or 0), Lens flares (1 or 0), Max particles, Antialiasing (1 or 0, from next start) |
+| Value | Number (expression) | `1` |  |
 
 ### Set max particles {/* #system-setmaxparticles */}
 

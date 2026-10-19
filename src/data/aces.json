@@ -1553,6 +1553,268 @@
       ]
     },
     {
+      "id": "system.setScreenEffect",
+      "kind": "action",
+      "category": "Graphics",
+      "label": "Set screen effect",
+      "hint": "Change a setting of vignette, color, glow, depth of field or occlusion while playing, optionally gliding there",
+      "display": "Set {effect} to {value} over {seconds} s",
+      "displayNoObject": null,
+      "icon": "🎛️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "effect",
+          "label": "Setting",
+          "type": "choice",
+          "options": [
+            {
+              "value": "vignette",
+              "label": "Vignette (0 to 1)"
+            },
+            {
+              "value": "fringe",
+              "label": "Color fringe (0 to 1)"
+            },
+            {
+              "value": "saturation",
+              "label": "Saturation (0 to 2)"
+            },
+            {
+              "value": "contrast",
+              "label": "Contrast (0.5 to 1.5)"
+            },
+            {
+              "value": "glowStrength",
+              "label": "Glow strength (0 to 2)"
+            },
+            {
+              "value": "glowSpread",
+              "label": "Glow spread (0 to 1)"
+            },
+            {
+              "value": "glowThreshold",
+              "label": "Glow above (0 to 3)"
+            },
+            {
+              "value": "focusDistance",
+              "label": "Focus distance (m)"
+            },
+            {
+              "value": "blurAmount",
+              "label": "Blur amount (0 to 0.1)"
+            },
+            {
+              "value": "blurLimit",
+              "label": "Blur limit (0 to 0.05)"
+            },
+            {
+              "value": "occlusionSize",
+              "label": "Occlusion size (0.1 to 2)"
+            },
+            {
+              "value": "occlusionStrength",
+              "label": "Occlusion strength (0.2 to 3)"
+            }
+          ],
+          "default": "vignette",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "number",
+          "options": null,
+          "default": "0.5",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "seconds",
+          "label": "Seconds to glide (0 = at once)",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.toggleScreenEffect",
+      "kind": "action",
+      "category": "Graphics",
+      "label": "Switch screen effect on or off",
+      "hint": "Edge smoothing, glow, depth of field or ambient occlusion",
+      "display": "Switch {effect} {state}",
+      "displayNoObject": null,
+      "icon": "🎛️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "effect",
+          "label": "Effect",
+          "type": "choice",
+          "options": [
+            {
+              "value": "fxaa",
+              "label": "Edge smoothing (FXAA)"
+            },
+            {
+              "value": "glow",
+              "label": "Glow (bloom)"
+            },
+            {
+              "value": "depthOfField",
+              "label": "Depth of field"
+            },
+            {
+              "value": "occlusion",
+              "label": "Ambient occlusion"
+            }
+          ],
+          "default": "glow",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "state",
+          "label": "State",
+          "type": "choice",
+          "options": [
+            {
+              "value": "on",
+              "label": "on"
+            },
+            {
+              "value": "off",
+              "label": "off"
+            }
+          ],
+          "default": "on",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.setGraphicsOption",
+      "kind": "action",
+      "category": "Graphics",
+      "label": "Set graphics option",
+      "hint": "One setting of the quality level: switches take 1 (on) or 0 (off)",
+      "display": "Set graphics {option} to {value}",
+      "displayNoObject": null,
+      "icon": "🎚️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "option",
+          "label": "Option",
+          "type": "choice",
+          "options": [
+            {
+              "value": "pixelRatio",
+              "label": "Resolution scale (pixel ratio)"
+            },
+            {
+              "value": "shadows",
+              "label": "Shadows (1 or 0)"
+            },
+            {
+              "value": "shadowMapSize",
+              "label": "Shadow picture size (512, 1024, 2048)"
+            },
+            {
+              "value": "cascades",
+              "label": "Shadow cascades (0, 2, 3, 4)"
+            },
+            {
+              "value": "glow",
+              "label": "Glow (1 or 0)"
+            },
+            {
+              "value": "depthOfField",
+              "label": "Depth of field (1 or 0)"
+            },
+            {
+              "value": "occlusion",
+              "label": "Ambient occlusion (1 or 0)"
+            },
+            {
+              "value": "edgeSmoothing",
+              "label": "Edge smoothing (1 or 0)"
+            },
+            {
+              "value": "colorFinish",
+              "label": "Color finish (1 or 0)"
+            },
+            {
+              "value": "mirrors",
+              "label": "Mirror picture size (0 = off, 128 to 1024)"
+            },
+            {
+              "value": "glass",
+              "label": "Glass (1 or 0)"
+            },
+            {
+              "value": "lensFlares",
+              "label": "Lens flares (1 or 0)"
+            },
+            {
+              "value": "maxParticles",
+              "label": "Max particles"
+            },
+            {
+              "value": "antialias",
+              "label": "Antialiasing (1 or 0, from next start)"
+            }
+          ],
+          "default": "pixelRatio",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "system.setMaxParticles",
       "kind": "action",
       "category": "Graphics",

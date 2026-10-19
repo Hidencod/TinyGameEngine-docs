@@ -36,18 +36,31 @@ Open with **⋮ → Project settings** or **Scene tab → ⚙ Project**.
 
 ### Quality levels
 
-Like Unity's Quality Settings, the game has three levels: **Low**, **Medium** and **High**. Each is a set of the fields above (plus **Screen effects** for Low and Medium: off means the scene's glow, vignette, depth of field and the other [screen effects](./scene-tab#screen-effects) are not drawn).
+Like Unity's Quality Settings, the game has three levels: **Low**, **Medium** and **High**. Pick one with **Edit level** and change anything it sets:
 
-- **High** is your project's own settings, the ones you had before.
-- **Medium** and **Low** start as lighter versions of High (a lower pixel ratio, no smooth edges; Low also has no shadows and no screen effects, and fewer particles). Pick **Edit level** and change anything.
-- The scene's own screen effects stay your choice: a level can switch them off but never add any.
+| Setting | What it does at that level |
+| --- | --- |
+| **Max pixel ratio**, **Smooth edges (antialias)**, **Shadows**, **Max particles** | As above. |
+| **Shadow picture size** | Sharpness of every light's shadow: 512, 1024 or 2048. Bigger costs more memory and time. |
+| **Shadow cascades (most)** | The most cascades a sun's [Shadow cascades](../world/cameras-and-lights) may use: Off, 2, 3 or 4. Off gives a single shadow picture. |
+| **Glow, Depth of field, Ambient occlusion, Edge smoothing, Color finish** | Whether that [screen effect](./scene-tab#screen-effects) may be drawn. A level can switch effects off but never adds one a scene lacks. *Color finish* is vignette, color fringe, saturation and contrast. |
+| **Mirror picture size** | The biggest reflection picture a mirror may have: Off (a mirror is plain metal), 128, 256, 512 or 1024. |
+| **Glass** | Off: glass objects are plain surfaces, which is much faster. |
+| **Lens flares** | Off: no lens flares. |
+
+- **High** starts as your project's own settings, the ones you had before, with everything on.
+- **Medium** and **Low** start as lighter versions (Medium: a lower pixel ratio, 2 cascades, no depth of field or occlusion, small mirrors. Low: no shadows, no glow, mirrors and glass off, no lens flares, fewer particles; edge smoothing and color finish stay on because they are cheap).
 
 The game starts at **Starts at quality**, or at the level the player chose last time (it is saved on the device). Let players change it with events or a script:
 
-- Event actions (group **Graphics**): *Set graphics quality*, *Set resolution scale*, *Set shadows*, *Set screen effects*, *Set max particles*, *Set antialiasing (smooth edges)*, and the condition *Graphics quality is*.
-- Scripts: `game.quality.level = "low"`, or one setting: `game.quality.pixelRatio = 1`, `.shadows = false`, `.effects = false`, `.maxParticles = 300`.
+- Event actions (group **Graphics**): *Set graphics quality*, *Set resolution scale*, *Set shadows*, *Set screen effects*, *Set max particles*, *Set antialiasing (smooth edges)*, *Set graphics option* (any single setting above: switches take 1 for on and 0 for off), and the condition *Graphics quality is*.
+- Scripts: `game.quality.level = "low"`, or one setting: `game.quality.pixelRatio = 1`, `.shadows = false`, `.shadowMapSize = 512`, `.cascades = 2`, `.glow = false`, `.depthOfField = false`, `.occlusion = false`, `.edgeSmoothing = true`, `.colorFinish = true`, `.mirrors = 256`, `.glass = false`, `.lensFlares = false`, `.maxParticles = 300`. `.effects = false` switches every effect off at once.
 
-Setting a level also resets the single settings to that level. **Smooth edges (antialiasing)** can only change when the game starts, so a new value counts from the next start; **screen effects** can be switched off any time, but switched on again only if the game started with them allowed. Use **Play → fps** and its draw-call line to see what a level saves.
+Setting a level also resets the single settings to that level. **Smooth edges (antialiasing)** can only change when the game starts, so a new value counts from the next start. Screen effects can be switched off any time, but switched on again only if the game could draw them from the start. Use **Play → fps** and its draw-call line to see what a level saves.
+
+### Effects from scripts and events
+
+**Effects from scripts and events** makes the game ready to draw screen effects even when no scene has one, so a script or an event can switch them on while playing (see [Screen effects](./scene-tab#screen-effects)). It costs a little speed, so leave it off if you don't need it.
 
 See [Performance tips](../help/performance).
 

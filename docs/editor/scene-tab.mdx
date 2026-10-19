@@ -100,6 +100,15 @@ Effects drawn over the finished picture, in the game only (not in the editor vie
 | **Depth of field** | Blurs what is far from the **Focus distance** (meters). **Blur amount** is how fast it blurs; **Blur limit** is the most blur. Draws the scene a second time, so it costs speed. |
 | **Ambient occlusion** | Soft shadow in corners and creases. **Occlusion size** and **Occlusion strength** tune it. Draws the scene a second time, so it costs speed. |
 
+### Changing effects while playing
+
+Every effect above can change during the game, for a moment of drama or a player's own taste.
+
+- **Events (group Graphics):** *Set screen effect* (vignette, color fringe, saturation, contrast, glow strength, spread and threshold, focus distance, blur amount and limit, occlusion size and strength) with a value and **Seconds to glide** (0 = at once), and *Switch screen effect on or off* (edge smoothing, glow, depth of field, ambient occlusion).
+- **Scripts:** `game.effects.vignette = 0.6`, `game.effects.focusDistance = 4`, `game.effects.glow = true`, or `game.effects.set("vignette", 0.8, 2)` to glide over 2 seconds.
+
+Numbers stay inside the ranges the editor allows. A new scene starts from how it was made, and a [quality level](./project-settings#quality-levels) can still forbid an effect. To switch an effect on that no scene has, turn on **Effects from scripts and events** in [Project settings](./project-settings#effects-from-scripts-and-events).
+
 Glow, depth of field and occlusion are the heavy ones on phones. Edge smoothing, vignette, fringe, saturation and contrast cost little.
 
 ## Scene variables

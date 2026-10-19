@@ -1139,8 +1139,14 @@
         {
           "name": "quality",
           "kind": "property",
-          "type": "{level,pixelRatio,shadows,effects,antialias,maxParticles}",
-          "doc": "Graphics quality, like Unity QualitySettings: game.quality.level = \"low\" (or \"medium\", \"high\") applies a whole level; game.quality.pixelRatio = 1, .shadows = false, .effects = false, .maxParticles = 300 change one setting. Saved on the device. antialias counts from the next start; effects (the scene glow, vignette and other screen effects) can be switched back on only if the game started with them allowed."
+          "type": "{level,pixelRatio,shadows,shadowMapSize,cascades,glow,depthOfField,occlusion,edgeSmoothing,colorFinish,mirrors,glass,lensFlares,effects,antialias,maxParticles}",
+          "doc": "Graphics quality, like Unity QualitySettings: game.quality.level = \"low\" (or \"medium\", \"high\") applies a whole level and resets the single settings; the single ones change just that: pixelRatio (1), shadows, shadowMapSize (512, 1024, 2048), cascades (0, 2, 3, 4), mirrors (picture size, 0 = plain metal), glass, lensFlares, maxParticles, and which screen effects are allowed: glow, depthOfField, occlusion, edgeSmoothing, colorFinish (effects = all of them at once). Saved on the device. antialias counts from the next start. A quality level only forbids effects a scene has, it never adds any."
+        },
+        {
+          "name": "effects",
+          "kind": "property",
+          "type": "{vignette,fringe,saturation,contrast,glow,depthOfField,occlusion,fxaa,...}",
+          "doc": "The scene screen effects, live: game.effects.vignette = 0.6, game.effects.focusDistance = 4, game.effects.glow = true; numbers: vignette, fringe, saturation, contrast, glowStrength, glowSpread, glowThreshold, focusDistance, blurAmount, blurLimit, occlusionSize, occlusionStrength (kept inside the editor ranges); switches: fxaa, glow, depthOfField, occlusion. game.effects.set(\"vignette\", 0.8, 2) glides there over 2 seconds. A new scene starts from how it was made. Switching an effect on needs a game that can draw effects: a scene has one, or Project settings → Effects from scripts and events is on. The quality level can still forbid an effect."
         },
         {
           "name": "addDecal",
