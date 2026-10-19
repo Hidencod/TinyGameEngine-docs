@@ -16,7 +16,8 @@
     "Behaviors",
     "Particles",
     "Audio",
-    "Camera"
+    "Camera",
+    "Graphics"
   ],
   "icons": {
     "System": "⚙️",
@@ -35,7 +36,8 @@
     "Behaviors": "🧩",
     "Particles": "✨",
     "Audio": "🔊",
-    "Camera": "🎥"
+    "Camera": "🎥",
+    "Graphics": "🎚️"
   },
   "list": [
     {
@@ -1195,6 +1197,269 @@
             }
           ],
           "default": "bump",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.setQuality",
+      "kind": "action",
+      "category": "Graphics",
+      "label": "Set graphics quality",
+      "hint": "Low, Medium or High: the project decides what each means",
+      "display": "Set graphics quality to {level}",
+      "displayNoObject": null,
+      "icon": "🎚️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "level",
+          "label": "Level",
+          "type": "choice",
+          "options": [
+            {
+              "value": "low",
+              "label": "Low"
+            },
+            {
+              "value": "medium",
+              "label": "Medium"
+            },
+            {
+              "value": "high",
+              "label": "High"
+            }
+          ],
+          "default": "medium",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.compareQuality",
+      "kind": "condition",
+      "category": "Graphics",
+      "label": "Graphics quality is",
+      "hint": "Check the current quality level",
+      "display": "Graphics quality is {level}",
+      "displayNoObject": null,
+      "icon": "🎚️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "level",
+          "label": "Level",
+          "type": "choice",
+          "options": [
+            {
+              "value": "low",
+              "label": "Low"
+            },
+            {
+              "value": "medium",
+              "label": "Medium"
+            },
+            {
+              "value": "high",
+              "label": "High"
+            }
+          ],
+          "default": "high",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.setResolution",
+      "kind": "action",
+      "category": "Graphics",
+      "label": "Set resolution scale",
+      "hint": "Highest pixel ratio the screen is drawn at: lower is faster, blurrier",
+      "display": "Set resolution scale to {ratio}",
+      "displayNoObject": null,
+      "icon": "🔍",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "ratio",
+          "label": "Pixel ratio (0.5 to 3)",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.setShadows",
+      "kind": "action",
+      "category": "Graphics",
+      "label": "Set shadows",
+      "hint": "Turn all shadows on or off",
+      "display": "Set shadows {state}",
+      "displayNoObject": null,
+      "icon": "🌓",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "state",
+          "label": "State",
+          "type": "choice",
+          "options": [
+            {
+              "value": "on",
+              "label": "on"
+            },
+            {
+              "value": "off",
+              "label": "off"
+            }
+          ],
+          "default": "on",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.setGlow",
+      "kind": "action",
+      "category": "Graphics",
+      "label": "Set glow (bloom)",
+      "hint": "Switch the glow effect off to save speed",
+      "display": "Set glow {state}",
+      "displayNoObject": null,
+      "icon": "✨",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "state",
+          "label": "State",
+          "type": "choice",
+          "options": [
+            {
+              "value": "on",
+              "label": "on"
+            },
+            {
+              "value": "off",
+              "label": "off"
+            }
+          ],
+          "default": "off",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.setMaxParticles",
+      "kind": "action",
+      "category": "Graphics",
+      "label": "Set max particles",
+      "hint": "Most particles alive at once",
+      "display": "Set max particles to {count}",
+      "displayNoObject": null,
+      "icon": "💨",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "count",
+          "label": "Count",
+          "type": "number",
+          "options": null,
+          "default": "500",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.setSmoothEdges",
+      "kind": "action",
+      "category": "Graphics",
+      "label": "Set antialiasing (smooth edges)",
+      "hint": "Smooth jagged edges. It can only change when the game starts, so a new value counts from the next start",
+      "display": "Set antialiasing {state} (from next start)",
+      "displayNoObject": null,
+      "icon": "◪",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "state",
+          "label": "State",
+          "type": "choice",
+          "options": [
+            {
+              "value": "on",
+              "label": "on"
+            },
+            {
+              "value": "off",
+              "label": "off"
+            }
+          ],
+          "default": "off",
           "optional": false,
           "hint": null,
           "varScope": null

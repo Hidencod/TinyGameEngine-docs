@@ -1104,6 +1104,12 @@
           "doc": "Draw shapes over the game to check positions and sizes, like Unity Debug.DrawLine and Gizmos: game.debug.drawSphere(enemy.position, 5, \"#ff0000\"), drawLine(a, b, color, seconds), drawRay(origin, direction), drawCircle(center, radius), drawBox(center, size), drawPoint(position). Seconds default to 0 = one frame, so call it every update()."
         },
         {
+          "name": "quality",
+          "kind": "property",
+          "type": "{level,pixelRatio,shadows,glow,antialias,maxParticles}",
+          "doc": "Graphics quality, like Unity QualitySettings: game.quality.level = \"low\" (or \"medium\", \"high\") applies a whole level; game.quality.pixelRatio = 1, .shadows = false, .glow = false, .maxParticles = 300 change one setting. Saved on the device. antialias counts from the next start; glow can be switched back on only if the game started with glow allowed."
+        },
+        {
           "name": "vibrate",
           "kind": "method",
           "sig": "(ms)",

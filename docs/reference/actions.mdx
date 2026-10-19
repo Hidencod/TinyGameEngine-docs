@@ -16,9 +16,9 @@ Actions are the **DO** part of an event. They run from top to bottom when the ev
 Number and text fields accept expressions, e.g. `Score + 1`, `"Score: " + Score`, `Player.x`, `random(1, 6)`. See [Expressions](./expressions).
 :::
 
-There are **131 actions**, grouped by category as in the action picker.
+There are **137 actions**, grouped by category as in the action picker.
 
-[⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera)
+[⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera) · [🎚️ Graphics](#graphics)
 
 ## ⚙️ System {/* #system */}
 
@@ -1805,3 +1805,83 @@ Move the main camera.
 | X | Number (expression) | `0` |  |
 | Y | Number (expression) | `6` |  |
 | Z | Number (expression) | `10` |  |
+
+## 🎚️ Graphics {/* #graphics */}
+
+### Set graphics quality {/* #system-setquality */}
+
+<span class="tge-ace-display">Set graphics quality to ‹Level›</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `system.setQuality` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Level | Choice | `medium` | Options: Low, Medium, High |
+
+### Set resolution scale {/* #system-setresolution */}
+
+<span class="tge-ace-display">Set resolution scale to ‹Pixel ratio (0.5 to 3)›</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `system.setResolution` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Pixel ratio (0.5 to 3) | Number (expression) | `1` |  |
+
+### Set shadows {/* #system-setshadows */}
+
+<span class="tge-ace-display">Set shadows ‹State›</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `system.setShadows` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| State | Choice | `on` | Options: on, off |
+
+### Set glow (bloom) {/* #system-setglow */}
+
+<span class="tge-ace-display">Set glow ‹State›</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `system.setGlow` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| State | Choice | `off` | Options: on, off |
+
+### Set max particles {/* #system-setmaxparticles */}
+
+<span class="tge-ace-display">Set max particles to ‹Count›</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `system.setMaxParticles` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Count | Number (expression) | `500` |  |
+
+### Set antialiasing (smooth edges) {/* #system-setsmoothedges */}
+
+<span class="tge-ace-display">Set antialiasing ‹State› (from next start)</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `system.setSmoothEdges` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| State | Choice | `off` | Options: on, off |

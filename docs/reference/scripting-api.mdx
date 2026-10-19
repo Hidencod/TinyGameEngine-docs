@@ -214,6 +214,7 @@ The running game.
 | `spawnParticles(effect, x, y, z, overrides?)` | `void` | Play an effect once at a position: "Sparkles", "Fire", "Smoke", "Explosion", "Dust puff", "Rain", "Confetti", "Splash", "Bubbles", "Magic". overrides change any module, e.g. &#123; main: &#123; startColor: "#ff0000" &#125;, noise: &#123; enabled: true &#125; &#125; |
 | `shakeCamera(intensity, duration)` | `void` | Shake the camera. |
 | `debug` | `{drawLine,drawRay,drawSphere,drawCircle,drawBox,drawPoint,clear}` | Draw shapes over the game to check positions and sizes, like Unity Debug.DrawLine and Gizmos: game.debug.drawSphere(enemy.position, 5, "#ff0000"), drawLine(a, b, color, seconds), drawRay(origin, direction), drawCircle(center, radius), drawBox(center, size), drawPoint(position). Seconds default to 0 = one frame, so call it every update(). |
+| `quality` | `{level,pixelRatio,shadows,glow,antialias,maxParticles}` | Graphics quality, like Unity QualitySettings: game.quality.level = "low" (or "medium", "high") applies a whole level; game.quality.pixelRatio = 1, .shadows = false, .glow = false, .maxParticles = 300 change one setting. Saved on the device. antialias counts from the next start; glow can be switched back on only if the game started with glow allowed. |
 | `vibrate(ms)` | `void` | Vibrate the phone, e.g. vibrate(40) on a hit (Android; ignored elsewhere). |
 | `enterFullscreen()` | `Promise<void>` | Fill the screen. Browsers only allow it inside a tap, so call it from a Button's On Click. |
 | `exitFullscreen()` | `Promise<void>` | Leave fullscreen. |
