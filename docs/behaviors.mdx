@@ -230,6 +230,25 @@ When the Curve is on its own object, the path stays where it was when the game s
 
 Events: **On reached end of curve**, **Compare curve progress**, **Set curve progress** and **Play / pause curve** (see [Curve](./world/curve#events)).
 
+## 🔁 Repeat along curve {/* #repeat-on-curve */}
+
+Put it **on an object with a [Curve](./world/curve)**. When the game starts it places copies of another object along the line, a set distance apart: fence posts, street lamps, trees along a road, coins on a path.
+
+| Setting | Default | What it does |
+| --- | --- | --- |
+| **Object** | (pick one) | What to copy: another object of this scene, or a prefab. |
+| **Spacing** | 2 | Meters between copies, measured along the line. |
+| **Start offset** | 0 | Meters from the start of the curve to the first copy. |
+| **Face forward** | on | Turn each copy to look along the line. |
+| **Upright** | on | Keep copies standing up on slopes. |
+| **Use tilt** | on | Lean copies by the curve's **Tilt** at that spot. |
+| **Use scale** | on | Size copies by the curve's **Scale** at that spot. |
+| **Hide source** | on | Hide the original object, so only the copies show. |
+
+The copies are children of the curve object, so moving the curve moves them all. They are placed once at the start (at most 500); in scripts, `entity.behavior('repeatOnCurve').rebuild()` places them again, and `.count` says how many there are. Copies have everything the original has (collider, physics, behaviors), so use plain objects for scenery.
+
+You see the copies when you press Play, not in the editor.
+
 ## 🏞️ Parallax {/* #parallax */}
 
 <Side shot="behavior-parallax" crop>

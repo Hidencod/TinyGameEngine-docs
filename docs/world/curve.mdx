@@ -24,9 +24,20 @@ Moving or rotating the curve object moves the whole path, so you can place a fin
 
 | Setting | What it does |
 | --- | --- |
-| **Curve type** | *Smooth (centripetal)* is the default and never loops or overshoots at tight corners. *Catmull-Rom (tension)* adds a **Tension** slider (0–1). *Chordal* hugs the points more tightly. |
+| **Curve type** | *Smooth (centripetal)* is the default and never loops or overshoots at tight corners. *Catmull-Rom (tension)* adds a **Tension** slider (0–1). *Chordal* hugs the points more tightly. *Bezier (handles)* gives every point a handle you drag to shape the bend (below). |
 | **Closed** | Joins the last point back to the first, for a race track or a patrol circuit. |
-| **Points** | Each point has **X / Y / Z** and **Tilt (°)**. **Add point** puts a new one after the last (up to 64); 🗑 removes one (a curve keeps at least 2). |
+| **Points** | Each point has **X / Y / Z**, **Tilt (°)** and **Scale**. **Add point** puts a new one after the last (up to 64); 🗑 removes one (a curve keeps at least 2). |
+
+## Bezier handles
+
+With **Curve type: Bezier (handles)**, pick a point and two cyan dots appear on a line through it: the point's **handle**. Drag a dot to bend the curve at that point. The farther the dot, the wider the bend; the line shows which way the curve passes through. Both dots move together, so the curve stays smooth.
+
+- **Shift + drag** (mouse) moves the dot up and down instead of over the ground.
+- The point's card has **Handle X / Y / Z** if you want numbers. **Auto handle** goes back to a handle worked out from the neighbouring points (the default for every point).
+
+## Scale
+
+**Scale** sets how big a copy is at that point: 1 = as it is, 2 = twice as big. It eases between points like Tilt. It is used by [Repeat along curve](../behaviors#repeat-on-curve), so fence posts, trees or lamps can grow along the path.
 
 ## Tilt
 
