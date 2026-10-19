@@ -64,14 +64,13 @@ A sky drawn live, with a sun and clouds, and it lights the scene. No image neede
 
 | Field | What it does |
 | --- | --- |
-| **Sun from light object** | On: the sun sits where the scene's first **Directional light** points, and the sky follows it as you turn that light. Off: use the two sliders below. |
-| **Sun height / Sun direction** | Where the sun is: degrees above the horizon (0–90) and around you. Low gives a sunset. |
+| **Sun height / Sun direction** | Where the sun is: degrees above the horizon (0–90) and around you. Low gives a sunset. The sky does not follow your **Sun** light object: turn that light to match (a new scene's Sun points at height 41, direction 42). |
 | **Sun size** | The size of the sun's disc. |
 | **Haze** | More haze whitens the sky and warms the horizon. |
 | **Sky blue** | How blue the clear sky is. |
 | **Clouds / Cloud thickness / Cloud height** | How much of the sky is covered, how dense the clouds are, and how high they drift. |
 | **Light with sky** | The sky lights objects with the **Realistic** material (reflections and soft light). **Sky light** sets how strongly. |
-| **Sun light / Sun light strength** | Only when *Sun from light object* is off: adds a sun that casts light, warms toward sunset and dims as the sun sets. |
+| **Sun light / Sun light strength** | Adds a sun light (no shadows) from where the sky's sun is: it warms toward sunset and dims as the sun sets. Off by default, because the scene already has its own **Sun** light. |
 
 Choosing it the first time also turns on **Tone mapping: ACES**, which a bright sky needs to look right.
 
