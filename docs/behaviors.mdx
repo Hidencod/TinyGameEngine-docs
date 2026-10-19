@@ -247,7 +247,7 @@ Put it **on an object with a [Curve](./world/curve)**. When the game starts it p
 
 The copies are children of the curve object, so moving the curve moves them all. They are placed once at the start (at most 500); in scripts, `entity.behavior('repeatOnCurve').rebuild()` places them again, and `.count` says how many there are. Copies have everything the original has (collider, physics, behaviors), so use plain objects for scenery.
 
-You see the copies when you press Play, not in the editor.
+The editor shows the copies too (as the object itself, or small boxes for a prefab), so you can move the curve's points and watch them follow. The original is hidden only when the game runs.
 
 ## 🏞️ Parallax {/* #parallax */}
 
