@@ -1,0 +1,54 @@
+---
+title: Navmesh (pathfinding)
+description: Let characters find their way over slopes, stairs and several floors, and jump across gaps, with a baked navigation mesh.
+---
+
+# Navmesh (pathfinding)
+
+By default, characters that **go around walls** (the *Follow target* behavior with Pathfinding, and the **Move to position** block) search a flat grid on the floor they stand on. That is fine for a yard with walls and rocks, but it cannot climb a staircase to the next floor or jump a gap.
+
+The **navmesh** can. Turn it on and the game works out, from your static colliders, every place a character of its size can stand: ramps, stairs, upper floors, the ground under a bridge. Paths are then searched over that.
+
+## Turn it on
+
+**Project settings → Navigation → Baked navmesh.**
+
+| Setting | Means |
+| --- | --- |
+| **Cell size** | How finely the floor is sampled. Smaller is more exact and slower to bake (0.5 m is fine for most games). |
+| **Steepest slope** | Ground steeper than this is not walkable. |
+| **Step height** | Edges up to this high are stepped over (kerbs, stairs). |
+
+The mesh is made **the first time a character needs a path** (a moment of work on a big level) and is kept until the scene ends. A mesh is made per character size, measured from the character's model, so a tall guard and a small dog get their own. Only **static** colliders count: moving bodies are not walls, and a wall that appears later is not seen until you call `game.navmesh.rebuild()`.
+
+## What it understands
+
+- **Slopes and stairs**: ground within the slope limit, joined by steps up to the step height.
+- **Several floors**: floors above each other are separate; a character reaches the upper one only by walking up something (stairs, a ramp) or over a link. The ground under an upper floor stays walkable.
+- **Room for the character**: places where its body would not fit (under a low ceiling, between close walls) are left out.
+- **Goals off the mesh**: a goal in a wall or across a gap makes the character walk to the reachable spot closest to it.
+
+## Walk to another floor
+
+**Move to position** has an optional **Floor height Y**. Left empty, the character goes to a place on the floor it is on; give a height to pick another floor at the same X and Z. (In scripts: `entity.moveTo(x, z, speed, { y: 4 })`.) **Follow target** goes to wherever the target stands.
+
+## Jumping across gaps: Nav link
+
+A gap, a ledge down, a ladder: places the mesh does not join. Add a **Nav link** component to an object at the take-off spot and set **Lands on** to an object at the landing spot. Characters then jump from one to the other, on an arc, when that is the way. **Both ways** lets them jump back; **Reach** is how far from each object they may start and land.
+
+## From scripts
+
+```ts
+const r = game.navmesh.findPath(enemy.position, player.position, { radius: 0.4, height: 1.8 });
+if (r && r.complete) {
+  for (const p of r.points) console.log(p.x, p.y, p.z, p.leap ? 'jump' : '');
+}
+const floor = game.navmesh.sample(player.position);   // nearest place to stand
+game.navmesh.rebuild();                               // after walls changed
+```
+
+## Good to know
+
+- With the navmesh off, nothing changes: the grid search is used.
+- If the mesh cannot be made (no static colliders), characters fall back to the grid search.
+- Not there yet: showing the mesh in the editor, baking ahead of time, avoiding other moving characters, different surface costs (mud, road).
