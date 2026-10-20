@@ -18,9 +18,9 @@ Conditions are the **WHEN / IF** part of an event. All conditions of an event mu
 - Most other conditions can be **inverted** (NOT) from the condition’s menu.
 :::
 
-There are **79 conditions**, grouped by category as in the condition picker.
+There are **81 conditions**, grouped by category as in the condition picker.
 
-[⚙️ System](#system) · [🔢 Variables](#variables) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🖼️ UI](#ui) · [✨ Particles](#particles) · [🎚️ Graphics](#graphics)
+[⚙️ System](#system) · [🔢 Variables](#variables) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🖼️ UI](#ui) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎚️ Graphics](#graphics)
 
 ## ⚙️ System {/* #system */}
 
@@ -991,6 +991,34 @@ Runs when its Particle System has stopped and its last particle died. Needs "Sto
 - **Where:** Pick an **object** (or a #tag) first, then this condition.
 - **ID:** `object.onParticlesStopped` (as saved in project files)
 - **Parameters:** none
+
+## 🔊 Audio {/* #audio */}
+
+### Is sound playing {/* #audio-isplaying */}
+
+<span class="tge-ace-display">Sound ‹Sound (empty = any)› is playing</span>
+
+True while a sound you played (or any, when empty) is still playing. A sound that is fading out no longer counts.
+
+- **Where:** Found under **Audio** in the picker.
+- **ID:** `audio.isPlaying` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Sound (empty = any) | Sound |  | *Optional.* |
+
+### Is music playing {/* #audio-ismusicplaying */}
+
+<span class="tge-ace-display">Music ‹Music (empty = any)› is playing</span>
+
+True while music (or that music) is playing.
+
+- **Where:** Found under **Audio** in the picker.
+- **ID:** `audio.isMusicPlaying` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Music (empty = any) | Sound |  | *Optional.* |
 
 ## 🎚️ Graphics {/* #graphics */}
 

@@ -1,6 +1,6 @@
 ---
 title: Sound
-description: Free sounds, the Sound component, 3D sound, and playing sounds from events and scripts.
+description: Free sounds, the Sound component, 3D sound, music, the audio mixer, fades, and playing sounds from events and scripts.
 ---
 
 # Sound
@@ -23,7 +23,7 @@ description: Free sounds, the Sound component, 3D sound, and playing sounds from
 
 ## Play a sound from an event
 
-The simplest way: **Add action → Audio → Play sound**, choose the sound, a **volume** and whether it **loops**. **Stop sound** stops it, **Set master volume** changes the volume of everything.
+The simplest way: **Add action → Audio → Play sound**, choose the sound, a **volume** and whether it **loops**. It can also play through a **mixer group**, at another **pitch** (1 = normal, 1.2 = a little higher and faster; a small random pitch like `random(0.9, 1.1)` keeps repeated sounds from sounding the same) and **fade in**. **Stop sound** stops one sound or all of them, with an optional **fade out**. **Is sound playing** checks whether one is still going.
 
 Example — a coin sound: *WHEN Player collides with Coin → Audio: Play sound `Coin`*.
 
@@ -39,12 +39,57 @@ For a sound that belongs to an object — an engine hum on a car, a waterfall, b
 | **Play on start** | Starts when the scene starts. |
 | **Loop** | Repeats forever. |
 | **Volume** | 0–1. |
-| **3D sound** | Quieter when the object is far from the camera. |
+| **Pitch** | 1 = normal; 2 = an octave up and twice as fast. |
+| **Mixer group** | The group of the [audio mixer](#the-audio-mixer) it plays through (Master = none). |
+| **3D sound** | Quieter when the object is far from the camera, and from the side it is on. |
+| **Full volume within** | (3D) Closer than this, it plays at full volume. |
+| **Heard up to** | (3D) How far it carries. |
+| **Fade with distance** | (3D) *Natural* fades like real sound and never quite goes silent; *Linear* reaches silence at **Heard up to**. |
 
-Actions **Play its sound** / **Stop its sound** control it.
+Actions **Play its sound** / **Stop its sound** (with a fade out) control it.
 
 </Side>
 
 :::info[Sound on phones]
 Browsers only allow sound after the player touches the screen. Exported games show a *Tap to play* screen that unlocks sound; in the editor the ▶ Play tap does it.
 :::
+
+## Music
+
+**Play music** plays one track at a time: starting another **cross-fades** from the one playing over the time you give (1 s by default), and asking for the track that is already playing only changes its volume. **Stop music** fades it out; **Is music playing** checks it. Use it for level music, a menu theme, or a boss fight that takes over.
+
+## The audio mixer
+
+**Project settings → Audio mixer** holds the game's **groups**, like Unity's Audio Mixer: for example *Music*, *SFX* and *Voices*. A sound plays through the group you pick (in **Play sound**, **Play music** or the Sound component); a group sets the volume of everything in it.
+
+| Group setting | What it does |
+| --- | --- |
+| **Name** | What sounds and events call it. Renaming it renames it on every Sound component. |
+| **On** | Off mutes the group. |
+| **Volume** | 0–1, under the master volume. |
+| **Low-pass** | Muffles the group (in Hz; 0 = off). 500–800 sounds like being under water or behind a wall. |
+
+While playing:
+
+| Block | Does |
+| --- | --- |
+| **Set group volume** | A group's volume, faded over the time you give. `Master` is the master volume. An options menu's music slider is one of these. |
+| **Mute group** | Silence a group, or bring it back. |
+| **Set group low-pass** | Muffle a group (fade it in when the player dives, out when they come up). |
+| **Pause all sounds** / **Resume all sounds** | For a pause menu: everything stops where it is and carries on later. |
+
+## In scripts
+
+```js
+const hit = audio.play('Punch', { group: 'SFX', pitch: random(0.9, 1.1) })
+const engine = audio.play('Engine', { loop: true, fadeIn: 0.5 })
+engine.pitch = 0.8 + speed / 20        // change it while it plays
+engine.stop(1)                          // fade out over 1 s
+
+audio.playMusic('Boss', { fade: 2 })     // cross-fade from the level music
+audio.setGroupVolume('Music', 0.3, 1)    // duck the music for a cutscene
+audio.setGroupLowpass('SFX', 600, 0.3)   // under water
+audio.pauseAll()
+```
+
+`audio.play()` returns the sound: `volume`, `pitch`, `playing`, `stop(fadeOut)` and `fadeTo(volume, seconds)`. Also `audio.stop(tag, fadeOut)`, `audio.isPlaying(tag)`, `audio.music`, `audio.stopMusic(fade)`, `audio.getGroupVolume(group)`, `audio.setGroupMuted(group, muted)`, `audio.resumeAll()`, and `entity.stopSound(fadeOut)`.

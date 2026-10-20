@@ -6830,7 +6830,18 @@
       "loop": null,
       "noInvert": false,
       "isWait": false,
-      "params": []
+      "params": [
+        {
+          "id": "fade",
+          "label": "Fade out (s)",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
     },
     {
       "id": "object.setBehaviorEnabled",
@@ -8391,6 +8402,36 @@
           "optional": false,
           "hint": null,
           "varScope": null
+        },
+        {
+          "id": "group",
+          "label": "Mixer group (optional)",
+          "type": "string",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "pitch",
+          "label": "Pitch",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "fadeIn",
+          "label": "Fade in (s)",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
         }
       ]
     },
@@ -8400,8 +8441,8 @@
       "category": "Audio",
       "label": "Stop sound",
       "hint": "One sound or all",
-      "display": "Stop sound {sound}",
-      "displayNoObject": "Stop sound {sound}",
+      "display": "Stop sound {sound} (fade {fade} s)",
+      "displayNoObject": null,
       "icon": "🔇",
       "description": "Stop a sound (leave empty to stop all sounds).",
       "isTrigger": false,
@@ -8415,6 +8456,176 @@
         {
           "id": "sound",
           "label": "Sound (empty = all)",
+          "type": "sound",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "fade",
+          "label": "Fade out (s)",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "audio.isPlaying",
+      "kind": "condition",
+      "category": "Audio",
+      "label": "Is sound playing",
+      "hint": "A sound (or any) is playing",
+      "display": "Sound {sound} is playing",
+      "displayNoObject": null,
+      "icon": "🔊",
+      "description": "True while a sound you played (or any, when empty) is still playing. A sound that is fading out no longer counts.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "audio",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "sound",
+          "label": "Sound (empty = any)",
+          "type": "sound",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "audio.playMusic",
+      "kind": "action",
+      "category": "Audio",
+      "label": "Play music",
+      "hint": "Cross-fades from the music playing",
+      "display": "Play music {sound} (volume {volume}, cross-fade {fade} s)",
+      "displayNoObject": null,
+      "icon": "🎵",
+      "description": "Plays music, one track at a time: another track cross-fades from the one playing; the same track only changes its volume. Loops unless you turn Loop off.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "audio",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "sound",
+          "label": "Music",
+          "type": "sound",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "volume",
+          "label": "Volume",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "fade",
+          "label": "Cross-fade (s)",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "group",
+          "label": "Mixer group (optional)",
+          "type": "string",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "loop",
+          "label": "Loop",
+          "type": "boolean",
+          "options": null,
+          "default": "true",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "audio.stopMusic",
+      "kind": "action",
+      "category": "Audio",
+      "label": "Stop music",
+      "hint": "Fade the music out",
+      "display": "Stop music (fade {fade} s)",
+      "displayNoObject": null,
+      "icon": "🔇",
+      "description": "Fades the music out over the time given.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "audio",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "fade",
+          "label": "Fade out (s)",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "audio.isMusicPlaying",
+      "kind": "condition",
+      "category": "Audio",
+      "label": "Is music playing",
+      "hint": "Some music, or that one",
+      "display": "Music {sound} is playing",
+      "displayNoObject": null,
+      "icon": "🎵",
+      "description": "True while music (or that music) is playing.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "audio",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "sound",
+          "label": "Music (empty = any)",
           "type": "sound",
           "options": null,
           "default": "",
@@ -8453,6 +8664,184 @@
           "varScope": null
         }
       ]
+    },
+    {
+      "id": "audio.setGroupVolume",
+      "kind": "action",
+      "category": "Audio",
+      "label": "Set group volume",
+      "hint": "A mixer group, faded",
+      "display": "Set {group} volume to {volume} (fade {fade} s)",
+      "displayNoObject": null,
+      "icon": "🎚️",
+      "description": "Sets the volume of a group of the audio mixer (Project settings → Audio mixer), faded over the time given. Master is the master volume.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "audio",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "group",
+          "label": "Mixer group",
+          "type": "string",
+          "options": null,
+          "default": "Music",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "volume",
+          "label": "Volume",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "fade",
+          "label": "Fade (s)",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "audio.muteGroup",
+      "kind": "action",
+      "category": "Audio",
+      "label": "Mute group",
+      "hint": "Silence a mixer group",
+      "display": "Mute {group}: {muted}",
+      "displayNoObject": null,
+      "icon": "🔇",
+      "description": "Silences a mixer group, or brings it back at its volume.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "audio",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "group",
+          "label": "Mixer group",
+          "type": "string",
+          "options": null,
+          "default": "Music",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "muted",
+          "label": "Muted",
+          "type": "boolean",
+          "options": null,
+          "default": "true",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "audio.setGroupLowpass",
+      "kind": "action",
+      "category": "Audio",
+      "label": "Set group low-pass",
+      "hint": "Muffle (Hz, 0 = off)",
+      "display": "Set {group} low-pass to {hz} Hz (fade {fade} s)",
+      "displayNoObject": null,
+      "icon": "〰️",
+      "description": "Muffles a mixer group with a low-pass filter (Hz; 0 = off), e.g. 600 under water.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "audio",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "group",
+          "label": "Mixer group",
+          "type": "string",
+          "options": null,
+          "default": "SFX",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "hz",
+          "label": "Cutoff (Hz, 0 = off)",
+          "type": "number",
+          "options": null,
+          "default": "800",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "fade",
+          "label": "Fade (s)",
+          "type": "number",
+          "options": null,
+          "default": "0.3",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "audio.pauseAll",
+      "kind": "action",
+      "category": "Audio",
+      "label": "Pause all sounds",
+      "hint": "For a pause menu",
+      "display": "Pause all sounds",
+      "displayNoObject": null,
+      "icon": "⏸",
+      "description": "Pauses every sound where it is, for a pause menu. Resume all sounds carries on.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "audio",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "audio.resumeAll",
+      "kind": "action",
+      "category": "Audio",
+      "label": "Resume all sounds",
+      "hint": "Go on where they were",
+      "display": "Resume all sounds",
+      "displayNoObject": null,
+      "icon": "▶️",
+      "description": "Carries on the sounds paused by Pause all sounds.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "audio",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
     },
     {
       "id": "camera.shake",

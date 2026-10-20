@@ -139,7 +139,7 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `isEmittingParticles()` | `boolean` | True while the Particle System makes new particles. |
 | `getParticleCount()` | `number` | Particles currently alive. |
 | `playSound()` | `void` | Play this entity's Audio component. |
-| `stopSound()` | `void` | Stop this entity's Audio component. |
+| `stopSound(fadeOut = 0)` | `void` | Stop the sound of its Sound component, fading out over fadeOut seconds. |
 | `getComponent(type)` | `object\|null` | A copy of a component's or behavior's settings, e.g. getComponent("rigidbody").mass. Read-only — component() gives you the live one. |
 | `component(type)` | `component\|null` | A component as a live object: every setting in the Inspector is a property you can read and write, e.g. component("rigidbody").mass = 5, component("light").intensity = 2. Structural ones (shape, model) need rebuild() — component(type).set(&#123; … &#125;) does it for you. |
 | `getComponents()` | `string[]` | Component types on this object. |
@@ -256,9 +256,21 @@ Sound playback.
 
 | Member | Type | Description |
 | --- | --- | --- |
-| `play(nameOrId, {volume, loop, tag}?)` | `void` | Play an audio asset, e.g. audio.play("coin") or audio.play(hit) with a sound field. |
-| `stop(tag?)` | `void` | Stop sounds with a tag (or all). |
+| `play(nameOrId, {volume, loop, tag, group, pitch, fadeIn}?)` | `SoundHandle` | Play an audio asset, e.g. audio.play("coin") or audio.play(hit) with a sound field. Returns its handle: handle.stop(fadeOut), handle.fadeTo(volume, seconds), handle.volume, handle.pitch, handle.playing. |
+| `stop(tag?, fadeOut?)` | `void` | Stop sounds with a tag (or all), fading out over fadeOut seconds. |
+| `isPlaying(tag?)` | `boolean` | A sound with that tag (or any) is playing. |
+| `playMusic(nameOrId, {volume, fade, group, loop}?)` | `void` | Play music, cross-fading from the track playing (fade defaults to 1 s). Asking for the same track only changes its volume. |
+| `stopMusic(fade = 1)` | `void` | Fade the music out. |
+| `music` | `string` | Name of the music playing, or "". |
+| `setGroupVolume(group, 0..1, fade?)` | `void` | Volume of a mixer group (Project settings → Audio mixer), smoothly over fade seconds. "Master" is the master volume. |
+| `getGroupVolume(group)` | `number` | Volume of a mixer group. |
+| `setGroupMuted(group, muted)` | `void` | Silence a mixer group, or bring it back. |
+| `setGroupLowpass(group, hz, fade?)` | `void` | Muffle a mixer group (e.g. 600 under water); 0 turns the filter off. |
 | `setMasterVolume(0..1)` | `void` | Global volume. |
+| `getMasterVolume()` | `number` | Global volume. |
+| `pauseAll()` | `void` | Pause every sound (a pause menu). |
+| `resumeAll()` | `void` | Carry on where they were. |
+| `paused` | `boolean` | Sounds are paused. |
 
 ## `helpers` — Helpers {/* #helpers */}
 

@@ -639,9 +639,9 @@
         {
           "name": "stopSound",
           "kind": "method",
-          "sig": "()",
+          "sig": "(fadeOut = 0)",
           "type": "void",
-          "doc": "Stop this entity's Audio component."
+          "doc": "Stop the sound of its Sound component, fading out over fadeOut seconds."
         },
         {
           "name": "getComponent",
@@ -1304,16 +1304,71 @@
         {
           "name": "play",
           "kind": "method",
-          "sig": "(nameOrId, {volume, loop, tag}?)",
-          "type": "void",
-          "doc": "Play an audio asset, e.g. audio.play(\"coin\") or audio.play(hit) with a sound field."
+          "sig": "(nameOrId, {volume, loop, tag, group, pitch, fadeIn}?)",
+          "type": "SoundHandle",
+          "doc": "Play an audio asset, e.g. audio.play(\"coin\") or audio.play(hit) with a sound field. Returns its handle: handle.stop(fadeOut), handle.fadeTo(volume, seconds), handle.volume, handle.pitch, handle.playing."
         },
         {
           "name": "stop",
           "kind": "method",
-          "sig": "(tag?)",
+          "sig": "(tag?, fadeOut?)",
           "type": "void",
-          "doc": "Stop sounds with a tag (or all)."
+          "doc": "Stop sounds with a tag (or all), fading out over fadeOut seconds."
+        },
+        {
+          "name": "isPlaying",
+          "kind": "method",
+          "sig": "(tag?)",
+          "type": "boolean",
+          "doc": "A sound with that tag (or any) is playing."
+        },
+        {
+          "name": "playMusic",
+          "kind": "method",
+          "sig": "(nameOrId, {volume, fade, group, loop}?)",
+          "type": "void",
+          "doc": "Play music, cross-fading from the track playing (fade defaults to 1 s). Asking for the same track only changes its volume."
+        },
+        {
+          "name": "stopMusic",
+          "kind": "method",
+          "sig": "(fade = 1)",
+          "type": "void",
+          "doc": "Fade the music out."
+        },
+        {
+          "name": "music",
+          "kind": "property",
+          "type": "string",
+          "doc": "Name of the music playing, or \"\"."
+        },
+        {
+          "name": "setGroupVolume",
+          "kind": "method",
+          "sig": "(group, 0..1, fade?)",
+          "type": "void",
+          "doc": "Volume of a mixer group (Project settings → Audio mixer), smoothly over fade seconds. \"Master\" is the master volume."
+        },
+        {
+          "name": "getGroupVolume",
+          "kind": "method",
+          "sig": "(group)",
+          "type": "number",
+          "doc": "Volume of a mixer group."
+        },
+        {
+          "name": "setGroupMuted",
+          "kind": "method",
+          "sig": "(group, muted)",
+          "type": "void",
+          "doc": "Silence a mixer group, or bring it back."
+        },
+        {
+          "name": "setGroupLowpass",
+          "kind": "method",
+          "sig": "(group, hz, fade?)",
+          "type": "void",
+          "doc": "Muffle a mixer group (e.g. 600 under water); 0 turns the filter off."
         },
         {
           "name": "setMasterVolume",
@@ -1321,6 +1376,33 @@
           "sig": "(0..1)",
           "type": "void",
           "doc": "Global volume."
+        },
+        {
+          "name": "getMasterVolume",
+          "kind": "method",
+          "sig": "()",
+          "type": "number",
+          "doc": "Global volume."
+        },
+        {
+          "name": "pauseAll",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Pause every sound (a pause menu)."
+        },
+        {
+          "name": "resumeAll",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Carry on where they were."
+        },
+        {
+          "name": "paused",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "Sounds are paused."
         }
       ]
     },
