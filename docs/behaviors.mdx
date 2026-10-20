@@ -227,6 +227,20 @@ Turns a part of the object toward another object: a character's head that follow
 
 For a turret, leave **Bone** empty and set **Max angle** to 180.
 
+## 🦾 Two-bone IK {/* #two-bone-ik */}
+
+Bends an arm or a leg so its end reaches another object, like Unity's *Two Bone IK Constraint*: a hand on a door handle or a steering wheel, a foot on a step, an arm aiming at a target. It works **after** the animation each frame, so the rest of the body keeps animating.
+
+| Setting | Default | What it does |
+| --- | --- | --- |
+| **Bone** | — | The end of the limb: a hand or a foot of the object's model. Its parent (forearm / shin) and grand-parent (upper arm / thigh) are the two bones that turn. |
+| **Target** | — | The object the end reaches for (its middle). Usually an empty object you place, or one you move with events. |
+| **Hint target** | (none) | An object the elbow or knee points toward: put one behind the character for an elbow, in front for a knee. Without one the limb keeps the bend its animation gave it. |
+| **Weight** | 1 | 0 = the animated pose, 1 = fully reaching. Change it from events or a script to blend the reach in and out. |
+| **Match rotation** | off | Also turn the hand or foot to the target's rotation (a hand holding a handle the way it is turned). |
+
+Out of reach, the limb stretches straight toward the target. Use one Two-bone IK per limb: two for both hands on a wheel.
+
 ## ➰ Follow curve {/* #follow-curve */}
 
 Travels along a [Curve](./world/curve) at a steady speed. It moves the object every frame, so use it on objects without Physics, or with a kinematic body (a static body is made kinematic for you, as with a moving platform).

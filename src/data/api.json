@@ -407,7 +407,13 @@
           "kind": "method",
           "sig": "(name: string, loop = true)",
           "type": "void",
-          "doc": "Play a clip of the 3D model, or an animation of a sprite, e.g. \"walk\" or \"jump\". loop=false plays once and holds the last frame. Asking for the clip already playing keeps it going."
+          "doc": "Play a clip of the 3D model, or an animation of a sprite, e.g. \"walk\" or \"jump\". loop=false plays once and holds the last frame. Asking for the clip already playing keeps it going. With an Animator component the name is a state of its controller."
+        },
+        {
+          "name": "animator",
+          "kind": "property",
+          "type": "Animator|null",
+          "doc": "The Animator (an Animator component with a controller), as in Unity: animator.setFloat(\"Speed\", 3), setBool, setInteger, setTrigger(\"Attack\"), resetTrigger, getFloat / getBool / getInteger, play(\"Die\"), crossFade(\"Run\", 0.2), state, isInState(\"Jump\"), normalizedTime(), isInTransition(), setLayerWeight(1, 0.5), speed. Null without one."
         },
         {
           "name": "stopAnimation",

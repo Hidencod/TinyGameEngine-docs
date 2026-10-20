@@ -82,6 +82,13 @@
       "speed": 8,
       "weight": 1
     },
+    "twoBoneIK": {
+      "bone": "",
+      "target": "",
+      "hintTarget": "",
+      "weight": 1,
+      "matchRotation": false
+    },
     "firstPerson": {
       "target": "Player",
       "eyeHeight": 0.6,
@@ -206,6 +213,11 @@
       "icon": "👀",
       "title": "Look at target",
       "desc": ""
+    },
+    "twoBoneIK": {
+      "icon": "🦾",
+      "title": "Two-bone IK",
+      "desc": "Bends an arm or leg so its end reaches another object"
     },
     "parallax": {
       "icon": "🏞️",

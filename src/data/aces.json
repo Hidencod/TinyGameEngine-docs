@@ -8,6 +8,7 @@
     "Loops",
     "Input",
     "Object",
+    "Animator",
     "Physics",
     "Health",
     "Curve",
@@ -37,7 +38,8 @@
     "Particles": "✨",
     "Audio": "🔊",
     "Camera": "🎥",
-    "Graphics": "🎚️"
+    "Graphics": "🎚️",
+    "Animator": "🔀"
   },
   "list": [
     {
@@ -7072,6 +7074,361 @@
           "type": "tag",
           "options": null,
           "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.onAnimatorStateEnter",
+      "kind": "condition",
+      "category": "Animator",
+      "label": "On state entered",
+      "hint": "Its Animator starts a state",
+      "display": "On {object} entering animator state {state}",
+      "displayNoObject": null,
+      "icon": "🔀",
+      "description": "Runs when the object's Animator starts a state: as the cross-fade into it begins. Leave the name empty for any state.",
+      "isTrigger": true,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "state",
+          "label": "State (empty = any)",
+          "type": "string",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.onAnimatorStateExit",
+      "kind": "condition",
+      "category": "Animator",
+      "label": "On state exited",
+      "hint": "Its Animator left a state",
+      "display": "On {object} leaving animator state {state}",
+      "displayNoObject": null,
+      "icon": "🔀",
+      "description": "Runs when the object's Animator has left a state: as the cross-fade out of it ends. Leave the name empty for any state.",
+      "isTrigger": true,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "state",
+          "label": "State (empty = any)",
+          "type": "string",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.isInAnimatorState",
+      "kind": "condition",
+      "category": "Animator",
+      "label": "Is in state",
+      "hint": "Its Animator plays a state",
+      "display": "{object} is in animator state {state}",
+      "displayNoObject": null,
+      "icon": "🔀",
+      "description": "True while the object's Animator is in that state of its Base Layer (during a cross-fade, the state it is going to).",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "state",
+          "label": "State",
+          "type": "string",
+          "options": null,
+          "default": "Idle",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.compareAnimatorParam",
+      "kind": "condition",
+      "category": "Animator",
+      "label": "Compare parameter",
+      "hint": "e.g. Speed > 2",
+      "display": "{object} animator {param} {op} {value}",
+      "displayNoObject": null,
+      "icon": "🔢",
+      "description": "Compares one of the Animator's parameters with a value. A bool reads as 1 or 0.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "param",
+          "label": "Parameter",
+          "type": "string",
+          "options": null,
+          "default": "Speed",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "op",
+          "label": "Comparison",
+          "type": "choice",
+          "options": [
+            {
+              "value": "=",
+              "label": "="
+            },
+            {
+              "value": "≠",
+              "label": "≠"
+            },
+            {
+              "value": "<",
+              "label": "<"
+            },
+            {
+              "value": "≤",
+              "label": "≤"
+            },
+            {
+              "value": ">",
+              "label": ">"
+            },
+            {
+              "value": "≥",
+              "label": "≥"
+            }
+          ],
+          "default": "=",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "expression",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.setAnimatorParam",
+      "kind": "action",
+      "category": "Animator",
+      "label": "Set parameter",
+      "hint": "A float, int or bool",
+      "display": "Set {object} animator {param} to {value}",
+      "displayNoObject": null,
+      "icon": "🔢",
+      "description": "Sets a float, int or bool parameter of the object's Animator. Its transitions check it in the same frame.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "param",
+          "label": "Parameter",
+          "type": "string",
+          "options": null,
+          "default": "Speed",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "expression",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.setAnimatorTrigger",
+      "kind": "action",
+      "category": "Animator",
+      "label": "Set trigger",
+      "hint": "Fire a trigger parameter",
+      "display": "Set {object} animator trigger {param}",
+      "displayNoObject": null,
+      "icon": "⚡",
+      "description": "Sets a trigger parameter. The next transition that tests it is taken and uses it up.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "param",
+          "label": "Trigger",
+          "type": "string",
+          "options": null,
+          "default": "Jump",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.resetAnimatorTrigger",
+      "kind": "action",
+      "category": "Animator",
+      "label": "Reset trigger",
+      "hint": "Unset a trigger",
+      "display": "Reset {object} animator trigger {param}",
+      "displayNoObject": null,
+      "icon": "⚡",
+      "description": "Unsets a trigger that no transition has used yet.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "param",
+          "label": "Trigger",
+          "type": "string",
+          "options": null,
+          "default": "Jump",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.playAnimatorState",
+      "kind": "action",
+      "category": "Animator",
+      "label": "Play state",
+      "hint": "Go to a state (fade optional)",
+      "display": "{object} animator plays {state} (fade {fade} s, layer {layer})",
+      "displayNoObject": null,
+      "icon": "▶️",
+      "description": "Goes to a state straight away, or cross-fades into it over the time given. Layer 0 is the Base Layer; a layer name works too.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "state",
+          "label": "State",
+          "type": "string",
+          "options": null,
+          "default": "Idle",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "fade",
+          "label": "Cross-fade (s)",
+          "type": "number",
+          "options": null,
+          "default": "0.25",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "layer",
+          "label": "Layer (0 = Base)",
+          "type": "expression",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.setAnimatorLayerWeight",
+      "kind": "action",
+      "category": "Animator",
+      "label": "Set layer weight",
+      "hint": "0 … 1",
+      "display": "Set {object} animator layer {layer} weight to {weight}",
+      "displayNoObject": null,
+      "icon": "🎚️",
+      "description": "How much a layer of the Animator counts: 0 = not at all, 1 = fully. The Base Layer always counts fully.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "layer",
+          "label": "Layer (name or number)",
+          "type": "expression",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "weight",
+          "label": "Weight",
+          "type": "number",
+          "options": null,
+          "default": "1",
           "optional": false,
           "hint": null,
           "varScope": null

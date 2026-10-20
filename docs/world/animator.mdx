@@ -1,0 +1,142 @@
+---
+title: Animator
+description: Play a character's animations with a state machine — states, transitions, parameters, blend trees and layers — like Unity's Animator.
+---
+
+# Animator
+
+A model's **Animation** setting plays one clip. A character needs more: idle when it stands, walk and run as it speeds up, jump in the air, attack on a button, die once. The **Animator** does this the way Unity does. You make an **Animator controller** file with **states** (each plays a clip) and **transitions** between them (taken when **parameters** say so), then give the object an **Animator** component that uses it.
+
+<Row>
+  <Phone name="anim-controller" caption="An Animator controller: states and transitions" />
+  <Phone name="anim-transition" caption="A transition and its condition" />
+</Row>
+
+## Set one up
+
+1. Select the character and choose **Add component → Animator**.
+2. Tap **Controller → New controller…** and name it. The controller editor opens, ready to list the clips of the character's model.
+3. **＋ State** adds a state for a clip. The first one becomes the **default state** (orange): where the Animator starts.
+4. In **Parameters**, add the values that decide what plays, for example a float `Speed`.
+5. Select a state, tap **＋ To…**, pick where it goes, and add a **condition** (`Speed` Greater `0.1`). Add the way back too (`Speed` Less `0.1`).
+6. Press **Play**. With the controller editor open beside the game, the state the character is in glows blue and fills up as it plays.
+
+<Phone name="anim-component" caption="The Animator component" />
+
+With an Animator, the model's own **Animation** setting is hidden: the controller decides what plays. **Play animation** (events) and `playAnimation()` (scripts) then go to the **state** of that name.
+
+## The controller editor
+
+The top half shows the **graph** of the selected layer: **Entry** (green) points at the default state, **Any State** (teal) holds transitions that can happen from any state, and arrows show the transitions (×2 when two lead the same way). Drag a state to move it, drag the background to look around, and use **＋ / −** or the mouse wheel to zoom; **⤢** frames everything.
+
+Below it (beside it on a wide screen) you edit what is selected:
+
+| Selected | What you edit |
+| --- | --- |
+| Nothing | The layer (name, weight, blending, mask), its states, the **parameters**, and the **preview model** whose clips the lists offer. |
+| A state | Its name, **Motion** (a clip or a blend tree), **Speed**, **Speed × parameter**, **Loop**, *Set as default state*, and its transitions. |
+| A transition | Where it goes, **Has exit time** / **Exit time**, **Duration**, **Offset** and its **conditions**. |
+| Entry | The default state. |
+| Any State | Its transitions. |
+
+## Parameters
+
+| Type | Holds | Conditions |
+| --- | --- | --- |
+| **Float** | a number (speed, height) | Greater / Less than a value |
+| **Int** | a whole number (a weapon number) | Greater, Less, Equals, Not equal |
+| **Bool** | on or off (Grounded, Crouching) | true / false |
+| **Trigger** | a one-off signal (Jump, Attack) | set — and the transition that uses it unsets it |
+
+Renaming a parameter renames it in every condition and blend tree that uses it.
+
+### Filled in by the movement behaviors
+
+**Platformer**, **Top-down movement**, **Follow target** and **Move to position** set these parameters on their own when the controller has one with that name, so a controller can work with no events at all:
+
+| Parameter | Type | Value |
+| --- | --- | --- |
+| `Speed` | float | Speed along the ground, in m/s |
+| `Grounded` | bool | Standing on something |
+| `VerticalSpeed` | float | Up (+) or down (−) speed |
+| `Jump` | trigger | Set the moment it jumps |
+| `Swimming` / `Climbing` | bool | In water / on a ladder |
+| `MoveX` / `MoveZ` | float | Speed to its right / ahead (for strafing) |
+
+## Transitions
+
+A state's transitions are checked in order every frame (**Any State**'s first). The first whose conditions are all true is taken.
+
+- **Has exit time**: wait until the state is that far through before the transition can happen. **Exit time** is a fraction of the clip: `1` = its end, `0.75` = three quarters. Use it to go back to Idle when a Jump or Attack has finished (a transition with exit time and no conditions happens at that point).
+- **Duration**: how long the cross-fade takes, in seconds.
+- **Offset**: where in the next state's clip to start (0 … 1).
+- A transition with no condition and no exit time never happens.
+- While a cross-fade runs, no other transition starts on that layer.
+
+## Blend trees
+
+A state's **Motion** can mix several clips by parameters instead of playing one:
+
+- **Blend tree 1D**: clips at values of one parameter. *Idle at 0, Walk at 2, Run at 6* on `Speed` gives a smooth idle → walk → run with one state. Between two values the two clips mix.
+- **Blend tree 2D**: clips at points of two parameters, for example `MoveX` / `MoveZ` with *Forward (0, 1)*, *Back (0, −1)*, *Left (−1, 0)*, *Right (1, 0)* and *Idle (0, 0)* for a character that strafes.
+
+The clips of a blend tree run in step, so feet stay in time as they mix.
+
+## Layers
+
+**＋** next to *Base Layer* adds a layer: another state machine playing on top.
+
+- **Weight**: how much it counts (0 … 1). Change it while playing with **Set layer weight** or `animator.setLayerWeight()`.
+- **Blending**: **Override** replaces the layers below; **Additive** adds its movement to them (a breathing or recoil clip).
+- **Mask**: the bones it moves, each with everything under it (pick them from the preview model). An upper-body layer masked to the **torso** can attack while the legs keep walking.
+
+## In events
+
+The **Animator** group of conditions and actions:
+
+| Block | Does |
+| --- | --- |
+| ⚡ **On state entered** / **On state exited** | Runs when the Animator starts or leaves a state. |
+| **Is in state** | The Base Layer is in that state. |
+| **Compare parameter** | Checks a parameter. |
+| **Set parameter**, **Set trigger**, **Reset trigger** | Change parameters. |
+| **Play state** | Go to a state, with a cross-fade time and layer. |
+| **Set layer weight** | 0 … 1. |
+
+## In scripts
+
+`entity.animator` is the object's Animator (null without one), with Unity's methods:
+
+```js
+export function update(dt) {
+  const a = entity.animator
+  a.setFloat('Speed', entity.getVelocity().x)
+  if (input.wasPressed('attack')) a.setTrigger('Attack')
+  if (a.isInState('Die') && a.normalizedTime() >= 1) game.restartScene()
+}
+```
+
+| Member | Does |
+| --- | --- |
+| `setFloat`, `setInteger`, `setBool`, `setTrigger`, `resetTrigger` | Set a parameter. |
+| `getFloat`, `getInteger`, `getBool`, `hasParameter`, `parameters` | Read them. |
+| `play(state, layer?, normalizedTime?)` | Go to a state at once. |
+| `crossFade(state, seconds?, layer?, normalizedTime?)` | Cross-fade to it. |
+| `state`, `stateOf(layer)`, `isInState(name, layer?)` | Which state it is in. |
+| `normalizedTime(layer?)`, `isInTransition(layer?)` | How far through, and whether it is fading. |
+| `getLayerWeight(layer)`, `setLayerWeight(layer, w)` | Layer weights (index or name). |
+| `speed` | Playback speed. |
+
+`game.on('animatorState', ({ entity, layer, state, phase }) => …)` tells you every state change (`phase` is `'enter'` or `'exit'`).
+
+## Sprites
+
+An Animator also plays a **Sprite**'s animations: a state's clip is the name of one of the sprite's animations. Frames can't be mixed, so a blend tree plays its strongest clip and cross-fades switch at once.
+
+## Debugging
+
+While playing, the [debugger](../editor/debugging)'s inspector has an **Animator** group: the state of each layer with how far through it is, and every parameter, which you can change to try a transition.
+
+:::tip[Bending limbs to things]
+To put a hand on a handle or a foot on a step on top of the animation, add the [Two-bone IK](../behaviors#two-bone-ik) behavior.
+:::

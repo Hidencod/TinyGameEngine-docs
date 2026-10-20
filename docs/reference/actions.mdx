@@ -16,9 +16,9 @@ Actions are the **DO** part of an event. They run from top to bottom when the ev
 Number and text fields accept expressions, e.g. `Score + 1`, `"Score: " + Score`, `Player.x`, `random(1, 6)`. See [Expressions](./expressions).
 :::
 
-There are **144 actions**, grouped by category as in the action picker.
+There are **149 actions**, grouped by category as in the action picker.
 
-[⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera) · [🎚️ Graphics](#graphics)
+[⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera) · [🎚️ Graphics](#graphics)
 
 ## ⚙️ System {/* #system */}
 
@@ -1092,6 +1092,77 @@ Remove a tag from the object.
 | Parameter | Type | Default | Notes |
 | --- | --- | --- | --- |
 | Tag | Tag |  |  |
+
+## 🔀 Animator {/* #animator */}
+
+### Set parameter {/* #object-setanimatorparam */}
+
+<span class="tge-ace-display">Set ‹Object› animator ‹Parameter› to ‹Value›</span>
+
+Sets a float, int or bool parameter of the object's Animator. Its transitions check it in the same frame.
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.setAnimatorParam` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Parameter | Text | `Speed` |  |
+| Value | Expression | `1` |  |
+
+### Set trigger {/* #object-setanimatortrigger */}
+
+<span class="tge-ace-display">Set ‹Object› animator trigger ‹Trigger›</span>
+
+Sets a trigger parameter. The next transition that tests it is taken and uses it up.
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.setAnimatorTrigger` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Trigger | Text | `Jump` |  |
+
+### Reset trigger {/* #object-resetanimatortrigger */}
+
+<span class="tge-ace-display">Reset ‹Object› animator trigger ‹Trigger›</span>
+
+Unsets a trigger that no transition has used yet.
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.resetAnimatorTrigger` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Trigger | Text | `Jump` |  |
+
+### Play state {/* #object-playanimatorstate */}
+
+<span class="tge-ace-display">‹Object› animator plays ‹State› (fade ‹Cross-fade (s)› s, layer ‹Layer (0 = Base)›)</span>
+
+Goes to a state straight away, or cross-fades into it over the time given. Layer 0 is the Base Layer; a layer name works too.
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.playAnimatorState` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| State | Text | `Idle` |  |
+| Cross-fade (s) | Number (expression) | `0.25` |  |
+| Layer (0 = Base) | Expression | `0` |  |
+
+### Set layer weight {/* #object-setanimatorlayerweight */}
+
+<span class="tge-ace-display">Set ‹Object› animator layer ‹Layer (name or number)› weight to ‹Weight›</span>
+
+How much a layer of the Animator counts: 0 = not at all, 1 = fully. The Base Layer always counts fully.
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.setAnimatorLayerWeight` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Layer (name or number) | Expression | `1` |  |
+| Weight | Number (expression) | `1` |  |
 
 ## 🧱 Physics {/* #physics */}
 

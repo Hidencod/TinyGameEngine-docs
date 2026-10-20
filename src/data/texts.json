@@ -65,6 +65,15 @@
   "object.onArrived": "Runs when the object reaches the point of its \"Move to position\" (or gets as close as it can when walls are in the way).",
   "object.isMovingTo": "True while a \"Move to position\" is under way.",
   "object.onAnimationFinished": "Runs when a play-once animation (loop off) reaches its end. Leave the name empty for any animation.",
+  "object.onAnimatorStateEnter": "Runs when the object's Animator starts a state: as the cross-fade into it begins. Leave the name empty for any state.",
+  "object.onAnimatorStateExit": "Runs when the object's Animator has left a state: as the cross-fade out of it ends. Leave the name empty for any state.",
+  "object.isInAnimatorState": "True while the object's Animator is in that state of its Base Layer (during a cross-fade, the state it is going to).",
+  "object.compareAnimatorParam": "Compares one of the Animator's parameters with a value. A bool reads as 1 or 0.",
+  "object.setAnimatorParam": "Sets a float, int or bool parameter of the object's Animator. Its transitions check it in the same frame.",
+  "object.setAnimatorTrigger": "Sets a trigger parameter. The next transition that tests it is taken and uses it up.",
+  "object.resetAnimatorTrigger": "Unsets a trigger that no transition has used yet.",
+  "object.playAnimatorState": "Goes to a state straight away, or cross-fades into it over the time given. Layer 0 is the Base Layer; a layer name works too.",
+  "object.setAnimatorLayerWeight": "How much a layer of the Animator counts: 0 = not at all, 1 = fully. The Base Layer always counts fully.",
   "system.raycast": "Shoots an invisible ray from a point in a direction and is true when it hits something solid. Afterwards, in the actions of the same event, use rayHitX / rayHitY / rayHitZ (where it hit), rayNormalX / rayNormalY / rayNormalZ (which way the surface faces; rayNormalY is 1 on flat ground), rayDistance (meters) and rayhitname() (the object's name). Must hit makes the condition true only when the ray hits that kind of object, and picks it for the actions. Only tag ignores everything without that tag. Ignore lets the ray pass through those objects. Triggers (coins, checkpoints) never block a ray.",
   "object.raycast": "Shoots a ray out of the object: forward, backward, left, right (the way it faces), or straight up or down. It never hits the object itself. Start height lifts the start above the object's center, e.g. to eye level. Uses the same rayHit…, rayNormal…, rayDistance and rayhitname() values and the same Must hit / Only tag / Ignore options as the Raycast condition. With several objects at once, the values come from the last one that hit.",
   "object.hasLineOfSight": "True when nothing solid (walls, crates…) is between the object and the target, e.g. an enemy only chases the player it can see. Triggers (checkpoints, coins) never block the view.",
@@ -200,7 +209,8 @@
   "follow": "Moves toward another object",
   "destroyOffscreen": "Removes the object when it falls or goes too far",
   "draggable": "Player can drag it with a finger",
-  "health": "Takes damage, flashes, dies at 0"
+  "health": "Takes damage, flashes, dies at 0",
+  "twoBoneIK": "Bends an arm or leg so its end reaches another object"
  },
  "components": {
   "mesh": "Visible 3D shape or model with a material",
@@ -213,6 +223,7 @@
   "text": "On-screen text like score or messages",
   "ui": "Text, button, image, slider or panel",
   "script": "Custom JavaScript for advanced logic",
+  "animator": "Plays model clips through an Animator Controller (states, transitions, blend trees)",
   "particles": "Sparks, smoke, fire, confetti",
   "terrain": "Hills you sculpt by dragging",
   "water": "Lake or sea: things float, characters swim"

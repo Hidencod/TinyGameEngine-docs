@@ -89,6 +89,11 @@
       "icon": "🧱",
       "title": "Tilemap",
       "desc": ""
+    },
+    "animator": {
+      "icon": "🔀",
+      "title": "Animator",
+      "desc": "Plays model clips through an Animator Controller (states, transitions, blend trees)"
     }
   }
 }

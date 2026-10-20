@@ -95,6 +95,7 @@ The camera's distance is checked a few times a second, and the switch has a litt
 - The **Platformer**, **Top-down** and **Follow target** behaviors animate characters automatically (with *Animate* on): **idle** when standing, **walk** / **sprint** when moving, **jump** / **fall** in the air — using whichever of these clips the model has.
 - Actions: **Play animation** (loop or once), **Stop animation**, **Set animation speed**. Condition: **On animation finished**, **Is playing animation**.
 - Scripts: `entity.playAnimation('wave', false)`, `entity.getAnimationNames()`.
+- For idle / walk / run / jump / attack with blends, layers and transitions, use an [Animator](./animator) instead.
 
 ## Ragdoll
 

@@ -105,7 +105,8 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `moveUITo(target, offsetX, offsetY)` | `void` | Put this UI element's pivot on the middle of another UI element, plus an offset in canvas px. attachTo(parent) / detach() also work for UI elements and move them inside the new parent. |
 | `refreshUI()` | `void` | Re-apply the UI styles after writing component data directly. |
 | `isPressed()` | `boolean` | True while this UI button is held down. |
-| `playAnimation(name: string, loop = true)` | `void` | Play a clip of the 3D model, or an animation of a sprite, e.g. "walk" or "jump". loop=false plays once and holds the last frame. Asking for the clip already playing keeps it going. |
+| `playAnimation(name: string, loop = true)` | `void` | Play a clip of the 3D model, or an animation of a sprite, e.g. "walk" or "jump". loop=false plays once and holds the last frame. Asking for the clip already playing keeps it going. With an Animator component the name is a state of its controller. |
+| `animator` | `Animator\|null` | The Animator (an Animator component with a controller), as in Unity: animator.setFloat("Speed", 3), setBool, setInteger, setTrigger("Attack"), resetTrigger, getFloat / getBool / getInteger, play("Die"), crossFade("Run", 0.2), state, isInState("Jump"), normalizedTime(), isInTransition(), setLayerWeight(1, 0.5), speed. Null without one. |
 | `stopAnimation()` | `void` | Stop the playing model animation. |
 | `ragdoll(on = true)` | `void` | Make a rigged 3D character limp with physics, e.g. entity.ragdoll() when it dies; ragdoll(false) brings it back to its animation. The object itself stays where it is, only its bones move. entity.ragdolled says whether it is limp. |
 | `getAnimation()` | `string` | Name of the playing clip (empty if none). |

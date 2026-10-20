@@ -18,9 +18,9 @@ Conditions are the **WHEN / IF** part of an event. All conditions of an event mu
 - Most other conditions can be **inverted** (NOT) from the condition’s menu.
 :::
 
-There are **75 conditions**, grouped by category as in the condition picker.
+There are **79 conditions**, grouped by category as in the condition picker.
 
-[⚙️ System](#system) · [🔢 Variables](#variables) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🖼️ UI](#ui) · [✨ Particles](#particles) · [🎚️ Graphics](#graphics)
+[⚙️ System](#system) · [🔢 Variables](#variables) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🖼️ UI](#ui) · [✨ Particles](#particles) · [🎚️ Graphics](#graphics)
 
 ## ⚙️ System {/* #system */}
 
@@ -628,6 +628,62 @@ Only use one random instance.
 - **Where:** Pick an **object** (or a #tag) first, then this condition.
 - **ID:** `object.pickRandom` (as saved in project files)
 - **Parameters:** none
+
+## 🔀 Animator {/* #animator */}
+
+### On state entered {/* #object-onanimatorstateenter */}
+
+<span class="tge-ace-display">On ‹Object› entering animator state ‹State (empty = any)›</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+Runs when the object's Animator starts a state: as the cross-fade into it begins. Leave the name empty for any state.
+
+- **Where:** Pick an **object** (or a #tag) first, then this condition.
+- **ID:** `object.onAnimatorStateEnter` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| State (empty = any) | Text |  | *Optional.* |
+
+### On state exited {/* #object-onanimatorstateexit */}
+
+<span class="tge-ace-display">On ‹Object› leaving animator state ‹State (empty = any)›</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+Runs when the object's Animator has left a state: as the cross-fade out of it ends. Leave the name empty for any state.
+
+- **Where:** Pick an **object** (or a #tag) first, then this condition.
+- **ID:** `object.onAnimatorStateExit` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| State (empty = any) | Text |  | *Optional.* |
+
+### Is in state {/* #object-isinanimatorstate */}
+
+<span class="tge-ace-display">‹Object› is in animator state ‹State›</span>
+
+True while the object's Animator is in that state of its Base Layer (during a cross-fade, the state it is going to).
+
+- **Where:** Pick an **object** (or a #tag) first, then this condition.
+- **ID:** `object.isInAnimatorState` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| State | Text | `Idle` |  |
+
+### Compare parameter {/* #object-compareanimatorparam */}
+
+<span class="tge-ace-display">‹Object› animator ‹Parameter› ‹Comparison› ‹Value›</span>
+
+Compares one of the Animator's parameters with a value. A bool reads as 1 or 0.
+
+- **Where:** Pick an **object** (or a #tag) first, then this condition.
+- **ID:** `object.compareAnimatorParam` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Parameter | Text | `Speed` |  |
+| Comparison | Choice | `=` | Options: =, ≠, &lt;, ≤, &gt;, ≥ |
+| Value | Expression | `0` |  |
 
 ## 🧱 Physics {/* #physics */}
 
