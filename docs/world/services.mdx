@@ -56,6 +56,12 @@ Also `isAchievementUnlocked`, `achievementSteps`, `bestScore`, `showAchievements
 
 What the player has done (unlocked, best scores, owned products) is saved on the device, so `owns()` and the conditions answer at once.
 
+## Your own screens
+
+Make your own achievements, scores or shop screen from the data. In scripts, `game.services.achievements`, `.leaderboards` and `.products` list everything with where the player is: `id`, `name`, `unlocked`, `steps`, `goal`, `best`, `price`, `owned`.
+
+In event sheets, use these in expressions with a loop: `achievementcount()`, `achievementid(i)`, `achievementname(i)`, `achievementsteps(id)`, `achievementgoal(id)`, `achievementdone(id)`, `bestscore(id)`, `productprice(id)`. A pop-up when one unlocks is an event under **On achievement unlocked**.
+
 ## Test mode and your own provider
 
 Out of the box every call works with **test screens**: a "Test banner" strip, a "Test ad" with a Reward button, a "Test purchase" with a Buy button, and plain lists for the achievements and score screens. Use them to build and try the whole flow in the editor, in the web version and on a phone.
