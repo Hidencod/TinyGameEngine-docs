@@ -1,0 +1,52 @@
+---
+title: Localization
+description: Ship your game in several languages — a table of texts per key, text objects bound to keys, and a language switch.
+---
+
+# Localization
+
+A **localization** is one table in your project: a list of **keys** (`menu.play`, `score`) and, for each key, the text in every **language** of the game. Objects show the text of their key in the current language, and switching language changes them all at once.
+
+## Set it up
+
+1. **Files → New → Localization (languages and texts)**. The panel opens with one language, `en`.
+2. **＋ Language** adds another: a short **code** (`fr`, `es`, `pt-BR`) that events and scripts use, and a **name** a language menu can show. Tap a language chip to rename it, make it the **default** (⭐), or delete it.
+3. **＋ Text** adds a key. Type the key's name, then its text in each language. A language with no text yet is marked yellow and shows the default language's text.
+4. Select a **Text**, **UI text** or **3D text** object and pick the key in **Text key**. (The field appears once the project has keys.) The text you typed in the object stays as a preview in the editor; in the game the key's text wins.
+
+Renaming a key renames it on every object that uses it.
+
+## Placeholders
+
+Use `{0}`, `{1}`… for values filled in by the game: the text `Score: {0} of {1}` with `t("score", 3, 10)` gives `Score: 3 of 10`. Different languages can put them in a different order.
+
+## Which language starts
+
+The language the player chose last time (it is remembered on the device), otherwise the language of the device (`fr-CA` finds `fr`), otherwise the default language of the project.
+
+## In events
+
+| Block | Does |
+| --- | --- |
+| **Set language** | Switches language; every object with a key changes, and it is remembered. |
+| **Language is** | Condition, for example to mark the current choice in a menu. |
+| **On language changed** | Trigger, to redraw anything you built yourself. |
+| **Set text from key** | Puts a key's text in an object (a one-off, not a binding). |
+| `t("key")` | In any expression: the text in the current language. `t("score", points)` fills `{0}`. |
+
+A button per language is just *On click → Set language `fr`*.
+
+## In scripts
+
+```ts
+game.language = 'fr';            // switch (remembered)
+label.setText(game.t('score', points));
+game.on('languageChanged', (e) => console.log(e.language));
+game.languages;                  // ['en', 'fr']
+```
+
+## Good to know
+
+- A key with no text in the current language uses the default language; a key that does not exist shows the key itself, so gaps are easy to see.
+- Text made by scripts (`setText`) is yours to translate: call `game.t(...)` and write it again on **languageChanged**.
+- Not there yet: fonts per language, right-to-left text, plural forms, and importing or exporting the table as a spreadsheet.
