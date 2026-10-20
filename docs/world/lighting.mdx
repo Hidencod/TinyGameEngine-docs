@@ -1,0 +1,33 @@
+---
+title: Reflection probes
+description: Make shiny and lit objects pick up their surroundings — a room reflects the room, not the sky — with Reflection probes.
+---
+
+# Reflection probes
+
+Out of the box every object is lit and reflects the **sky** of the scene (the Environment). That is wrong inside a cave, a lamp-lit room or under a bridge: a metal ball there should show the walls around it. A **Reflection probe** fixes this. It takes a picture of the scene from its own position, and objects inside its box use that picture for their reflections **and** for their ambient light, so a red room tints what stands in it.
+
+## Add one
+
+1. Make an empty object where the camera of the picture should be: the middle of the room, about head height.
+2. **Add component → Reflection probe.**
+3. Set **Size** so the box (the blue outline in the scene view) covers the room.
+4. Press **Play**.
+
+Objects whose position is inside the box now use the probe. Where boxes overlap, the **smallest** box wins, so a small probe inside a big one gives a detail area its own picture.
+
+| Setting | Means |
+| --- | --- |
+| **Size** | The box, in metres, centred on the object and along the world axes. |
+| **Resolution** | Size of each side of the picture (32 … 512). Sharper reflections cost memory and a little time when it is taken. |
+| **Intensity** | Strength of the reflections and light from the probe. |
+| **Refresh (s)** | 0 takes the picture once, a moment after the scene starts. Anything above 0 takes it again that often, for rooms that change (lights switching, doors opening). |
+
+## Good to know
+
+- The picture is taken in the running game, not in the editor, so the scene view still shows the sky reflections.
+- Moving objects change probe as they cross a box edge. Objects made while the game runs join the probe they are in.
+- Objects of the same look in the same room still share one material, so static batching keeps working.
+- It affects the standard shaded materials. Custom shaders, water and terrain are left alone.
+- This one probe does the job of Unity's reflection probe and of its light probes: the picture lights surfaces too, so put several small probes through a level to get local colour on characters.
+- Not there yet: a lightmap bake of shadows and bounced light into the level, and parallax-corrected reflections.
