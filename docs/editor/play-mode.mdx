@@ -19,13 +19,15 @@ At the bottom of the screen:
 | Button | What it does |
 | --- | --- |
 | **■ Stop** | Back to the editor. Also the phone’s Back button. |
+| **⏸ Pause / ⏭ Step** | Hold the game, or run it one frame at a time. See [Debugging](./debugging). |
 | **🐞 Debug console** | Messages from *Log to console* actions, `console.log()` and `game.log()` in scripts, plus errors (a script error names the object it happened on). **Clear** empties it. |
+| **🔍 Debugger** | Inspect and change objects and variables while playing, and the profiler. See [Debugging](./debugging). |
 | **⬚ Colliders** | Draw the physics shapes while playing. |
 | **fps** | Frames per second. 60 is smooth; under 30 feels slow — see [Performance](../help/performance). Tap it to see what the calls went to (terrain, water, models, shapes, particles, batched, and shadows and effects). Beside it: **calls** (draw calls per frame, the number that matters most on phones), **tris** (triangles) and, when the game groups copies, **batched** (how many objects are drawn together). |
 
 - The game runs on a **copy** of your project: anything that happens while playing (objects destroyed, variables changed) is forgotten when you stop.
 - The screen turns to the project’s orientation while playing and back afterwards.
-- **Errors** in events or scripts show as a red message; the event gets a red badge in the sheet and the script line is highlighted.
+- **Errors** in events or scripts show as a red message; the event gets a red badge in the sheet and the script line is highlighted. Tap the error in the console to go to it.
 
 :::tip[Log to console]
 To check that an event runs, add the action **System → Log to console** with a message such as `"Coin hit, score " + Score`, then open the console while playing.

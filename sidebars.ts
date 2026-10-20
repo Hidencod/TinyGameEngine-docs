@@ -11,7 +11,7 @@ const sidebars: SidebarsConfig = {
       type: 'category', label: 'The editor',
       items: [
         'editor/overview', 'editor/viewport', 'editor/objects', 'editor/inspector', 'editor/assets',
-        'editor/scene-tab', 'editor/scenes', 'editor/project-settings', 'editor/play-mode', 'editor/shortcuts',
+        'editor/scene-tab', 'editor/scenes', 'editor/project-settings', 'editor/play-mode', 'editor/debugging', 'editor/shortcuts',
       ],
     },
     {

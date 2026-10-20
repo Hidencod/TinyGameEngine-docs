@@ -1,0 +1,90 @@
+---
+title: Debugging
+description: Pause and step the running game, inspect and change objects while it plays, stop at an event with a breakpoint, and find what makes a frame slow.
+---
+
+# Debugging
+
+While the game plays, the buttons at the bottom of the screen pause it, run it one frame at a time, and open the **debugger** (🔍). Everything you change in the debugger changes only the running game. Your project stays as it was.
+
+<Row>
+  <Phone name="debug-inspector" caption="The debugger: objects and the live inspector" />
+  <Phone name="debug-profiler" caption="The profiler" />
+</Row>
+
+## Pause and step
+
+| Button | What it does |
+| --- | --- |
+| **⏸ Pause** | Holds the game: nothing moves, timers and sounds stop, but the view is still drawn. Press **▶** to go on. |
+| **⏭ Step** | (While paused) runs exactly one frame (1/60 s) and holds again. |
+| **🔍 Debugger** | Opens the debugger panel: **Objects**, **Variables** and **Profiler**. |
+
+<Crop name="debug-hud" caption="Stop, resume, step, console, debugger, colliders" />
+
+## Objects: inspect while playing
+
+The **Objects** tab lists everything in the running scene, children under their parents. Objects spawned during play are in the list too, and destroyed ones disappear. Type in **Search** to filter by name. Tap 🎯, then tap the game, to select the object under your finger.
+
+The selected object gets a yellow outline in the game, and below the list you see its values **as the game is using them right now**:
+
+| Group | Values |
+| --- | --- |
+| **Object** | enabled, visible, tags |
+| **Transform** | position, rotation, scale |
+| **Physics** | velocity, body type, on ground |
+| **Variables** | its instance variables |
+| **Script: name** | every value its code script exports (`export let speed = 4`) |
+| **Behavior: name** | the behavior's settings, and whether it is enabled |
+
+The values update while the game runs. Change one (type a number and press Enter, or tick a box) and the game uses it at once. This is the quickest way to tune a jump height or a speed: change it while playing, and when it feels right, type the same value into the Inspector after you stop.
+
+Values the debugger can't change (an object a script points at, a list) are shown in grey.
+
+## Variables
+
+The **Variables** tab shows the global variables, and the scene's own variables marked *scene*. You can change them while the game runs, for example to set `Score` to 99 and see the win screen.
+
+<Phone name="debug-variables" caption="Global and scene variables" />
+
+## Breakpoints
+
+A breakpoint makes the game **pause when an event runs**. In the event sheet, open an event's menu (tap its number, then tap it again) and choose **Add breakpoint**. A red dot shows in the event's margin. **Remove breakpoint** takes it away.
+
+<Row>
+  <Phone name="debug-breakpoint-menu" caption="Add breakpoint in the event menu" />
+  <Phone name="debug-paused" caption="Held at a breakpoint" />
+</Row>
+
+When the event's conditions are true while playing:
+
+- the game pauses at the end of that frame (its actions have run, so you see what they did);
+- the debugger opens with **🔴 Event 4 · Main events** at the top, and the objects that event's conditions picked: tap one to inspect it;
+- with the event sheet open beside the game (on a computer), the event is highlighted in yellow. **Show** opens the sheet at that event;
+- **▶** goes on to the next time the event runs. For an event that runs every frame, that is the next frame. **Remove** deletes the breakpoint.
+
+Breakpoints belong to you, not to the game: they are kept in this browser or app only, and are never saved in the project or in an exported game.
+
+## Profiler
+
+The **Profiler** tab shows how long each frame takes the processor, averaged over the last second, with a bar for each recent frame (red bars took longer than 1/60 s). Below it, where the time goes:
+
+| Row | Time spent on |
+| --- | --- |
+| **Render** | drawing the frame |
+| **Physics** | moving bodies and finding collisions |
+| **Collision events** | *On collision* events and `onCollision()` in scripts |
+| **Behaviors** | Platformer, Car, Follow and the other behaviors |
+| **Events** | the event sheet |
+| **Scripts** | code scripts' `update()` and other functions |
+| **Animation** | model animation |
+| **Particles** | particle effects |
+| **Input & UI** | touches, keys and the screen UI |
+
+Then the slowest **scripts** (with how many times per frame they run) and the slowest **events**. Tap an event to open it in the sheet.
+
+The profiler measures the processor only. If the frame time is low but the game still runs below 60 fps, the graphics card is the limit: see the **calls** and **tris** next to the fps counter, and [Performance](../help/performance).
+
+:::tip[Errors take you to the line]
+In the debug console (🐞), tap a red script error to open the script at that line, or an event error to open the event sheet at that event.
+:::
