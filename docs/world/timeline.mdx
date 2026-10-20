@@ -9,13 +9,15 @@ A **timeline** is a file that holds a sequence along a clock: the door slides op
 
 ## Make one
 
-1. **Files → New → Timeline (cutscene)**, name it (`Intro`). The editor opens with no tracks.
-2. **＋ Add track** and pick what it does, then (for most) which object it drives.
-3. Tap the **ruler** to move the red **playhead**; **◆ Add key at playhead** or **＋ Clip at playhead** adds something there.
-4. Tap a key or clip to edit it below (beside the tracks on a wide screen). Drag keys and clips along the track; drag the right end of a clip to stretch it. **＋ / −** zoom the time.
-5. **▶ Play** starts the game and plays the timeline from the start. If the game is already running, it restarts the timeline.
+1. **Files → New → Timeline (cutscene)**, name it (`Intro`). The timeline opens in a **dock under the scene view**; drag its top edge to resize it, **✕** closes it.
+2. **＋** (top of the track names) adds a track: pick its kind, then the object.
+3. **Scrub**: drag along the **ruler**. The objects in the scene view take their pose for that moment (nothing is saved). **▶** plays that preview, **⏮** goes to the start.
+4. **Add a key**: **◆** on a property track, or double-tap the track at the time you want. A clip track has **＋** instead.
+5. **Record** (**⏺**): with it on, move, turn or scale an object in the scene view and keys are made for you at the playhead, on new tracks if needed (an object that is moved at 2 s starts where it was at 0 s). The object itself stays where it was; the keys hold the move.
+6. Tap a key or clip to edit it in the list on the right: time, value, ease, which camera, which sound. Drag keys and clips along the track; drag the right end of a clip to stretch it.
+7. **🎮** plays it in the game; **⏹** stops it.
 
-**Length** and **Loop** are at the top. Tracks can be moved up or down and muted.
+**Length** and **Loop** are at the top. Tracks can be moved up or down and muted from the list on the right.
 
 ## Tracks
 
@@ -61,4 +63,4 @@ game.on('timelineFinished', (e) => game.goToScene('Level 1'));
 - A timeline runs on **game time**: it follows the game's time scale and stops while the game is paused.
 - Ending a scene stops its timelines (sounds off, camera back).
 - Seeking changes what you see (positions, who is shown, the camera) but fires no sounds, animations or signals.
-- Not there yet: scrubbing the playhead to preview in the editor's scene view, curves between keys other than the eases, and blending between cameras.
+- Not there yet: previewing camera cuts, sounds and subtitles while scrubbing, curves between keys other than the eases, and blending between cameras.
