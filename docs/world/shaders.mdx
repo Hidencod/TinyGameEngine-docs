@@ -1,0 +1,72 @@
+---
+title: Shaders (GLSL) and starters
+description: Make your own look with a GLSL shader, or begin from a ready-made starter — Hologram, Dissolve, Toon outline, Fresnel glow, Water, Wind sway. What a shader can read, how its settings become fields, and how to use it on an object.
+---
+
+# Shaders (GLSL) and starters
+
+A **shader** is a small program that decides how a surface is drawn. In TinyGameEngine a shader is a file (**Files → New → Shader**) with two pieces of GLSL, a **vertex** part (where the points of the shape go) and a **fragment** part (the colour of each pixel). You use it through a **material**: a shared material set to **Style → ShaderMaterial (Custom GLSL)** with that shader picked.
+
+## Make one
+
+1. **Files → New → Shader.** A list opens: **Blank**, then the starters.
+2. Pick one and name it. The shader editor opens, with the code to change.
+3. Make a material (**Files → New → Material**), set its **Style** to *ShaderMaterial (Custom GLSL)* and pick your shader. You can also do this on an object's own material.
+4. Give the material to an object. The settings of the shader (see below) are fields on the material.
+
+## Starters
+
+| Starter | Look | Settings (starting value) |
+| --- | --- | --- |
+| **Hologram** | See-through blue glow with scrolling lines, a bright edge and a flicker. Uses the material **Color**. | Speed (1), Lines (40), Rim (2), Flicker (0.3) |
+| **Dissolve** | The object burns away through noise with a glowing edge. | Amount (0.4), Speed (0.25), Scale (6), Edge (0.06), Edge colour (#ff7a18) |
+| **Toon outline** | Flat bands of light and a dark line round the shape. | Bands (3), Width (0.25), Outline colour (#101018) |
+| **Fresnel glow** | The object is lit normally and glows at its edges. | Glow colour (#4cc3ff), Power (3), Strength (1.2), Pulse (1) |
+| **Water** | A wavy, slightly see-through surface with sparkles. Best on a plane. | Wave height (0.08), Wave speed (1), Scale (4), Deep colour (#0b4f7a), Shine (0.5) |
+| **Wind sway** | The top of the object sways, the base stays still. For grass, trees and flags. The base of the object has to be at its origin (y = 0 is the bottom). | Strength (0.15), Speed (1.5), Height (1) |
+
+Notes:
+
+- **Dissolve:** with **Speed** above 0 it burns away over and over by itself. Set **Speed** to 0 to hold it at the **Amount** you choose (0 shows everything, 1 shows nothing).
+- **Wind sway:** set **Height** to the height of your object so the whole length bends smoothly.
+- The lit starters (Dissolve, Toon, Fresnel, Wind) use the material **Color** and its picture, if it has one.
+- Every starter is ordinary GLSL. Change it as you like.
+
+## Write your own
+
+A shader may use these without declaring them in your material:
+
+| Name | Is |
+| --- | --- |
+| `uTime` | Seconds since the scene started. |
+| `uColor` | The material colour. |
+| `uOpacity` | The material opacity. |
+| `uMap`, `uHasMap` | The material picture, and 1 when it has one. |
+| `uResolution` | Size of the screen. |
+
+The vertex shader also gets the usual three.js names: `position`, `normal`, `uv`, `modelViewMatrix`, `projectionMatrix`, `normalMatrix`.
+
+### Your own settings
+
+Any `uniform float` or `uniform vec3` you declare, apart from those above, becomes a field on the material: a number for `float`, a colour for `vec3`. GLSL cannot give a uniform a value in the source, so write the **starting value in a comment** after it:
+
+```glsl
+uniform float uSpeed; // 1.5
+uniform vec3 uGlow;   // #4cc3ff
+```
+
+Without a comment a float starts at 0 and a colour at white. A uniform declared in both the vertex and the fragment shader is one setting.
+
+### See-through shaders
+
+Add a line `// @transparent` to the fragment shader and it blends with what is behind it, using the alpha you output (`gl_FragColor = vec4(colour, alpha)`). Without it, a material draws solid unless its **Opacity** is below 1.
+
+### Errors
+
+If the shader does not compile, the error is shown in the shader editor.
+
+## Good to know
+
+- A custom shader does **not** get scene lighting, shadows or fog by itself. The starters fake a light from one direction. A shader is drawn with the **object's** shape, so it works on any shape.
+- Shaders are not shared between materials: each material makes its own.
+- Not there yet: changing a shader setting while the game runs (from events or scripts), and a visual node editor.
