@@ -1,0 +1,64 @@
+---
+title: Timeline (cutscenes)
+description: Make cutscenes and scripted sequences with tracks of keyframes and clips — move objects, cut between cameras, play sounds and animations, show subtitles, send signals — like Unity's Timeline.
+---
+
+# Timeline (cutscenes)
+
+A **timeline** is a file that holds a sequence along a clock: the door slides open at 2 s, the camera cuts to the hero at 3 s, a line of dialogue appears, a sound plays, and at 8 s a **signal** tells your game the scene is over. You make it in **Files → New → Timeline (cutscene)** and play it from an event or a script.
+
+## Make one
+
+1. **Files → New → Timeline (cutscene)**, name it (`Intro`). The editor opens with no tracks.
+2. **＋ Add track** and pick what it does, then (for most) which object it drives.
+3. Tap the **ruler** to move the red **playhead**; **◆ Add key at playhead** or **＋ Clip at playhead** adds something there.
+4. Tap a key or clip to edit it below (beside the tracks on a wide screen). Drag keys and clips along the track; drag the right end of a clip to stretch it. **＋ / −** zoom the time.
+5. **▶ Play** starts the game and plays the timeline from the start. If the game is already running, it restarts the timeline.
+
+**Length** and **Loop** are at the top. Tracks can be moved up or down and muted.
+
+## Tracks
+
+| Track | Holds | What it does |
+| --- | --- | --- |
+| **Move / turn / scale / fade** | keyframes | Sets one property of an object: position X/Y/Z, rotation X/Y/Z (degrees), uniform size, opacity. Between two keys the later key's **ease** (linear, easeIn, easeOut, easeInOut, back, elastic, bounce) shapes the movement. Before the first key and after the last, the value is held. **Take the object's value now** copies what the object has in the scene. |
+| **Show / hide an object** | clips | The object is visible during its clips and hidden outside them (or the other way round). |
+| **Camera cuts** | clips | Each clip names a camera object; while it plays, that camera renders the game. When the timeline ends or stops, the game's own camera comes back. |
+| **Play an animation** | points | At that moment plays an **Animator** state (with a cross-fade) or a model clip. |
+| **Sounds** | clips | Plays a sound at the clip's start (with volume and fade in). Stretch the clip and the sound is stopped at its end; leave it as a point for a one-shot. |
+| **Subtitles** | clips | Shows the clip's line in a Text object (a UI text or a 3D text) while the clip lasts, then clears it. |
+| **Signals** | points | A named marker. When time passes it, the game gets a signal that events and scripts can react to. |
+
+Tracks refer to objects **by name**, so a timeline works in any scene that has objects with those names. A track whose object is missing reports that in the console and does nothing.
+
+## Play it from events
+
+| Block | Does |
+| --- | --- |
+| **Play timeline** | Starts it (resumes a paused one; starts over if it had finished). |
+| **Pause timeline** / **Stop timeline** | Pause holds the time. Stop goes back to the start and gives the camera back. |
+| **Skip timeline** | Jumps to the end: the signals still to come fire, so the game carries on, but sounds and animations do not. Use it for a *Skip* button. |
+| **Jump to time**, **Set timeline speed** | Seek without firing anything on the way; change the speed. |
+| **On timeline signal** | Trigger: a signal was reached. Pick the timeline and the signal name, or leave them empty for any. |
+| **On timeline finished** | Trigger: a timeline played to its end. |
+| **Timeline is playing** | Condition, for example to ignore input during a cutscene. |
+
+The player is never touched by a timeline: to freeze the hero during a cutscene, use **Timeline is playing** in the events that read input.
+
+## Play it from a script
+
+```ts
+const intro = game.timeline('Intro');
+intro.play();
+game.on('timelineSignal', (e) => { if (e.signal === 'OpenDoor') door.playAnimation('open'); });
+game.on('timelineFinished', (e) => game.goToScene('Level 1'));
+```
+
+`game.timeline(name)` throws when the project has no timeline of that name. The handle has `play()`, `pause()`, `stop()`, `skip()`, `seek(seconds)`, and `time`, `duration`, `isPlaying`, `finished`, `speed`, `loop`.
+
+## Good to know
+
+- A timeline runs on **game time**: it follows the game's time scale and stops while the game is paused.
+- Ending a scene stops its timelines (sounds off, camera back).
+- Seeking changes what you see (positions, who is shown, the camera) but fires no sounds, animations or signals.
+- Not there yet: scrubbing the playhead to preview in the editor's scene view, curves between keys other than the eases, and blending between cameras.
