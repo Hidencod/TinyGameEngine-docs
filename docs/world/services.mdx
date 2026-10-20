@@ -1,0 +1,81 @@
+---
+title: Services (achievements, ads, purchases)
+description: Achievements, leaderboards, ads and in-app purchases for your game — with test screens so you can try them anywhere, and a provider hook so scripts can plug in a real ad network or store.
+---
+
+# Services
+
+**Services** gather what games on phones usually need from a store: **achievements**, **leaderboards**, **ads** and **in-app purchases**. You list them once in **Files → New → Services**, then use them from event blocks or scripts by their **ID**.
+
+## Set up
+
+Open **Files → New → Services** (or the **Services** file). It has four tabs:
+
+| Tab | Holds |
+| --- | --- |
+| **Achievements** | ID, name, and **Steps** (0 = unlocked in one go; 10 = a counter that unlocks at 10). |
+| **Boards** | ID, name, **Lower wins** (for race times). |
+| **Products** | ID, name, **Kind** (*Once* for things bought one time like "Remove ads", *Repeat* for coins), **Price** shown in test mode. |
+| **Ads** | Your ad network's **App ID**, **Banner**, **Full screen** and **Rewarded** unit IDs, and **Test ads**. |
+
+**Play ID** on each card is the id of the same item in the Google Play Console. It is passed to your provider so it can tell the store which item you mean.
+
+## Event blocks
+
+Category **Services**.
+
+| Block | Does |
+| --- | --- |
+| **Unlock achievement**, **Add achievement steps** | Unlock one, or add steps to a counter. Each unlocks once. |
+| **Achievement is unlocked** | Condition. |
+| **On achievement unlocked** | Trigger, for one achievement or any. |
+| **Show achievements** | The achievements screen. |
+| **Submit score**, **Show leaderboard** | Send a score (the best is kept) and show the scores screen. |
+| **Show banner ad**, **Hide banner ad** | A strip at the top or bottom. |
+| **Show full-screen ad** | Use it between levels, not during play. |
+| **Show rewarded ad** | The player watches for a reward. Put the reward under **On rewarded ad earned**. |
+| **On ad closed** | Trigger: any full-screen ad ended. |
+| **Buy product**, **Restore purchases** | Start a purchase; ask the store what the player owns. |
+| **Owns product** | Condition for permanent products. |
+| **On purchase done**, **On purchase failed** | Triggers, for one product or any. |
+
+## Scripts
+
+```ts
+game.services.unlockAchievement('first');
+game.services.addAchievementSteps('kills', 1);
+game.services.submitScore('score', points);
+game.services.showRewarded();
+game.on('adFinished', (e) => { if (e.rewarded) coins += 50; });
+game.services.buy('noAds');
+game.on('purchaseFinished', (e) => { if (e.ok) hideAds(); });
+if (game.services.owns('noAds')) { /* ... */ }
+```
+
+Also `isAchievementUnlocked`, `achievementSteps`, `bestScore`, `showAchievements`, `showLeaderboard`, `showBanner`, `hideBanner`, `showInterstitial`, `restorePurchases` and `price`.
+
+What the player has done (unlocked, best scores, owned products) is saved on the device, so `owns()` and the conditions answer at once.
+
+## Test mode and your own provider
+
+Out of the box every call works with **test screens**: a "Test banner" strip, a "Test ad" with a Reward button, a "Test purchase" with a Buy button, and plain lists for the achievements and score screens. Use them to build and try the whole flow in the editor, in the web version and on a phone.
+
+Real ads, real purchases and a real leaderboard are done by a **provider**: an object your script sets, with only the calls you want to handle. Everything else keeps the test behaviour.
+
+```ts
+game.services.provider = {
+  showRewarded: async (ads) => (await myAdNetwork.showRewarded(ads.rewardedId)) === 'earned',
+  buy: async (p) => await myStore.purchase(p.googleId ?? p.id),
+  restore: async () => await myStore.ownedIds(),
+  price: (p) => myStore.priceOf(p.googleId ?? p.id),
+  submitScore: (board, score) => myServer.send(board.googleId ?? board.id, score),
+};
+```
+
+Each method may return a value or a promise. If one throws, the error appears in the console and the game goes on (the ad or purchase counts as not done).
+
+## Good to know
+
+- Money from ads and purchases goes to the accounts you create with the ad network and the store. The engine takes no part of it.
+- Not there yet: the Android app does not carry Play Games, AdMob or Play Billing code. In an exported game these services use the test screens until a provider is set. Without the native part there is nothing a script could call for real ads on a phone yet.
+- Do not ship test purchases: a game published on the web grants "Buy" for free.
