@@ -1,0 +1,157 @@
+---
+title: In-app purchases (products)
+description: How products work in Services — Once and Repeat products, the buy flow with blocks and scripts, what the engine remembers, and exactly what a purchase provider must do to connect a real store.
+---
+
+# In-app purchases (products)
+
+A **product** is something the player can buy inside your game: "Remove ads", "100 coins", a level pack. You list products once in **Files → Services → Products**, then buy and check them from event blocks or scripts. This page is about products only; the rest of Services is on [Services](./services).
+
+:::note
+Without a provider, every purchase is a **test purchase**: a screen with **Buy** and **✕**, no money moves, and nothing is checked with a store. Real purchases need a **provider** (see [Connect a real store](#connect-a-real-store)).
+:::
+
+## Add a product
+
+**Files → Services → Products → ＋**. Each product has:
+
+| Field | Means |
+| --- | --- |
+| **Name** | Shown on the test purchase screen and in your own shop screens. |
+| **ID** | What blocks and scripts use (`noAds`). No spaces, unique (not case sensitive). Changing it later breaks blocks that use the old one. |
+| **Kind** | **Once** or **Repeat** (below). |
+| **Price** | The text shown in test mode (`$0.99`). With a real store the store's own price text replaces it. |
+| **Play ID** | The id of the same product in the store (the Google Play Console product id). Passed to the provider as `googleId`. Leave empty to use the ID. |
+
+### Once and Repeat
+
+| | Once (`permanent`) | Repeat (`consumable`) |
+| --- | --- | --- |
+| Examples | Remove ads, unlock a level pack | Coins, extra lives |
+| After a successful purchase | The engine **remembers** it: **Owns product** is true from then on. | The engine remembers **nothing**. You give the reward yourself. |
+| Buying it again | Does not ask the store. **On purchase done** fires at once. | Asks the store each time. |
+| **Owns product** | true once bought or restored | always false |
+| Restore | Gets it back after a reinstall or on a new phone. | Nothing to restore. |
+
+## Buy flow
+
+1. The player taps your Shop button. Run **Buy product** `noAds`.
+2. The store screen opens (the test screen, or the real store).
+3. Success: **On purchase done** (for `noAds`, or any product) fires.
+4. Cancel or failure: **On purchase failed** fires.
+5. Give the reward in those events: hide the ads, add the coins, unlock the pack.
+
+Event sheet:
+
+```
+On start
+  Owns product noAds          → Hide banner ad
+
+Shop button clicked           → Buy product noAds
+On purchase of noAds done     → Hide banner ad
+On purchase of coins done     → Add 100 to variable coins
+On purchase failed            → Show a "Not bought" message
+```
+
+Script:
+
+```ts
+game.services.buy('coins');
+game.on('purchaseFinished', (e) => {
+  if (!e.ok) return;                       // cancelled or failed
+  if (e.id === 'coins') coins += 100;      // Repeat: you give the reward
+  if (e.id === 'noAds') game.services.hideBanner();
+});
+if (game.services.owns('noAds')) game.services.hideBanner();   // Once: remembered
+```
+
+`purchaseFinished` carries `{ id, ok }`. It fires once for every `buy()` that gets as far as asking, including a Once product that is already owned (`ok` true).
+
+### Restore
+
+**Restore purchases** (`game.services.restorePurchases()`) asks the provider which Once products the player owns and marks them owned. Call it from a "Restore" button and, if you want, once at the start. **Without a provider it does nothing**, because there is no store to ask. It does not fire an event; check **Owns product** afterwards (the answer comes a moment later when the provider is asynchronous).
+
+## Show products in your own shop screen
+
+Scripts: `game.services.products` lists every product:
+
+```ts
+for (const p of game.services.products) {
+  // p.id, p.name, p.kind ('permanent' | 'consumable'), p.price, p.owned, p.googleId
+}
+```
+
+`price` is the store's price text when the provider gives one (`price()`), else the **Price** you typed. Event sheets: `productprice("noAds")`, plus the **Owns product** condition.
+
+## What the engine remembers
+
+On the device, under the game's saved data (key `__services`, together with achievements and best scores): the ids of **Once** products that were bought or restored. That is all.
+
+- It is **not** proof of purchase. It is a note that the provider said yes. It is cleared when the player clears the game's data; **Restore** brings it back.
+- Consumables are never stored.
+- Nothing is sent anywhere by the engine itself.
+
+## Rules the engine follows
+
+- **One purchase at a time.** While a purchase is open, another **Buy product** is ignored. It is not queued and gives no event.
+- **Unknown id:** reported in the console ("There is no product ...") and nothing happens, no event.
+- **Failure means `ok: false`.** A provider returning anything other than `true`, throwing, or rejecting counts as failed. A throw or rejection is also written to the console.
+- **A Once product that is already owned** is never sent to the store again.
+
+## Connect a real store
+
+Set `game.services.provider` in a script that runs at the start of the game. Only the methods you give are used. For products, three matter:
+
+```ts
+game.services.provider = {
+  // Start the purchase. Resolve true only when the store confirmed it.
+  buy: async (p) => {
+    // p = { id, name, kind: 'permanent' | 'consumable', googleId? }
+    const ok = await myStore.purchase(p.googleId ?? p.id);
+    if (ok && p.kind === 'consumable') await myStore.consume(p.googleId ?? p.id);
+    return ok;
+  },
+
+  // The ids of the Once products the player owns. Resolve an array of ids (matched without case).
+  restore: async () => await myStore.ownedProductIds(),
+
+  // Price text for a product, from the store ("$1.99"). Return undefined to use the Price you typed.
+  price: (p) => myStore.priceText(p.googleId ?? p.id),
+};
+```
+
+| Method | Input | Must return | When the engine calls it |
+| --- | --- | --- | --- |
+| `buy(p)` | `{ id, name, kind, googleId? }` | `true` (bought) or `false`; may be a promise | **Buy product**, only if not already owned and no other purchase is open |
+| `restore()` | none | array of product ids; may be a promise | **Restore purchases** |
+| `price(p)` | `{ id, name, googleId? }` | text or `undefined`; **not** a promise | `game.services.products`, `productprice()`, `game.services.price(id)` — often, keep it fast (read from a cache) |
+
+Notes for whoever writes the provider:
+
+- **The engine marks Once products owned itself** when `buy` returns `true`. You do not need to do anything else for that.
+- **Consume Repeat products** in the store when `buy` succeeds (Google Play needs this before the same product can be bought again).
+- **Acknowledge** the purchase in the store within its time limit, or it is refunded. The engine does not do this for you.
+- **Pending purchases** (the player has to pay later): resolve `false` now. When it completes later, the store reports it on its own. Give the reward then and, for a Once product, call `restorePurchases()` or handle it in your own code.
+- **Receipt checks and cheating** are up to the provider or your server. The engine trusts `true`.
+- Return `price` text already in the player's currency, from the store.
+- A product `googleId` is the Play Console product id. If you leave **Play ID** empty, `p.googleId` is `undefined`; use `p.id`.
+
+### Checklist for testing with a real provider
+
+1. A Once product: buy → **On purchase done** fires → **Owns product** true → close and reopen the game → still true.
+2. The same Once product: **Buy product** again → no store screen, **On purchase done** fires.
+3. Clear the game's data (or reinstall) → **Owns product** false → **Restore purchases** → true shortly after.
+4. A Repeat product: buy twice in a row → two stores screens, two **On purchase done** events, and **Owns product** stays false.
+5. Cancel the store screen → **On purchase failed** fires, nothing owned, buying again works.
+6. Tap **Buy product** twice quickly → only one store screen.
+7. Airplane mode → buy → **On purchase failed** (no hang).
+8. The price text on your shop screen is the store's, in the right currency.
+9. The provider throws → console shows the error, **On purchase failed** fires, the game keeps running.
+10. Use the store's test accounts (Google Play license testers) until you have checked everything above.
+
+## Not covered
+
+- Subscriptions, free trials and introductory prices.
+- Product descriptions and pictures from the store.
+- Receipt verification and refund handling.
+- The Android app does not include Play Billing: a provider has to bring its own.
