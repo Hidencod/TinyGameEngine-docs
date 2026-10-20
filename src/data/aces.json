@@ -407,6 +407,126 @@
       ]
     },
     {
+      "id": "system.raycast",
+      "kind": "condition",
+      "category": "Physics",
+      "label": "Raycast",
+      "hint": "Shoot an invisible ray",
+      "display": "Ray from ({fx}, {fy}, {fz}) towards ({dx}, {dy}, {dz}), {length} m{hit}{tag}{ignore}",
+      "displayNoObject": null,
+      "icon": "📡",
+      "description": "Shoots an invisible ray from a point in a direction and is true when it hits something solid. Afterwards, in the actions of the same event, use rayHitX / rayHitY / rayHitZ (where it hit), rayNormalX / rayNormalY / rayNormalZ (which way the surface faces; rayNormalY is 1 on flat ground), rayDistance (meters) and rayhitname() (the object's name). Must hit makes the condition true only when the ray hits that kind of object, and picks it for the actions. Only tag ignores everything without that tag. Ignore lets the ray pass through those objects. Triggers (coins, checkpoints) never block a ray.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "fx",
+          "label": "From X",
+          "type": "expression",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "fy",
+          "label": "From Y",
+          "type": "expression",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "fz",
+          "label": "From Z",
+          "type": "expression",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "dx",
+          "label": "Direction X",
+          "type": "expression",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "dy",
+          "label": "Direction Y",
+          "type": "expression",
+          "options": null,
+          "default": "-1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "dz",
+          "label": "Direction Z",
+          "type": "expression",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "length",
+          "label": "Length (m)",
+          "type": "expression",
+          "options": null,
+          "default": "10",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "hit",
+          "label": "Must hit (optional)",
+          "type": "object",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "tag",
+          "label": "Only tag (optional)",
+          "type": "tag",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "ignore",
+          "label": "Ignore (optional)",
+          "type": "object",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "system.once",
       "kind": "condition",
       "category": "System",
@@ -3446,6 +3566,111 @@
           "options": null,
           "default": null,
           "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.raycast",
+      "kind": "condition",
+      "category": "Physics",
+      "label": "Raycast from",
+      "hint": "Shoot a ray out of it",
+      "display": "{object} raycast {direction}, {length} m{hit}{tag}{ignore}",
+      "displayNoObject": null,
+      "icon": "📡",
+      "description": "Shoots a ray out of the object: forward, backward, left, right (the way it faces), or straight up or down. It never hits the object itself. Start height lifts the start above the object's center, e.g. to eye level. Uses the same rayHit…, rayNormal…, rayDistance and rayhitname() values and the same Must hit / Only tag / Ignore options as the Raycast condition. With several objects at once, the values come from the last one that hit.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "direction",
+          "label": "Direction",
+          "type": "choice",
+          "options": [
+            {
+              "value": "forward",
+              "label": "forward"
+            },
+            {
+              "value": "back",
+              "label": "backward"
+            },
+            {
+              "value": "left",
+              "label": "left"
+            },
+            {
+              "value": "right",
+              "label": "right"
+            },
+            {
+              "value": "up",
+              "label": "up"
+            },
+            {
+              "value": "down",
+              "label": "down"
+            }
+          ],
+          "default": "forward",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "length",
+          "label": "Length (m)",
+          "type": "expression",
+          "options": null,
+          "default": "10",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "height",
+          "label": "Start height (m)",
+          "type": "expression",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "hit",
+          "label": "Must hit (optional)",
+          "type": "object",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "tag",
+          "label": "Only tag (optional)",
+          "type": "tag",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "ignore",
+          "label": "Ignore (optional)",
+          "type": "object",
+          "options": null,
+          "default": "",
+          "optional": true,
           "hint": null,
           "varScope": null
         }

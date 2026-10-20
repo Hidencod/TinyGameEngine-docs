@@ -18,7 +18,7 @@ Conditions are the **WHEN / IF** part of an event. All conditions of an event mu
 - Most other conditions can be **inverted** (NOT) from the condition’s menu.
 :::
 
-There are **73 conditions**, grouped by category as in the condition picker.
+There are **75 conditions**, grouped by category as in the condition picker.
 
 [⚙️ System](#system) · [🔢 Variables](#variables) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🖼️ UI](#ui) · [✨ Particles](#particles) · [🎚️ Graphics](#graphics)
 
@@ -631,6 +631,28 @@ Only use one random instance.
 
 ## 🧱 Physics {/* #physics */}
 
+### Raycast {/* #system-raycast */}
+
+<span class="tge-ace-display">Ray from (‹From X›, ‹From Y›, ‹From Z›) towards (‹Direction X›, ‹Direction Y›, ‹Direction Z›), ‹Length (m)› m‹Must hit (optional)›‹Only tag (optional)›‹Ignore (optional)›</span>
+
+Shoots an invisible ray from a point in a direction and is true when it hits something solid. Afterwards, in the actions of the same event, use rayHitX / rayHitY / rayHitZ (where it hit), rayNormalX / rayNormalY / rayNormalZ (which way the surface faces; rayNormalY is 1 on flat ground), rayDistance (meters) and rayhitname() (the object's name). Must hit makes the condition true only when the ray hits that kind of object, and picks it for the actions. Only tag ignores everything without that tag. Ignore lets the ray pass through those objects. Triggers (coins, checkpoints) never block a ray.
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `system.raycast` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| From X | Expression | `0` |  |
+| From Y | Expression | `1` |  |
+| From Z | Expression | `0` |  |
+| Direction X | Expression | `0` |  |
+| Direction Y | Expression | `-1` |  |
+| Direction Z | Expression | `0` |  |
+| Length (m) | Expression | `10` |  |
+| Must hit (optional) | Object or #tag |  | *Optional.* |
+| Only tag (optional) | Tag |  | *Optional.* |
+| Ignore (optional) | Object or #tag |  | *Optional.* |
+
 ### On collision with {/* #object-collideswith */}
 
 <span class="tge-ace-display">‹Object› collides with ‹Other object›</span> <span class="tge-pill trigger">⚡ Trigger</span>
@@ -722,6 +744,24 @@ True when nothing solid (walls, crates…) is between the object and the target,
 | Parameter | Type | Default | Notes |
 | --- | --- | --- | --- |
 | Target | Object or #tag |  |  |
+
+### Raycast from {/* #object-raycast */}
+
+<span class="tge-ace-display">‹Object› raycast ‹Direction›, ‹Length (m)› m‹Must hit (optional)›‹Only tag (optional)›‹Ignore (optional)›</span>
+
+Shoots a ray out of the object: forward, backward, left, right (the way it faces), or straight up or down. It never hits the object itself. Start height lifts the start above the object's center, e.g. to eye level. Uses the same rayHit…, rayNormal…, rayDistance and rayhitname() values and the same Must hit / Only tag / Ignore options as the Raycast condition. With several objects at once, the values come from the last one that hit.
+
+- **Where:** Pick an **object** (or a #tag) first, then this condition.
+- **ID:** `object.raycast` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Direction | Choice | `forward` | Options: forward, backward, left, right, up, down |
+| Length (m) | Expression | `10` |  |
+| Start height (m) | Expression | `0` |  |
+| Must hit (optional) | Object or #tag |  | *Optional.* |
+| Only tag (optional) | Tag |  | *Optional.* |
+| Ignore (optional) | Object or #tag |  | *Optional.* |
 
 ### Is moving {/* #object-ismoving */}
 

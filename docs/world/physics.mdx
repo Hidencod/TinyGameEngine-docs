@@ -82,8 +82,9 @@ The world’s gravity is set in [Project settings](../editor/project-settings) (
 | **Is touching** | it is touching right now (every frame). |
 | **Is on ground** | it stands on something. |
 | **Has line of sight to** | nothing solid is between it and another object. |
+| **Raycast** / **Raycast from** | an invisible ray hits something solid (see [Raycasts](#raycasts)). |
 
-Actions: **Set velocity**, **Push (impulse)** (a kick), **Apply force** (a push over time), **Jump**. In scripts: `entity.applyImpulse(0, 5, 0)`, `game.raycast(from, to)`. See the [Conditions](../reference/conditions#physics) and [Actions](../reference/actions#physics) reference.
+Actions: **Set velocity**, **Push (impulse)** (a kick), **Apply force** (a push over time), **Jump**. In scripts: `entity.applyImpulse(0, 5, 0)`, `game.raycast(from, to)` (see [Raycasts](#raycasts)). See the [Conditions](../reference/conditions#physics) and [Actions](../reference/actions#physics) reference.
 
 :::caution[Common problems]
 - **Falls through the floor** — the floor needs a Collider (and a static body); very fast small objects may need a bigger collider.
@@ -91,3 +92,40 @@ Actions: **Set velocity**, **Push (impulse)** (a kick), **Apply force** (a push 
 - **Rolls over / tips** — tick **Don’t tip over**.
 - **Coins block the player** — tick **Trigger only** on the coin’s collider.
 :::
+
+## Raycasts
+
+A raycast shoots an invisible ray and tells you what it hit first. Use it for a gun that hits what it aims at, a character that checks the ground or a wall ahead, or an enemy that looks for the player. Triggers (coins, checkpoints) never block a ray.
+
+Two conditions in the **Physics** group:
+
+| Condition | The ray starts… |
+| --- | --- |
+| **Raycast from** (on an object) | at the object, going **forward, backward, left, right, up or down**. **Start height** lifts it, for example to eye level. It never hits the object itself. |
+| **Raycast** (no object) | at any point (X, Y, Z) and goes in any direction (X, Y, Z), for **Length** meters. |
+
+Both have three optional filters: **Must hit** (true only when the ray hits that kind of object, and it becomes the picked object for the actions), **Only tag** (ignore everything without that tag) and **Ignore** (objects the ray passes through).
+
+When the condition is true, the actions of the same event can read what was hit:
+
+| Value | Meaning |
+| --- | --- |
+| `rayhitname()` | the name of the object that was hit |
+| `rayHitX`, `rayHitY`, `rayHitZ` | where it hit |
+| `rayNormalX`, `rayNormalY`, `rayNormalZ` | which way the surface faces (`rayNormalY` is 1 on flat ground) |
+| `rayDistance` | how far the ray travelled, in meters |
+
+In scripts, the same thing is `game.raycast(from, to)` or, along a direction:
+
+```js
+const hit = game.raycast(entity.position, {
+  direction: entity.getForward(), // any direction
+  length: 20,                     // default 100
+  tags: ['enemy'],                // optional: only objects with this tag
+  ignore: entity,                 // optional: pass through these (and their children)
+  includeMoving: true,            // false = only static scenery
+});
+if (hit) console.log(hit.entity.name, hit.distance, hit.point, hit.normal);
+```
+
+It returns `{ entity, point, normal, distance }`, or `null` when nothing was hit.

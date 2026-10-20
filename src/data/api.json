@@ -1009,9 +1009,9 @@
         {
           "name": "raycast",
           "kind": "method",
-          "sig": "(from, to)",
-          "type": "{entity,point,distance}|null",
-          "doc": "Physics ray between two world points."
+          "sig": "(from, to | { direction, length, tags?, ignore?, includeMoving? }, options?)",
+          "type": "{entity,point,normal,distance}|null",
+          "doc": "Physics ray between two points, or along a direction: game.raycast(p, { direction: {x:0,y:-1,z:0}, length: 5, tags: [\"ground\"], ignore: player }). Triggers never block it."
         },
         {
           "name": "isTouching",

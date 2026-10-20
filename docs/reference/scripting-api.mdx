@@ -200,7 +200,7 @@ The running game.
 | `pick(screenX, screenY)` | `entity\|null` | Entity at a screen point. |
 | `touchWorld()` | `{x,y,z}` | The spot in the world under the finger / mouse (a surface, else the ground plane). Tap to move: player.moveTo(p.x, p.z). |
 | `hasLineOfSight(a, b)` | `boolean` | True when nothing solid is between the two objects, e.g. an enemy can see the player. |
-| `raycast(from, to)` | `{entity,point,distance}\|null` | Physics ray between two world points. |
+| `raycast(from, to \| { direction, length, tags?, ignore?, includeMoving? }, options?)` | `{entity,point,normal,distance}\|null` | Physics ray between two points, or along a direction: game.raycast(p, &#123; direction: &#123;x:0,y:-1,z:0&#125;, length: 5, tags: ["ground"], ignore: player &#125;). Triggers never block it. |
 | `isTouching(a, b)` | `boolean` | Are two entities touching? |
 | `touchInfo(a, b)` | `CollisionInfo \| null` | Current contact of two touching entities (point, normal, speed, impulse), or null |
 | `getVar(name)` | `value` | Read a global/scene variable: game.getVar("Score") |

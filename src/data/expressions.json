@@ -260,6 +260,13 @@
       "insert": "tablerow(\"\", loopIndex)"
     },
     {
+      "name": "rayhitname",
+      "signature": "rayhitname()",
+      "description": "After a \"Raycast\" condition: the name of the object the ray hit (empty when nothing)",
+      "category": "Raycast",
+      "insert": "rayhitname()"
+    },
+    {
       "name": "tablecount",
       "signature": "tablecount(\"Item\")",
       "description": "How many rows a data table has",
@@ -398,6 +405,55 @@
       "description": "In \"On collision with\" or \"Is touching\": how fast they hit each other (m/s), e.g. damage or a sound volume",
       "category": "Collision",
       "insert": "hitSpeed"
+    },
+    {
+      "name": "rayHitX",
+      "signature": "rayHitX",
+      "description": "After a \"Raycast\" condition: X of the point the ray hit",
+      "category": "Raycast",
+      "insert": "rayHitX"
+    },
+    {
+      "name": "rayHitY",
+      "signature": "rayHitY",
+      "description": "After a \"Raycast\" condition: Y (height) of the point the ray hit",
+      "category": "Raycast",
+      "insert": "rayHitY"
+    },
+    {
+      "name": "rayHitZ",
+      "signature": "rayHitZ",
+      "description": "After a \"Raycast\" condition: Z of the point the ray hit",
+      "category": "Raycast",
+      "insert": "rayHitZ"
+    },
+    {
+      "name": "rayNormalX",
+      "signature": "rayNormalX",
+      "description": "After a \"Raycast\" condition: X of the direction the hit surface faces",
+      "category": "Raycast",
+      "insert": "rayNormalX"
+    },
+    {
+      "name": "rayNormalY",
+      "signature": "rayNormalY",
+      "description": "After a \"Raycast\" condition: Y of the direction the hit surface faces (1 = flat ground)",
+      "category": "Raycast",
+      "insert": "rayNormalY"
+    },
+    {
+      "name": "rayNormalZ",
+      "signature": "rayNormalZ",
+      "description": "After a \"Raycast\" condition: Z of the direction the hit surface faces",
+      "category": "Raycast",
+      "insert": "rayNormalZ"
+    },
+    {
+      "name": "rayDistance",
+      "signature": "rayDistance",
+      "description": "After a \"Raycast\" condition: how far the ray travelled before it hit (meters)",
+      "category": "Raycast",
+      "insert": "rayDistance"
     },
     {
       "name": "hitImpulse",
@@ -595,7 +651,14 @@
     "hitNormalY",
     "hitNormalZ",
     "hitSpeed",
-    "hitImpulse"
+    "hitImpulse",
+    "rayHitX",
+    "rayHitY",
+    "rayHitZ",
+    "rayNormalX",
+    "rayNormalY",
+    "rayNormalZ",
+    "rayDistance"
   ],
   "compareOps": [
     "=",

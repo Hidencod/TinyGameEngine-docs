@@ -102,6 +102,19 @@ If you mistype a name, the game keeps running: it shows a friendly message once 
 | `replace(text, find, with)` | Replace every occurrence |
 | `pad(value, length, char?)` | Pad with leading zeros, e.g. 007 |
 
+### Raycast
+
+| Function | What it does |
+| --- | --- |
+| `rayhitname()` | After a "Raycast" condition: the name of the object the ray hit (empty when nothing) |
+| `rayHitX` | After a "Raycast" condition: X of the point the ray hit |
+| `rayHitY` | After a "Raycast" condition: Y (height) of the point the ray hit |
+| `rayHitZ` | After a "Raycast" condition: Z of the point the ray hit |
+| `rayNormalX` | After a "Raycast" condition: X of the direction the hit surface faces |
+| `rayNormalY` | After a "Raycast" condition: Y of the direction the hit surface faces (1 = flat ground) |
+| `rayNormalZ` | After a "Raycast" condition: Z of the direction the hit surface faces |
+| `rayDistance` | After a "Raycast" condition: how far the ray travelled before it hit (meters) |
+
 ### Input
 
 | Function | What it does |
@@ -173,7 +186,7 @@ Inside an action on an object type, `Coin.x` means *the coin being processed*. W
 
 ## Built-in values
 
-`time` · `dt` · `fps` · `screenWidth` · `screenHeight` · `touchX` · `touchY` · `touching` · `joystickX` · `joystickY` · `lookX` · `lookY` · `touchWorldX` · `touchWorldY` · `touchWorldZ` · `loopIndex` · `timeScale` · `loadingProgress` · `hitX` · `hitY` · `hitZ` · `hitNormalX` · `hitNormalY` · `hitNormalZ` · `hitSpeed` · `hitImpulse`
+`time` · `dt` · `fps` · `screenWidth` · `screenHeight` · `touchX` · `touchY` · `touching` · `joystickX` · `joystickY` · `lookX` · `lookY` · `touchWorldX` · `touchWorldY` · `touchWorldZ` · `loopIndex` · `timeScale` · `loadingProgress` · `hitX` · `hitY` · `hitZ` · `hitNormalX` · `hitNormalY` · `hitNormalZ` · `hitSpeed` · `hitImpulse` · `rayHitX` · `rayHitY` · `rayHitZ` · `rayNormalX` · `rayNormalY` · `rayNormalZ` · `rayDistance`
 
 ## Compare operators
 
