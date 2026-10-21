@@ -31,6 +31,21 @@ On the home screen tap **⬇ Import .tge** and choose the file. It is added as a
 
 Send them the `.tge` file. They import it and can open, play and change your project — a great way to learn from each other or work on a game together.
 
+## Project as a folder (for git and syncing)
+
+**⋮ → Project as folder (.zip)** saves the same project as a zip of **many small text files** instead of one `.tge`. Unzip it and you can read it, compare two versions, or put it in a git repository.
+
+| File | Holds |
+| --- | --- |
+| `project.json` | name, settings, global variables, start scene, and the order of everything else |
+| `scenes/`, `sheets/`, `prefabs/`, `timelines/`, `tables/`, `animators/`, `materials/` | one file for each |
+| `scripts/` | each script as a `.json` with its settings and a `.ts` file with its code |
+| `shaders/` | each shader as a `.json` plus `.vert.glsl` and `.frag.glsl` |
+| `localization.json`, `services.json` | the texts and the achievements, boards and products |
+| `assets/index.json` and `assets/files/` | the list of images, sounds and models, and the files themselves |
+
+The same project always makes the same files, so a change to one scene changes one file. Import the zip with **Import .tge** like any backup: it comes back as a new project.
+
 :::tip[Good habits]
 - Back up before big changes, or use **Duplicate** on the home screen to keep a copy.
 - Keep backups outside the phone (Drive, email).
