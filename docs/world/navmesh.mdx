@@ -47,8 +47,16 @@ const floor = game.navmesh.sample(player.position);   // nearest place to stand
 game.navmesh.rebuild();                               // after walls changed
 ```
 
+## See the mesh
+
+Press **Play**, then the **Show colliders** button. The places a character can walk are drawn as **green cells** on the floor, with the colliders outlined. A wall that has no green hole under it and no outline has **no collider**, or it is not **static**: add a **Collider** and set the **Rigidbody** to *Static* (or leave out the Rigidbody) and it blocks paths.
+
+This is the same idea as Unity's NavMesh display. Unity bakes the objects you mark **Navigation Static** and agents never leave that surface; here the objects that count are the static colliders, and the green cells are the baked surface.
+
+A goal that is off the mesh (the player is outside the ground, or inside a wall) sends the character to the nearest place it can stand, and it stops there. It does not walk off the ground in a straight line.
+
 ## Good to know
 
 - With the navmesh off, nothing changes: the grid search is used.
 - If the mesh cannot be made (no static colliders), characters fall back to the grid search.
-- Not there yet: showing the mesh in the editor, baking ahead of time, avoiding other moving characters, different surface costs (mud, road).
+- Not there yet: showing the mesh in the editor view (it shows in Play), baking ahead of time, avoiding other moving characters, different surface costs (mud, road).

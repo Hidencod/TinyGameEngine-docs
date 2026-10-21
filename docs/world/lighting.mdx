@@ -23,6 +23,15 @@ Objects whose position is inside the box now use the probe. Where boxes overlap,
 | **Intensity** | Strength of the reflections and light from the probe. |
 | **Refresh (s)** | 0 takes the picture once, a moment after the scene starts. Anything above 0 takes it again that often, for rooms that change (lights switching, doors opening). |
 
+## Try it: a shiny ball in a coloured room
+
+1. Make a floor and four walls, and give the walls different colours (red, green, blue, yellow).
+2. Add a **Sphere** in the middle. Set its material **Style** to *Realistic*, **Metalness** to 1 and **Roughness** to 0.1.
+3. Make an empty object next to the sphere (not inside it), a little above the floor, and add **Reflection probe**. Set **Size** so the blue box covers the whole room **and the sphere**.
+4. Press **Play**. The sphere now mirrors the coloured walls.
+
+If it only shows the sky: the sphere is outside the blue box, or you are looking at the scene view. The probe's picture is taken in the running game, so **look in Play**. Without a probe a metal ball reflects the scene's sky (a soft default sky when the scene has none).
+
 ## Good to know
 
 - The picture is taken in the running game, not in the editor, so the scene view still shows the sky reflections.
