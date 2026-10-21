@@ -30,6 +30,7 @@ const DESKTOP = { width: 1280, height: 720 };
 const GAMES = [
   { module: 'streetRacer', slug: 'street-racer', shots: streetRacerShots },
   { module: 'lootRoom', slug: 'loot-room', shots: lootRoomShots },
+  { module: 'crystalVault', slug: 'crystal-vault', shots: crystalVaultShots },
 ];
 
 const filter = process.argv.slice(2).filter((a) => !a.startsWith('--'));
@@ -123,7 +124,7 @@ async function streetRacerShots({ page, shot, tge, module }) {
   await page.waitForSelector('.editor.desktop', { timeout: 60000 });
   await page.waitForTimeout(6000);
   await shot('editor');
-  await page.locator('.desk-dock .tab[data-tab="logic"]').click();
+  await page.locator('.desk-area .tab[data-tab="logic"]').click();
   await page.locator('.list-row', { hasText: 'Main events' }).first().click();
   await page.waitForSelector('.es-root', { timeout: 30000 });
   await page.waitForTimeout(1500);
@@ -175,4 +176,49 @@ async function lootRoomShots({ page, shot, tge, module }) {
   await page.waitForSelector('.editor.desktop', { timeout: 60000 });
   await page.waitForTimeout(5000);
   await shot('editor');
+}
+
+async function crystalVaultShots({ page, shot, tge, module }) {
+  await page.goto(`${TGE}/showcase/dev.html?game=${module}`, { timeout: 120000 });
+  await page.waitForFunction(() => window.__tgeReady, null, { timeout: 120000 });
+  // The intro: the camera is still pushing in and the title is fading.
+  await page.waitForTimeout(1800);
+  await shot('intro');
+  await page.waitForFunction(() => window.__tgeGame.getVar('Started') === 1, null, { timeout: 120000 });
+  await page.waitForTimeout(1200);
+  await shot('play');
+  // The same screen in French.
+  await page.evaluate(() => { window.__tgeGame.language = 'fr'; });
+  await page.waitForTimeout(500);
+  await shot('french');
+  await page.evaluate(() => { window.__tgeGame.language = 'en'; });
+  // Clear the vault (the player is put on each crystal; the guards are kept in a corner) for the win screen.
+  await page.evaluate(async () => {
+    const g = window.__tgeGame;
+    const p = g.find('Player');
+    for (const c of g.select('#crystal')) {
+      for (let i = 0; i < 6; i++) {
+        p.setPosition(c.position.x, 0.9, c.position.z);
+        for (const gd of g.select('Guard')) gd.setPosition(9, 0.5, 9);
+        await new Promise((r) => setTimeout(r, 40));
+      }
+    }
+  });
+  await page.waitForTimeout(2500);
+  await shot('win');
+  // The project in the editor, with its event sheet open.
+  await page.goto(TGE + '/', { timeout: 120000 });
+  await page.waitForSelector('.home', { timeout: 30000 });
+  const chooser = page.waitForEvent('filechooser');
+  await page.getByRole('button', { name: /Import \.tge/ }).click();
+  await (await chooser).setFiles(tge);
+  await page.locator('.project-card', { hasText: 'Crystal Vault' }).first().click({ timeout: 60000 });
+  await page.waitForSelector('.editor.desktop', { timeout: 60000 });
+  await page.waitForTimeout(5000);
+  await shot('editor');
+  await page.locator('.desk-area .tab[data-tab="logic"]').click();
+  await page.locator('.list-row', { hasText: 'Main events' }).first().click();
+  await page.waitForSelector('.es-root', { timeout: 30000 });
+  await page.waitForTimeout(1500);
+  await shot('events');
 }

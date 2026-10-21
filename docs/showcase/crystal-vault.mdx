@@ -1,0 +1,94 @@
+---
+title: Crystal Vault
+description: A small stealth game that uses the newest features of Tiny Game Engine — navmesh guards, a timeline intro, two languages, achievements, a shop, a rewarded ad and a dissolve shader. Play it in your browser, then open the project and see how it works.
+---
+
+# Crystal Vault
+
+Steal six crystals from a walled vault while two guards hunt you. The guards find their way round the walls by themselves, the intro is a cutscene, every text switches between English and French, and the game has achievements, a best-time board, a shop and a rewarded ad.
+
+It is a tour of the newest engine features. **Everything is an event sheet and project data: there are no code scripts.**
+
+<PlayEmbed
+  src="https://hidencod.github.io/tge-assets/showcase/crystal-vault/"
+  poster="/img/showcase/crystal-vault-play.webp"
+  title="Crystal Vault"
+  size="8 MB"
+/>
+
+**Controls:** the joystick moves the ball (**WASD** or the **arrow keys** on a computer). The buttons along the top switch the language, show the achievements and the best times, and buy the Golden ball. Purchases and ads are **test screens** here.
+
+## Open it in the editor
+
+1. Download **[crystal-vault.tge](https://hidencod.github.io/tge-assets/showcase/crystal-vault/crystal-vault.tge)** (100 KB).
+2. Open the editor: **[editor.jeevagames.com](https://editor.jeevagames.com)** on a computer, or the Android app.
+3. On the home screen tap **Import .tge** and pick the file, then open **Crystal Vault (imported)**.
+4. Press **▶ Play**, or open **Logic → Main events** to read the rules.
+
+![Crystal Vault's event sheet in the editor](/img/showcase/crystal-vault-events.webp)
+
+## How it works
+
+### The guards: navmesh
+
+**Project settings → Navigation** has the navmesh turned on. The vault has two inner walls with a gap at opposite ends, so a guard has to zigzag to reach you. The whole chase is one action, run every tick while you play:
+
+- **Move to position** on `Guard`, to `Player.x`, `Player.z`, speed 2.8.
+
+There is no path code: the walkable area is made from the walls (static colliders), and the **Navmesh** button in the scene view shows it before you press Play. See [Navmesh](../world/navmesh).
+
+The guards have a **Kinematic** Rigidbody on purpose. A collider with no Rigidbody counts as a static wall, and a guard would be baked into the walkable area as a block.
+
+### The intro: timeline
+
+**Files → Intro** is a timeline of four seconds: the camera's *y* and *z* are keyed so it pushes in, the title box's *opacity* fades up and down, and a signal marks the end. Two events run it:
+
+- **On start of scene** → **Play timeline** `Intro`.
+- **On Intro finished** → **Set Started to 1**, which lets the game begin.
+
+Everything that moves while you play checks `Started = 1`. See [Timeline](../world/timeline).
+
+### Two languages
+
+**Files → Localization** holds English and French texts by key (`title`, `crystals`, `win`…). Labels such as the title and the buttons have a **Text key**, so they change by themselves. The two counters are set from an event, each tick:
+
+```
+Set text of ScoreText to t("crystals", Score, 6)        → "Crystals: 2 / 6" or "Cristaux : 2 / 6"
+Set text of TimeText  to t("time", floor(Time))         → "Time: 14 s" or "Temps : 14 s"
+```
+
+The language button is one click event with two sub-events: *Language is en* → **Set language** `fr`, **Else** → **Set language** `en`. Put the check **inside** the click event: an Else is paired with the whole condition of the event above it, so an Else next to a click trigger would run every tick. See [Localization](../world/localization).
+
+### Achievements, best times, shop and ad
+
+**Files → Services** lists three achievements (*Collector* needs 10 crystals and counts them over many games), a *Fastest vault* board where lower is better, the *Golden ball* product, and the ad settings. The blocks:
+
+| When | Block |
+| --- | --- |
+| A crystal is collected | **Unlock achievement** `first`, **Add achievement steps** `collector` |
+| The sixth crystal | **Unlock achievement** `vault`, **Submit score** `floor(Time)` to `time` |
+| Tap *Golden ball* | **Buy product** `gold`, then on **On purchase of gold done** the ball turns gold |
+| The game starts | **Owns product** `gold` keeps the colour next time (a permanent product is remembered) |
+| Caught by a guard | the *Caught!* screen; **Show rewarded ad**, then **On rewarded ad earned** puts both back and carries on |
+
+Without a provider, ads and purchases are the engine's **test screens**. To use a real store, set `game.services.provider` in a script: see [Services](../world/services) and [In-app purchases](../world/purchases).
+
+### Guards that burn away: shaders
+
+The guards use a material with the **Dissolve** starter shader ([Shaders](../world/shaders)). When the sixth crystal is taken:
+
+- **Set shader uniform** `uSpeed` to 0 stops the shader burning by itself,
+- every tick, `Dissolve` grows by `dt * 0.7` and **Set shader uniform** `uAmount` to `Dissolve` burns the guards away.
+
+### The mirror statue: reflections
+
+The metal ball in the middle is a *Realistic* material with **Metalness** 1 and **Roughness** 0.08. A **Reflection probe** over the vault gives it a picture of the room to reflect. See [Reflection probes](../world/lighting).
+
+## Make it yours
+
+- More guards: duplicate a `Guard` object. The one **Move to position** action moves every object with that name.
+- Harder or easier: change the guard speed (2.8) in the *Every tick* event, or the ball's **Speed** on its Platformer.
+- More crystals: add objects tagged `crystal` and change `6` in the counter text and in the win check.
+- More languages: **Files → Localization → ＋ Language**, then fill a text in each row.
+
+![The vault cleared](/img/showcase/crystal-vault-win.webp)
