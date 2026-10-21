@@ -1,0 +1,44 @@
+---
+title: Sync with GitHub
+description: Keep one project on your phone and your computer by syncing it to a GitHub repository. One button brings in what changed on GitHub and sends what changed here, with a choice when both changed the same file.
+---
+
+# Sync with GitHub
+
+Work on the same project on your phone and on your computer. **Sync with GitHub** copies the project to a repository you own and brings it back on the other device. There is no server of ours in between: the editor talks to GitHub directly, and your token stays in the browser.
+
+## Set it up once
+
+1. Make a repository on GitHub (private is fine). It can be empty.
+2. Make a **fine-grained token**: GitHub → **Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token**. Pick your repository, and give it **Contents: Read and write**.
+3. In the editor: **File → Sync with GitHub** (on a phone: **⋮ → Sync with GitHub**).
+4. Paste the **token** (🔑), the **Repo** (`owner/name`, or the address of the repository) and the **Branch** (`main`).
+
+## Sync
+
+Press **⇅ Sync**. It does three things in one go:
+
+- **↓** brings in the files that changed on GitHub,
+- **↑** sends the files that changed here, as **one commit**,
+- **✓** means both sides now match.
+
+When something comes in from GitHub, the editor opens the project again to show it. Do your first sync from the device that has the project: the files go up. On the second device, make a project, press **Sync** with the same repository, and the project comes down into it.
+
+### When both sides changed the same file
+
+Each scene, event sheet, script and so on is a file of its own, so two devices rarely touch the same one. When they did, the editor asks for that file: **Mine** keeps this device's version and sends it, **GitHub** takes the version from GitHub. Nothing is lost: the other version stays in the repository's history.
+
+A file changed on one side and deleted on the other is asked the same way.
+
+## What is in the repository
+
+The same files as **Project as folder (.zip)** (see [Backup](./backup#project-as-a-folder-for-git-and-syncing)): `project.json`, one file per scene, sheet, script, prefab, timeline and so on, and your images, sounds and models under `assets/files/`. Other files in the repository, such as a README or a license, are never touched.
+
+The project's own **id and dates** are not synced: each device keeps its own.
+
+## Good to know
+
+- The token is kept on the device in the browser's storage. **Disconnect** forgets it. Anyone using your browser profile could use it, so give it only the one repository.
+- Models and sounds are large: the first sync over mobile data can take a while. GitHub refuses a single file above **100 MB**.
+- Syncing never **merges inside** a file: if you and your other device both changed the same scene, you choose one version of it.
+- You can read the history, compare versions and go back to an older one on GitHub; the files are plain text.
