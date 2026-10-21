@@ -65,8 +65,23 @@ Add a line `// @transparent` to the fragment shader and it blends with what is b
 
 If the shader does not compile, the error is shown in the shader editor.
 
+## Change a setting while the game runs
+
+The **Set shader uniform** block (category **Object**) changes one setting of the object's shader: pick the object, the uniform, and a value. A number for a `float`, a colour as text for a `vec3`:
+
+```
+Player is hurt   → Set Player shader uniform uGlow to "#ff0000"
+Enemy died       → Set Enemy shader uniform uAmount to 0.6     (Dissolve with Speed 0)
+```
+
+In a script: `entity.setUniform('uAmount', 0.7)` or `entity.setUniform('uGlow', '#ff0000')`. It returns `false` when the object's shader has no uniform of that name (the block reports it in the console).
+
+- Only **that object** changes, even if other objects use the same material.
+- It sets the value now. To change it over time, set it again each frame from a script or an event that runs every frame.
+- For Dissolve, set **Speed** to 0 first, otherwise it keeps burning on its own.
+
 ## Good to know
 
 - A custom shader does **not** get scene lighting, shadows or fog by itself. The starters fake a light from one direction. A shader is drawn with the **object's** shape, so it works on any shape.
 - Shaders are not shared between materials: each material makes its own.
-- Not there yet: changing a shader setting while the game runs (from events or scripts), and a visual node editor.
+- Not there yet: tweening a shader uniform, and a visual node editor.
