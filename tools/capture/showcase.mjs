@@ -16,7 +16,8 @@
  * The playable files go to tge-assets rather than this repo: they are large and change
  * with every engine release.
  */
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { createServer } from 'node:http';
 import { join, resolve } from 'node:path';
 import { chromium } from 'playwright';
 import sharp from 'sharp';
@@ -28,9 +29,9 @@ const DESKTOP = { width: 1280, height: 720 };
 
 /** module: file in TinyGameEngine/showcase/ exporting createShowcase(). */
 const GAMES = [
-  { module: 'streetRacer', slug: 'street-racer', shots: streetRacerShots },
+  { module: 'streetRacer', slug: 'street-racer', shots: streetRacerShots, expect: 'Race!' },
   { module: 'lootRoom', slug: 'loot-room', shots: lootRoomShots },
-  { module: 'crystalVault', slug: 'crystal-vault', shots: crystalVaultShots },
+  { module: 'crystalVault', slug: 'crystal-vault', shots: crystalVaultShots, expect: 'Crystals: 0 / 6' },
 ];
 
 const filter = process.argv.slice(2).filter((a) => !a.startsWith('--'));
@@ -85,6 +86,10 @@ for (const game of GAMES.filter((g) => !filter.length || filter.some((f) => g.sl
   writeFileSync(join(dir, 'index.html'), Buffer.from(out.html, 'base64'));
   writeFileSync(join(dir, game.slug + '.tge'), Buffer.from(out.tge, 'base64'));
   console.log(`  ✓ exported (${(out.html.length * 0.75 / 1e6).toFixed(1)} MB html, ${(out.tge.length * 0.75 / 1e6).toFixed(1)} MB tge) → ${dir}`);
+
+  // 1b. The exported game, as a visitor gets it (a plain web page): it must start without errors and show
+  // its texts. This catches anything the export leaves out (localization, timelines, services...).
+  await checkExported(browser, join(dir, 'index.html'), game);
 
   // 2. Screenshots.
   mkdirSync(SHOTS, { recursive: true });
@@ -221,4 +226,29 @@ async function crystalVaultShots({ page, shot, tge, module }) {
   await page.waitForSelector('.es-root', { timeout: 30000 });
   await page.waitForTimeout(1500);
   await shot('events');
+}
+
+/** Open an exported game from a local web server and fail loudly when it throws or does not show its text. */
+async function checkExported(browser, file, game) {
+  if (!existsSync(file)) throw new Error('missing ' + file);
+  const html = readFileSync(file);
+  const server = createServer((_req, res) => { res.writeHead(200, { 'content-type': 'text/html;charset=utf-8' }); res.end(html); });
+  await new Promise((r) => server.listen(0, '127.0.0.1', r));
+  const url = `http://127.0.0.1:${server.address().port}/`;
+  const context = await browser.newContext({ viewport: DESKTOP, locale: 'en-US' });
+  const page = await context.newPage();
+  const problems = [];
+  page.on('pageerror', (e) => problems.push('page error: ' + e.message));
+  page.on('console', (m) => { if (m.type() === 'error') problems.push('console error: ' + m.text()); });
+  await page.goto(url, { timeout: 120000 });
+  await page.waitForTimeout(7000);
+  const text = await page.evaluate(() => document.body.innerText);
+  if (game.expect && !text.includes(game.expect)) problems.push(`the page does not show "${game.expect}" (it shows: ${text.replace(/\s+/g, ' ').slice(0, 120)})`);
+  await context.close();
+  server.close();
+  if (problems.length) {
+    console.error(`  ✗ the exported ${game.slug} is broken:`);
+    for (const x of problems) console.error('    ' + x);
+    process.exitCode = 1;
+  } else console.log('  ✓ the exported game starts and shows its texts');
 }
