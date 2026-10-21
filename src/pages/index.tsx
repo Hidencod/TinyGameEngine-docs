@@ -4,143 +4,147 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import Layout from '@theme/Layout';
 import styles from './index.module.css';
 
-/** A sprite from static/img/art (cut from the art sheet by tools/art/cut-sprites.py). */
-function Art({name, className, style, alt = ''}: {name: string; className?: string; style?: CSSProperties; alt?: string}) {
-  return <img src={useBaseUrl(`/img/art/${name}.webp`)} alt={alt} className={className} style={style} draggable={false} />;
+function Shot({name, alt, className}: {name: string; alt: string; className?: string}) {
+  return <img src={useBaseUrl(`/img/showcase/${name}.webp`)} alt={alt} className={className} width={1280} height={720} loading="lazy" draggable={false} />;
 }
 
-const STEPS = [
-  {art: 'cube-grass', title: 'Place objects', text: 'Shapes, free 3D models, lights, a camera.'},
-  {art: 'penguin', title: 'Add behaviors', text: 'Walk, jump, drive, follow — in one tap.'},
-  {art: 'tile-code', title: 'Write events', text: 'WHEN something happens → DO actions.'},
-  {art: 'tile-play', title: 'Play & share', text: 'Test instantly, export an APK or HTML file.'},
+const GAMES = [
+  {to: '/docs/showcase/street-racer', shot: 'street-racer-race', title: 'Street Racer', text: 'AI opponents, laps, a grid start and a best-time board.'},
+  {to: '/docs/showcase/crystal-vault', shot: 'crystal-vault-play', title: 'Crystal Vault', text: 'Guards, pickups, a win screen and a second language.'},
+  {to: '/docs/showcase/loot-room', shot: 'loot-room-room', title: 'Loot Room', text: 'An inventory, a book of items and a health bar.'},
 ];
 
-const START = [
-  {to: '/docs/getting-started/first-game', art: 'coin', title: 'Make your first game', text: 'A 15-minute tutorial: roll a ball, collect coins, keep score and win.'},
-  {to: '/docs/editor/overview', art: 'tile-gear', title: 'Learn the editor', text: 'Every screen, tab, button and menu explained.'},
-  {to: '/docs/logic/event-sheets', art: 'tile-gamepad', title: 'Make things happen', text: 'How events, conditions, actions and picking work.'},
-  {to: '/docs/reference', art: 'flag', title: 'Look something up', text: 'Components, behaviors, conditions, actions and the scripting API.'},
+const SCRIPT = `export let speed = 2;   // set per object in the Inspector
+let timer = 0;
+
+function update(dt) {
+  timer += dt;
+  if (timer > 3) { timer = 0; game.log('3 seconds passed'); }
+}
+
+function onCollision(other) {
+  game.log('hit something');
+}`;
+
+const INSIDE = [
+  {title: 'Physics', text: 'Rigid bodies, triggers, ray casts and ray-cast cars.'},
+  {title: '2D and 3D', text: 'Tilemaps, sprites and animated tiles next to full 3D scenes.'},
+  {title: 'Animation', text: 'Animators, inverse kinematics and a timeline for cutscenes.'},
+  {title: 'Interface', text: 'Canvas, layout groups, buttons and fonts, built like Unity’s uGUI.'},
+  {title: 'Debugger', text: 'Breakpoints, watches and a console while the game runs.'},
+  {title: 'GitHub sync', text: 'The project is a folder of small text files you can push, pull and branch.'},
 ];
 
-const FEATURES = [
-  {art: 'tile-gamepad', title: 'Made for your phone', text: 'Build, test and export a 3D game with touch. No PC needed, but it runs in a browser on your PC too.'},
-  {art: 'cube-stone', title: 'Real physics', text: 'Gravity, collisions, triggers, bouncing and ray-cast cars.'},
-  {art: 'tree', title: 'Free assets', text: 'Hundreds of CC0 models, sounds and 360° skies by Kenney.'},
-  {art: 'star', title: 'Menus & HUD', text: 'Buttons, labels, health bars and full-screen menus.'},
-  {art: 'waterfall', title: 'Particles & sky', text: 'Fire, smoke, confetti, fog and 360° skies.'},
-  {art: 'flag-small', title: 'Export APK & HTML', text: 'Signed Android apps and single-file web games, built offline.'},
+const LEARN = [
+  {to: '/docs/getting-started/first-game', title: 'Your first game', text: 'Roll a ball, collect coins, keep score. About 15 minutes.'},
+  {to: '/docs/editor/overview', title: 'The editor', text: 'Every panel, tab and menu.'},
+  {to: '/docs/logic/event-sheets', title: 'Event sheets', text: 'Conditions, actions and picking.'},
+  {to: '/docs/reference/scripting-api', title: 'Scripting API', text: 'Everything a script can call.'},
 ];
+
+const delay = (n: number): CSSProperties => ({['--i' as string]: n});
 
 export default function Home(): ReactNode {
   return (
-    <Layout title="Make 3D games on your phone" description="Documentation for Tiny Game Engine, the mobile-first 3D game engine and editor.">
-      <header className={styles.hero}>
-        <div className={styles.sky} aria-hidden>
-          <span className={styles.cloud} style={{left: '4%', top: '18%'}} />
-          <span className={styles.cloud} style={{left: '46%', top: '6%', transform: 'scale(1.4)'}} />
-          <span className={styles.cloud} style={{right: '3%', top: '62%', transform: 'scale(1.2)'}} />
-          <Art name="cube-water" className={`${styles.bgCube} ${styles.float3}`} style={{left: '2%', bottom: '8%', width: 90}} />
-          <Art name="cube-grass" className={`${styles.bgCube} ${styles.float2}`} style={{left: '38%', bottom: '-2%', width: 80}} />
-          <Art name="cube-stone" className={`${styles.bgCube} ${styles.float1}`} style={{right: '4%', top: '8%', width: 70}} />
-        </div>
-
-        <div className={styles.heroInner}>
+    <Layout title="Tiny Game Engine" description="A game engine and editor for 3D and 2D games that runs in your browser and on your phone, with physics, event sheets, TypeScript scripting and export to Android and the web.">
+      <div className={styles.page}>
+        <header className={styles.hero}>
           <div className={styles.heroText}>
-            <img src={useBaseUrl('/img/logo.png')} alt="" className={styles.logo} />
-            <h1 className={styles.title}>Tiny Game Engine</h1>
-            <p className={styles.tagline}>Make 3D games on your phone.</p>
-            <p className={styles.sub}>No PC needed, or use it in your browser. No code required. The complete guide — from your first game to every setting in the editor.</p>
-            <div className={styles.buttons}>
-              <Link className={`button button--lg ${styles.btnMain}`} to="/docs/getting-started/first-game">Make your first game</Link>
-              <Link className={`button button--lg ${styles.btnGhost}`} to="/docs/intro">Read the guide</Link>
-              <Link className={`button button--lg ${styles.btnGhost}`} href="https://editor.jeevagames.com">Open in your browser</Link>
-            </div>
-          </div>
-
-          <div className={styles.stage} role="img" aria-label="A little robot with a game controller floats above a 3D island, next to the editor's scene list and event blocks">
-            <Art name="panel-scene" className={`${styles.panelScene} ${styles.float2}`} />
-            <Art name="panel-events" className={`${styles.panelEvents} ${styles.float3}`} />
-            <Art name="island" className={styles.island} />
-            <Art name="robot" className={`${styles.robot} ${styles.float1}`} />
-            <Art name="star-small" className={`${styles.star} ${styles.float3}`} />
-            <Art name="icon-bar" className={`${styles.iconBar} ${styles.float1}`} />
-            <Art name="penguin" className={`${styles.penguin} ${styles.float3}`} />
-          </div>
-        </div>
-      </header>
-
-      <main className={styles.main}>
-        <section className={styles.steps} aria-label="How a game is made">
-          {STEPS.map((s, i) => (
-            <div key={s.title} className={styles.step}>
-              <span className={styles.stepNum}>{i + 1}</span>
-              <Art name={s.art} className={styles.stepArt} />
-              <h3>{s.title}</h3>
-              <p>{s.text}</p>
-            </div>
-          ))}
-        </section>
-
-        <section className={styles.events}>
-          <div className={styles.eventsText}>
-            <h2>Game rules, snapped together</h2>
-            <p>
-              Events read like sentences: <b>WHEN</b> something happens, <b>DO</b> these actions.
-              Pick from 139 ready-made conditions and actions — collisions, taps, timers, sounds, score, menus —
-              and fill in the blanks. No code, but real game logic: variables, loops, functions and more.
+            <h1 className={styles.title} style={delay(0)}>Make 3D and 2D games in your browser or on your phone</h1>
+            <p className={styles.sub} style={delay(1)}>
+              A complete engine and editor: physics, event sheets, TypeScript scripting, animation and one-tap export to Android and the web.
             </p>
-            <Link className="button button--primary" to="/docs/logic/event-sheets">How events work →</Link>
+            <div className={styles.buttons} style={delay(2)}>
+              <a className={styles.primary} href="https://editor.jeevagames.com">Open the editor</a>
+              <Link className={styles.ghost} to="/docs/getting-started/first-game">Make your first game</Link>
+            </div>
           </div>
-          <div className={styles.blocks} aria-hidden>
-            <Art name="block-when" className={styles.block} style={{marginLeft: 0}} />
-            <Art name="block-collide" className={styles.block} style={{marginLeft: '8%'}} />
-            <Art name="block-sound" className={styles.block} style={{marginLeft: '16%'}} />
-            <Art name="block-add" className={styles.block} style={{marginLeft: '8%'}} />
-            <Art name="coin-small" className={`${styles.blocksCoin} ${styles.float2}`} />
-            <Art name="star-small" className={`${styles.blocksStar} ${styles.float3}`} />
+          <div className={styles.stage} style={delay(3)}>
+            <div className={styles.frame}>
+              <Shot name="crystal-vault-editor" alt="The editor with the object list on the left, the 3D scene in the middle and the inspector on the right" className={styles.shot} />
+            </div>
+            <div className={`${styles.frame} ${styles.inset}`}>
+              <Shot name="street-racer-race" alt="A race in Street Racer, a game made in the editor" className={styles.shot} />
+            </div>
           </div>
-        </section>
+        </header>
 
         <section className={styles.section}>
-          <h2>Start here</h2>
-          <div className={styles.start}>
-            {START.map((c) => (
-              <Link key={c.to} className={styles.startCard} to={c.to}>
-                <Art name={c.art} className={styles.startArt} />
-                <span>
-                  <span className={styles.startTitle}>{c.title} →</span>
-                  <span className={styles.startText}>{c.text}</span>
-                </span>
+          <h2 className={styles.h2}>Games made with it</h2>
+          <div className={styles.games}>
+            {GAMES.map((g) => (
+              <Link key={g.to} to={g.to} className={styles.game}>
+                <div className={styles.gameImg}><Shot name={g.shot} alt="" className={styles.shot} /></div>
+                <h3>{g.title}</h3>
+                <p>{g.text}</p>
               </Link>
             ))}
           </div>
         </section>
 
+        <section className={styles.row}>
+          <div className={styles.rowText}>
+            <h2 className={styles.h2}>Events that read like rules</h2>
+            <p>When something happens, do these actions. Pick from ready-made conditions and actions for collisions, taps, timers, sounds, score and menus. Variables, loops and functions are there when a game needs real logic.</p>
+            <Link className={styles.link} to="/docs/logic/event-sheets">How event sheets work</Link>
+          </div>
+          <div className={styles.frame}><Shot name="crystal-vault-events" alt="An event sheet in the editor" className={styles.shot} /></div>
+        </section>
+
+        <section className={`${styles.row} ${styles.flip}`}>
+          <div className={styles.rowText}>
+            <h2 className={styles.h2}>Scripts when you want code</h2>
+            <p>Write JavaScript or TypeScript in the editor with completion that knows your objects, sounds and fields. Scripts and events work on the same game and can call each other.</p>
+            <Link className={styles.link} to="/docs/logic/scripting">Read about scripting</Link>
+          </div>
+          <pre className={styles.code}><code>{SCRIPT}</code></pre>
+        </section>
+
+        <section className={styles.row}>
+          <div className={styles.rowText}>
+            <h2 className={styles.h2}>Ship it as an app or a web page</h2>
+            <p>Export a signed Android APK or a single HTML file, built on your device with nothing uploaded. Back the project up to GitHub and open it on another device.</p>
+            <Link className={styles.link} to="/docs/publish/export-apk">How exporting works</Link>
+          </div>
+          <ul className={styles.outputs}>
+            <li><b>.apk</b><span>Signed Android app</span></li>
+            <li><b>.html</b><span>One file, plays anywhere</span></li>
+            <li><b>Git</b><span>A folder of small text files</span></li>
+          </ul>
+        </section>
+
         <section className={styles.section}>
-          <h2>What’s inside</h2>
-          <div className={styles.features}>
-            {FEATURES.map((f) => (
-              <div key={f.title} className={styles.feature}>
-                <Art name={f.art} className={styles.featureArt} />
-                <div>
-                  <h3>{f.title}</h3>
-                  <p>{f.text}</p>
-                </div>
+          <h2 className={styles.h2}>What is inside</h2>
+          <div className={styles.inside}>
+            {INSIDE.map((f) => (
+              <div key={f.title} className={styles.cell}>
+                <h3>{f.title}</h3>
+                <p>{f.text}</p>
               </div>
             ))}
           </div>
         </section>
 
-        <section className={styles.cta}>
-          <Art name="robot" className={styles.ctaRobot} />
-          <div>
-            <h2>Ready? Your first game takes 15 minutes.</h2>
-            <p>Roll a ball, collect coins, keep score and win — step by step, with a screenshot for every tap.</p>
-            <Link className="button button--primary button--lg" to="/docs/getting-started/first-game">Start the tutorial</Link>
+        <section className={styles.section}>
+          <h2 className={styles.h2}>Learn</h2>
+          <div className={styles.learn}>
+            {LEARN.map((l) => (
+              <Link key={l.to} to={l.to} className={styles.learnRow}>
+                <span className={styles.learnTitle}>{l.title}</span>
+                <span className={styles.learnText}>{l.text}</span>
+              </Link>
+            ))}
           </div>
         </section>
-      </main>
+
+        <section className={styles.close}>
+          <h2 className={styles.h2}>Start with a blank scene</h2>
+          <div className={styles.buttons}>
+            <a className={styles.primary} href="https://editor.jeevagames.com">Open the editor</a>
+            <Link className={styles.ghost} to="/docs/intro">Read the guide</Link>
+          </div>
+        </section>
+      </div>
     </Layout>
   );
 }

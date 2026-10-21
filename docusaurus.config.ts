@@ -57,6 +57,9 @@ const config: Config = {
     ],
   ],
 
+  stylesheets: [
+    'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400..700&display=swap',
+  ],
   themeConfig: {
     image: 'img/social-card.jpg',
     colorMode: {
