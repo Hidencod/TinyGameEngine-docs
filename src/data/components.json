@@ -94,6 +94,21 @@
       "icon": "🔀",
       "title": "Animator",
       "desc": "Plays model clips through an Animator Controller (states, transitions, blend trees)"
+    },
+    "navLink": {
+      "icon": "🪂",
+      "title": "Nav link",
+      "desc": ""
+    },
+    "reflectionProbe": {
+      "icon": "🔮",
+      "title": "Reflection probe",
+      "desc": ""
+    },
+    "volume": {
+      "icon": "🎚",
+      "title": "Post-processing volume",
+      "desc": "Puts a post-processing profile (glow, depth of field, vignette…) on the screen: everywhere, or while the camera is inside its box"
     }
   }
 }

@@ -1,6 +1,8 @@
 {
  "aces": {
   "system.onStart": "Runs once when the scene starts.",
+  "object.setVolumeProfile": "Put another post-processing profile on a Post-processing Volume (empty = none).",
+  "object.setVolumeWeight": "How much of a Post-processing Volume counts: 0 = none, 1 = all.",
   "scene.onEnd": "Runs once when the scene ends (changing or restarting scene).",
   "system.everyTick": "True every frame (about 60 times per second).",
   "system.every": "True once every few seconds.",
@@ -235,7 +237,8 @@
   "animator": "Plays model clips through an Animator Controller (states, transitions, blend trees)",
   "particles": "Sparks, smoke, fire, confetti",
   "terrain": "Hills you sculpt by dragging",
-  "water": "Lake or sea: things float, characters swim"
+  "water": "Lake or sea: things float, characters swim",
+  "volume": "Puts a post-processing profile (glow, depth of field, vignette…) on the screen: everywhere, or while the camera is inside its box"
  },
  "snippets": {
   "joystick": "Walk around with the on-screen joystick (or WASD / arrow keys).",

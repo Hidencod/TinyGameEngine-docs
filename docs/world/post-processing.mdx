@@ -1,0 +1,79 @@
+---
+title: Post-processing
+description: Glow, depth of field, ambient occlusion, vignette and colour grading with post-processing profiles and volumes, like Unity — a global look, local zones that blend in, and control from events and scripts.
+---
+
+# Post-processing
+
+**Post-processing** changes the finished picture: things glow, the background blurs, corners darken, colours shift. It works like Unity's: a **profile** is a file that lists the effects and their settings, and a **Post-processing Volume** on an object puts a profile on the screen, everywhere or only while the camera is inside a box.
+
+You see the effects in the editor view as well as in the game.
+
+## Make a look
+
+1. Add the **Post-processing volume** component to an object (an empty one is fine): **Add component → Post-processing volume**.
+2. Tap **＋ Add effect…** under it and pick one, for example **Bloom**. With no profile yet, one is made for you, named after the object, and the volume uses it.
+3. The effect appears as a section with its settings. Drag a slider and watch the view.
+
+Each effect section has a box to switch it **on or off** (its settings are kept) and a **⋮** menu to **remove** it. **Open** shows the whole profile on a page of its own.
+
+A **profile** is a file in **Files → Profiles** (also **＋ New → Post-processing profile**). It is shared: change it and every volume that uses it changes, as in Unity. Give two volumes the same profile to reuse a look, or different profiles for different places.
+
+## Effects
+
+| Effect | What it does | Settings |
+| --- | --- | --- |
+| **Ambient occlusion** | Soft shadow in corners and creases. Draws the scene a second time, so it costs speed. | **Radius**, **Intensity** |
+| **Bloom** | Bright things glow softly: lamps, fire, neon. Materials with a bright **Emissive** colour are what glow. | **Intensity**, **Threshold** (how bright before it glows), **Diffusion** (how far it spreads) |
+| **Color grading** | The overall colour of the picture. | **Saturation** (1 = as drawn, 0 = grey, 2 = vivid), **Contrast** |
+| **Depth of field** | Blurs what is far from the focus distance. Draws the scene a second time, so it costs speed. | **Focus distance** (m), **Aperture** (how fast it blurs), **Max blur** |
+| **Vignette** | Darker corners. | **Intensity** |
+| **Chromatic aberration** | Red and blue edges drift apart toward the sides, like a cheap lens. | **Intensity** |
+| **Anti-aliasing (FXAA)** | Smooths jagged edges cheaply. Use it instead of **Smooth edges (antialias)** in Project settings, which is slow when effects are on. | none |
+
+Ambient occlusion and depth of field are the heavy ones on phones. The rest cost little.
+
+## Where it applies: the volume
+
+| Setting | What it does |
+| --- | --- |
+| **Profile** | The profile to put on the screen. |
+| **Global** | On: everywhere. Off: only near the box below. |
+| **Size** | The box (centred on the object, and scaled with it), in metres. Shown when **Global** is off. |
+| **Blend distance** | How far outside the box the effects start to fade in (0 = a hard edge). |
+| **Weight** | How much of the profile counts, 0 to 1. |
+| **Priority** | When volumes overlap, the higher priority is applied last, on top. |
+
+The camera decides: walk (or fly) into a box volume and its effects fade in over the blend distance. Where several volumes reach the camera they blend from the lowest priority to the highest, each by its weight. An effect a profile does not have is left as the volumes below set it.
+
+:::tip
+A **Global** volume for the game's look, plus a **Box** volume with a higher priority for a special place (a dream, a cave, under water), is the usual setup. The **Post-processing** [template](../templates#postprocessing) does exactly that.
+:::
+
+## Changing it while playing
+
+**Volumes**
+
+- **Events (group Graphics):** *Set volume weight* (0 = none, 1 = all) and *Set volume profile* on an object that has the component.
+- **Scripts:** `volume = obj.component('volume'); volume.weight = 0.5; volume.profile = 'Underwater'`. The profile can be given by name.
+
+**The effects themselves**
+
+- **Events (group Graphics):** *Set screen effect* (vignette, colour fringe, saturation, contrast, glow strength, spread and threshold, focus distance, blur amount and limit, occlusion size and strength) with a value and **Seconds to glide** (0 = at once), and *Switch screen effect on or off* (edge smoothing, glow, depth of field, ambient occlusion).
+- **Scripts:** `game.effects.vignette = 0.6`, `game.effects.focusDistance = 4`, `game.effects.glow = true`, or `game.effects.set('vignette', 0.8, 2)` to glide over 2 seconds.
+
+What an event or script sets sits **on top of** the volumes, so a script can still drive one effect while the volumes handle the rest. A new scene starts clean. Numbers stay inside the ranges the editor allows.
+
+To switch an effect on that no volume has, turn on **Effects from scripts and events** in [Project settings](../editor/project-settings#effects-from-scripts-and-events).
+
+## Graphics quality
+
+A player's [quality level](../editor/project-settings#quality-levels) can switch each kind of effect off (Low does): the volumes keep working, the effect is just not drawn. A level never adds an effect no volume has.
+
+## From older projects
+
+Projects made before profiles had their effects in the Scene tab. When you open one, each scene that had effects gets a profile called *“Scene name” effects* and a **Post-processing** object with a Global volume that uses it. Nothing looks different.
+
+## In the editor view
+
+The editor view draws the effects of the volumes the editor camera is in, like Play. The move tools and the camera preview in the corner are drawn without them. If the view feels slow with heavy effects, switch the effect off in its profile while you build.

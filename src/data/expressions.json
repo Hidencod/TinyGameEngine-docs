@@ -253,11 +253,74 @@
       "insert": "table(\"\", \"\", \"\")"
     },
     {
+      "name": "t",
+      "signature": "t(\"menu.play\")",
+      "description": "A text from Files → Localization in the current language; {0}, {1} in it are filled by extra arguments: t(\"score\", points)",
+      "category": "Game",
+      "insert": "t(\"\")"
+    },
+    {
       "name": "tablerow",
       "signature": "tablerow(\"Item\", index)",
       "description": "The name of a row of a data table by number (0 is the first), to go through every row with a loop",
       "category": "Game",
       "insert": "tablerow(\"\", loopIndex)"
+    },
+    {
+      "name": "achievementcount",
+      "signature": "achievementcount()",
+      "description": "How many achievements Files → Services has (to go through them with a loop)",
+      "category": "Game",
+      "insert": "achievementcount()"
+    },
+    {
+      "name": "achievementid",
+      "signature": "achievementid(index)",
+      "description": "The id of an achievement by number (0 is the first)",
+      "category": "Game",
+      "insert": "achievementid(loopIndex)"
+    },
+    {
+      "name": "achievementname",
+      "signature": "achievementname(index or id)",
+      "description": "The name of an achievement, by number or id",
+      "category": "Game",
+      "insert": "achievementname(loopIndex)"
+    },
+    {
+      "name": "achievementsteps",
+      "signature": "achievementsteps(id)",
+      "description": "Steps done of an achievement (all of them once unlocked)",
+      "category": "Game",
+      "insert": "achievementsteps(\"\")"
+    },
+    {
+      "name": "achievementgoal",
+      "signature": "achievementgoal(id)",
+      "description": "Steps an achievement needs (1 for a plain one)",
+      "category": "Game",
+      "insert": "achievementgoal(\"\")"
+    },
+    {
+      "name": "achievementdone",
+      "signature": "achievementdone(id)",
+      "description": "1 when the achievement is unlocked, else 0",
+      "category": "Game",
+      "insert": "achievementdone(\"\")"
+    },
+    {
+      "name": "bestscore",
+      "signature": "bestscore(id)",
+      "description": "The best score sent to a leaderboard from this device (0 when none)",
+      "category": "Game",
+      "insert": "bestscore(\"\")"
+    },
+    {
+      "name": "productprice",
+      "signature": "productprice(id)",
+      "description": "The price text of a product, e.g. \"$1.99\"",
+      "category": "Game",
+      "insert": "productprice(\"\")"
     },
     {
       "name": "rayhitname",

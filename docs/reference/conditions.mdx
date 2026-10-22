@@ -18,9 +18,9 @@ Conditions are the **WHEN / IF** part of an event. All conditions of an event mu
 - Most other conditions can be **inverted** (NOT) from the condition’s menu.
 :::
 
-There are **81 conditions**, grouped by category as in the condition picker.
+There are **93 conditions**, grouped by category as in the condition picker.
 
-[⚙️ System](#system) · [🔢 Variables](#variables) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🖼️ UI](#ui) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎚️ Graphics](#graphics)
+[⚙️ System](#system) · [🔢 Variables](#variables) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🎬 Timeline](#timeline) · [🌐 Language](#language) · [🏆 Services](#services) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🖼️ UI](#ui) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎚️ Graphics](#graphics)
 
 ## ⚙️ System {/* #system */}
 
@@ -684,6 +684,160 @@ Compares one of the Animator's parameters with a value. A bool reads as 1 or 0.
 | Parameter | Text | `Speed` |  |
 | Comparison | Choice | `=` | Options: =, ≠, &lt;, ≤, &gt;, ≥ |
 | Value | Expression | `0` |  |
+
+## 🎬 Timeline {/* #timeline */}
+
+### On timeline signal {/* #timeline-onsignal */}
+
+<span class="tge-ace-display">On ‹Timeline (empty = any)› signal ‹Signal (empty = any)›</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `timeline.onSignal` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Timeline (empty = any) | Timeline |  | *Optional.* |
+| Signal (empty = any) | Text |  | *Optional.* |
+
+### On timeline finished {/* #timeline-onfinished */}
+
+<span class="tge-ace-display">On ‹Timeline (empty = any)› finished</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `timeline.onFinished` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Timeline (empty = any) | Timeline |  | *Optional.* |
+
+### Timeline is playing {/* #timeline-isplaying */}
+
+<span class="tge-ace-display">‹Timeline› is playing</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `timeline.isPlaying` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Timeline | Timeline |  |  |
+
+## 🌐 Language {/* #language */}
+
+### Language is {/* #system-languageis */}
+
+<span class="tge-ace-display">Language is ‹Language›</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `system.languageIs` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Language | Language |  |  |
+
+### On language changed {/* #system-onlanguagechanged */}
+
+<span class="tge-ace-display">On language changed</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `system.onLanguageChanged` (as saved in project files)
+- **Parameters:** none
+
+## 🏆 Services {/* #services */}
+
+### Achievement is unlocked {/* #services-achievementunlocked */}
+
+<span class="tge-ace-display">Achievement ‹Achievement› is unlocked</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `services.achievementUnlocked` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Achievement | Achievement |  |  |
+
+### On achievement unlocked {/* #services-onachievement */}
+
+<span class="tge-ace-display">On achievement ‹Achievement (empty = any)› unlocked</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `services.onAchievement` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Achievement (empty = any) | Achievement |  | *Optional.* |
+
+### On rewarded ad earned {/* #services-onrewarded */}
+
+<span class="tge-ace-display">On rewarded ad earned</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `services.onRewarded` (as saved in project files)
+- **Parameters:** none
+
+### On ad closed {/* #services-onadclosed */}
+
+<span class="tge-ace-display">On ad closed</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `services.onAdClosed` (as saved in project files)
+- **Parameters:** none
+
+### Owns product {/* #services-owns */}
+
+<span class="tge-ace-display">Owns product ‹Product›</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `services.owns` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Product | Product |  |  |
+
+### On purchase done {/* #services-onpurchased */}
+
+<span class="tge-ace-display">On purchase of ‹Product (empty = any)› done</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `services.onPurchased` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Product (empty = any) | Product |  | *Optional.* |
+
+### On purchase failed {/* #services-onpurchasefailed */}
+
+<span class="tge-ace-display">On purchase of ‹Product (empty = any)› failed</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `services.onPurchaseFailed` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Product (empty = any) | Product |  | *Optional.* |
 
 ## 🧱 Physics {/* #physics */}
 

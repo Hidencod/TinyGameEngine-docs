@@ -64,5 +64,11 @@
     "name": "Cars and boats",
     "description": "Walk up to a car or a boat, press A to get in, and drive it. Enter / Exit vehicle seat you; you pass the joystick on yourself.",
     "icon": "🚤"
+  },
+  {
+    "id": "postProcessing",
+    "name": "Post-processing",
+    "description": "Glow, depth of field, vignette and more: a Global volume for the look and a dream zone you walk into.",
+    "icon": "🎚"
   }
 ]

@@ -1,6 +1,6 @@
 ---
 title: Templates
-description: The ten ready-made starting projects, how to play them and what each one teaches.
+description: The ready-made starting projects, how to play them and what each one teaches.
 ---
 
 # Templates
@@ -22,6 +22,7 @@ Start a project from a template with **＋ New project** on the home screen. Eve
   <Card to="#explorer" img="/img/templates/explorer.webp" title="⛰️ Hill explorer">Terrain, gems, a hunter.</Card>
   <Card to="#firstperson" img="/img/templates/explorer.webp" title="👁️ First person">Walk and look, collect coins.</Card>
   <Card to="#racing" img="/img/templates/racing.webp" title="🏎️ Kart racing">3 laps, checkpoints, best lap.</Card>
+  <Card to="#postprocessing" title="🎚 Post-processing">Profiles, a global look, a dream zone.</Card>
 </Cards>
 
 ## ⬜ Empty 3D scene {/* #empty */}
@@ -85,3 +86,9 @@ Open a template, then its **Logic → Main events**. Long-press any event → **
 A walled arena with blocks to climb. Look around, walk and jump to collect all 8 coins. The camera is at the player's eyes and the player's body is hidden.
 
 **Learn:** the [First person](./behaviors#first-person) behavior on the camera, the Platformer behavior walking relative to where you look, and a free sky.
+
+## 🎚 Post-processing {/* #postprocessing */}
+
+Roll the ball with the joystick through a yard of glowing neon, crates and walls, and on into a **dream zone** at the far end. The look comes from two [post-processing profiles](./world/post-processing): **Cinematic** (bloom, ambient occlusion, colour grading, vignette, FXAA) on a **Global** volume, and **Dream** (strong glow, washed colours, colour fringe, depth of field) on a **Box** volume that fades in as you walk into it. The **Effects** button at the top right switches both volumes off and on, so you can compare.
+
+**Learn:** the Post-processing volume component, Global and Box volumes, blend distance and priority, profiles in Files, *Set volume weight*, emissive materials that glow.

@@ -43,7 +43,7 @@ Like Unity's Quality Settings, the game has three levels: **Low**, **Medium** an
 | **Max pixel ratio**, **Smooth edges (antialias)**, **Shadows**, **Max particles** | As above. |
 | **Shadow picture size** | Sharpness of every light's shadow: 512, 1024 or 2048. Bigger costs more memory and time. |
 | **Shadow cascades (most)** | The most cascades a sun's [Shadow cascades](../world/cameras-and-lights) may use: Off, 2, 3 or 4. Off gives a single shadow picture. |
-| **Glow, Depth of field, Ambient occlusion, Edge smoothing, Color finish** | Whether that [screen effect](./scene-tab#screen-effects) may be drawn. A level can switch effects off but never adds one a scene lacks. *Color finish* is vignette, color fringe, saturation and contrast. |
+| **Glow, Depth of field, Ambient occlusion, Edge smoothing, Color finish** | Whether that [screen effect](../world/post-processing#effects) may be drawn. A level can switch effects off but never adds one no volume has. *Color finish* is vignette, color fringe, saturation, contrast and colour grading. |
 | **Mirror picture size** | The biggest reflection picture a mirror may have: Off (a mirror is plain metal), 128, 256, 512 or 1024. |
 | **Glass** | Off: glass objects are plain surfaces, which is much faster. |
 | **Lens flares** | Off: no lens flares. |
@@ -60,7 +60,7 @@ Setting a level also resets the single settings to that level. **Smooth edges (a
 
 ### Effects from scripts and events
 
-**Effects from scripts and events** makes the game ready to draw screen effects even when no scene has one, so a script or an event can switch them on while playing (see [Screen effects](./scene-tab#screen-effects)). It costs a little speed, so leave it off if you don't need it.
+**Effects from scripts and events** makes the game ready to draw screen effects even when no volume has one, so a script or an event can switch them on while playing (see [Post-processing](../world/post-processing#changing-it-while-playing)). It costs a little speed, so leave it off if you don't need it.
 
 See [Performance tips](../help/performance).
 

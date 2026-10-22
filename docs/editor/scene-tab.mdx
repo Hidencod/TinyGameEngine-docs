@@ -35,7 +35,7 @@ The cards below can be folded by tapping their title.
 | **Fog type** | *Linear*: clear until **Fog starts at**, solid at **Fog fully at**. *Thick (exponential)*: gets thicker with distance, set by **Fog thickness** (about 0.01 is a light haze, 0.1 is dense). *Ground (height)*: like thick, but densest near the ground and thinner higher up, for morning mist in a valley (below). |
 | **Fog color / starts at / fully at** | Color, the distance where fog begins, and the distance where it is solid (Linear only). |
 | **Tone mapping** | Squeezes bright light into a film-like picture: *None*, *ACES (film)*, *Neutral* or *AgX*. Pick one and an **Exposure** slider appears (lower = darker). |
-| **Glow (bloom)** | Bright things glow. See [Glow](#glow). |
+| **Screen effects** | Glow, depth of field, vignette and the rest moved to [Post-processing](../world/post-processing): a profile and a volume. |
 
 ### Sky image
 
@@ -76,40 +76,11 @@ A sky drawn live, with a sun and clouds, and it lights the scene. No image neede
 
 Choosing it the first time also turns on **Tone mapping: ACES**, which a bright sky needs to look right.
 
-### Glow
-
-**Glow (bloom)** makes anything brighter than a level glow softly: lamps, fire, neon, the sun. **Glow strength**, **Glow spread** and **Glow above** (how bright something must be before it glows) tune it. It is drawn in the game, not in the editor view, and costs speed on weak phones, so keep it off unless you want it. Materials with a bright **Emissive** color are what glow.
-
 ### Ground fog
 
 With **Fog type: Ground (height)**, the fog lies low like mist. **Fog level** is the height (world Y, in meters) where it has its **Fog thickness**; above that it thins out, faster the higher **Fog thinning** is (0.15 clears about every 10 m of height, 1 is a thin layer). Below the level it gets thicker still. Looking down through it is thicker than looking along it, so hills poke out above it. Put the level a little above your ground to make a valley fill with mist.
 
 It works on everything lit, the water and particles, in the game and in the editor view. It doesn't tint the sky color (the sky is not fogged), so match the **Fog color** to the horizon.
-
-### Screen effects
-
-Effects drawn over the finished picture, in the game only (not in the editor view). They are all off until you change them, and a player can switch them all off with **Graphics quality** (Low does).
-
-| Field | What it does |
-| --- | --- |
-| **Edge smoothing (FXAA)** | Smooths jagged edges cheaply. Use it instead of **Smooth edges (antialias)** in Project settings, which is slow when a scene also has glow or other effects. |
-| **Vignette** | Darker corners. |
-| **Color fringe** | Red and blue edges drift apart toward the sides, like a cheap lens. |
-| **Saturation** | 1 = as drawn, 0 = grey, 2 = vivid. |
-| **Contrast** | 1 = as drawn; more separates dark from bright. |
-| **Depth of field** | Blurs what is far from the **Focus distance** (meters). **Blur amount** is how fast it blurs; **Blur limit** is the most blur. Draws the scene a second time, so it costs speed. |
-| **Ambient occlusion** | Soft shadow in corners and creases. **Occlusion size** and **Occlusion strength** tune it. Draws the scene a second time, so it costs speed. |
-
-### Changing effects while playing
-
-Every effect above can change during the game, for a moment of drama or a player's own taste.
-
-- **Events (group Graphics):** *Set screen effect* (vignette, color fringe, saturation, contrast, glow strength, spread and threshold, focus distance, blur amount and limit, occlusion size and strength) with a value and **Seconds to glide** (0 = at once), and *Switch screen effect on or off* (edge smoothing, glow, depth of field, ambient occlusion).
-- **Scripts:** `game.effects.vignette = 0.6`, `game.effects.focusDistance = 4`, `game.effects.glow = true`, or `game.effects.set("vignette", 0.8, 2)` to glide over 2 seconds.
-
-Numbers stay inside the ranges the editor allows. A new scene starts from how it was made, and a [quality level](./project-settings#quality-levels) can still forbid an effect. To switch an effect on that no scene has, turn on **Effects from scripts and events** in [Project settings](./project-settings#effects-from-scripts-and-events).
-
-Glow, depth of field and occlusion are the heavy ones on phones. Edge smoothing, vignette, fringe, saturation and contrast cost little.
 
 ## Scene variables
 

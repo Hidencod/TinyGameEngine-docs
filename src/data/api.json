@@ -228,6 +228,13 @@
           "doc": "Change material opacity."
         },
         {
+          "name": "setUniform",
+          "kind": "method",
+          "sig": "(name, value)",
+          "type": "boolean",
+          "doc": "Set a setting (uniform) of this object's custom shader while the game runs: a number, or a colour as text. entity.setUniform(\"uAmount\", 0.7). Only this object changes; false when its shader has no such uniform."
+        },
+        {
           "name": "setText",
           "kind": "method",
           "sig": "(text)",
@@ -1104,6 +1111,38 @@
           "doc": "A data table made in Files: game.table(\"Item\").get(\"Sword\"), .all(), .where(r => r.damage > 5), .ids(), .has(name), .length."
         },
         {
+          "name": "language",
+          "kind": "property",
+          "type": "string",
+          "doc": "Current language code from Files → Localization (\"en\", \"fr\"). Set it to switch: every object with a text key changes, and it is remembered. game.languages lists the codes."
+        },
+        {
+          "name": "t",
+          "kind": "method",
+          "sig": "(key, ...args)",
+          "type": "string",
+          "doc": "A text from Files → Localization in the current language; {0}, {1} in it are filled by the arguments: game.t(\"score\", points). game.on(\"languageChanged\", …) tells when it changes."
+        },
+        {
+          "name": "navmesh",
+          "kind": "property",
+          "type": "NavMesh",
+          "doc": "The baked navigation mesh (Project settings → Navigation): game.navmesh.findPath(from, to, { radius, height }) gives { complete, points: [{x,y,z,leap}] } over slopes, stairs and floors; sample(point) the nearest place to stand; rebuild() after walls change; enabled, lastBakeMs."
+        },
+        {
+          "name": "services",
+          "kind": "property",
+          "type": "ServicesAPI",
+          "doc": "Achievements, leaderboards, ads and purchases from Files → Services: game.services.unlockAchievement(\"first\"), .submitScore(\"score\", 12), .showRewarded(), .buy(\"noAds\"), .owns(\"noAds\"). Set game.services.provider = { showRewarded: () => …, buy: p => … } to handle any of them yourself (your own ad network or store); the results come back as game.on(\"adFinished\" / \"purchaseFinished\" / \"achievementUnlocked\", …)."
+        },
+        {
+          "name": "timeline",
+          "kind": "method",
+          "sig": "(name)",
+          "type": "Timeline",
+          "doc": "A cutscene made in Files → Timeline: game.timeline(\"Intro\").play(). Also pause(), stop(), skip() (the signals still to come fire), seek(seconds), time, duration, isPlaying, finished, speed, loop. game.on(\"timelineSignal\", e => …) hears its signals (e.signal), \"timelineFinished\" its end."
+        },
+        {
           "name": "getCamera",
           "kind": "method",
           "sig": "()",
@@ -1152,7 +1191,7 @@
           "name": "effects",
           "kind": "property",
           "type": "{vignette,fringe,saturation,contrast,glow,depthOfField,occlusion,fxaa,...}",
-          "doc": "The scene screen effects, live: game.effects.vignette = 0.6, game.effects.focusDistance = 4, game.effects.glow = true; numbers: vignette, fringe, saturation, contrast, glowStrength, glowSpread, glowThreshold, focusDistance, blurAmount, blurLimit, occlusionSize, occlusionStrength (kept inside the editor ranges); switches: fxaa, glow, depthOfField, occlusion. game.effects.set(\"vignette\", 0.8, 2) glides there over 2 seconds. A new scene starts from how it was made. Switching an effect on needs a game that can draw effects: a scene has one, or Project settings → Effects from scripts and events is on. The quality level can still forbid an effect."
+          "doc": "The screen effects in force (from the Post-processing Volumes), live: game.effects.vignette = 0.6, game.effects.focusDistance = 4, game.effects.glow = true; numbers: vignette, fringe, saturation, contrast, glowStrength, glowSpread, glowThreshold, focusDistance, blurAmount, blurLimit, occlusionSize, occlusionStrength (kept inside the editor ranges); switches: fxaa, glow, depthOfField, occlusion. game.effects.set(\"vignette\", 0.8, 2) glides there over 2 seconds. Your changes sit on top of the volumes and a new scene starts clean. To change a volume itself: entity.component(\"volume\").weight = 0.5 or .profile = \"Underwater\" (a profile name). Switching an effect on needs a game that can draw effects: the volumes have a profile with one, or Project settings → Effects from scripts and events is on. The quality level can still forbid an effect."
         },
         {
           "name": "addDecal",

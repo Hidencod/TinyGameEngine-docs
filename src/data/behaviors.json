@@ -92,6 +92,9 @@
     "firstPerson": {
       "target": "Player",
       "eyeHeight": 0.6,
+      "offsetX": 0,
+      "offsetY": 0,
+      "offsetZ": 0,
       "lookSpeed": 1,
       "invertY": false,
       "minPitch": -85,

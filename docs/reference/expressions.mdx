@@ -46,7 +46,16 @@ If you mistype a name, the game keeps running: it shows a friendly message once 
 | --- | --- |
 | `loopindex("i")` | Current number of the loop called "i" (For loop), or of the innermost loop without a name |
 | `table("Item", "Sword", "damage")` | A cell of a data table: the table, the row name, the column |
+| `t("menu.play")` | A text from Files → Localization in the current language; &#123;0&#125;, &#123;1&#125; in it are filled by extra arguments: t("score", points) |
 | `tablerow("Item", index)` | The name of a row of a data table by number (0 is the first), to go through every row with a loop |
+| `achievementcount()` | How many achievements Files → Services has (to go through them with a loop) |
+| `achievementid(index)` | The id of an achievement by number (0 is the first) |
+| `achievementname(index or id)` | The name of an achievement, by number or id |
+| `achievementsteps(id)` | Steps done of an achievement (all of them once unlocked) |
+| `achievementgoal(id)` | Steps an achievement needs (1 for a plain one) |
+| `achievementdone(id)` | 1 when the achievement is unlocked, else 0 |
+| `bestscore(id)` | The best score sent to a leaderboard from this device (0 when none) |
+| `productprice(id)` | The price text of a product, e.g. "$1.99" |
 | `tablecount("Item")` | How many rows a data table has |
 | `time` | Seconds since the scene started |
 | `dt` | Seconds since the last frame (multiply speeds by dt) |
