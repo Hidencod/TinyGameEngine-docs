@@ -4945,7 +4945,7 @@
       "category": "Graphics",
       "label": "Set volume weight",
       "hint": "How much of a Post-processing Volume counts: 0 = none, 1 = all",
-      "display": "Set {object} volume weight to {weight}",
+      "display": "Set {object} volume weight to {weight} over {seconds} s",
       "displayNoObject": null,
       "icon": "🎚",
       "description": "How much of a Post-processing Volume counts: 0 = none, 1 = all.",
@@ -4963,6 +4963,16 @@
           "type": "number",
           "options": null,
           "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "seconds",
+          "label": "Seconds to glide (0 = at once)",
+          "type": "number",
+          "options": null,
+          "default": "0",
           "optional": false,
           "hint": null,
           "varScope": null

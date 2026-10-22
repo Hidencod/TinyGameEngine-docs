@@ -555,6 +555,13 @@
           "doc": "Model: bend a morph target, 0 to 1, at once or blended over seconds, e.g. setMorph(\"Smile\", 1, 0.3). false when the model has none of that name."
         },
         {
+          "name": "setVolumeWeight",
+          "kind": "method",
+          "sig": "(weight, seconds?)",
+          "type": "boolean",
+          "doc": "Post-processing Volume: set how much of it counts, 0 to 1, at once or gliding there over seconds, e.g. setVolumeWeight(0, 1.5). false when the object has no Volume component."
+        },
+        {
           "name": "getMorph",
           "kind": "method",
           "sig": "(name)",

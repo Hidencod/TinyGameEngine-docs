@@ -9,13 +9,25 @@ description: Glow, depth of field, ambient occlusion, vignette and colour gradin
 
 You see the effects in the editor view as well as in the game.
 
+<Phone name="pp-editor-view" size="small" caption="Glow on the neon, drawn in the editor view" />
+
 ## Make a look
 
 1. Add the **Post-processing volume** component to an object (an empty one is fine): **Add component → Post-processing volume**.
 2. Tap **＋ Add effect…** under it and pick one, for example **Bloom**. With no profile yet, one is made for you, named after the object, and the volume uses it.
 3. The effect appears as a section with its settings. Drag a slider and watch the view.
 
+<Phone name="pp-volume-inspector" size="small" caption="A Global volume: its profile, weight and priority, and the profile's effects right below" />
+
+<Phone name="pp-add-effect" size="small" caption="Add effect…" />
+
 Each effect section has a box to switch it **on or off** (its settings are kept) and a **⋮** menu to **remove** it. **Open** shows the whole profile on a page of its own.
+
+<Phone name="pp-profile-panel" size="small" caption="The profile page" />
+
+The box in front of each setting is Unity's **override** box: unticked, the profile leaves that setting as the volumes below it set it (it shows dimmed). That lets a volume change only the vignette, say, and nothing else.
+
+<Phone name="pp-files-profiles" size="small" caption="Files → Profiles" />
 
 A **profile** is a file in **Files → Profiles** (also **＋ New → Post-processing profile**). It is shared: change it and every volume that uses it changes, as in Unity. Give two volumes the same profile to reuse a look, or different profiles for different places.
 
@@ -44,6 +56,8 @@ Ambient occlusion and depth of field are the heavy ones on phones. The rest cost
 | **Weight** | How much of the profile counts, 0 to 1. |
 | **Priority** | When volumes overlap, the higher priority is applied last, on top. |
 
+<Phone name="pp-volume-box" size="small" caption="A Box volume: size, blend distance and priority" />
+
 The camera decides: walk (or fly) into a box volume and its effects fade in over the blend distance. Where several volumes reach the camera they blend from the lowest priority to the highest, each by its weight. An effect a profile does not have is left as the volumes below set it.
 
 :::tip
@@ -54,8 +68,8 @@ A **Global** volume for the game's look, plus a **Box** volume with a higher pri
 
 **Volumes**
 
-- **Events (group Graphics):** *Set volume weight* (0 = none, 1 = all) and *Set volume profile* on an object that has the component.
-- **Scripts:** `volume = obj.component('volume'); volume.weight = 0.5; volume.profile = 'Underwater'`. The profile can be given by name.
+- **Events (group Graphics):** *Set volume weight* (0 = none, 1 = all, with **Seconds to glide**) and *Set volume profile* on an object that has the component.
+- **Scripts:** `obj.setVolumeWeight(0, 1.5)` fades a volume out over 1.5 s (or `obj.component('volume').weight = 0.5` at once), and `obj.component('volume').profile = 'Underwater'` swaps the profile (give its name).
 
 **The effects themselves**
 

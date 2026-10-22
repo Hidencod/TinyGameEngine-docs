@@ -121,7 +121,7 @@ async function streetRacerShots({ page, shot, tge, module }) {
 
   // The editor in its desktop layout with the project imported and the event sheet open.
   await page.goto(TGE + '/', { timeout: 120000 });
-  await page.waitForSelector('.home', { timeout: 30000 });
+  await page.waitForSelector('.hm', { timeout: 30000 });
   const chooser = page.waitForEvent('filechooser');
   await page.getByRole('button', { name: /Import \.tge/ }).click();
   await (await chooser).setFiles(tge);
@@ -173,7 +173,7 @@ async function lootRoomShots({ page, shot, tge, module }) {
   await shot('book');
   // The project in the editor, with its data table open.
   await page.goto(TGE + '/', { timeout: 120000 });
-  await page.waitForSelector('.home', { timeout: 30000 });
+  await page.waitForSelector('.hm', { timeout: 30000 });
   const chooser = page.waitForEvent('filechooser');
   await page.getByRole('button', { name: /Import \.tge/ }).click();
   await (await chooser).setFiles(tge);
@@ -213,7 +213,7 @@ async function crystalVaultShots({ page, shot, tge, module }) {
   await shot('win');
   // The project in the editor, with its event sheet open.
   await page.goto(TGE + '/', { timeout: 120000 });
-  await page.waitForSelector('.home', { timeout: 30000 });
+  await page.waitForSelector('.hm', { timeout: 30000 });
   const chooser = page.waitForEvent('filechooser');
   await page.getByRole('button', { name: /Import \.tge/ }).click();
   await (await chooser).setFiles(tge);

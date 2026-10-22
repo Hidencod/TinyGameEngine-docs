@@ -127,6 +127,7 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `stopTweens()` | `void` | Stop all tweens where they are. |
 | `morphTargets` | `string[]` | Model: the names of its morph targets (blend shapes), e.g. ["Smile", "Blink"]. Empty while it loads or when it has none. |
 | `setMorph(name, value, seconds?)` | `boolean` | Model: bend a morph target, 0 to 1, at once or blended over seconds, e.g. setMorph("Smile", 1, 0.3). false when the model has none of that name. |
+| `setVolumeWeight(weight, seconds?)` | `boolean` | Post-processing Volume: set how much of it counts, 0 to 1, at once or gliding there over seconds, e.g. setVolumeWeight(0, 1.5). false when the object has no Volume component. |
 | `getMorph(name)` | `number` | Model: how far a morph target is applied, 0 to 1. |
 | `video` | `{play,pause,restart,playing}\|null` | The video on this object (its material's Video): video.play(), video.pause(), video.restart(), video.playing. Null when it shows no video. |
 | `attachTo(parent, part?)` | `void` | Carry this object along with another (keeps its place in the world), e.g. a picked-up key. part: the name of a part of the 3D model of the other object, such as a hand bone. |

@@ -152,7 +152,7 @@ export function editorHelpers(page, s) {
     /** Open the app with a clean storage (fresh browser context expected). */
     async home() {
       await page.goto(TGE + '/');
-      await page.waitForSelector('.home', { timeout: 30000 });
+      await page.waitForSelector('.hm', { timeout: 30000 });
       await s.settle(800);
     },
     /** Topmost open sheet/dialog. */
@@ -189,9 +189,10 @@ export function editorHelpers(page, s) {
     },
     /** Create a project from a template and open it in the editor. */
     async newProject(template, name) {
-      await page.getByRole('button', { name: /New project/ }).click();
-      await H.waitSheet();
-      await H.pick(template);
+      // New project opens the templates page: one card per template.
+      await page.getByRole('button', { name: /New project/ }).first().click();
+      await page.locator('.hm-card.template').first().waitFor();
+      await page.locator('.hm-card.template').filter({ has: page.locator('.hm-name', { hasText: new RegExp('^' + esc(template)) }) }).first().click();
       await H.prompt(name ?? template);
       await page.waitForSelector('.editor', { timeout: 30000 });
       await s.settle(2500);

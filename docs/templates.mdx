@@ -22,7 +22,8 @@ Start a project from a template with **＋ New project** on the home screen. Eve
   <Card to="#explorer" img="/img/templates/explorer.webp" title="⛰️ Hill explorer">Terrain, gems, a hunter.</Card>
   <Card to="#firstperson" img="/img/templates/explorer.webp" title="👁️ First person">Walk and look, collect coins.</Card>
   <Card to="#racing" img="/img/templates/racing.webp" title="🏎️ Kart racing">3 laps, checkpoints, best lap.</Card>
-  <Card to="#postprocessing" title="🎚 Post-processing">Profiles, a global look, a dream zone.</Card>
+  <Card to="#vehicles" title="🚤 Cars and boats">Enter and drive a car or a boat.</Card>
+  <Card to="#postprocessing" img="/img/templates/postProcessing.webp" title="🎚 Post-processing">Profiles, a global look, a dream zone.</Card>
 </Cards>
 
 ## ⬜ Empty 3D scene {/* #empty */}
@@ -86,6 +87,12 @@ Open a template, then its **Logic → Main events**. Long-press any event → **
 A walled arena with blocks to climb. Look around, walk and jump to collect all 8 coins. The camera is at the player's eyes and the player's body is hidden.
 
 **Learn:** the [First person](./behaviors#first-person) behavior on the camera, the Platformer behavior walking relative to where you look, and a free sky.
+
+## 🚤 Cars and boats {/* #vehicles */}
+
+A hero on foot on rolling hills with a big lake, a **car** and a **boat**. Walk up to a vehicle and press **A** to get in; press **A** again to get out. The joystick moves whoever is in control: the hero walking, the car driving (left/right steers, up is gas, down is brake) or the boat sailing.
+
+**Learn:** the Car and Boat behaviors, *Enter vehicle* and *Exit vehicle* (they seat the hero and move the camera, but never read the joystick: the events pass it on), *Drive car*, *Move with input*, a terrain with a dug lake and water, and a camera that follows whatever you drive.
 
 ## 🎚 Post-processing {/* #postprocessing */}
 
