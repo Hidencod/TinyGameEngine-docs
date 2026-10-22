@@ -110,7 +110,7 @@ async function streetRacerShots({ page, shot, tge, module }) {
   await page.waitForFunction(() => window.__tgeReady, null, { timeout: 120000 });
   await page.waitForTimeout(3000);
   await shot('start');
-  await page.locator('.tge-ui-el.k-button', { hasText: 'Race!' }).first().click();
+  await page.getByText(/Race!/).first().click({ force: true });
   // Countdown (3 s of game time), then let the player's car drive itself for the pictures.
   await page.waitForFunction(() => window.__tgeGame.getVar('Racing') === 1, null, { timeout: 120000 });
   await page.evaluate(() => window.__tgeGame.find('Player').setBehaviorParam('car', 'driver', 'ai'));
@@ -122,10 +122,8 @@ async function streetRacerShots({ page, shot, tge, module }) {
   // The editor in its desktop layout with the project imported and the event sheet open.
   await page.goto(TGE + '/', { timeout: 120000 });
   await page.waitForSelector('.hm', { timeout: 30000 });
-  const chooser = page.waitForEvent('filechooser');
-  await page.getByRole('button', { name: /Import \.tge/ }).click();
-  await (await chooser).setFiles(tge);
-  await page.locator('.project-card', { hasText: 'Street Racer' }).first().click({ timeout: 60000 });
+  await importTge(page, tge);
+  await page.locator('.hm-card', { hasText: 'Street Racer' }).first().click({ timeout: 60000 });
   await page.waitForSelector('.editor.desktop', { timeout: 60000 });
   await page.waitForTimeout(6000);
   await shot('editor');
@@ -174,10 +172,8 @@ async function lootRoomShots({ page, shot, tge, module }) {
   // The project in the editor, with its data table open.
   await page.goto(TGE + '/', { timeout: 120000 });
   await page.waitForSelector('.hm', { timeout: 30000 });
-  const chooser = page.waitForEvent('filechooser');
-  await page.getByRole('button', { name: /Import \.tge/ }).click();
-  await (await chooser).setFiles(tge);
-  await page.locator('.project-card', { hasText: 'Loot Room' }).first().click({ timeout: 60000 });
+  await importTge(page, tge);
+  await page.locator('.hm-card', { hasText: 'Loot Room' }).first().click({ timeout: 60000 });
   await page.waitForSelector('.editor.desktop', { timeout: 60000 });
   await page.waitForTimeout(5000);
   await shot('editor');
@@ -214,10 +210,8 @@ async function crystalVaultShots({ page, shot, tge, module }) {
   // The project in the editor, with its event sheet open.
   await page.goto(TGE + '/', { timeout: 120000 });
   await page.waitForSelector('.hm', { timeout: 30000 });
-  const chooser = page.waitForEvent('filechooser');
-  await page.getByRole('button', { name: /Import \.tge/ }).click();
-  await (await chooser).setFiles(tge);
-  await page.locator('.project-card', { hasText: 'Crystal Vault' }).first().click({ timeout: 60000 });
+  await importTge(page, tge);
+  await page.locator('.hm-card', { hasText: 'Crystal Vault' }).first().click({ timeout: 60000 });
   await page.waitForSelector('.editor.desktop', { timeout: 60000 });
   await page.waitForTimeout(5000);
   await shot('editor');
@@ -251,4 +245,29 @@ async function checkExported(browser, file, game) {
     for (const x of problems) console.error('    ' + x);
     process.exitCode = 1;
   } else console.log('  ✓ the exported game starts and shows its texts');
+}
+
+/**
+ * Import a .tge on the home page. With no project yet the home page only offers three ways to start (no .tge
+ * import), so one empty project is made first: after that the page lists projects and has the import button.
+ */
+async function importTge(page, tge) {
+  const importBtn = page.getByRole('button', { name: /Import \.tge/ });
+  if (!(await importBtn.count())) {
+    await page.getByRole('button', { name: /New project/ }).first().click();
+    await page.locator('.hm-card.template').first().waitFor();
+    await page.locator('.hm-card.template').filter({ has: page.locator('.hm-name', { hasText: /^Empty/ }) }).first().click();
+    const input = page.locator('.sheet-layer.open .prompt-input').last();
+    await input.waitFor();
+    await input.fill('Scratch');
+    await page.locator('.sheet-layer.open .dialog-actions .btn.primary').last().click();
+    await page.waitForSelector('.editor', { timeout: 60000 });
+    await page.waitForTimeout(2000);
+    // The arrow at the top left goes back to the project list (a reload would reopen the project).
+    await page.mouse.click(16, 15);
+    await page.waitForSelector('.hm', { timeout: 30000 });
+  }
+  const chooser = page.waitForEvent('filechooser');
+  await importBtn.click();
+  await (await chooser).setFiles(tge);
 }
