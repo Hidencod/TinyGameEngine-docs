@@ -33,6 +33,11 @@ export async function run({ page, s, H }) {
   await H.scrollTo(H.card('Post-processing volume'));
   await s.shot('pp-volume-box', { wait: 800 });
 
+  // A local volume shows its box (and where its blend ends) in the editor view.
+  await page.locator('.vp-btn[aria-label="Focus"]').click();
+  await s.settle(1200);
+  await s.shot('pp-zone-bounds', { clip: page.locator('.split-viewport'), pad: 0, wait: 1200 });
+
   // Profiles in Files.
   await H.tab('assets');
   await page.locator('.chip', { hasText: 'Profiles' }).click();

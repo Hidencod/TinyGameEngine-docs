@@ -61,7 +61,7 @@ Ambient occlusion and depth of field are the heavy ones on phones. The rest cost
 The camera decides: walk (or fly) into a box volume and its effects fade in over the blend distance. Where several volumes reach the camera they blend from the lowest priority to the highest, each by its weight. An effect a profile does not have is left as the volumes below set it.
 
 :::tip
-A **Global** volume for the game's look, plus a **Box** volume with a higher priority for a special place (a dream, a cave, under water), is the usual setup. The **Post-processing** [template](../templates#postprocessing) does exactly that.
+A **Global** volume for the game's look, plus a **Box** volume with a higher priority for a special place (a dream, a cave, under water), is the usual setup. The **Post-processing** [template](../templates#postprocessing) does exactly that, with Kenney's *special lines* floor marking stretched over the zone so you can see where it is.
 :::
 
 ## Changing it while playing
@@ -90,4 +90,8 @@ Projects made before profiles had their effects in the Scene tab. When you open 
 
 ## In the editor view
 
-The editor view draws the effects of the volumes the editor camera is in, like Play. The move tools and the camera preview in the corner are drawn without them. If the view feels slow with heavy effects, switch the effect off in its profile while you build.
+The editor view draws the effects of the volumes the editor camera is in, like Play.
+
+A volume that is not **Global** shows its box in the editor view: an orange outline for the box and a fainter one where the blend distance ends. **Focus** on it frames the whole box.
+
+<Phone name="pp-zone-bounds" size="small" caption="The dream zone: its box, the blend outline and the floor marking the template adds" /> The move tools and the camera preview in the corner are drawn without them. If the view feels slow with heavy effects, switch the effect off in its profile while you build.
