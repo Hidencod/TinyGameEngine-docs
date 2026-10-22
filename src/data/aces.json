@@ -1491,7 +1491,7 @@
       "kind": "action",
       "category": "Graphics",
       "label": "Set graphics quality",
-      "hint": "Low, Medium or High: the project decides what each means",
+      "hint": "One of the quality levels of the project (Low, Medium, High to start with): the project decides what each means",
       "display": "Set graphics quality to {level}",
       "displayNoObject": null,
       "icon": "🎚️",
@@ -1507,21 +1507,8 @@
         {
           "id": "level",
           "label": "Level",
-          "type": "choice",
-          "options": [
-            {
-              "value": "low",
-              "label": "Low"
-            },
-            {
-              "value": "medium",
-              "label": "Medium"
-            },
-            {
-              "value": "high",
-              "label": "High"
-            }
-          ],
+          "type": "qualityLevel",
+          "options": null,
           "default": "medium",
           "optional": false,
           "hint": null,
@@ -1550,21 +1537,8 @@
         {
           "id": "level",
           "label": "Level",
-          "type": "choice",
-          "options": [
-            {
-              "value": "low",
-              "label": "Low"
-            },
-            {
-              "value": "medium",
-              "label": "Medium"
-            },
-            {
-              "value": "high",
-              "label": "High"
-            }
-          ],
+          "type": "qualityLevel",
+          "options": null,
           "default": "high",
           "optional": false,
           "hint": null,

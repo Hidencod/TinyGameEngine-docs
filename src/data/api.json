@@ -1192,7 +1192,7 @@
           "name": "quality",
           "kind": "property",
           "type": "{level,pixelRatio,shadows,shadowMapSize,cascades,glow,depthOfField,occlusion,edgeSmoothing,colorFinish,mirrors,glass,lensFlares,effects,antialias,maxParticles}",
-          "doc": "Graphics quality, like Unity QualitySettings: game.quality.level = \"low\" (or \"medium\", \"high\") applies a whole level and resets the single settings; the single ones change just that: pixelRatio (1), shadows, shadowMapSize (512, 1024, 2048), cascades (0, 2, 3, 4), mirrors (picture size, 0 = plain metal), glass, lensFlares, maxParticles, and which screen effects are allowed: glow, depthOfField, occlusion, edgeSmoothing, colorFinish (effects = all of them at once). Saved on the device. antialias counts from the next start. A quality level only forbids effects a scene has, it never adds any."
+          "doc": "Graphics quality, like Unity QualitySettings: game.quality.level = \"low\" applies one of the quality levels of the project (Project settings, Graphics: Low, Medium and High to start with, add your own), by its id, its name or its position, and resets the single settings; game.quality.level reads the id of the level in force; the single ones change just that: pixelRatio (1), shadows, shadowMapSize (512, 1024, 2048), cascades (0, 2, 3, 4), mirrors (picture size, 0 = plain metal), glass, lensFlares, maxParticles, and which screen effects are allowed: glow, depthOfField, occlusion, edgeSmoothing, colorFinish (effects = all of them at once). Saved on the device. antialias counts from the next start. A quality level only forbids effects a scene has, it never adds any."
         },
         {
           "name": "effects",
