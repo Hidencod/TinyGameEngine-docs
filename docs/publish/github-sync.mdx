@@ -1,13 +1,13 @@
 ---
 title: GitHub
-description: Keep a project on GitHub, work on it from your phone and your computer, see exactly what changed in a scene, and merge changes made in two places.
+description: Git in the editor the way VS Code does it. Stage and commit, push and pull, branches, stash, a commit graph, side-by-side diffs, change marks on objects and files, and blame in the code editor.
 ---
 
 # GitHub
 
-Put a project in a GitHub repository you own, and open it on another device. The editor talks to GitHub directly: there is no server of ours in between, and your sign-in stays in the browser.
+Put a project in a GitHub repository you own and work on it the way you would in VS Code: stage what you want, commit it with a message, and push when you are ready. The editor talks to GitHub directly. There is no server of ours in between, and your sign-in stays in the browser.
 
-The project is stored as small text files (one per scene, event sheet, script and so on), so GitHub can show what changed and two devices rarely touch the same file. See [Backup](./backup#project-as-a-folder-for-git-and-syncing) for the folder layout.
+The project is stored as small text files (one per scene, event sheet, script and so on), so GitHub can show what changed and two people rarely touch the same file. See [Backup](./backup#project-as-a-folder-for-git-and-syncing) for the folder layout.
 
 ## Sign in
 
@@ -20,62 +20,110 @@ Then pick the **repository** (or make a new one) and the **branch** from the two
 
 On the home screen, **Import from Git** makes a new project from a repository you already have.
 
+## How it works
+
+It is git, with the same steps VS Code has:
+
+| | |
+| --- | --- |
+| **Working tree** | The project as it is now. Every edit shows up in **Changes**. |
+| **Staged** | What the next commit takes. Stage a file with **+**, take it back with **−**. |
+| **Commit** | Saved **on this device** with your message. You can make several before you push. |
+| **Push** | Sends your commits to GitHub as the same commits, one by one. |
+| **Pull** | Brings GitHub's new commits in. If you have commits of your own, a **merge commit** joins the two. |
+
+Commits wait on the device until you push, so you can work offline and push later.
+
 ## The git mark
 
-The editor shows where the project stands without opening the panel.
+The editor shows where the project stands without opening the panel, like VS Code's status bar:
 
-- On a **computer** it is a chip in the top bar: the branch name and a number, the files that differ from the last time you synced.
-- On a **phone** it is a round button at the bottom right of the viewport. It hides while the game plays.
-- A green **↓** means GitHub has a newer commit than the one you last synced.
+- **`main*`**: the branch, with `*` when there are changes not yet committed. The number is how many files changed.
+- **`2↓`**: GitHub has two commits this branch does not have yet.
+- **`1↑`**: one commit made here is not pushed yet.
 
-Tap it to open the panel. The number counts on its own as you edit; the ↓ is checked every few minutes and when you come back to the editor.
+On a **computer** it is a chip in the top bar. On a **phone** it is a round button at the bottom right of the viewport, and it hides while the game plays. Tap it to open the panel. The editor asks GitHub every few minutes, and again when you come back to it (a **fetch**).
 
 ## Changes
 
-The **Changes** tab lists two groups:
+The **Changes** tab is VS Code's Source Control view:
 
-- **On this device**: what you changed since the last sync, ready to push.
-- **On GitHub**: what was changed there, ready to pull.
+- **Message**: what the commit is about. **Ctrl+Enter** commits.
+- **Commit** commits what is staged. If nothing is staged, it commits every change. The **▾** beside it has **Commit (Amend)**, **Commit & Push**, **Commit & Sync** and **Undo Last Commit**.
+- **Staged Changes** and **Changes** list the files. Each file has a letter: **M** changed, **U** new, **A** new and staged, **D** deleted.
+- Next to each file: **Open** (opens the scene, script, shader, material… in its editor), **Discard** (puts it back as it was at the last commit), **+ Stage** or **− Unstage**. The group headers have the same for all files at once.
 
-Tap a file to see what changed inside it, in plain words:
+When everything is committed, the button becomes **Sync Changes 1↓ 2↑** (pull, then push), or **Publish Branch** for a branch GitHub does not have yet.
 
-| File | What you see |
-| --- | --- |
-| Scene or prefab | Objects added or removed, and for a changed object the field: `Camera › transform › position (0, 6, 10) → (1, 2, 3)`. Settings of the scene itself are listed too. |
-| Event sheet, material, settings, tables | The fields that changed, and items added or removed from lists. |
-| Script or shader | The lines taken out (`−`) and put in (`+`) with their line numbers. |
-| Pictures, sounds, models | Added or removed (there is nothing to list inside them). |
+**Undo Last Commit** works on commits that are not pushed yet. Their changes come back as staged, and the message comes back into the box.
 
-The **⋮** beside a file offers **Discard my change**, which puts that file back to what GitHub has. **Discard all** does the same for everything on this device. **Undo last pull** goes back to how the project was before the last pull.
+## Diffs
 
-## Pull and Push
+Tap a file to see what changed in it:
 
-- **Pull ↓** brings in what changed on GitHub. When something comes in, the editor opens the project again to show it.
-- **Push ↑** sends what changed here as **one commit**. Write a short message first; it is what **History** shows later.
+- **Readable** (scenes, prefabs, settings): in plain words. Objects added or removed, and for a changed object the field: `Camera › transform › position (0, 6, 10) → (1, 2, 3)`.
+- **Side by side**: the old file on the left, the new one on the right. The changed part of a line is highlighted, and unchanged stretches fold into **⋯ 37** (tap it to unfold).
+- **Inline**: one column, removed lines then added lines.
 
-When GitHub has changes, **Pull** is the main button: pull first, then push what is left. **Push** stays off while a file is in conflict. Pulling never sends anything, and pushing never takes anything in.
+The buttons at the top switch between them. Scripts and shaders open side by side on a wide screen and inline on a phone. For pictures you see the old and the new picture next to each other.
 
-## When both sides changed the same file
+## Change marks
 
-If you and your other device both changed a file, **Pull** merges the two versions by meaning, not by line, the way Unity's Smart Merge does for scenes:
+As in VS Code's Explorer, things that changed since the last commit are marked:
+
+- In **Objects**, each changed object has an **M** (changed) or **U** (new), and an object with a changed child gets a dot. Objects are compared one by one, so moving one object marks only that object.
+- In **Files**, scripts, materials, shaders, prefabs, pictures and so on get the same letters, and folders with a changed file inside get a dot.
+
+## In the code editor
+
+The script and shader editors show **quick diff** bars beside the lines changed since the last commit: **green** for added lines, **blue** for changed ones, and a **red wedge** where lines were removed. Tap a bar to see the old lines, and **Revert** to put them back.
+
+The line with the cursor shows **blame** at its end: who last changed it, when, and the commit message (from GitHub). Lines you have not committed say **You · Uncommitted**.
+
+## Pull, push and merging
+
+- **Pull** brings in GitHub's commits. Your uncommitted changes are carried over, and the editor opens the project again to show the result.
+- **Push** sends your commits. If someone pushed in the meantime, GitHub refuses; the panel offers **Pull and push**.
+- **Sync** does both.
+
+When both sides changed the same file, the merge works by meaning, not by line, the way Unity's Smart Merge does for scenes:
 
 - Changes to **different objects** merge on their own.
 - Changes to **different fields of one object** (you moved the Player, they renamed it) merge on their own.
-- Objects added on both sides are both kept. An object deleted on one side and untouched on the other is deleted.
 - Scripts and shaders merge by line: changes in different places merge on their own.
 
-Only a real clash is a question: the **same field changed to two values**, or something **deleted on one side and changed on the other**. The panel lists each one:
+Only a real clash is a question: the **same field changed to two values**, or something **deleted on one side and changed on the other**. The panel lists each one. **Current** keeps yours and **Incoming** takes theirs (**All current** and **All incoming** answer them all). For code, **Both** keeps one after the other. Press **Done** when every clash has an answer. The back arrow stops the merge and changes nothing.
 
-- **Mine** keeps this device's value, **GitHub** takes theirs. **All mine** and **All GitHub** answer all of them at once.
-- For code, a clash shows both versions of the lines, and **Both** keeps one after the other.
-- Press **Done** when every clash has an answer.
+## Graph
 
-The merged file is kept here and appears under **On this device**. Look at it with the diff, then **Push** to send the merge. Nothing is lost: both older versions stay in GitHub's history.
+The **Graph** tab draws the branch's commits with their lanes, newest first, as in VS Code's Source Control Graph:
 
-## History and branches
+- **↑** marks your commits that are not pushed yet (outgoing), and **↓** marks commits on GitHub you have not pulled (incoming).
+- Labels show the branch (`main`), GitHub's copy of it (`origin/main`) and tags.
+- **Fetch**, **Pull** and **Push** sit above the list.
 
-- **History** lists the commits on the branch, newest first, with who made them and when. Tap one to **Restore** the project to that moment. The way back is **Undo last pull**.
-- **Branches** switches branch, makes a new one from the current branch, **merges** another branch into this one, or deletes one. A merge GitHub cannot do (the same lines changed on both) is reported; pull the other branch's changes instead to get the merge screen above.
+Tap a commit to see its files (each opens as a diff) and:
+
+- **Revert**: a new commit that undoes that commit's changes.
+- **Restore**: the project's files become that commit's, as uncommitted changes.
+- **Tag**: name a pushed commit (`v1.0`) on GitHub.
+- **Undo**: on your last commit that is not pushed yet.
+
+## Branches
+
+The branch chip at the top switches branch (**Checkout to…**) and creates new ones. The **Branches** tab lists the branches on this device and the ones only on GitHub. Tap one to **Checkout**, **Merge into** the current branch, or **Delete** it (here, or on GitHub too).
+
+- A new branch starts from where you are, with your commits, and stays on the device until you **Publish Branch**.
+- When you switch, your uncommitted changes come along. If the other branch changed the same files, you choose **Stash & Checkout** or **Discard & Checkout**.
+- **Merge** makes a merge commit here (the same merge screen as a pull), which you then push.
+
+## Stash
+
+**⋮ → Stash…** puts your uncommitted changes away and leaves the project as it was at the last commit. **Pop** brings them back and removes the stash. **Apply** brings them back and keeps it, and **Drop** deletes it. Stashes belong to the project, not to a branch, so you can stash on one branch and pop on another.
+
+## More actions
+
+The **⋮** at the top of the panel has everything in one place: **Pull**, **Push**, **Fetch**, **Sync**, the commit actions, **Stage / Unstage / Discard All Changes**, **Stash**, the branch actions, **Undo last pull** (goes back to how the project was before the last pull, merge or revert) and **Sign out**.
 
 ## What is in the repository
 
@@ -83,6 +131,6 @@ Only the project's own files. Other files in the repository, such as a README or
 
 ## Good to know
 
-- The sign-in is kept on the device. **Sign out** (in the **⋮** at the top of the panel) forgets it. Anyone using your browser profile could use it.
-- Models and sounds are large: the first push over mobile data can take a while. GitHub refuses a single file above **100 MB**.
-- The count in the git mark is worked out on the device from the files, so it can differ for a moment from the panel until the panel checks GitHub.
+- The sign-in is kept on the device. **Sign out** forgets it. Anyone using your browser profile could use it.
+- Commits that are not pushed live in this browser. Clearing the site's data loses them, so push what matters.
+- Models and sounds are large: the first push over mobile data can take a while. GitHub refuses a single file above **100 MB**, and **Commit** tells you which file is too big.
