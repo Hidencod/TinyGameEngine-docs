@@ -4910,6 +4910,25 @@
       ]
     },
     {
+      "id": "object.focusDepthOfField",
+      "kind": "action",
+      "category": "Graphics",
+      "label": "Focus depth of field on object",
+      "hint": "Keep this object sharp: the depth-of-field focus follows how far it is from the camera",
+      "display": "Focus depth of field on {object}",
+      "displayNoObject": null,
+      "icon": "🔎",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
       "id": "object.setVolumeProfile",
       "kind": "action",
       "category": "Graphics",

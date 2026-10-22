@@ -38,7 +38,7 @@ A **profile** is a file in **Files → Profiles** (also **＋ New → Post-proce
 | **Ambient occlusion** | Soft shadow in corners and creases. Draws the scene a second time, so it costs speed. | **Radius**, **Intensity** |
 | **Bloom** | Bright things glow softly: lamps, fire, neon. Materials with a bright **Emissive** colour are what glow. | **Intensity**, **Threshold** (how bright before it glows), **Diffusion** (how far it spreads) |
 | **Color grading** | The overall colour of the picture. | **Saturation** (1 = as drawn, 0 = grey, 2 = vivid), **Contrast** |
-| **Depth of field** | Blurs what is far from the focus distance. Draws the scene a second time, so it costs speed. | **Focus distance** (m), **Aperture** (how fast it blurs), **Max blur** |
+| **Depth of field** | Blurs what is far from the focus distance. Draws the scene a second time, so it costs speed. | **Focus object** (keeps that object sharp: the focus follows how far it is from the camera), **Focus distance** (m, used when no object is set), **Aperture** (how fast it blurs), **Max blur** |
 | **Vignette** | Darker corners. | **Intensity** |
 | **Chromatic aberration** | Red and blue edges drift apart toward the sides, like a cheap lens. | **Intensity** |
 | **Anti-aliasing (FXAA)** | Smooths jagged edges cheaply. Use it instead of **Smooth edges (antialias)** in Project settings, which is slow when effects are on. | none |
@@ -73,8 +73,8 @@ A **Global** volume for the game's look, plus a **Box** volume with a higher pri
 
 **The effects themselves**
 
-- **Events (group Graphics):** *Set screen effect* (vignette, colour fringe, saturation, contrast, glow strength, spread and threshold, focus distance, blur amount and limit, occlusion size and strength) with a value and **Seconds to glide** (0 = at once), and *Switch screen effect on or off* (edge smoothing, glow, depth of field, ambient occlusion).
-- **Scripts:** `game.effects.vignette = 0.6`, `game.effects.focusDistance = 4`, `game.effects.glow = true`, or `game.effects.set('vignette', 0.8, 2)` to glide over 2 seconds.
+- **Events (group Graphics):** *Focus depth of field on object* (the object's name becomes the focus object), *Set screen effect* (vignette, colour fringe, saturation, contrast, glow strength, spread and threshold, focus distance, blur amount and limit, occlusion size and strength) with a value and **Seconds to glide** (0 = at once), and *Switch screen effect on or off* (edge smoothing, glow, depth of field, ambient occlusion).
+- **Scripts:** `game.effects.vignette = 0.6`, `game.effects.focusDistance = 4`, `game.effects.focusObject = 'Player'` (or `''` to go back to the distance), `game.effects.glow = true`, or `game.effects.set('vignette', 0.8, 2)` to glide over 2 seconds.
 
 What an event or script sets sits **on top of** the volumes, so a script can still drive one effect while the volumes handle the rest. A new scene starts clean. Numbers stay inside the ranges the editor allows.
 
