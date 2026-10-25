@@ -85,6 +85,7 @@ The line with the cursor shows **blame** at its end: who last changed it, when, 
 - **Pull** brings in GitHub's commits. Your uncommitted changes are carried over, and the editor opens the project again to show the result.
 - **Push** sends your commits. If someone pushed in the meantime, GitHub refuses; the panel offers **Pull and push**.
 - **Sync** does both.
+- **Preview** (in the **⋮** menu, while GitHub has new commits) lists what a pull would do to each file, without changing anything: **＋** new, **~** changed, **−** removed, **⇄** both sides changed it and it joins on its own, **⚠** a clash that will ask you (with how many).
 
 When both sides changed the same file, the merge works by meaning, not by line, the way Unity's Smart Merge does for scenes:
 
@@ -123,7 +124,7 @@ The branch chip at the top switches branch (**Checkout to…**) and creates new 
 
 ## More actions
 
-The **⋮** at the top of the panel has everything in one place: **Pull**, **Push**, **Fetch**, **Sync**, the commit actions, **Stage / Unstage / Discard All Changes**, **Stash**, the branch actions, **Undo last pull** (goes back to how the project was before the last pull, merge or revert) and **Sign out**.
+The **⋮** at the top of the panel has everything in one place: **Pull**, **Preview**, **Push**, **Fetch**, **Sync**, the commit actions, **Stage / Unstage / Discard All Changes**, **Stash**, the branch actions, **Undo last pull** (goes back to how the project was before the last pull, merge or revert) and **Sign out**.
 
 ## What is in the repository
 
