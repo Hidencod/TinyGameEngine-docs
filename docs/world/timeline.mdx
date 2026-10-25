@@ -23,7 +23,7 @@ A **timeline** is a file that holds a sequence along a clock: the door slides op
 
 | Track | Holds | What it does |
 | --- | --- | --- |
-| **Move / turn / scale / fade** | keyframes | Sets one property of an object: position X/Y/Z, rotation X/Y/Z (degrees), uniform size, opacity. Between two keys the later key's **ease** (linear, easeIn, easeOut, easeInOut, back, elastic, bounce) shapes the movement. Switch **Smooth** on in the track and one smooth curve passes through all its keys instead (the ease per key is ignored). Before the first key and after the last, the value is held. **Take the object's value now** copies what the object has in the scene. |
+| **Move / turn / scale / fade** | keyframes | Sets one property of an object: position X/Y/Z, rotation X/Y/Z (degrees), uniform size, opacity. Between two keys the later key's **ease** (linear, easeIn, easeOut, easeInOut, back, elastic, bounce) shapes the movement. Switch **Smooth** on in the track and one smooth curve passes through all its keys instead (the ease per key is ignored). Select a key on a Smooth track to set its **Tangent**, the curve's slope there in value per second (0 makes the curve level out at the key); **Auto** goes back to the worked-out slope. Before the first key and after the last, the value is held. **Take the object's value now** copies what the object has in the scene. |
 | **Show / hide an object** | clips | The object is visible during its clips and hidden outside them (or the other way round). |
 | **Camera cuts** | clips | Each clip names a camera object; while it plays, that camera renders the game. Give the clip a **Blend** time and the view glides in from the previous camera instead of cutting (two perspective cameras). When the timeline ends or stops, the game's own camera comes back. |
 | **Play an animation** | points | At that moment plays an **Animator** state (with a cross-fade) or a model clip. |
@@ -66,5 +66,5 @@ game.on('timelineFinished', (e) => game.goToScene('Level 1'));
 - Scrubbing shows the camera under the playhead in the small camera picture in the corner of the scene view.
 - Preview play in the editor plays the sound clips as the playhead passes them (scrubbing stays silent).
 - The subtitle line under the playhead shows at the foot of the scene view while you scrub or preview.
-- Not there yet: hand-drawn curve tangents (Smooth picks them for you).
+- Tangents are typed in, there is no curve view to drag handles on yet.
 - While the game runs, the debugger's **Variables** tab lists every timeline with play, pause and a scrub bar.
