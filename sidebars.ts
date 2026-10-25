@@ -25,7 +25,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category', label: 'Share your game',
-      items: ['publish/export-html', 'publish/export-apk', 'publish/backup', 'publish/github-sync'],
+      items: ['publish/publish-link', 'publish/export-html', 'publish/export-apk', 'publish/backup', 'publish/github-sync'],
     },
     'templates',
     {
