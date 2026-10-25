@@ -103,7 +103,17 @@ A rigged character can go limp with physics, like a death animation that falls a
 
 - The object itself stays where it was; only its bones move.
 - Turning it off brings the character back to its animation (and its physics body back) from where it lies.
-- Joints have no limits and the limbs don't bump each other, so it is loose rather than realistic. Characters with clean bones for the body, arms and legs look best.
+- Joints are kept inside a range (how far a bone may swing and twist from the pose it had), so a knee or a neck does not fold any way it likes. The limbs don't bump each other, so it is still loose rather than realistic. Characters with clean bones for the body, arms and legs look best.
+
+### Ragdoll component
+
+Add a **Ragdoll** component to the object to tune it (without one every bone gets the defaults). **Fill from model** lists the bones that get a body; then open a bone to change:
+
+- **Enabled** off: the bone gets no body and follows the bone above it (fingers, toes).
+- **Swing** and **Twist**: how many degrees the bone may bend away from its starting pose, and turn about its own length.
+- **Thickness**: the capsule's radius as a share of the bone's length (0 is automatic).
+
+**Mass** is the whole body's weight in kg, shared out by size. With the object selected, the view draws a capsule along every bone that gets a body and a cross at each joint, and they follow an animation preview. A bone shown in red is not in this model any more: fill again after changing the model.
 
 ## Parts of a model
 
