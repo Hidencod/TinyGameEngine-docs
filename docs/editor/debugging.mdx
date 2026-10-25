@@ -82,6 +82,16 @@ When the event's conditions are true while playing:
 
 Breakpoints belong to you, not to the game: they are kept in this browser or app only, and are never saved in the project or in an exported game.
 
+### In a code script
+
+Tap the margin beside a line number in the code editor to put a **red dot** on that line. It stays in the script as you edit around it, and tapping it again removes it.
+
+When playing, the game pauses as soon as that line is reached, at the end of that frame. The debugger shows **🔴 Walker · 3** (the script and the line) and the object whose script ran, so you can read its fields in **Objects** and any expression in **Watch**. **Show** opens the script at that line, **▶** goes on to the next time the line runs, **Step** runs one frame, and **Remove** takes the breakpoint away.
+
+This pauses *at* a line and lets you look around. It does not walk through the script line by line: the line itself has already run when the game stops. Put dots on several lines to follow the order the code runs in. A dot on a line that is not the start of a statement (a closing bracket, a line that carries on the one above) is ignored.
+
+Breakpoints are changed for scripts when Play starts, so add or remove them before pressing Play.
+
 ## Profiler
 
 The **Profiler** tab shows how long each frame takes the processor, averaged over the last second, with a bar for each recent frame (red bars took longer than 1/60 s). Below it, where the time goes:
