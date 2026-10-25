@@ -56,6 +56,12 @@ Define any of these; the engine calls them. `function update(dt)` and `export fu
 | `start()` | Once, when the scene starts | ✔ | ✔ |
 | `update(dt)` | Every frame, before physics. `dt` = seconds since the last frame | ✔ | ✔ |
 | `lateUpdate(dt)` | Every frame, after physics | ✔ | |
+| `fixedUpdate(dt)` | On every physics step (60 a second, `dt` is always 1/60), whatever the frame rate | ✔ | ✔ |
+| `onEnable()` | Before `start()`, and each time this object is switched on again | ✔ | ✔ |
+| `onDisable()` | This object is switched off, or about to be destroyed | ✔ | ✔ |
+| `onTriggerEnter(other)` | This object entered, or was entered by, a trigger (`other`); same as `onCollision` when one of the two is a trigger | ✔ | |
+| `onTriggerStay(other)` | Every frame while it overlaps a trigger | ✔ | |
+| `onTriggerExit(other)` | It left the trigger | ✔ | |
 | `onCollision(other)` | This object started touching `other` | ✔ | |
 | `onCollisionEnd(other)` | This object stopped touching `other` | ✔ | |
 | `onTap()` | The player tapped this object | ✔ | |
@@ -245,6 +251,20 @@ A problem the editor underlines **never stops the game from running**. Before th
 The converter and the checker are downloads the editor fetches only when they are needed, and a player's phone never loads them.
 
 Completion knows what each field holds, the columns of a data table row (`game.table('Item').get('Sword').`), and what another script exports.
+
+## Messages between scripts {/* #events */}
+
+`game.events` sends named messages, so scripts do not have to know about each other:
+
+```js
+// Hud script
+game.events.on('coinTaken', (n) => { score += n; });
+
+// Coin script
+game.events.emit('coinTaken', 1);
+```
+
+`on` returns a function that stops listening, `once` listens for one message, and `emit` returns how many listeners heard it. Pass an object as the third argument (`game.events.on('hit', fn, entity)`) and the listener ends with that object and waits while it is disabled. All listeners end with the scene.
 
 ## Share code with libraries {/* #libraries */}
 
