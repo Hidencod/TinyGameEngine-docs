@@ -18,7 +18,7 @@ While the game plays, the buttons at the bottom of the screen pause it, run it o
 | --- | --- |
 | **⏸ Pause** | Holds the game: nothing moves, timers and sounds stop, but the view is still drawn. Press **▶** to go on. |
 | **⏭ Step** | (While paused) runs exactly one frame (1/60 s) and holds again. |
-| **🔍 Debugger** | Opens the debugger panel: **Objects**, **Variables** and **Profiler**. |
+| **🔍 Debugger** | Opens the debugger panel: **Objects**, **Variables**, **Watch** and **Profiler**. |
 
 <Crop name="debug-hud" caption="Stop, resume, step, console, debugger, colliders" />
 
@@ -48,6 +48,21 @@ The **Variables** tab shows the global variables, and the scene's own variables 
 <Phone name="debug-variables" caption="Global and scene variables" />
 
 Below the variables, **Timelines** lists every timeline of the project with a play / pause button, a scrub bar and the time, so a cutscene can be stepped through while the game runs.
+
+## Watch
+
+The **Watch** tab keeps expressions and reads them again every moment, so you can see a value change while the game runs. Type one and press Enter (or **＋**); **✕** removes it. The list is kept per project. A value that changes flashes.
+
+An expression is a line of script with `game`, `find('Name')`, `vars` (the game variables) and `input` available:
+
+```js
+find('Player').position
+vars.Score
+game.getAllEntities().length
+find('Enemy').getScript('Ai').state
+```
+
+A mistake shows as ⚠ with the reason in place of the value, and the rest keep updating.
 
 ## Breakpoints
 
