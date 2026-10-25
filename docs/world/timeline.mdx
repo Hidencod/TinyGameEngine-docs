@@ -63,5 +63,6 @@ game.on('timelineFinished', (e) => game.goToScene('Level 1'));
 - A timeline runs on **game time**: it follows the game's time scale and stops while the game is paused.
 - Ending a scene stops its timelines (sounds off, camera back).
 - Seeking changes what you see (positions, who is shown, the camera) but fires no sounds, animations or signals.
-- Not there yet: previewing camera cuts, sounds and subtitles while scrubbing, and hand-drawn curve tangents (Smooth picks them for you).
+- Scrubbing shows the camera under the playhead in the small camera picture in the corner of the scene view.
+- Not there yet: previewing sounds and subtitles while scrubbing, and hand-drawn curve tangents (Smooth picks them for you).
 - While the game runs, the debugger's **Variables** tab lists every timeline with play, pause and a scrub bar.
