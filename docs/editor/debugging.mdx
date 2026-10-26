@@ -18,7 +18,7 @@ While the game plays, the buttons at the bottom of the screen pause it, run it o
 | --- | --- |
 | **⏸ Pause** | Holds the game: nothing moves, timers and sounds stop, but the view is still drawn. Press **▶** to go on. |
 | **⏭ Step** | (While paused) runs exactly one frame (1/60 s) and holds again. |
-| **🔍 Debugger** | Opens the debugger panel: **Objects**, **Variables**, **Watch** and **Profiler**. |
+| **🔍 Debugger** | Opens the debugger panel: **Objects**, **Variables**, **Watch**, **Events** and **Profiler**. |
 
 <Crop name="debug-hud" caption="Stop, resume, step, console, debugger, colliders" />
 
@@ -91,6 +91,12 @@ When playing, the game pauses as soon as that line is reached, at the end of tha
 This pauses *at* a line and lets you look around. It does not walk through the script line by line: the line itself has already run when the game stops. Put dots on several lines to follow the order the code runs in. A dot on a line that is not the start of a statement (a closing bracket, a line that carries on the one above) is ignored.
 
 Breakpoints are changed for scripts when Play starts, so add or remove them before pressing Play.
+
+## Events: what ran this frame
+
+The **Events** tab lists every event whose actions ran in the last frame, in the order they ran, with the objects each one picked (`Coin: Coin, Coin`). Tap a row to open that event in its sheet. A frame runs all its events at once, so this is how you step through a sheet: pause, press **⏭** to run one frame, and read what fired and on whom, then check **Variables** for what changed. An event that did not pass its conditions is not listed.
+
+It only records while the tab is open, so it costs nothing otherwise. A frame lists at most 500 events.
 
 ## Profiler
 
