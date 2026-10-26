@@ -1,0 +1,46 @@
+---
+title: Render textures (cameras on screens)
+description: Let a camera draw into a picture and show that picture on a surface in your game: a security monitor, a TV, a rear-view mirror, a portal, a minimap. Works like Unity's Render Texture and Target Texture.
+---
+
+# Render textures (cameras on screens)
+
+A **render texture** is a picture that a camera draws into instead of drawing to the player's screen. A material can then show that picture on any surface. This is how you make a security-camera monitor, a TV that shows another room, a rear-view mirror, a portal or a minimap.
+
+It works the way Unity does it, in three parts:
+
+1. A **render texture** is a file you make in **Files → ＋ New → Render texture**.
+2. A **camera** has a **Target texture** setting. Pick the render texture there and that camera draws into it.
+3. A **material** has a **Render texture** setting. Pick the same file and the surface shows what the camera sees.
+
+## Example: a security monitor
+
+1. **Files → ＋ New → Render texture**, name it `Monitor`.
+2. **Add → Camera**, name it `Security cam`. Put it up in a corner of the room and turn it to look at the floor. In its settings, set **Target texture** to `Monitor`. The camera no longer shows the game; it only feeds the monitor.
+3. Add a flat box for the screen (about 4 wide, 3 tall, thin), in the office. In its **Material**, set the style to **Unlit** and **Render texture** to `Monitor`.
+4. Press **Play**. The screen shows what the security camera sees, live.
+
+Use the **Unlit** style (MeshBasicMaterial) for a screen. A lit style would shade the picture like a wall; an unlit one shows the picture as it is, like a real screen.
+
+## The render texture file
+
+Tap it in **Files** for **Size** and **Update**:
+
+| Setting | What it does |
+| --- | --- |
+| **Size** | Width and height in pixels: 128, 256, 512 or 1024. Bigger is sharper and costs more. A monitor in a corner of the screen needs 256 or 512. |
+| **Update: Always** | Drawn on every frame, like Unity. |
+| **Update: Only when seen** | Drawn only while a surface showing it is in view of the game's camera. A monitor in another room costs nothing until you walk in. |
+| **Every** | Draws on every 2nd, 3rd, 4th, 6th or 10th frame instead of every one. A security feed that updates 10 times a second looks right and costs much less. |
+
+## Good to know
+
+- **Each camera feeding a render texture draws the whole scene a second time.** On phones this is the most expensive thing in this list. Keep the size small, use **Only when seen** and **Every**, and use as few as you need.
+- A camera with a Target texture is **never the game's camera**, even with **Main camera** on. The game's own view is chosen from the other cameras.
+- The surface that shows a render texture is hidden from the camera that feeds it, so a camera never sees its own screen.
+- The picture has the **shape of the render texture**, not of the screen, so use a camera **field of view** that suits it (a square texture on a wide screen is stretched).
+- Several surfaces can show the same render texture, and one render texture can be fed by only one camera at a time (if two cameras are set to the same one, the later one in the object list wins).
+- **Screen effects** (glow, depth of field, vignette) are not applied inside a render texture, only to the game's own picture.
+- Shows in **Play**. In the scene view (before you press Play) the surface keeps its plain colour.
+- Deleting the render texture file turns its cameras back into ordinary cameras and clears the setting on the materials that used it.
+- **Materials with a custom shader** can't show one, as with videos. Use a built-in style.

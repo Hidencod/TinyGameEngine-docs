@@ -16,7 +16,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category', label: 'Building your world',
-      items: ['world/shapes-and-materials', 'world/shaders', 'world/models', 'world/animator', 'world/timeline', 'world/localization', 'world/services', 'world/purchases', 'world/navmesh', 'world/lighting', 'world/post-processing', 'world/terrain', 'world/water', 'world/curve', 'world/decals', 'world/sprites', 'world/tilemaps', 'world/2d-games', 'world/cameras-and-lights', 'world/physics', 'world/sound', 'world/particles', 'world/ui'],
+      items: ['world/shapes-and-materials', 'world/shaders', 'world/models', 'world/animator', 'world/timeline', 'world/render-textures', 'world/localization', 'world/services', 'world/purchases', 'world/navmesh', 'world/lighting', 'world/post-processing', 'world/terrain', 'world/water', 'world/curve', 'world/decals', 'world/sprites', 'world/tilemaps', 'world/2d-games', 'world/cameras-and-lights', 'world/physics', 'world/sound', 'world/particles', 'world/ui'],
     },
     'behaviors',
     {
