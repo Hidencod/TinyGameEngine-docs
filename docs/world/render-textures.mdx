@@ -33,6 +33,10 @@ Tap it in **Files** for **Size** and **Update**:
 | **Update: Only when seen** | Drawn only while a surface showing it is in view of the game's camera. A monitor in another room costs nothing until you walk in. |
 | **Every** | Draws on every 2nd, 3rd, 4th, 6th or 10th frame instead of every one. A security feed that updates 10 times a second looks right and costs much less. |
 
+## On a Sprite
+
+A **Sprite** object has a **Render texture** row too. It shows the camera's picture instead of its drawing, live, in the game: a flat screen that can face the camera (**Billboard**), be tinted, faded and sorted like any sprite. Its size comes from the render texture's size and **Pixels per unit**. In the scene view (before Play) it stays empty.
+
 ## On the HUD (a minimap)
 
 Select a UI **Image** and pick a **Render texture** in its Image section. The element then shows the camera's picture live, in the corner of the screen or wherever you place it. Use **Preserve aspect** to keep the picture's proportions inside the rect.
