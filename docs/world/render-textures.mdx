@@ -35,7 +35,7 @@ Tap it in **Files** for **Size** and **Update**:
 
 ## On a Sprite
 
-A **Sprite** object has a **Render texture** row too. It shows the camera's picture instead of its drawing, live, in the game: a flat screen that can face the camera (**Billboard**), be tinted, faded and sorted like any sprite. Its size comes from the render texture's size and **Pixels per unit**. In the scene view (before Play) it stays empty.
+A **Sprite** object has a **Render texture** row too. It shows the camera's picture instead of its drawing, live, in the game: a flat screen that can face the camera (**Billboard**), be tinted, faded and sorted like any sprite. Its size comes from the render texture's size and **Pixels per unit**. It shows in the scene view too.
 
 ## On the HUD (a minimap)
 
@@ -62,6 +62,6 @@ A pause is for the running game only; it is not saved.
 - The picture has the **shape of the render texture**, not of the screen, so use a camera **field of view** that suits it (a square texture on a wide screen is stretched).
 - Several surfaces can show the same render texture, and one render texture can be fed by only one camera at a time (if two cameras are set to the same one, the later one in the object list wins).
 - **Screen effects** (glow, depth of field, vignette) are not applied inside a render texture, only to the game's own picture.
-- Shows in **Play**. In the scene view (before you press Play) the surface keeps its plain colour.
+- Shows in the scene view and in **Play**. In the scene view each camera draws again whenever the view redraws, and the editor's own guides (grid, handles, camera icons) are left out of the picture. The HUD image shows in **Play** only.
 - Deleting the render texture file turns its cameras back into ordinary cameras and clears the setting on the materials that used it.
 - **Materials with a custom shader** can't show one, as with videos. Use a built-in style.
