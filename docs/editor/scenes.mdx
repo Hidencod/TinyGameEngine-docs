@@ -43,4 +43,13 @@ Tap **⋮** on a scene:
 
 Use the actions **Go to scene** and **Restart scene** (System category). *On end of scene* runs just before a scene is left. To play from the scene you are editing instead of the start scene, use **⋮ → Play this scene**.
 
+## Keep an object across scenes
+
+Select an object and switch on **Keep across scenes** (next to Visible and Active), or use the **Keep across scenes** action, or `entity.persist = true` in a script. When the game goes to another scene, that object comes along instead of being made again: with its children, **where it is now** and its variables. A score display, a music player or the hero that travels between levels.
+
+- If the next scene has the same object (same name) with **Keep across scenes** on too, the one that comes along **replaces** it, so it is never doubled. Put the switch on in every scene that has it, and test any scene on its own.
+- A scene's other objects are made as usual, and the ones you did not mark are left behind with the old scene.
+- Timers, running animations and scripts of the object start again in the new scene. Variables and position carry over.
+- An object under a parent that does not stay is moved to the top level where it stands.
+
 Each scene chooses which event sheet runs in it in the **Logic** tab (*This scene runs*). Several scenes can share one sheet, and a sheet can **include** another (see [Advanced events](../logic/advanced-events#include-sheets)).
