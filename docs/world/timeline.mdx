@@ -108,5 +108,5 @@ game.on('timelineFinished', (e) => game.goToScene('Level 1'));
 - Scrubbing shows the camera under the playhead in the small camera picture in the corner of the scene view.
 - Preview play in the editor plays the sound clips as the playhead passes them (scrubbing stays silent).
 - The subtitle line under the playhead shows at the foot of the scene view while you scrub or preview.
-- Tangents are typed in, there is no curve view to drag handles on yet.
+- **Curve graph.** Select a property track and a small graph of its curve shows in the side panel: time across, value up, a dashed line at the playhead. Tap a dot to pick that key. Drag the picked key to move it in time and value (it stays between its neighbours). On a **Smooth** track the picked key also shows a round handle on its slope line: drag it up or down to set the key's **Tangent**. Nothing is saved until you let go, and the whole drag is one undo step. The **Time**, **Value** and **Tangent** fields give the same control with numbers.
 - While the game runs, the debugger's **Variables** tab lists every timeline with play, pause and a scrub bar.
