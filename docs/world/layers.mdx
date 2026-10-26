@@ -1,0 +1,38 @@
+---
+title: Layers
+description: Put objects on layers, then leave layers out of a camera's picture or look at only some layers with a raycast — like Unity's layers and culling mask.
+---
+
+# Layers
+
+A **layer** is a name you put on an object so a camera or a raycast can treat a whole group alike: the minimap camera that leaves out the clouds, the shot that only hits enemies. Every object starts on **Default**.
+
+## Make layers
+
+1. **Project settings → Layers → ＋ Add layer**, name it (`Clouds`, `Enemy`, `Water`).
+2. Select an object: a **Layer** row appears under its name once the project has any layers. Pick the layer.
+
+Renaming a layer in Project settings moves its objects and the cameras' choices with it. Deleting one puts its objects back on **Default**.
+
+## Leave layers out of a camera
+
+A camera with a **Target texture** (see [Render textures](render-textures)) has a **Draw** switch for every layer. Switch **Draw Clouds** off and that camera's picture shows no clouds. Only the object itself is left out: things attached to it, on other layers, still draw. This applies to render-texture cameras, not to the game's own view.
+
+## Look at only some layers with a raycast
+
+```ts
+const hit = game.raycast(muzzle.position, { direction: aim, length: 50, layers: ['Enemy'] });
+```
+
+`layers` takes a name or a list; only objects on those layers can be hit. It combines with `tags` and `ignore`.
+
+## From events and scripts
+
+- Event block **Set layer** moves an object to a layer by name.
+- Script: `entity.layer` reads the layer name and can be set: `crate.layer = 'Water'`.
+
+## Good to know
+
+- An object is on **one** layer. Use tags when it needs several labels.
+- The block and the script take any name, but only layers made in Project settings do anything for cameras; setting a name that does not exist reports it in the console (the block) and leaves the object on that name.
+- Layers do not change which objects collide with each other.

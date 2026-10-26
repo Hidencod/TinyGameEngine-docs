@@ -45,7 +45,7 @@ Every picture is copied from the graphics card into the HUD, so keep the render 
 
 ## Leave things out of a camera
 
-A camera with a Target texture has a **Hide tags** row. Objects with one of those tags (and their children) are not drawn by that camera: tag the clouds `cloud`, type `cloud` there, and the minimap shows no clouds. It only applies to the render texture's camera, not to the game's own view.
+A camera with a Target texture has a **Draw** switch for every [layer](layers). Switch a layer off and the camera's picture shows nothing from it: put the clouds on a `Clouds` layer and the minimap shows no clouds. It only applies to the render texture's camera, not to the game's own view.
 
 ## From events and scripts
 
