@@ -33,6 +33,48 @@ A **timeline** is a file that holds a sequence along a clock: the door slides op
 
 Tracks refer to objects **by name**, so a timeline works in any scene that has objects with those names. A track whose object is missing reports that in the console and does nothing.
 
+## Cameras and blending
+
+A **Camera cuts** track decides which camera object renders the game at each moment. Every clip on it names one **camera object** (add one with **Add → Camera**), and while the clip lasts the game is drawn through that camera. Outside every clip the game's own camera is in charge: the one with **Main** ticked, or your **Camera follow** camera.
+
+**Example: from gameplay to a close-up and back**
+
+1. Add a second camera object and name it `Closeup`. Point it at the hero from the front. The game's normal camera keeps its name, say `Camera`.
+2. In the timeline add a **Camera cuts** track. Add a clip from **2 s to 6 s**, choose `Closeup` as its camera and set **Blend** to **1.5**.
+3. Play it. For the first 2 s you see the normal view. At 2 s the view *glides* to `Closeup` over 1.5 s and stays there until 6 s. At 6 s the normal camera comes back.
+
+What **Blend** does:
+
+- It is the number of **seconds the view takes to travel** from what was on screen to the clip's camera. The travel moves the position, the turn and the field of view together, starting and ending slowly. **0** is a hard cut.
+- The start point is whatever was showing the moment the clip began: the game's camera, or the previous clip's camera. So two clips in a row glide from shot to shot, and a clip after a gap glides from the game's camera.
+- Blend belongs to the **clip it is set on** and only applies when that clip starts. **Going back to the game's camera at the end is always a cut.** To glide back, add one more clip with the game's camera at the end and give it a Blend.
+- It follows the target camera while it travels, so a closeup camera that is itself moved by a property track is tracked, not aimed at where it started.
+- It works between two **perspective** cameras. If either one is orthographic the change is a cut.
+- It runs on game time, and it is not tied to the clip's length: a 1.5 s blend in a 1 s clip is simply interrupted when the clip ends.
+- Two clips that name the **same camera** change nothing, so there is nothing to blend. A common slip is to use the game's own camera as the clip's camera: use a second camera object.
+
+In the editor, scrubbing shows the camera under the playhead in the small camera picture in the corner of the scene view. The glide itself is only seen in **Play**.
+
+## Subtitles
+
+A **Subtitles** track writes a line of text into **one Text object** while each clip lasts, and clears it when the clip ends. The track does not draw anything itself and has no position of its own: **it is shown wherever that Text object is**. A track whose object is not a text (a ground plane, a model) shows nothing.
+
+**Example: a spoken line with a caption**
+
+1. Make the text object: **Add → UI → Text**, name it `Caption`. In its Rect Transform set the anchor to the **bottom centre**, a **width** of about 80% of the screen (so long lines wrap), an offset of **80–120** up from the bottom so it clears the phone's gesture bar and the browser's fullscreen notice, and text align *centre*. Leave its own text empty.
+2. In the timeline add a **Subtitles** track and pick `Caption` as its object.
+3. Add a clip from **0 s to 1 s** with the value `Hey.` and another from **1.7 s to 2.7 s** with `Hello`. Between and after the clips the text is cleared.
+4. Add a **Sounds** track with the voice recording on the same times so the words and the line match.
+
+More to know:
+
+- The value of a clip is the line. For several lines in a row, place clips back to back: the text is replaced the moment the next clip starts.
+- Use one subtitle track per speaker or per place on screen (a second Text object for a narrator at the top), each with its own object.
+- A 3D text object works too, and the caption then sits in the world, for a sign or a speech bubble.
+- **Stop timeline**, **Skip timeline** and reaching the end clear the text, so a half-shown line never stays behind.
+- While you scrub or preview in the editor the line under the playhead shows at the foot of the scene view, wherever your Text object is. Check the real position in **Play**.
+- To show a caption from an event instead, use **Set text**. The Subtitles track is for lines that must line up with the other tracks.
+
 ## Play it from events
 
 | Block | Does |
