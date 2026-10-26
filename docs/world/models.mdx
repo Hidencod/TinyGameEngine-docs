@@ -134,6 +134,8 @@ const hips = entity.ragdollPosition;
 
 The object itself never moves while it is limp, so use `ragdollPosition` to follow the body.
 
+In an event sheet, the **Ragdoll** action has **Shove X/Y/Z** for the start, **Push ragdoll part** pushes the bones whose name contains the text, and the properties `hipsX`, `hipsY` and `hipsZ` (e.g. `Guy.hipsY`) give the hips, or the object's own position when it is not limp.
+
 ## Parts of a model
 
 Every part of a model (a hand, a helmet, a wheel) is listed under the object in the Objects tab. You can hide a part, give it another material, or attach other objects to it. See [Model parts](../editor/objects#model-parts).
