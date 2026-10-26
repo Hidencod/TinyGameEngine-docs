@@ -33,6 +33,23 @@ Tap it in **Files** for **Size** and **Update**:
 | **Update: Only when seen** | Drawn only while a surface showing it is in view of the game's camera. A monitor in another room costs nothing until you walk in. |
 | **Every** | Draws on every 2nd, 3rd, 4th, 6th or 10th frame instead of every one. A security feed that updates 10 times a second looks right and costs much less. |
 
+## On the HUD (a minimap)
+
+Select a UI **Image** and pick a **Render texture** in its Image section. The element then shows the camera's picture live, in the corner of the screen or wherever you place it. Use **Preserve aspect** to keep the picture's proportions inside the rect.
+
+Every picture is copied from the graphics card into the HUD, so keep the render texture **small** (256 or less is plenty for a minimap) and use **Every** to draw it less often.
+
+## Leave things out of a camera
+
+A camera with a Target texture has a **Hide tags** row. Objects with one of those tags (and their children) are not drawn by that camera: tag the clouds `cloud`, type `cloud` there, and the minimap shows no clouds. It only applies to the render texture's camera, not to the game's own view.
+
+## From events and scripts
+
+- Event block **Render texture**: **Pause** freezes the picture (the last one stays), **Resume** starts it again, **Draw once** draws a single new picture even while paused.
+- Script: `game.renderTexture('Monitor').paused = true`, `.paused = false`, `.refresh()`; also `name`, `width`, `height`. It throws when the project has no render texture of that name.
+
+A pause is for the running game only; it is not saved.
+
 ## Good to know
 
 - **Each camera feeding a render texture draws the whole scene a second time.** On phones this is the most expensive thing in this list. Keep the size small, use **Only when seen** and **Every**, and use as few as you need.
