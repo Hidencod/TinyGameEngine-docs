@@ -112,8 +112,27 @@ Add a **Ragdoll** component to the object to tune it (without one every bone get
 - **Enabled** off: the bone gets no body and follows the bone above it (fingers, toes).
 - **Swing** and **Twist**: how many degrees the bone may bend away from its starting pose, and turn about its own length.
 - **Thickness**: the capsule's radius as a share of the bone's length (0 is automatic).
+- **Shape**: **Capsule** or **Box**. Either one is fitted to the bone's own mesh, so the body encloses the model and a leg does not sink into the floor. Thickness 0 uses that fit; a number overrides it.
 
-**Mass** is the whole body's weight in kg, shared out by size. With the object selected, the view draws a capsule along every bone that gets a body and a cross at each joint, and they follow an animation preview. A bone shown in red is not in this model any more: fill again after changing the model.
+**Mass** is the whole body's weight in kg, shared out by size, though no bone gets less than a twentieth or more than a third of it (a feather-light hip joined to a heavy torso would spin like a top). With the object selected, the view draws a capsule along every bone that gets a body and a cross at each joint, and they follow an animation preview. A bone shown in red is not in this model any more: fill again after changing the model.
+
+### Pushing a ragdoll
+
+While the character is limp, `applyImpulse`, `applyForce`, `setVelocity` and `getVelocity` act on all its bodies together. For more control, in a script:
+
+```ts
+// Start limp with a shove (a hit that knocks it down)
+entity.ragdoll(true, { impulse: { x: 0, y: 4, z: -8 } });
+
+// Push one part: any bone whose name contains the text, in any case
+entity.ragdollPush("head", 0, 0, -3);
+entity.ragdollPush("arm", 2, 0, 0); // both arms
+
+// Where the hips are now (null while it is not limp), for a camera or a pickup
+const hips = entity.ragdollPosition;
+```
+
+The object itself never moves while it is limp, so use `ragdollPosition` to follow the body.
 
 ## Parts of a model
 
