@@ -2930,6 +2930,18 @@
               "label": "worldZ"
             },
             {
+              "value": "hipsX",
+              "label": "hipsX"
+            },
+            {
+              "value": "hipsY",
+              "label": "hipsY"
+            },
+            {
+              "value": "hipsZ",
+              "label": "hipsZ"
+            },
+            {
               "value": "text",
               "label": "text"
             },
@@ -3907,6 +3919,25 @@
           "type": "number",
           "options": null,
           "default": "2",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "measure",
+          "label": "Measure",
+          "type": "choice",
+          "options": [
+            {
+              "value": "3d",
+              "label": "3D"
+            },
+            {
+              "value": "flat",
+              "label": "Flat (X, Z)"
+            }
+          ],
+          "default": "3d",
           "optional": false,
           "hint": null,
           "varScope": null
@@ -5652,6 +5683,56 @@
       ]
     },
     {
+      "id": "object.setSpin",
+      "kind": "action",
+      "category": "Physics",
+      "label": "Set spin",
+      "hint": "Degrees per second around the world X, Y and Z axes; the body must be allowed to tip over",
+      "display": "Set {object} spin to ({x}, {y}, {z}) °/s",
+      "displayNoObject": null,
+      "icon": "🌀",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "x",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Z",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "object.setVelocity",
       "kind": "action",
       "category": "Physics",
@@ -6147,6 +6228,96 @@
           "type": "boolean",
           "options": null,
           "default": "true",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "x",
+          "label": "Shove X",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Shove Y",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Shove Z",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.ragdollPush",
+      "kind": "action",
+      "category": "Object",
+      "label": "Push ragdoll part",
+      "hint": "Push the limp character's bones whose name contains the text (head, arm, leg)",
+      "display": "{object} ragdoll: push \"{bone}\" by ({x}, {y}, {z})",
+      "displayNoObject": null,
+      "icon": "🥊",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "bone",
+          "label": "Bone name contains",
+          "type": "string",
+          "options": null,
+          "default": "head",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "x",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "type": "number",
+          "options": null,
+          "default": "3",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Z",
+          "type": "number",
+          "options": null,
+          "default": "0",
           "optional": false,
           "hint": null,
           "varScope": null
@@ -7151,6 +7322,75 @@
       ]
     },
     {
+      "id": "object.setPersist",
+      "kind": "action",
+      "category": "Object",
+      "label": "Keep across scenes",
+      "hint": "Make it come along to the next scene instead of being made again (with its children, position and variables)",
+      "display": "{state} {object} across scenes",
+      "displayNoObject": null,
+      "icon": "🧳",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "state",
+          "label": "Mode",
+          "type": "choice",
+          "options": [
+            {
+              "value": "keep",
+              "label": "Keep"
+            },
+            {
+              "value": "release",
+              "label": "Stop keeping"
+            }
+          ],
+          "default": "keep",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.setLayer",
+      "kind": "action",
+      "category": "Object",
+      "label": "Set layer",
+      "hint": "Move it to a layer (Project settings → Layers): cameras can leave layers out, raycasts can look at only some",
+      "display": "Set layer of {object} to {layer}",
+      "displayNoObject": null,
+      "icon": "🗂️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "layer",
+          "label": "Layer",
+          "type": "string",
+          "options": null,
+          "default": "Default",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "object.addTag",
       "kind": "action",
       "category": "Object",
@@ -7859,6 +8099,59 @@
           "type": "number",
           "options": null,
           "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "renderTexture.control",
+      "kind": "action",
+      "category": "Graphics",
+      "label": "Render texture",
+      "hint": "Freeze or restart the picture a camera draws into a render texture, or draw it once",
+      "display": "{action} render texture {texture}",
+      "displayNoObject": null,
+      "icon": "📺",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "action",
+          "label": "Action",
+          "type": "choice",
+          "options": [
+            {
+              "value": "pause",
+              "label": "Pause"
+            },
+            {
+              "value": "resume",
+              "label": "Resume"
+            },
+            {
+              "value": "refresh",
+              "label": "Draw once"
+            }
+          ],
+          "default": "pause",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "texture",
+          "label": "Render texture",
+          "type": "renderTexture",
+          "options": null,
+          "default": "",
           "optional": false,
           "hint": null,
           "varScope": null

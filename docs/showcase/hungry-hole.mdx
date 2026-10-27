@@ -64,7 +64,7 @@ Every prop carries a **tag** for its size tier, `t1` to `t5`. Each tier has one 
 
 - **Distance to** `#t3` from `Hole`, **Measure: Flat (X, Z)**, less than `HoleR`. The *flat* measure ignores height, so a tall skyscraper counts as over the hole when its middle is.
 - **Compare** `HoleR * 1.15 ≥ 2.6`: the hole must be big enough for the biggest thing in the tier.
-- Then, for each one picked (**For each** `#t3`): **Add** the tier's points to `Mass`, **Set layer** `Falling`, and swap the tag from `t3` to `eaten`.
+- Then, for each one picked (**For each** `#t3`): **Add** the tier's points to `Mass`, **Set layer** `Falling`, **Set spin** towards the hole's middle so it tips over as it drops, and swap the tag from `t3` to `eaten`.
 
 Things that fall far enough (`y < -9`) are destroyed by one more event.
 

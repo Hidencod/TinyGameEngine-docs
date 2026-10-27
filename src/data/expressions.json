@@ -632,6 +632,18 @@
       "description": "World Z position"
     },
     {
+      "name": "hipsX",
+      "description": "X of the hips of a ragdoll (the object stays put); its own position when not limp"
+    },
+    {
+      "name": "hipsY",
+      "description": "Y of the hips of a ragdoll"
+    },
+    {
+      "name": "hipsZ",
+      "description": "Z of the hips of a ragdoll"
+    },
+    {
       "name": "text",
       "description": "Text shown (text objects)"
     },
@@ -749,6 +761,9 @@
     "worldX",
     "worldY",
     "worldZ",
+    "hipsX",
+    "hipsY",
+    "hipsZ",
     "text",
     "value",
     "min",

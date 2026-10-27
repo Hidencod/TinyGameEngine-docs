@@ -24,6 +24,18 @@
           "doc": "Tags of this entity (read-only set). Use hasTag/addTag."
         },
         {
+          "name": "layer",
+          "kind": "property",
+          "type": "string",
+          "doc": "The layer the object is on (\"Default\" unless changed; Project settings → Layers). Writable: entity.layer = \"Water\". Cameras with a target texture can leave layers out; game.raycast takes layers."
+        },
+        {
+          "name": "persist",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "True: the object stays when the game goes to another scene (with its children, position and variables) instead of being made again. An object of the same name in the next scene that also has persist on is replaced by it, never doubled. Also the \"Keep across scenes\" switch in the inspector."
+        },
+        {
           "name": "destroyed",
           "kind": "property",
           "type": "boolean",
@@ -184,6 +196,13 @@
           "sig": "(x, y, z)",
           "type": "void",
           "doc": "Set physics velocity."
+        },
+        {
+          "name": "setSpin",
+          "kind": "method",
+          "sig": "(x, y, z)",
+          "type": "void",
+          "doc": "Set how fast it spins, in degrees per second around the world X, Y and Z axes."
         },
         {
           "name": "applyImpulse",
@@ -432,9 +451,16 @@
         {
           "name": "ragdoll",
           "kind": "method",
-          "sig": "(on = true)",
+          "sig": "(on = true, opts?)",
           "type": "void",
-          "doc": "Make a rigged 3D character limp with physics, e.g. entity.ragdoll() when it dies; ragdoll(false) brings it back to its animation. The object itself stays where it is, only its bones move. entity.ragdolled says whether it is limp."
+          "doc": "Make a rigged 3D character limp with physics, e.g. entity.ragdoll() when it dies; ragdoll(false) brings it back to its animation. The object itself stays where it is, only its bones move. entity.ragdolled says whether it is limp. entity.ragdoll(true, { impulse: { x, y, z } }) starts it with a shove (a hit that knocks it down)."
+        },
+        {
+          "name": "ragdollPush",
+          "kind": "method",
+          "sig": "(bone, x, y, z)",
+          "type": "void",
+          "doc": "Push the limp character's bones whose name contains `bone` (e.g. \"arm\", \"head\"), an impulse shared out by their mass."
         },
         {
           "name": "getAnimation",
@@ -1029,7 +1055,7 @@
         {
           "name": "raycast",
           "kind": "method",
-          "sig": "(from, to | { direction, length, tags?, ignore?, includeMoving? }, options?)",
+          "sig": "(from, to | { direction, length, tags?, layers?, ignore?, includeMoving? }, options?)",
           "type": "{entity,point,normal,distance}|null",
           "doc": "Physics ray between two points, or along a direction: game.raycast(p, { direction: {x:0,y:-1,z:0}, length: 5, tags: [\"ground\"], ignore: player }). Triggers never block it."
         },
@@ -1150,6 +1176,13 @@
           "doc": "A cutscene made in Files → Timeline: game.timeline(\"Intro\").play(). Also pause(), stop(), skip() (the signals still to come fire), seek(seconds), time, duration, isPlaying, finished, speed, loop. game.on(\"timelineSignal\", e => …) hears its signals (e.signal), \"timelineFinished\" its end."
         },
         {
+          "name": "renderTexture",
+          "kind": "method",
+          "sig": "(name)",
+          "type": "RenderTexture",
+          "doc": "A render texture made in Files (what a camera with it as Target Texture draws): game.renderTexture(\"Monitor\").paused = true freezes the picture, false starts it again; refresh() draws one more picture even while paused; name, width, height."
+        },
+        {
           "name": "getCamera",
           "kind": "method",
           "sig": "()",
@@ -1255,6 +1288,13 @@
           "sig": "(seconds, fn, owner?)",
           "type": "stop",
           "doc": "Run fn every so many seconds of game time until the function it returns is called. In a script, plain every(seconds, fn) belongs to the object of the script already."
+        },
+        {
+          "name": "events",
+          "kind": "method",
+          "sig": "",
+          "type": "messages",
+          "doc": "Messages between scripts: game.events.on(\"coinTaken\", (n) => …, entity), game.events.once(…), game.events.emit(\"coinTaken\", 3). Listeners end with the scene; with an owner object they end when it is destroyed and wait while it is disabled."
         },
         {
           "name": "log",
@@ -1954,6 +1994,39 @@
       "name": "lateUpdate",
       "args": "dt",
       "doc": "Called every frame after physics."
+    },
+    {
+      "name": "fixedUpdate",
+      "args": "dt",
+      "doc": "Called on every physics step (60 a second), whatever the frame rate. dt is always 1/60.",
+      "global": true
+    },
+    {
+      "name": "onEnable",
+      "args": "",
+      "doc": "The object is switched on: before start(), and each time it is enabled again.",
+      "global": true
+    },
+    {
+      "name": "onDisable",
+      "args": "",
+      "doc": "The object is switched off or about to be destroyed.",
+      "global": true
+    },
+    {
+      "name": "onTriggerEnter",
+      "args": "other, collision",
+      "doc": "This entity entered, or was entered by, a trigger `other`."
+    },
+    {
+      "name": "onTriggerStay",
+      "args": "other, collision",
+      "doc": "Every frame while it overlaps a trigger `other`."
+    },
+    {
+      "name": "onTriggerExit",
+      "args": "other, collision",
+      "doc": "This entity left a trigger `other`."
     },
     {
       "name": "onCollision",
