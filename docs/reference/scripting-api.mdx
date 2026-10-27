@@ -20,6 +20,12 @@ Define any of these in a script; the engine calls them.
 | `start()` | Called once when the scene starts. | ✔ | ✔ |
 | `update(dt)` | Called every frame. dt = seconds since last frame. | ✔ | ✔ |
 | `lateUpdate(dt)` | Called every frame after physics. | ✔ |  |
+| `fixedUpdate(dt)` | Called on every physics step (60 a second), whatever the frame rate. dt is always 1/60. | ✔ | ✔ |
+| `onEnable()` | The object is switched on: before start(), and each time it is enabled again. | ✔ | ✔ |
+| `onDisable()` | The object is switched off or about to be destroyed. | ✔ | ✔ |
+| `onTriggerEnter(other, collision)` | This entity entered, or was entered by, a trigger `other`. | ✔ |  |
+| `onTriggerStay(other, collision)` | Every frame while it overlaps a trigger `other`. | ✔ |  |
+| `onTriggerExit(other, collision)` | This entity left a trigger `other`. | ✔ |  |
 | `onCollision(other, collision)` | This entity started touching `other`. collision has the details: contacts, point, normal, impulse, relativeVelocity, speed, isTrigger. | ✔ |  |
 | `onCollisionStay(other, collision)` | Every frame while it touches `other` (only define it if you need it: it reads every contact). | ✔ |  |
 | `onCollisionEnd(other, collision)` | This entity stopped touching `other`. | ✔ |  |
@@ -50,6 +56,8 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `id` | `string` | Unique id of this entity. |
 | `name` | `string` | Object type name (clones share it), e.g. "Coin". |
 | `tags` | `Set` | Tags of this entity (read-only set). Use hasTag/addTag. |
+| `layer` | `string` | The layer the object is on ("Default" unless changed; Project settings → Layers). Writable: entity.layer = "Water". Cameras with a target texture can leave layers out; game.raycast takes layers. |
+| `persist` | `boolean` | True: the object stays when the game goes to another scene (with its children, position and variables) instead of being made again. An object of the same name in the next scene that also has persist on is replaced by it, never doubled. Also the "Keep across scenes" switch in the inspector. |
 | `destroyed` | `boolean` | True once the entity has been destroyed. |
 | `position` | `{x,y,z}` | Local position in meters. Writable: entity.position.y += 1 |
 | `rotation` | `{x,y,z}` | Local rotation in DEGREES. Writable: entity.rotation.y += 90 * dt |
@@ -74,6 +82,7 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `hasBody()` | `boolean` | Has a RigidBody component? |
 | `getVelocity()` | `{x,y,z}` | Physics velocity (m/s). |
 | `setVelocity(x, y, z)` | `void` | Set physics velocity. |
+| `setSpin(x, y, z)` | `void` | Set how fast it spins, in degrees per second around the world X, Y and Z axes. |
 | `applyImpulse(x, y, z)` | `void` | Instant push, e.g. a jump: applyImpulse(0, 5, 0) |
 | `breakJoint()` | `void` | Cut this object's Joint component (a rope snaps, a door is torn off). |
 | `applyForce(x, y, z)` | `void` | Continuous push (call every frame). |
@@ -109,7 +118,9 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `playAnimation(name: string, loop = true)` | `void` | Play a clip of the 3D model, or an animation of a sprite, e.g. "walk" or "jump". loop=false plays once and holds the last frame. Asking for the clip already playing keeps it going. With an Animator component the name is a state of its controller. |
 | `animator` | `Animator\|null` | The Animator (an Animator component with a controller), as in Unity: animator.setFloat("Speed", 3), setBool, setInteger, setTrigger("Attack"), resetTrigger, getFloat / getBool / getInteger, play("Die"), crossFade("Run", 0.2), state, isInState("Jump"), normalizedTime(), isInTransition(), setLayerWeight(1, 0.5), speed. Null without one. |
 | `stopAnimation()` | `void` | Stop the playing model animation. |
-| `ragdoll(on = true)` | `void` | Make a rigged 3D character limp with physics, e.g. entity.ragdoll() when it dies; ragdoll(false) brings it back to its animation. The object itself stays where it is, only its bones move. entity.ragdolled says whether it is limp. |
+| `ragdoll(on = true, opts?)` | `void` | Make a rigged 3D character limp with physics, e.g. entity.ragdoll() when it dies; ragdoll(false) brings it back to its animation. The object itself stays where it is, only its bones move. entity.ragdolled says whether it is limp. entity.ragdoll(true, &#123; impulse: &#123; x, y, z &#125; &#125;) starts it with a shove (a hit that knocks it down). |
+| `ragdollPower(power)` | `void` | Powered ragdoll: how hard the ragdoll's bones are pulled toward the playing animation, 0 (limp) to 1 (follows it, a hit still moves it and it recovers). entity.ragdoll(true, &#123; power: 0.8 &#125;) starts powered: the character keeps animating and keeps its own body, so it still walks. |
+| `ragdollPush(bone, x, y, z)` | `void` | Push the limp character's bones whose name contains `bone` (e.g. "arm", "head"), an impulse shared out by their mass. |
 | `getAnimation()` | `string` | Name of the playing clip (empty if none). |
 | `isAnimationBusy()` | `boolean` | True while a play-once animation (loop off) is still running. |
 | `getAnimationNames()` | `string[]` | All clip names of the model, or the animations of a sprite. |
@@ -203,7 +214,7 @@ The running game.
 | `pick(screenX, screenY)` | `entity\|null` | Entity at a screen point. |
 | `touchWorld()` | `{x,y,z}` | The spot in the world under the finger / mouse (a surface, else the ground plane). Tap to move: player.moveTo(p.x, p.z). |
 | `hasLineOfSight(a, b)` | `boolean` | True when nothing solid is between the two objects, e.g. an enemy can see the player. |
-| `raycast(from, to \| { direction, length, tags?, ignore?, includeMoving? }, options?)` | `{entity,point,normal,distance}\|null` | Physics ray between two points, or along a direction: game.raycast(p, &#123; direction: &#123;x:0,y:-1,z:0&#125;, length: 5, tags: ["ground"], ignore: player &#125;). Triggers never block it. |
+| `raycast(from, to \| { direction, length, tags?, layers?, ignore?, includeMoving? }, options?)` | `{entity,point,normal,distance}\|null` | Physics ray between two points, or along a direction: game.raycast(p, &#123; direction: &#123;x:0,y:-1,z:0&#125;, length: 5, tags: ["ground"], ignore: player &#125;). Triggers never block it. |
 | `isTouching(a, b)` | `boolean` | Are two entities touching? |
 | `touchInfo(a, b)` | `CollisionInfo \| null` | Current contact of two touching entities (point, normal, speed, impulse), or null |
 | `getVar(name)` | `value` | Read a global/scene variable: game.getVar("Score") |
@@ -221,6 +232,7 @@ The running game.
 | `navmesh` | `NavMesh` | The baked navigation mesh (Project settings → Navigation): game.navmesh.findPath(from, to, &#123; radius, height &#125;) gives &#123; complete, points: [&#123;x,y,z,leap&#125;] &#125; over slopes, stairs and floors; sample(point) the nearest place to stand; rebuild() after walls change; enabled, lastBakeMs. |
 | `services` | `ServicesAPI` | Achievements, leaderboards, ads and purchases from Files → Services: game.services.unlockAchievement("first"), .submitScore("score", 12), .showRewarded(), .buy("noAds"), .owns("noAds"). Set game.services.provider = &#123; showRewarded: () =&gt; …, buy: p =&gt; … &#125; to handle any of them yourself (your own ad network or store); the results come back as game.on("adFinished" / "purchaseFinished" / "achievementUnlocked", …). |
 | `timeline(name)` | `Timeline` | A cutscene made in Files → Timeline: game.timeline("Intro").play(). Also pause(), stop(), skip() (the signals still to come fire), seek(seconds), time, duration, isPlaying, finished, speed, loop. game.on("timelineSignal", e =&gt; …) hears its signals (e.signal), "timelineFinished" its end. |
+| `renderTexture(name)` | `RenderTexture` | A render texture made in Files (what a camera with it as Target Texture draws): game.renderTexture("Monitor").paused = true freezes the picture, false starts it again; refresh() draws one more picture even while paused; name, width, height. |
 | `getCamera()` | `entity\|null` | The active camera entity. |
 | `three` | `{renderer,scene,camera}` | Advanced: the three.js renderer, scene and camera behind the game, e.g. game.three.scene.add(mesh). |
 | `rapier` | `{RAPIER,world,gravity,…}` | Advanced: the physics engine behind the game. game.rapier.world is the Rapier World, game.rapier.bodyOf(entity) / collidersOf(entity) its objects, game.rapier.setGravity(x, y, z) the world gravity. Use it with RAPIER. |
@@ -237,6 +249,7 @@ The running game.
 | `on(event, fn)` | `unsubscribe` | Listen: "sceneStart", "collisionStart", "entityCreated", "waterEnter", ... |
 | `after(seconds, fn, owner?)` | `cancel` | Run fn once after a delay of game time. In a script, plain after(seconds, fn) belongs to the object of the script already; this one takes the object to belong to, or none. |
 | `every(seconds, fn, owner?)` | `stop` | Run fn every so many seconds of game time until the function it returns is called. In a script, plain every(seconds, fn) belongs to the object of the script already. |
+| `events` | `messages` | Messages between scripts: game.events.on("coinTaken", (n) =&gt; …, entity), game.events.once(…), game.events.emit("coinTaken", 3). Listeners end with the scene; with an owner object they end when it is destroyed and wait while it is disabled. |
 | `log(...values)` | `void` | Show a message on screen and in the Play console (debugging). |
 | `consoleLog(...values)` | `void` | Write a line to the Play console only, nothing on screen. console.log() in a script does the same. |
 

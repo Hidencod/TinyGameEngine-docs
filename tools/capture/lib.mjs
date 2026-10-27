@@ -154,6 +154,11 @@ export function editorHelpers(page, s) {
       await page.goto(TGE + '/');
       await page.waitForSelector('.hm', { timeout: 30000 });
       await s.settle(800);
+      // A first visit lands on What's new: go to Projects, where the scenarios start.
+      if (!(await page.getByRole('button', { name: /New project/ }).count())) {
+        await page.locator('.hm-nav button, nav button').filter({ hasText: /^Projects/ }).first().click();
+        await s.settle(600);
+      }
     },
     /** Topmost open sheet/dialog. */
     sheet: () => page.locator('.sheet-layer.open').last(),

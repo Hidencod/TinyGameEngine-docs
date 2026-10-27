@@ -4680,7 +4680,7 @@
       "category": "Object",
       "label": "Look at",
       "hint": "Face an object",
-      "display": "{object} looks at {target}",
+      "display": "{object} looks at {target} (upright: {upright})",
       "displayNoObject": null,
       "icon": "👀",
       "description": "Turn the object to face another object.",
@@ -4698,6 +4698,16 @@
           "type": "object",
           "options": null,
           "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "upright",
+          "label": "Upright",
+          "type": "boolean",
+          "options": null,
+          "default": "true",
           "optional": false,
           "hint": null,
           "varScope": null
@@ -6258,6 +6268,46 @@
           "type": "number",
           "options": null,
           "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "power",
+          "label": "Power (0 = limp)",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.ragdollPower",
+      "kind": "action",
+      "category": "Object",
+      "label": "Set ragdoll power",
+      "hint": "How hard a ragdoll follows its animation: 0 = limp, 1 = holds the animation (a hit still moves it)",
+      "display": "{object} ragdoll power = {power}",
+      "displayNoObject": null,
+      "icon": "💪",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "power",
+          "label": "Power",
+          "type": "number",
+          "options": null,
+          "default": "1",
           "optional": false,
           "hint": null,
           "varScope": null

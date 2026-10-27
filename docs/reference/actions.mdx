@@ -16,7 +16,7 @@ Actions are the **DO** part of an event. They run from top to bottom when the ev
 Number and text fields accept expressions, e.g. `Score + 1`, `"Score: " + Score`, `Player.x`, `random(1, 6)`. See [Expressions](./expressions).
 :::
 
-There are **179 actions**, grouped by category as in the action picker.
+There are **185 actions**, grouped by category as in the action picker.
 
 [⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🎬 Timeline](#timeline) · [🌐 Language](#language) · [🏆 Services](#services) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera) · [🎚️ Graphics](#graphics)
 
@@ -756,7 +756,7 @@ Turn the object by some degrees. Multiply by dt for smooth per-second rotation.
 
 ### Look at {/* #object-lookat */}
 
-<span class="tge-ace-display">‹Object› looks at ‹Target›</span>
+<span class="tge-ace-display">‹Object› looks at ‹Target› (upright: ‹Upright›)</span>
 
 Turn the object to face another object.
 
@@ -766,6 +766,7 @@ Turn the object to face another object.
 | Parameter | Type | Default | Notes |
 | --- | --- | --- | --- |
 | Target | Object or #tag |  |  |
+| Upright | Yes / No (expression) | `true` |  |
 
 ### Set size {/* #object-setscale */}
 
@@ -1016,6 +1017,39 @@ Play a clip of its 3D model, e.g. "walk", "jump" or "die". Loop off = play once 
 | Parameter | Type | Default | Notes |
 | --- | --- | --- | --- |
 | Ragdoll | Yes / No (expression) | `true` |  |
+| Shove X | Number (expression) | `0` |  |
+| Shove Y | Number (expression) | `0` |  |
+| Shove Z | Number (expression) | `0` |  |
+| Power (0 = limp) | Number (expression) | `0` |  |
+
+### Set ragdoll power {/* #object-ragdollpower */}
+
+<span class="tge-ace-display">‹Object› ragdoll power = ‹Power›</span>
+
+
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.ragdollPower` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Power | Number (expression) | `1` |  |
+
+### Push ragdoll part {/* #object-ragdollpush */}
+
+<span class="tge-ace-display">‹Object› ragdoll: push "‹Bone name contains›" by (‹X›, ‹Y›, ‹Z›)</span>
+
+
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.ragdollPush` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Bone name contains | Text | `head` |  |
+| X | Number (expression) | `0` |  |
+| Y | Number (expression) | `3` |  |
+| Z | Number (expression) | `0` |  |
 
 ### Stop animation {/* #object-stopanimation */}
 
@@ -1081,6 +1115,32 @@ Stop the playing model animation.
 | --- | --- | --- | --- |
 | Cell X | Number (expression) | `0` |  |
 | Cell Y | Number (expression) | `0` |  |
+
+### Keep across scenes {/* #object-setpersist */}
+
+<span class="tge-ace-display">‹Mode› ‹Object› across scenes</span>
+
+
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.setPersist` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Mode | Choice | `keep` | Options: Keep, Stop keeping |
+
+### Set layer {/* #object-setlayer */}
+
+<span class="tge-ace-display">Set layer of ‹Object› to ‹Layer›</span>
+
+
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.setLayer` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Layer | Text | `Default` |  |
 
 ### Add tag {/* #object-addtag */}
 
@@ -1409,6 +1469,21 @@ How much a layer of the Animator counts: 0 = not at all, 1 = fully. The Base Lay
 - **Parameters:** none
 
 ## 🧱 Physics {/* #physics */}
+
+### Set spin {/* #object-setspin */}
+
+<span class="tge-ace-display">Set ‹Object› spin to (‹X›, ‹Y›, ‹Z›) °/s</span>
+
+
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.setSpin` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| X | Number (expression) | `0` |  |
+| Y | Number (expression) | `0` |  |
+| Z | Number (expression) | `0` |  |
 
 ### Set velocity {/* #object-setvelocity */}
 
@@ -2458,3 +2533,17 @@ How much of a Post-processing Volume counts: 0 = none, 1 = all.
 | --- | --- | --- | --- |
 | Weight (0 to 1) | Number (expression) | `1` |  |
 | Seconds to glide (0 = at once) | Number (expression) | `0` |  |
+
+### Render texture {/* #rendertexture-control */}
+
+<span class="tge-ace-display">‹Action› render texture ‹Render texture›</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `renderTexture.control` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Action | Choice | `pause` | Options: Pause, Resume, Draw once |
+| Render texture | renderTexture |  |  |

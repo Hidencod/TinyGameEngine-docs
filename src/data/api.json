@@ -456,6 +456,13 @@
           "doc": "Make a rigged 3D character limp with physics, e.g. entity.ragdoll() when it dies; ragdoll(false) brings it back to its animation. The object itself stays where it is, only its bones move. entity.ragdolled says whether it is limp. entity.ragdoll(true, { impulse: { x, y, z } }) starts it with a shove (a hit that knocks it down)."
         },
         {
+          "name": "ragdollPower",
+          "kind": "method",
+          "sig": "(power)",
+          "type": "void",
+          "doc": "Powered ragdoll: how hard the ragdoll's bones are pulled toward the playing animation, 0 (limp) to 1 (follows it, a hit still moves it and it recovers). entity.ragdoll(true, { power: 0.8 }) starts powered: the character keeps animating and keeps its own body, so it still walks."
+        },
+        {
           "name": "ragdollPush",
           "kind": "method",
           "sig": "(bone, x, y, z)",

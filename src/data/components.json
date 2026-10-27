@@ -114,6 +114,11 @@
       "icon": "🦴",
       "title": "Ragdoll",
       "desc": ""
+    },
+    "lod": {
+      "icon": "🔭",
+      "title": "LOD group",
+      "desc": ""
     }
   }
 }

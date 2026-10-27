@@ -65,9 +65,6 @@ Put a model on an object with **Shape & look → Shape: 3D model (file)** and ch
 | **Animation** | The animation clip to play (models with clips only), with **▶ preview** in the editor. *None (still)* = no animation. |
 | **Play on start** | Loop the chosen clip from the start of the game. |
 | **Animation speed** | 1 = normal, 2 = twice as fast. |
-| **Far model** | A lighter version of the model (a low-poly model from Files) that takes over from far away. See [Distance and detail](#distance-and-detail). |
-| **Switch distance** | Meters from the camera where the **Far model** takes over (default 30). Shown once a **Far model** is picked. |
-| **Hide beyond** | Meters from the camera past which the model is not drawn at all. 0 = never. |
 | *(one slider per blend shape)* | Only for models that have **morph targets**: see [Morph targets](#morph-targets). |
 
 ## Morph targets
@@ -81,14 +78,19 @@ While playing:
 
 A name the model doesn't have is reported in the console instead of silently doing nothing. If the model also plays an animation clip that moves the same morph target, the clip wins while it plays.
 
-## Distance and detail
+## Level of detail
 
-A model with many triangles is slow to draw, and from far away you can't see the detail anyway. Two settings on the **Mesh** card help:
+A model with many triangles is slow to draw, and from far away you can't see the detail anyway. Add an **LOD group** component (Add component → LOD group) to a model object, as in Unity's LOD Group:
 
-- **Far model**: a second, lighter model. Past **Switch distance** the object shows it instead. It is the same object with the same color, material and size, only a cheaper mesh. Pick it in the same way as the **Model**.
-- **Hide beyond**: past this distance the object is not drawn at all.
+<Crop name="card-lod" width={360} />
 
-The camera's distance is checked a few times a second, and the switch has a little slack on both sides, so an object right at the distance does not flicker. The Far model is not animated and does not move the collider (the collider always follows the main model). An object with a Far model or a **Hide beyond** distance is drawn on its own, not grouped with copies (see [Performance](../help/performance)).
+- **LOD 0** is the model in **Shape & look**, used up close.
+- Each **LOD 1, 2, …** below it has a lighter **Model** (a low-poly version from Files) and a **From (m)** distance: past that many meters from the camera the object shows that model instead. **+ Add level** adds one, **✕** removes one. A level with no model is skipped.
+- **Culled beyond (m)**: past this distance the object is not drawn at all. 0 = never.
+
+Every level is the same object with the same color, material and size, only a cheaper mesh. The camera's distance is checked a few times a second, and each switch has a little slack on both sides, so an object right at a distance does not flicker. If the camera jumps far, levels are skipped; a level whose model is still loading shows the one before it. The lighter models are not animated and do not move the collider (the collider always follows the LOD 0 model). An object with an LOD group is drawn on its own, not grouped with copies (see [Performance](../help/performance)).
+
+Projects made before this had **Far model**, **Switch distance** and **Hide beyond** on the Shape & look card; they open with an LOD group that has the same settings.
 
 ## Animations while playing
 
@@ -107,12 +109,17 @@ A rigged character can go limp with physics, like a death animation that falls a
 
 ### Ragdoll component
 
-Add a **Ragdoll** component to the object to tune it (without one every bone gets the defaults). **Fill from model** lists the bones that get a body; then open a bone to change:
+Add a **Ragdoll** component to the object to tune it (without one every bone gets the defaults).
+
+<Crop name="card-ragdoll" width={360} />
+
+**Mass** and **Power** (see [Powered ragdoll](#powered-ragdoll)) apply to the whole body. **Fill from model** lists the bones that get a body; then open a bone to change:
 
 - **Enabled** off: the bone gets no body and follows the bone above it (fingers, toes).
 - **Swing** and **Twist**: how many degrees the bone may bend away from its starting pose, and turn about its own length.
 - **Thickness**: the capsule's radius as a share of the bone's length (0 is automatic).
 - **Shape**: **Capsule** or **Box**. Either one is fitted to the bone's own mesh, so the body encloses the model and a leg does not sink into the floor. Thickness 0 uses that fit; a number overrides it.
+- **Power**: this bone's share of the ragdoll's Power, 0 to 1 (default 1). Only matters for a [powered ragdoll](#powered-ragdoll).
 
 **Mass** is the whole body's weight in kg, shared out by size, though no bone gets less than a twentieth or more than a third of it (a feather-light hip joined to a heavy torso would spin like a top). With the object selected, the view draws a capsule along every bone that gets a body and a cross at each joint, and they follow an animation preview. A bone shown in red is not in this model any more: fill again after changing the model.
 
@@ -134,7 +141,39 @@ const hips = entity.ragdollPosition;
 
 The object itself never moves while it is limp, so use `ragdollPosition` to follow the body.
 
-In an event sheet, the **Ragdoll** action has **Shove X/Y/Z** for the start, **Push ragdoll part** pushes the bones whose name contains the text, and the properties `hipsX`, `hipsY` and `hipsZ` (e.g. `Guy.hipsY`) give the hips, or the object's own position when it is not limp.
+### Powered ragdoll
+
+A limp ragdoll ignores its animation. With **Power** above 0 the bones are instead pulled toward the pose the animation is playing, so the character keeps animating and walking but still reacts to a hit and then returns to the animation. Use it when a character should be pushed around by the world without being knocked out.
+
+- **Power** on the Ragdoll component: 0 = limp (the default), 1 = follows the animation closely. The lower it is, the more a hit moves the bones and the longer they take to come back. Start around 0.5 and raise it until the character holds its pose as firmly as you want.
+- Each bone also has its own **Power**, a share of the whole: 0 lets just that part go limp (a dangling arm) while the rest follows the animation.
+- The model needs a skeleton, as for a limp ragdoll.
+
+**In a script:**
+
+```ts
+// Start powered: it keeps animating and walking
+entity.ragdoll(true, { power: 0.6 });
+
+// A hit: shove the head back, it springs back to the animation
+entity.ragdollPush("head", 0, 0, -3);
+
+// Hit hard: go loose for a moment, then firm up again
+entity.ragdollPower(0.1);
+game.after(0.5, () => entity.ragdollPower(0.6));
+
+// Dead: fully limp
+entity.ragdollPower(0);
+```
+
+**In an event sheet:** the **Ragdoll** action has a **Power** setting, and **Set ragdoll power** changes it later. **Push ragdoll part** works the same as for a limp character.
+
+A powered character keeps its own physics body, so movement behaviors, `setVelocity`, `applyImpulse` and `applyForce` still move it; only `ragdollPush` moves bones. Joint limits are taken around the animated pose, and the bones never fall asleep while powered.
+
+Things to know:
+
+- Switching a character from limp to powered while the game runs does not move its own body to where the ragdoll lies, so start powered (or at least stand it up) rather than switching after it has fallen.
+- Power values and spring strength have only been tried on a few characters; a very light or very heavy character may need a different Power to feel right.
 
 ## Parts of a model
 
