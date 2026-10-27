@@ -1,11 +1,11 @@
 ---
 title: Layers
-description: Put objects on layers, then leave layers out of a camera's picture or look at only some layers with a raycast — like Unity's layers and culling mask.
+description: Put objects on layers, then leave layers out of a camera's picture, look at only some layers with a raycast, or choose which layers collide — like Unity's layers and culling mask.
 ---
 
 # Layers
 
-A **layer** is a name you put on an object so a camera or a raycast can treat a whole group alike: the minimap camera that leaves out the clouds, the shot that only hits enemies. Every object starts on **Default**.
+A **layer** is a name you put on an object so a camera, a raycast or the physics can treat a whole group alike: the minimap camera that leaves out the clouds, the shot that only hits enemies. Every object starts on **Default**.
 
 ## Make layers
 
@@ -26,6 +26,15 @@ const hit = game.raycast(muzzle.position, { direction: aim, length: 50, layers: 
 
 `layers` takes a name or a list; only objects on those layers can be hit. It combines with `tags` and `ignore`.
 
+## Choose which layers collide
+
+Open **Project settings → Layer collisions**. Every pair of layers (Default included) has a toggle: lit means the two collide, dark means objects on them **pass through each other**, and no collision or trigger event happens between them. This is Unity's Layer Collision Matrix. Everything collides until you switch a pair off.
+
+- Use it for ghosts that walk through walls, bullets that ignore the shooter's team, or pickups the player passes through while enemies cannot.
+- It follows an object when its layer changes while playing (**Set layer**, `entity.layer = ...`), so a player can turn into a ghost for a moment.
+- Raycasts have their own layer list (above) and ignore this matrix. A character's ground check and auto-step only see layers it collides with.
+- Renaming a layer keeps its switches; deleting a layer removes them. There is room for **14 layers** besides Default.
+
 ## From events and scripts
 
 - Event block **Set layer** moves an object to a layer by name.
@@ -35,4 +44,4 @@ const hit = game.raycast(muzzle.position, { direction: aim, length: 50, layers: 
 
 - An object is on **one** layer. Use tags when it needs several labels.
 - The block and the script take any name, but only layers made in Project settings do anything for cameras; setting a name that does not exist reports it in the console (the block) and leaves the object on that name.
-- Layers do not change which objects collide with each other.
+- Layers collide with each other unless you switch a pair off in Layer collisions.

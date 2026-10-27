@@ -1,0 +1,100 @@
+---
+title: Hungry Hole
+description: Steer a hole round a small city and swallow everything that fits, from traffic cones to skyscrapers. It shows layers with the collision matrix, a custom ground shader and a size-tier game design, all in an event sheet. Play it in your browser, then open the project and see how it works.
+---
+
+# Hungry Hole
+
+Steer a hole round a small city. Whatever is smaller than the hole drops in, and the hole grows with everything it swallows: cones and crates first, then trees and cars, houses, shops, and in the end the skyscrapers. You have 100 seconds.
+
+It is a tour of three things the engine does well: **layers with the collision matrix**, a **custom shader**, and a game built from **size tiers**. **Everything is an event sheet and project data: there are no code scripts.** The buildings and props are free [Kenney](https://kenney.nl) models.
+
+<PlayEmbed
+  src="https://hidencod.github.io/tge-assets/showcase/hungry-hole/"
+  poster="/img/showcase/hungry-hole-play.webp"
+  title="Hungry Hole"
+  size="11 MB"
+/>
+
+**Controls:** the joystick steers the hole (**WASD** or the **arrow keys** on a computer). Tap **Play** to start. When time is up your score goes to the *Best score* board.
+
+## Open it in the editor
+
+1. Download **[hungry-hole.tge](https://hidencod.github.io/tge-assets/showcase/hungry-hole/hungry-hole.tge)** (2.4 MB).
+2. Open the editor: **[editor.jeevagames.com](https://editor.jeevagames.com)** on a computer, or the Android app.
+3. On the home screen tap **Import .tge** and pick the file, then open **Hungry Hole (imported)**.
+4. Press **▶ Play**, or open **Logic → Main events** to read the rules.
+
+![Hungry Hole's event sheet in the editor](/img/showcase/hungry-hole-events.webp)
+
+## How it works
+
+### Falling through the ground: layers and the collision matrix
+
+The ground is a normal static collider, and everything stands on it. To let one thing drop through it, the game moves that thing to a layer that **collides with nothing**.
+
+**Project settings → Layers** has two layers, **Ground** and **Falling**. **Layer collisions** switches off every pair that has *Falling* in it:
+
+| Pair | Collides |
+| --- | --- |
+| Ground × Falling | no |
+| Default × Falling | no |
+| Falling × Falling | no |
+| everything else | yes |
+
+The ground object is on **Ground**; everything else starts on **Default**, so it stands on the ground. When the hole takes something, one block, **Set layer** `Falling`, makes it lose the floor and drop. It also falls past its neighbours instead of knocking them over. See [Layers](../world/layers).
+
+### The hole in the ground: a shader
+
+The ground does not really have a hole. Its material uses a **custom shader** that throws away every pixel inside a circle ([Shaders](../world/shaders)). The same shader draws the grass, the roads on a 20 m grid, the kerbs, the dashed lines, and the glowing rim round the hole. A dark box far below is what you see through it.
+
+The circle's place and size come from three uniforms, set every frame by events:
+
+```
+Set shader uniform uHoleX of Ground to Hole.x
+Set shader uniform uHoleZ of Ground to Hole.z
+Set shader uniform uHoleR of Ground to HoleR
+```
+
+`Hole` is an empty object that the joystick moves: *Set position* to `Hole.x + joystickX * speed * dt` (kept inside the city with `clamp`).
+
+### Swallowing: size tiers
+
+Every prop carries a **tag** for its size tier, `t1` to `t5`. Each tier has one event, run every tick while you play:
+
+- **Distance to** `#t3` from `Hole`, **Measure: Flat (X, Z)**, less than `HoleR`. The *flat* measure ignores height, so a tall skyscraper counts as over the hole when its middle is.
+- **Compare** `HoleR * 1.15 ≥ 2.6`: the hole must be big enough for the biggest thing in the tier.
+- Then, for each one picked (**For each** `#t3`): **Add** the tier's points to `Mass`, **Set layer** `Falling`, and swap the tag from `t3` to `eaten`.
+
+Things that fall far enough (`y < -9`) are destroyed by one more event.
+
+| Tier | Things | Points | Hole needed |
+| --- | --- | --- | --- |
+| t1 | cones, barrels, crates | 1 | any |
+| t2 | trees, cars | 3 | 1.3 m radius |
+| t3 | houses, a garbage truck | 8 | 2.3 m |
+| t4 | shops, offices | 18 | 3.1 m |
+| t5 | skyscrapers | 40 | 3.9 m |
+
+### Growing
+
+The hole's radius comes from how much it has eaten, with a formula that grows fast at first and slows down:
+
+```
+Set HoleR to min(5.5, 1 + 0.1 * pow(Mass, 0.62))
+```
+
+The camera follows the hole and rises as it grows (*Set position* on `Camera`, a little closer to its target every frame), so you always see where you are going.
+
+### Score and the board
+
+The score is `floor(Mass * 10)`. When `TimeLeft` reaches 0 the game stops, **Submit score** sends it to the *Best score* board (higher is better), and the end screen offers **Play again** and **Best scores**. Two achievements, *Big appetite* and *Skyscraper snack*, unlock when the hole reaches a size. See [Services](../world/services).
+
+## Make it yours
+
+- **Harder or easier:** change `ROUND`-style numbers in the events: the time (100), the growth (`0.1`, `0.62`), the speed (`7 + HoleR * 1.3`).
+- **New things to eat:** add an object with a **Rigidbody** and a **Collider**, give it a tier tag (`t2`, say) and put it on the Default layer.
+- **A new tier:** copy a tier event, use a new tag and set its points and the hole size it needs.
+- **Something that fights back:** add a layer that does not fall, such as a bomb that costs time when the hole goes over it.
+
+![The hole near the end of a round](/img/showcase/hungry-hole-big.webp)

@@ -32,6 +32,7 @@ const GAMES = [
   { module: 'streetRacer', slug: 'street-racer', shots: streetRacerShots, expect: 'Race!' },
   { module: 'lootRoom', slug: 'loot-room', shots: lootRoomShots },
   { module: 'crystalVault', slug: 'crystal-vault', shots: crystalVaultShots, expect: 'Crystals: 0 / 6' },
+  { module: 'holeRush', slug: 'hungry-hole', shots: holeRushShots, expect: 'Hungry Hole' },
 ];
 
 const filter = process.argv.slice(2).filter((a) => !a.startsWith('--'));
@@ -222,6 +223,70 @@ async function crystalVaultShots({ page, shot, tge, module }) {
   await shot('events');
 }
 
+async function holeRushShots({ page, shot, tge, module }) {
+  await page.goto(`${TGE}/showcase/dev.html?game=${module}`, { timeout: 120000 });
+  await page.waitForFunction(() => window.__tgeReady, null, { timeout: 120000 });
+  await page.waitForTimeout(4000);
+  await shot('start');
+  // A bot plays by pressing the arrow keys towards the nearest thing the hole can swallow; time is stepped by hand.
+  await page.evaluate(() => {
+    const g = window.__tgeGame;
+    cancelAnimationFrame(g.raf);
+    const key = (type, code) => window.dispatchEvent(new KeyboardEvent(type, { code, bubbles: true }));
+    const hole = g.find('Hole');
+    const keys = ['KeyA', 'KeyD', 'KeyW', 'KeyS'];
+    let held = new Set();
+    const need = { t1: 0.5, t2: 1.5, t3: 2.6, t4: 3.5, t5: 4.5 };
+    window.__runBot = (n) => {
+      for (let i = 0; i < n; i++) {
+        const r = g.getVar('HoleR');
+        let best = null, bd = 1e9;
+        for (const t of Object.keys(need)) {
+          if (r * 1.15 < need[t]) continue;
+          for (const e of g.query('#' + t)) {
+            const d = Math.hypot(e.position.x - hole.position.x, e.position.z - hole.position.z);
+            if (d < bd) { bd = d; best = e; }
+          }
+        }
+        const want = new Set();
+        if (best) {
+          const dx = best.position.x - hole.position.x, dz = best.position.z - hole.position.z;
+          if (dx > 0.25) want.add('KeyD'); else if (dx < -0.25) want.add('KeyA');
+          if (dz > 0.25) want.add('KeyS'); else if (dz < -0.25) want.add('KeyW');
+        }
+        for (const k of keys) {
+          if (want.has(k) && !held.has(k)) key('keydown', k);
+          if (!want.has(k) && held.has(k)) key('keyup', k);
+        }
+        held = want;
+        g.tick(1 / 60);
+      }
+    };
+    g.pendingUIClicks.push(g.find('PlayButton').id);
+    g.tick(1 / 60);
+    window.__runBot(420);
+  });
+  await shot('play');
+  await page.evaluate(() => window.__runBot(1500));
+  await shot('big');
+  await page.evaluate(() => { const g = window.__tgeGame; g.setVar('TimeLeft', 0.02); for (let i = 0; i < 6; i++) g.tick(1 / 60); });
+  await page.waitForTimeout(600);
+  await shot('end');
+  // The project in the editor, with its event sheet open.
+  await page.goto(TGE + '/', { timeout: 120000 });
+  await page.waitForSelector('.hm', { timeout: 30000 });
+  await importTge(page, tge);
+  await page.locator('.hm-card', { hasText: 'Hungry Hole' }).first().click({ timeout: 60000 });
+  await page.waitForSelector('.editor.desktop', { timeout: 60000 });
+  await page.waitForTimeout(6000);
+  await shot('editor');
+  await page.locator('.desk-area .tab[data-tab="logic"]').click();
+  await page.locator('.list-row', { hasText: 'Main events' }).first().click();
+  await page.waitForSelector('.es-root', { timeout: 30000 });
+  await page.waitForTimeout(1500);
+  await shot('events');
+}
+
 /** Open an exported game from a local web server and fail loudly when it throws or does not show its text. */
 async function checkExported(browser, file, game) {
   if (!existsSync(file)) throw new Error('missing ' + file);
@@ -252,6 +317,8 @@ async function checkExported(browser, file, game) {
  * import), so one empty project is made first: after that the page lists projects and has the import button.
  */
 async function importTge(page, tge) {
+  // A visit with no seen release opens on What's new: go to the projects page first.
+  await page.getByRole('button', { name: 'Projects', exact: true }).first().click({ timeout: 3000 }).catch(() => {});
   const importBtn = page.getByRole('button', { name: /Import \.tge/ });
   if (!(await importBtn.count())) {
     await page.getByRole('button', { name: /New project/ }).first().click();

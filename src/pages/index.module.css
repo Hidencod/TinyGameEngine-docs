@@ -52,7 +52,7 @@
 .section { padding: 4.5rem 0 0; }
 .h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1.12; letter-spacing: -0.02em; font-weight: 650; margin: 0 0 1.6rem; }
 
-.games { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+.games { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.4rem; }
 .game { display: block; color: var(--text); text-decoration: none; border-radius: 14px; }
 .game:hover { color: var(--text); text-decoration: none; }
 .gameImg { padding: 4px; border-radius: 14px; background: var(--surface); box-shadow: var(--ring); transition: box-shadow 150ms ease; }

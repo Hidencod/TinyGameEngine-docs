@@ -11,6 +11,7 @@ function Shot({name, alt, className}: {name: string; alt: string; className?: st
 const GAMES = [
   {to: '/docs/showcase/street-racer', shot: 'street-racer-race', title: 'Street Racer', text: 'AI opponents, laps, a grid start and a best-time board.'},
   {to: '/docs/showcase/crystal-vault', shot: 'crystal-vault-play', title: 'Crystal Vault', text: 'Guards, pickups, a win screen and a second language.'},
+  {to: '/docs/showcase/hungry-hole', shot: 'hungry-hole-big', title: 'Hungry Hole', text: 'A hole that grows as it swallows a city: layers and a custom shader.'},
   {to: '/docs/showcase/loot-room', shot: 'loot-room-room', title: 'Loot Room', text: 'An inventory, a book of items and a health bar.'},
 ];
 
