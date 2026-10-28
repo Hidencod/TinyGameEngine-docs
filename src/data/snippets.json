@@ -88,6 +88,14 @@
     "description": "Global script: keeps a Text entity named \"ScoreText\" updated."
   },
   {
+    "id": "webrequest",
+    "title": "Web request (global)",
+    "icon": "🔗",
+    "scope": "global",
+    "code": "// Global script: ask a web server for data and send a score.\n// Only https:// works. A game played from the gallery may only contact the domains you list in\n// Project settings → Web requests → Allowed domains.\nasync function loadScores() {\n  const r = await game.http.get('https://example.com/scores.json');\n  if (!r.ok) { game.log('No scores: ' + r.error); return; }   // never throws: a failure is ok = false\n  game.setVar('TopName', r.json.list[0].name);              // r.json is the reply read as JSON\n}\n\nasync function sendScore() {\n  // An object is sent as JSON. Never put a secret key in a game: call your own server instead.\n  const r = await game.http.post('https://example.com/score', { name: 'Ann', score: game.getVar('Score') });\n  if (!r.ok) game.log('Score not sent: ' + r.error);\n}\n\nloadScores();\ngame.on('died', sendScore);\n",
+    "description": ""
+  },
+  {
     "id": "swipe",
     "title": "Swipe lanes (runner)",
     "icon": "👆",

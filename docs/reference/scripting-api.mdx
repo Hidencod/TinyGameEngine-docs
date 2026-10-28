@@ -605,6 +605,28 @@ function update(dt) {
 }
 ```
 
+### Web request (global)
+
+```js
+// Global script: ask a web server for data and send a score.
+// Only https:// works. A game played from the gallery may only contact the domains you list in
+// Project settings → Web requests → Allowed domains.
+async function loadScores() {
+  const r = await game.http.get('https://example.com/scores.json');
+  if (!r.ok) { game.log('No scores: ' + r.error); return; }   // never throws: a failure is ok = false
+  game.setVar('TopName', r.json.list[0].name);              // r.json is the reply read as JSON
+}
+
+async function sendScore() {
+  // An object is sent as JSON. Never put a secret key in a game: call your own server instead.
+  const r = await game.http.post('https://example.com/score', { name: 'Ann', score: game.getVar('Score') });
+  if (!r.ok) game.log('Score not sent: ' + r.error);
+}
+
+loadScores();
+game.on('died', sendScore);
+```
+
 ### Swipe lanes (runner)
 
 Swipe left/right to switch between 3 lanes, swipe up to jump.
