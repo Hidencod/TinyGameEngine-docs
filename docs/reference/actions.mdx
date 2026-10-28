@@ -16,7 +16,7 @@ Actions are the **DO** part of an event. They run from top to bottom when the ev
 Number and text fields accept expressions, e.g. `Score + 1`, `"Score: " + Score`, `Player.x`, `random(1, 6)`. See [Expressions](./expressions).
 :::
 
-There are **190 actions**, grouped by category as in the action picker.
+There are **191 actions**, grouped by category as in the action picker.
 
 [⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🎬 Timeline](#timeline) · [🌐 Language](#language) · [🏆 Services](#services) · [🔗 Web](#web) · [👥 Multiplayer](#multiplayer) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera) · [🎚️ Graphics](#graphics)
 
@@ -1541,6 +1541,22 @@ How much a layer of the Animator counts: 0 = not at all, 1 = fully. The Base Lay
 | Value (number or text) | Expression | `0` | *Optional.* |
 | Value 2 | Expression |  | *Optional.* |
 | Value 3 | Expression |  | *Optional.* |
+
+### Spawn for everyone {/* #net-spawn */}
+
+<span class="tge-ace-display">Spawn ‹Prefab to create› for everyone at (‹X›, ‹Y›, ‹Z›)</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `net.spawn` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Prefab to create | Object / prefab |  |  |
+| X | Number (expression) | `0` |  |
+| Y | Number (expression) | `0` |  |
+| Z | Number (expression) | `0` |  |
 
 ## 🧱 Physics {/* #physics */}
 

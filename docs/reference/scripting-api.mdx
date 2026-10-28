@@ -118,6 +118,8 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `playAnimation(name: string, loop = true)` | `void` | Play a clip of the 3D model, or an animation of a sprite, e.g. "walk" or "jump". loop=false plays once and holds the last frame. Asking for the clip already playing keeps it going. With an Animator component the name is a state of its controller. |
 | `animator` | `Animator\|null` | The Animator (an Animator component with a controller), as in Unity: animator.setFloat("Speed", 3), setBool, setInteger, setTrigger("Attack"), resetTrigger, getFloat / getBool / getInteger, play("Die"), crossFade("Run", 0.2), state, isInState("Jump"), normalizedTime(), isInTransition(), setLayerWeight(1, 0.5), speed. Null without one. |
 | `stopAnimation()` | `void` | Stop the playing model animation. |
+| `isMine` | `boolean` | In a multiplayer room: true when this player drives the object (placed objects belong to the host, objects from game.net.spawn to whoever spawned them). Always true outside a room. Objects driven by someone else do not run their behaviors; check isMine before reading input in your own scripts. |
+| `owner` | `NetPlayer\|null` | In a multiplayer room: the player who drives the object, or null. |
 | `ragdoll(on = true, opts?)` | `void` | Make a rigged 3D character limp with physics, e.g. entity.ragdoll() when it dies; ragdoll(false) brings it back to its animation. The object itself stays where it is, only its bones move. entity.ragdolled says whether it is limp. entity.ragdoll(true, &#123; impulse: &#123; x, y, z &#125; &#125;) starts it with a shove (a hit that knocks it down). |
 | `ragdollPower(power)` | `void` | Powered ragdoll: how hard the ragdoll's bones are pulled toward the playing animation, 0 (limp) to 1 (follows it, a hit still moves it and it recovers). entity.ragdoll(true, &#123; power: 0.8 &#125;) starts powered: the character keeps animating and keeps its own body, so it still walks. |
 | `ragdollPush(bone, x, y, z)` | `void` | Push the limp character's bones whose name contains `bone` (e.g. "arm", "head"), an impulse shared out by their mass. |
@@ -232,7 +234,7 @@ The running game.
 | `navmesh` | `NavMesh` | The baked navigation mesh (Project settings → Navigation): game.navmesh.findPath(from, to, &#123; radius, height &#125;) gives &#123; complete, points: [&#123;x,y,z,leap&#125;] &#125; over slopes, stairs and floors; sample(point) the nearest place to stand; rebuild() after walls change; enabled, lastBakeMs. |
 | `services` | `ServicesAPI` | Achievements, leaderboards, ads and purchases from Files → Services: game.services.unlockAchievement("first"), .submitScore("score", 12), .showRewarded(), .buy("noAds"), .owns("noAds"). Set game.services.provider = &#123; showRewarded: () =&gt; …, buy: p =&gt; … &#125; to handle any of them yourself (your own ad network or store); the results come back as game.on("adFinished" / "purchaseFinished" / "achievementUnlocked", …). |
 | `http` | `HttpAPI` | Web requests: const r = await game.http.get("https://…"); r.ok, r.status, r.json, r.text. Also .post(url, body) (an object is sent as JSON) and .request(url, &#123; method, headers, body, timeout, name &#125;). It never throws: a failure is r.ok === false with r.error. https only (Project settings → Web requests → Allow HTTP for plain http); a game played from the gallery may only contact the domains listed there. Replies also come as game.on("webResponse" / "webError", …). |
-| `net` | `NetAPI` | Rooms for realtime multiplayer: const r = await game.net.create(); r.code is the room code to share; a friend does await game.net.join(code). Then game.net.send("move", &#123; x: 1 &#125;) reaches the others, and game.on("netMessage", m =&gt; m.name, m.data, m.from.name) receives. game.net.players, .me, .host, .isHost, .code. Also "netPlayerJoined" / "netPlayerLeft" / "netClosed". The room only relays messages (it never runs your game): each player moves their own objects and sends where they are; the host decides shared things like the score. Up to 8 players, 30 messages a second each, about 2000 characters a message. |
+| `net` | `NetAPI` | Rooms for realtime multiplayer: const r = await game.net.create(); r.code is the room code to share; a friend does await game.net.join(code). Then game.net.send("move", &#123; x: 1 &#125;) reaches the others, and game.on("netMessage", m =&gt; m.name, m.data, m.from.name) receives. game.net.players, .me, .host, .isHost, .code. Also "netPlayerJoined" / "netPlayerLeft" / "netClosed". The room only relays messages (it never runs your game): each player moves their own objects and sends where they are; the host decides shared things like the score. Up to 8 players, 30 messages a second each, about 2000 characters a message. game.net.spawn("Car", &#123; x, y, z &#125;) makes a prefab that every player sees: you drive it, the others see a copy that glides along (give prefabs and placed objects a Net Sync component to choose what is sent). entity.isMine says whether this player drives an object (a placed object belongs to the host); only run input on objects that are yours. |
 | `timeline(name)` | `Timeline` | A cutscene made in Files → Timeline: game.timeline("Intro").play(). Also pause(), stop(), skip() (the signals still to come fire), seek(seconds), time, duration, isPlaying, finished, speed, loop. game.on("timelineSignal", e =&gt; …) hears its signals (e.signal), "timelineFinished" its end. |
 | `renderTexture(name)` | `RenderTexture` | A render texture made in Files (what a camera with it as Target Texture draws): game.renderTexture("Monitor").paused = true freezes the picture, false starts it again; refresh() draws one more picture even while paused; name, width, height. |
 | `getCamera()` | `entity\|null` | The active camera entity. |
@@ -663,6 +665,24 @@ function update(dt) {
 }
 
 start();
+```
+
+### Multiplayer players (global)
+
+```js
+// Global script: every player gets a car that all the others see. Needs a prefab called "Car".
+// game.net.spawn makes it for everyone; you drive yours, the others' cars glide along by themselves.
+let mine = null;
+
+game.on('netJoined', () => {
+  mine = game.net.spawn('Car', { x: game.net.me.id * 3, y: 1, z: 0 });
+});
+
+function update(dt) {
+  if (!mine || mine.destroyed) return;
+  // Only read input for the car that is yours. Cars of other players have isMine === false.
+  if (mine.isMine) mine.translate(input.axis.x * 5 * dt, 0, -input.axis.y * 5 * dt);
+}
 ```
 
 ### Swipe lanes (runner)

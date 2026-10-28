@@ -449,6 +449,18 @@
           "doc": "Stop the playing model animation."
         },
         {
+          "name": "isMine",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "In a multiplayer room: true when this player drives the object (placed objects belong to the host, objects from game.net.spawn to whoever spawned them). Always true outside a room. Objects driven by someone else do not run their behaviors; check isMine before reading input in your own scripts."
+        },
+        {
+          "name": "owner",
+          "kind": "property",
+          "type": "NetPlayer|null",
+          "doc": "In a multiplayer room: the player who drives the object, or null."
+        },
+        {
           "name": "ragdoll",
           "kind": "method",
           "sig": "(on = true, opts?)",
@@ -1185,7 +1197,7 @@
           "name": "net",
           "kind": "property",
           "type": "NetAPI",
-          "doc": "Rooms for realtime multiplayer: const r = await game.net.create(); r.code is the room code to share; a friend does await game.net.join(code). Then game.net.send(\"move\", { x: 1 }) reaches the others, and game.on(\"netMessage\", m => m.name, m.data, m.from.name) receives. game.net.players, .me, .host, .isHost, .code. Also \"netPlayerJoined\" / \"netPlayerLeft\" / \"netClosed\". The room only relays messages (it never runs your game): each player moves their own objects and sends where they are; the host decides shared things like the score. Up to 8 players, 30 messages a second each, about 2000 characters a message."
+          "doc": "Rooms for realtime multiplayer: const r = await game.net.create(); r.code is the room code to share; a friend does await game.net.join(code). Then game.net.send(\"move\", { x: 1 }) reaches the others, and game.on(\"netMessage\", m => m.name, m.data, m.from.name) receives. game.net.players, .me, .host, .isHost, .code. Also \"netPlayerJoined\" / \"netPlayerLeft\" / \"netClosed\". The room only relays messages (it never runs your game): each player moves their own objects and sends where they are; the host decides shared things like the score. Up to 8 players, 30 messages a second each, about 2000 characters a message. game.net.spawn(\"Car\", { x, y, z }) makes a prefab that every player sees: you drive it, the others see a copy that glides along (give prefabs and placed objects a Net Sync component to choose what is sent). entity.isMine says whether this player drives an object (a placed object belongs to the host); only run input on objects that are yours."
         },
         {
           "name": "timeline",

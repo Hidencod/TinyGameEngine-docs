@@ -104,6 +104,14 @@
     "description": ""
   },
   {
+    "id": "multiplayer-spawn",
+    "title": "Multiplayer players (global)",
+    "icon": "🧬",
+    "scope": "global",
+    "code": "// Global script: every player gets a car that all the others see. Needs a prefab called \"Car\".\n// game.net.spawn makes it for everyone; you drive yours, the others' cars glide along by themselves.\nlet mine = null;\n\ngame.on('netJoined', () => {\n  mine = game.net.spawn('Car', { x: game.net.me.id * 3, y: 1, z: 0 });\n});\n\nfunction update(dt) {\n  if (!mine || mine.destroyed) return;\n  // Only read input for the car that is yours. Cars of other players have isMine === false.\n  if (mine.isMine) mine.translate(input.axis.x * 5 * dt, 0, -input.axis.y * 5 * dt);\n}\n",
+    "description": ""
+  },
+  {
     "id": "swipe",
     "title": "Swipe lanes (runner)",
     "icon": "👆",

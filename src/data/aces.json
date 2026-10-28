@@ -9110,6 +9110,85 @@
       ]
     },
     {
+      "id": "net.spawn",
+      "kind": "action",
+      "category": "Multiplayer",
+      "label": "Spawn for everyone",
+      "hint": "Every player in the room sees it; you drive it, the others see a copy that follows. Outside a room it just spawns",
+      "display": "Spawn {what} for everyone at ({x}, {y}, {z})",
+      "displayNoObject": null,
+      "icon": "🧬",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "what",
+          "label": "Prefab to create",
+          "type": "prefab",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "x",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Z",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "net.isMine",
+      "kind": "condition",
+      "category": "Multiplayer",
+      "label": "Is mine",
+      "hint": "You drive this object: a placed object belongs to the host, a spawned one belongs to whoever spawned it. Always true outside a room",
+      "display": "{object} is mine",
+      "displayNoObject": null,
+      "icon": "🙋",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
       "id": "net.isHost",
       "kind": "condition",
       "category": "Multiplayer",

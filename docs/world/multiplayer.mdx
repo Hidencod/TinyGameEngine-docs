@@ -50,6 +50,21 @@ game.on('netPlayerLeft', (e) => game.log(e.player.name + ' left'));
 
 `game.net.players`, `.me`, `.host`, `.isHost`, `.code` and `.state` (`offline`, `connecting`, `online`) tell where you are. Nothing throws: a room that cannot be joined is `ok: false` with an `error`. The editor's **Snippets** has a **Multiplayer room (global)** example.
 
+## Syncing objects
+
+Sending positions by hand works, but most games just want "this object is shared". Two things do that for you.
+
+**Spawn for everyone** (block) or `game.net.spawn('Car', { x: 0, y: 1, z: 0 })` (script) makes a prefab that every player in the room sees. **You drive it**: its position goes to the others about ten times a second, and on their side it is a copy that glides to where yours is. When you destroy it, or leave the room, it goes for everyone. A player who joins later gets the objects that already exist. Outside a room it simply makes the object, so the same game also plays alone.
+
+The **Net sync** component (Add component → Net sync) chooses what is sent: updates per second (1 to 30), and whether position, rotation and scale travel. A prefab without it still syncs position and rotation at 10 a second. Put it on an object **placed in the scene** and that object belongs to the **host**; the other players see it glide.
+
+Things to know:
+
+- **Whose is it?** The condition **Is mine** (`entity.isMine`) is true for objects this player drives. Use it before reading input: *when the joystick moves, if the Car is mine, move it*. `entity.owner` is the player who drives it.
+- **Copies stand still on their own.** The behaviors of an object someone else drives do not run on your side (their Platformer would otherwise walk to *your* joystick), and its physics body follows what it is told. Your own scripts and events still run, so check **Is mine** in anything that reads input.
+- Only the owner can move an object: a position sent by anyone else is ignored.
+- Movements smaller than half a centimetre are not sent, and an object that stands still sends one update a second.
+
 ## The host
 
 The **host** is the player who has been in the room the longest. When the host leaves, the next player becomes host and everyone is told. Use it for decisions that must come from one place: only the host spawns the enemies, only the host counts the score.
