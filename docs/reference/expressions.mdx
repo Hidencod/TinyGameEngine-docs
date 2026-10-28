@@ -111,6 +111,25 @@ If you mistype a name, the game keeps running: it shows a friendly message once 
 | `replace(text, find, with)` | Replace every occurrence |
 | `pad(value, length, char?)` | Pad with leading zeros, e.g. 007 |
 
+### Multiplayer
+
+| Function | What it does |
+| --- | --- |
+| `netcode()` | The code of the room you are in (give it to friends so they can join); empty when not in a room |
+| `netishost()` | 1 when you are the host of the room (the player who has been in it the longest), else 0 |
+| `netonline()` | 1 when you are in a room, else 0 |
+| `netplayers()` | How many players are in the room, you included |
+| `netplayername(index)` | The name of a player by number (0 is the first to have joined); use with a loop |
+| `netplayerid(index)` | The id of a player by number (0 is the first to have joined) |
+| `netmyname()` | Your name in the room |
+| `netmyid()` | Your id in the room (0 when not in one) |
+| `nethostname()` | The name of the host |
+| `netwho()` | In "On player joined", "On player left" and "On message": the name of that player |
+| `netwhoid()` | In "On player joined", "On player left" and "On message": the id of that player |
+| `netmessage()` | The name of the latest message received |
+| `netdata("x")` | In "On message": what the message carries. Without a name it is the whole value; with one it is that part of an object ("x" or "pos.z") |
+| `neterror()` | In "On room failed": why (notfound, full, busy or offline) |
+
 ### Web
 
 | Function | What it does |

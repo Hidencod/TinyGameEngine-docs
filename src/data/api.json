@@ -1182,6 +1182,12 @@
           "doc": "Web requests: const r = await game.http.get(\"https://…\"); r.ok, r.status, r.json, r.text. Also .post(url, body) (an object is sent as JSON) and .request(url, { method, headers, body, timeout, name }). It never throws: a failure is r.ok === false with r.error. https only (Project settings → Web requests → Allow HTTP for plain http); a game played from the gallery may only contact the domains listed there. Replies also come as game.on(\"webResponse\" / \"webError\", …)."
         },
         {
+          "name": "net",
+          "kind": "property",
+          "type": "NetAPI",
+          "doc": "Rooms for realtime multiplayer: const r = await game.net.create(); r.code is the room code to share; a friend does await game.net.join(code). Then game.net.send(\"move\", { x: 1 }) reaches the others, and game.on(\"netMessage\", m => m.name, m.data, m.from.name) receives. game.net.players, .me, .host, .isHost, .code. Also \"netPlayerJoined\" / \"netPlayerLeft\" / \"netClosed\". The room only relays messages (it never runs your game): each player moves their own objects and sends where they are; the host decides shared things like the score. Up to 8 players, 30 messages a second each, about 2000 characters a message."
+        },
+        {
           "name": "timeline",
           "kind": "method",
           "sig": "(name)",

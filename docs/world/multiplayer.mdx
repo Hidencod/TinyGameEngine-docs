@@ -1,0 +1,74 @@
+---
+title: Multiplayer
+description: Realtime multiplayer for your game — rooms with a share code, messages between players, and the host. Event blocks and a script API.
+---
+
+# Multiplayer
+
+Players can play together in a **room**. One player **creates** a room and gets a short **code** such as `K7QMD`. Friends **join** with that code. Everyone in the room can then **send messages** to the others, and every other player gets them at once.
+
+The room only passes messages along. It never runs your game. So the rule of thumb is: **each player moves their own objects and tells the others where they are**, and the **host** decides the things that must be the same for everyone (the score, who won, when a round starts).
+
+## With event blocks
+
+Category **Multiplayer**.
+
+| Block | Does |
+| --- | --- |
+| **Create room** | Makes a room as *Your name*, for up to 2 to 8 players. |
+| **Join room** | Joins the room with a code a friend gives you. |
+| **Leave room** | Disconnects. |
+| **Send message** | Sends a named message with one value (number or text) to every other player. |
+| **On room joined**, **On room failed** | Triggers for the room you made or tried to join. On failed, `neterror()` says why: `notfound`, `full`, `busy` or `offline`. |
+| **On player joined**, **On player left** | Triggers when someone else comes or goes. `netwho()` is their name. |
+| **On message** | Trigger for a message another player sent, for one name or any. |
+| **On disconnected** | The connection to the room was lost. |
+| **I am the host**, **In a room** | Conditions. |
+
+Expressions: `netcode()` (show it so friends can join), `netplayers()`, `netishost()`, `netmyname()`, `netwho()` (the player of the latest join, leave or message), `netmessage()`, `netdata()`, `netdata("x")` (a part of what the message carries), `netplayername(i)` and `netplayerid(i)` (go through the players with a loop), `nethostname()`, `neterror()`.
+
+**Send message** carries up to three values. One value arrives as it is; two or three arrive as a list, read with `netdata("0")`, `netdata("1")`, `netdata("2")`.
+
+For example, two players, each with an object the other one sees as `Friend`: **Create room** (and the other player **Join room**); then under **On room joined**, set a Text to `"Code: " + netcode()`. Under **Every 0.1 seconds**, **Send message** `pos` with `Player.x` and `Player.z`. Under **On message** `pos`, **Set position** of `Friend` to (`netdata("0")`, 0, `netdata("1")`).
+
+## In scripts
+
+```ts
+const r = await game.net.create({ name: 'Ann', max: 4 });
+if (r.ok) game.log('Tell your friends: ' + r.code);
+
+// a friend
+const j = await game.net.join('K7QMD', { name: 'Bo' });
+
+game.net.send('pos', { x: 1, y: 0, z: 2 });          // to everyone else
+game.net.send('whisper', 'hi', somePlayer);           // to one player
+
+game.on('netMessage', (m) => { /* m.from.name, m.name, m.data */ });
+game.on('netPlayerJoined', (e) => game.log(e.player.name + ' joined'));
+game.on('netPlayerLeft', (e) => game.log(e.player.name + ' left'));
+```
+
+`game.net.players`, `.me`, `.host`, `.isHost`, `.code` and `.state` (`offline`, `connecting`, `online`) tell where you are. Nothing throws: a room that cannot be joined is `ok: false` with an `error`. The editor's **Snippets** has a **Multiplayer room (global)** example.
+
+## The host
+
+The **host** is the player who has been in the room the longest. When the host leaves, the next player becomes host and everyone is told. Use it for decisions that must come from one place: only the host spawns the enemies, only the host counts the score.
+
+## Limits
+
+These keep the shared relay affordable for everyone:
+
+- At most **8 players** in a room.
+- A message is at most **about 2000 characters**, and a player can send **30 messages a second**. Ten a second is plenty for positions; more are dropped.
+- A room closes after **3 hours**.
+- The relay has a **daily limit on new rooms** across all games. When it is reached, joining says `busy` until the next day; rooms already open keep going.
+
+Rooms are separate for each game, and a room code only works in the game that made it.
+
+## Your own relay
+
+**Project settings → Multiplayer → Server** is empty by default (the engine's relay). If you run your own relay, put its `wss://` address there and the game uses it instead. A game published to the gallery can always reach the server you set.
+
+:::caution
+Players can send anything, so treat what comes in as untrusted: check that numbers are sensible, and let only the host decide shared results. Do not put secrets in messages; every player in the room sees them.
+:::

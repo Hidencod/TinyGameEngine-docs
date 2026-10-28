@@ -323,6 +323,104 @@
       "insert": "productprice(\"\")"
     },
     {
+      "name": "netcode",
+      "signature": "netcode()",
+      "description": "The code of the room you are in (give it to friends so they can join); empty when not in a room",
+      "category": "Multiplayer",
+      "insert": "netcode()"
+    },
+    {
+      "name": "netishost",
+      "signature": "netishost()",
+      "description": "1 when you are the host of the room (the player who has been in it the longest), else 0",
+      "category": "Multiplayer",
+      "insert": "netishost()"
+    },
+    {
+      "name": "netonline",
+      "signature": "netonline()",
+      "description": "1 when you are in a room, else 0",
+      "category": "Multiplayer",
+      "insert": "netonline()"
+    },
+    {
+      "name": "netplayers",
+      "signature": "netplayers()",
+      "description": "How many players are in the room, you included",
+      "category": "Multiplayer",
+      "insert": "netplayers()"
+    },
+    {
+      "name": "netplayername",
+      "signature": "netplayername(index)",
+      "description": "The name of a player by number (0 is the first to have joined); use with a loop",
+      "category": "Multiplayer",
+      "insert": "netplayername(loopIndex)"
+    },
+    {
+      "name": "netplayerid",
+      "signature": "netplayerid(index)",
+      "description": "The id of a player by number (0 is the first to have joined)",
+      "category": "Multiplayer",
+      "insert": "netplayerid(loopIndex)"
+    },
+    {
+      "name": "netmyname",
+      "signature": "netmyname()",
+      "description": "Your name in the room",
+      "category": "Multiplayer",
+      "insert": "netmyname()"
+    },
+    {
+      "name": "netmyid",
+      "signature": "netmyid()",
+      "description": "Your id in the room (0 when not in one)",
+      "category": "Multiplayer",
+      "insert": "netmyid()"
+    },
+    {
+      "name": "nethostname",
+      "signature": "nethostname()",
+      "description": "The name of the host",
+      "category": "Multiplayer",
+      "insert": "nethostname()"
+    },
+    {
+      "name": "netwho",
+      "signature": "netwho()",
+      "description": "In \"On player joined\", \"On player left\" and \"On message\": the name of that player",
+      "category": "Multiplayer",
+      "insert": "netwho()"
+    },
+    {
+      "name": "netwhoid",
+      "signature": "netwhoid()",
+      "description": "In \"On player joined\", \"On player left\" and \"On message\": the id of that player",
+      "category": "Multiplayer",
+      "insert": "netwhoid()"
+    },
+    {
+      "name": "netmessage",
+      "signature": "netmessage()",
+      "description": "The name of the latest message received",
+      "category": "Multiplayer",
+      "insert": "netmessage()"
+    },
+    {
+      "name": "netdata",
+      "signature": "netdata(\"x\")",
+      "description": "In \"On message\": what the message carries. Without a name it is the whole value; with one it is that part of an object (\"x\" or \"pos.z\")",
+      "category": "Multiplayer",
+      "insert": "netdata()"
+    },
+    {
+      "name": "neterror",
+      "signature": "neterror()",
+      "description": "In \"On room failed\": why (notfound, full, busy or offline)",
+      "category": "Multiplayer",
+      "insert": "neterror()"
+    },
+    {
       "name": "webstatus",
       "signature": "webstatus()",
       "description": "In \"On web response\" / \"On web error\": the status code of the reply (200, 404…; 0 when no reply came)",

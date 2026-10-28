@@ -232,6 +232,7 @@ The running game.
 | `navmesh` | `NavMesh` | The baked navigation mesh (Project settings → Navigation): game.navmesh.findPath(from, to, &#123; radius, height &#125;) gives &#123; complete, points: [&#123;x,y,z,leap&#125;] &#125; over slopes, stairs and floors; sample(point) the nearest place to stand; rebuild() after walls change; enabled, lastBakeMs. |
 | `services` | `ServicesAPI` | Achievements, leaderboards, ads and purchases from Files → Services: game.services.unlockAchievement("first"), .submitScore("score", 12), .showRewarded(), .buy("noAds"), .owns("noAds"). Set game.services.provider = &#123; showRewarded: () =&gt; …, buy: p =&gt; … &#125; to handle any of them yourself (your own ad network or store); the results come back as game.on("adFinished" / "purchaseFinished" / "achievementUnlocked", …). |
 | `http` | `HttpAPI` | Web requests: const r = await game.http.get("https://…"); r.ok, r.status, r.json, r.text. Also .post(url, body) (an object is sent as JSON) and .request(url, &#123; method, headers, body, timeout, name &#125;). It never throws: a failure is r.ok === false with r.error. https only (Project settings → Web requests → Allow HTTP for plain http); a game played from the gallery may only contact the domains listed there. Replies also come as game.on("webResponse" / "webError", …). |
+| `net` | `NetAPI` | Rooms for realtime multiplayer: const r = await game.net.create(); r.code is the room code to share; a friend does await game.net.join(code). Then game.net.send("move", &#123; x: 1 &#125;) reaches the others, and game.on("netMessage", m =&gt; m.name, m.data, m.from.name) receives. game.net.players, .me, .host, .isHost, .code. Also "netPlayerJoined" / "netPlayerLeft" / "netClosed". The room only relays messages (it never runs your game): each player moves their own objects and sends where they are; the host decides shared things like the score. Up to 8 players, 30 messages a second each, about 2000 characters a message. |
 | `timeline(name)` | `Timeline` | A cutscene made in Files → Timeline: game.timeline("Intro").play(). Also pause(), stop(), skip() (the signals still to come fire), seek(seconds), time, duration, isPlaying, finished, speed, loop. game.on("timelineSignal", e =&gt; …) hears its signals (e.signal), "timelineFinished" its end. |
 | `renderTexture(name)` | `RenderTexture` | A render texture made in Files (what a camera with it as Target Texture draws): game.renderTexture("Monitor").paused = true freezes the picture, false starts it again; refresh() draws one more picture even while paused; name, width, height. |
 | `getCamera()` | `entity\|null` | The active camera entity. |
@@ -625,6 +626,43 @@ async function sendScore() {
 
 loadScores();
 game.on('died', sendScore);
+```
+
+### Multiplayer room (global)
+
+```js
+// Global script: make a room, show its code, and share each player's position.
+// One player runs create(); the others run join(code) with the code they were given.
+// The room only relays messages (it never runs your game): everyone moves their own object and tells the others.
+async function start() {
+  const r = await game.net.create({ name: 'Player', max: 4 });
+  if (!r.ok) { game.log('No room: ' + r.error); return; }   // never throws: "notfound", "full", "busy" or "offline"
+  game.setVar('RoomCode', r.code);                         // show it in a Text, friends type it to join
+}
+
+// A friend: await game.net.join(game.getVar('CodeTyped'), { name: 'Bo' });
+
+game.on('netPlayerJoined', (e) => game.log(e.player.name + ' joined'));
+game.on('netPlayerLeft', (e) => game.log(e.player.name + ' left'));
+
+// Receive: move the matching puppet (an object named after the player) to where they say they are.
+game.on('netMessage', (m) => {
+  if (m.name !== 'pos') return;
+  const puppet = game.find(m.from.name);
+  if (puppet) puppet.setPosition(m.data.x, m.data.y, m.data.z);
+});
+
+// Send my position about ten times a second (at most 30 messages a second are allowed).
+let timer = 0;
+function update(dt) {
+  timer += dt;
+  if (timer < 0.1 || game.net.state !== 'online') return;
+  timer = 0;
+  const me = game.find('Player');
+  if (me) game.net.send('pos', { x: me.position.x, y: me.position.y, z: me.position.z });
+}
+
+start();
 ```
 
 ### Swipe lanes (runner)

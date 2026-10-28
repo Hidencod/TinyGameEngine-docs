@@ -96,6 +96,14 @@
     "description": ""
   },
   {
+    "id": "multiplayer",
+    "title": "Multiplayer room (global)",
+    "icon": "👥",
+    "scope": "global",
+    "code": "// Global script: make a room, show its code, and share each player's position.\n// One player runs create(); the others run join(code) with the code they were given.\n// The room only relays messages (it never runs your game): everyone moves their own object and tells the others.\nasync function start() {\n  const r = await game.net.create({ name: 'Player', max: 4 });\n  if (!r.ok) { game.log('No room: ' + r.error); return; }   // never throws: \"notfound\", \"full\", \"busy\" or \"offline\"\n  game.setVar('RoomCode', r.code);                         // show it in a Text, friends type it to join\n}\n\n// A friend: await game.net.join(game.getVar('CodeTyped'), { name: 'Bo' });\n\ngame.on('netPlayerJoined', (e) => game.log(e.player.name + ' joined'));\ngame.on('netPlayerLeft', (e) => game.log(e.player.name + ' left'));\n\n// Receive: move the matching puppet (an object named after the player) to where they say they are.\ngame.on('netMessage', (m) => {\n  if (m.name !== 'pos') return;\n  const puppet = game.find(m.from.name);\n  if (puppet) puppet.setPosition(m.data.x, m.data.y, m.data.z);\n});\n\n// Send my position about ten times a second (at most 30 messages a second are allowed).\nlet timer = 0;\nfunction update(dt) {\n  timer += dt;\n  if (timer < 0.1 || game.net.state !== 'online') return;\n  timer = 0;\n  const me = game.find('Player');\n  if (me) game.net.send('pos', { x: me.position.x, y: me.position.y, z: me.position.z });\n}\n\nstart();\n",
+    "description": ""
+  },
+  {
     "id": "swipe",
     "title": "Swipe lanes (runner)",
     "icon": "👆",

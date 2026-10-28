@@ -16,9 +16,9 @@ Actions are the **DO** part of an event. They run from top to bottom when the ev
 Number and text fields accept expressions, e.g. `Score + 1`, `"Score: " + Score`, `Player.x`, `random(1, 6)`. See [Expressions](./expressions).
 :::
 
-There are **186 actions**, grouped by category as in the action picker.
+There are **190 actions**, grouped by category as in the action picker.
 
-[⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🎬 Timeline](#timeline) · [🌐 Language](#language) · [🏆 Services](#services) · [🔗 Web](#web) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera) · [🎚️ Graphics](#graphics)
+[⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🎬 Timeline](#timeline) · [🌐 Language](#language) · [🏆 Services](#services) · [🔗 Web](#web) · [👥 Multiplayer](#multiplayer) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera) · [🎚️ Graphics](#graphics)
 
 ## ⚙️ System {/* #system */}
 
@@ -1485,6 +1485,62 @@ How much a layer of the Animator counts: 0 = not at all, 1 = fully. The Base Lay
 | Address | Expression | `"https://"` |  |
 | Body (text, sent as it is) | Expression | `""` | *Optional.* |
 | Name | Text |  | *Optional.* |
+
+## 👥 Multiplayer {/* #multiplayer */}
+
+### Create room {/* #net-create */}
+
+<span class="tge-ace-display">Create room as ‹Your name›, up to ‹Most players (2 to 8)› players</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `net.create` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Your name | Expression | `"Player"` |  |
+| Most players (2 to 8) | Number (expression) | `4` |  |
+
+### Join room {/* #net-join */}
+
+<span class="tge-ace-display">Join room ‹Room code› as ‹Your name›</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `net.join` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Room code | Expression | `""` |  |
+| Your name | Expression | `"Player"` |  |
+
+### Leave room {/* #net-leave */}
+
+<span class="tge-ace-display">Leave room</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `net.leave` (as saved in project files)
+- **Parameters:** none
+
+### Send message {/* #net-send */}
+
+<span class="tge-ace-display">Send message ‹Message name› with ‹Value (number or text)›‹Value 2›‹Value 3›</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `net.send` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Message name | Text | `move` |  |
+| Value (number or text) | Expression | `0` | *Optional.* |
+| Value 2 | Expression |  | *Optional.* |
+| Value 3 | Expression |  | *Optional.* |
 
 ## 🧱 Physics {/* #physics */}
 

@@ -18,9 +18,9 @@ Conditions are the **WHEN / IF** part of an event. All conditions of an event mu
 - Most other conditions can be **inverted** (NOT) from the condition’s menu.
 :::
 
-There are **95 conditions**, grouped by category as in the condition picker.
+There are **103 conditions**, grouped by category as in the condition picker.
 
-[⚙️ System](#system) · [🔢 Variables](#variables) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🎬 Timeline](#timeline) · [🌐 Language](#language) · [🏆 Services](#services) · [🔗 Web](#web) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🖼️ UI](#ui) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎚️ Graphics](#graphics)
+[⚙️ System](#system) · [🔢 Variables](#variables) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🎬 Timeline](#timeline) · [🌐 Language](#language) · [🏆 Services](#services) · [🔗 Web](#web) · [👥 Multiplayer](#multiplayer) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🖼️ UI](#ui) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎚️ Graphics](#graphics)
 
 ## ⚙️ System {/* #system */}
 
@@ -867,6 +867,91 @@ Compares one of the Animator's parameters with a value. A bool reads as 1 or 0.
 | Parameter | Type | Default | Notes |
 | --- | --- | --- | --- |
 | Name (empty = any) | Text |  | *Optional.* |
+
+## 👥 Multiplayer {/* #multiplayer */}
+
+### I am the host {/* #net-ishost */}
+
+<span class="tge-ace-display">I am the host</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `net.isHost` (as saved in project files)
+- **Parameters:** none
+
+### In a room {/* #net-isonline */}
+
+<span class="tge-ace-display">In a room</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `net.isOnline` (as saved in project files)
+- **Parameters:** none
+
+### On room joined {/* #net-onjoined */}
+
+<span class="tge-ace-display">On room joined</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `net.onJoined` (as saved in project files)
+- **Parameters:** none
+
+### On room failed {/* #net-onfailed */}
+
+<span class="tge-ace-display">On room failed</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `net.onFailed` (as saved in project files)
+- **Parameters:** none
+
+### On player joined {/* #net-onplayerjoined */}
+
+<span class="tge-ace-display">On player joined</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `net.onPlayerJoined` (as saved in project files)
+- **Parameters:** none
+
+### On player left {/* #net-onplayerleft */}
+
+<span class="tge-ace-display">On player left</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `net.onPlayerLeft` (as saved in project files)
+- **Parameters:** none
+
+### On message {/* #net-onmessage */}
+
+<span class="tge-ace-display">On message ‹Name (empty = any)›</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `net.onMessage` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Name (empty = any) | Text |  | *Optional.* |
+
+### On disconnected {/* #net-onclosed */}
+
+<span class="tge-ace-display">On disconnected</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `net.onClosed` (as saved in project files)
+- **Parameters:** none
 
 ## 🧱 Physics {/* #physics */}
 
