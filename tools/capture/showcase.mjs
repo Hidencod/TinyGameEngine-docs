@@ -33,6 +33,7 @@ const GAMES = [
   { module: 'lootRoom', slug: 'loot-room', shots: lootRoomShots },
   { module: 'crystalVault', slug: 'crystal-vault', shots: crystalVaultShots, expect: 'Crystals: 0 / 6' },
   { module: 'holeRush', slug: 'hungry-hole', shots: holeRushShots, expect: 'Hungry Hole' },
+  { module: 'netBalls', slug: 'ball-arena', shots: ballArenaShots, expect: 'Ball Arena' },
 ];
 
 const filter = process.argv.slice(2).filter((a) => !a.startsWith('--'));
@@ -221,6 +222,29 @@ async function crystalVaultShots({ page, shot, tge, module }) {
   await page.waitForSelector('.es-root', { timeout: 30000 });
   await page.waitForTimeout(1500);
   await shot('events');
+}
+
+async function ballArenaShots({ page, shot, module }) {
+  await page.goto(`${TGE}/showcase/dev.html?game=${module}`, { timeout: 120000 });
+  await page.waitForFunction(() => window.__tgeReady, null, { timeout: 120000 });
+  await page.waitForTimeout(3000);
+  await shot('start');
+  // Play alone (no room needed), then a second ball from a pretend friend so the picture shows two balls.
+  await page.evaluate(() => {
+    const g = window.__tgeGame;
+    cancelAnimationFrame(g.raf);
+    g.pendingUIClicks.push(g.find('AloneButton').id);
+    for (let i = 0; i < 30; i++) g.tick(1 / 60);
+    const me = g.find('Ball');
+    const friend = g.spawn('Ball', { x: -3, y: 0.6, z: 2 });
+    friend.setColor?.('#ff7a59');
+    for (let i = 0; i < 60; i++) g.tick(1 / 60);
+    me.setPosition(2, 0.6, -1);
+    for (let i = 0; i < 30; i++) g.tick(1 / 60);
+    g.render?.(0);
+  });
+  await page.waitForTimeout(800);
+  await shot('play');
 }
 
 async function holeRushShots({ page, shot, tge, module }) {

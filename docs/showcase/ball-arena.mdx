@@ -1,0 +1,56 @@
+---
+title: Ball Arena
+description: A tiny multiplayer game. Everyone who taps Play online lands in the same room and rolls a ball round an arena, and you see the other players' balls move. It shows rooms, Spawn for everyone, Net sync and Is mine, all in an event sheet.
+---
+
+# Ball Arena
+
+A small arena with twelve coins. Tap **Play online** and you join the room `ARENA`. Everyone else who taps it joins the same room, and you see their balls roll about while you collect coins. **Play alone** is the same game without a room.
+
+It is a tour of the **multiplayer** blocks: a room with a code of your own, objects that every player sees, and telling your own ball from the others. **Everything is an event sheet and project data: there are no code scripts.**
+
+<PlayEmbed
+  src="https://hidencod.github.io/tge-assets/showcase/ball-arena/"
+  poster="/img/showcase/ball-arena-play.webp"
+  title="Ball Arena"
+  size="8 MB"
+/>
+
+**Controls:** the joystick rolls your ball (**WASD** or the **arrow keys** on a computer). To try it with a friend, open this page on two devices and tap **Play online** on both.
+
+## Open it in the editor
+
+1. Download **[ball-arena.tge](https://hidencod.github.io/tge-assets/showcase/ball-arena/ball-arena.tge)** (0.1 MB).
+2. Open the editor: **[editor.jeevagames.com](https://editor.jeevagames.com)** on a computer, or the Android app.
+3. On the home screen tap **Import .tge** and pick the file, then open **Ball Arena (imported)**.
+4. Press **▶ Play**, or open **Logic → Main events** to read the rules.
+
+## How it works
+
+### One room for everyone
+
+**Play online** runs **Create room** with the room code `"ARENA"`. The first player makes the room; anyone else who uses the same code joins it. That is a lobby without anybody typing a code. If it cannot connect, **On room failed** says why with `neterror()`.
+
+### A ball for each player
+
+Under **On room joined**, **Spawn for everyone** makes the `Ball` prefab at a random spot. Every player in the room sees it. The player who spawned it **drives** it; the others see a copy that glides to where it is. The `Ball` prefab has a **Net sync** component, which sends its position about ten times a second. When you leave, your ball goes for everyone.
+
+**Play alone** runs the same **Spawn for everyone** with no room, and it just makes the ball.
+
+### Only my ball listens to my finger
+
+Every ball is called `Ball`, so the movement event has a second condition: **Ball is mine**. Only the ball you drive reads the joystick:
+
+- **Every tick** and **Ball is mine** → **Set move input** `Ball` to the joystick.
+
+The balls of other players do not run their behaviors on your device, so even without that check they would not move by themselves. The check is there so *your* joystick does not steer *their* ball in your own copy of the scene.
+
+### Coins
+
+When a ball touches a coin, the coin is destroyed on your screen. Under it, a sub-event with **Ball is mine** adds to your score. A friend's ball that rolls through a coin removes it from your screen but not from your count.
+
+## Make it yours
+
+- **A shared score:** send a `coin` message with **Send message** when you collect one, and let the host add them up. See [Multiplayer](../world/multiplayer).
+- **Different colours:** each player sends the colour they picked with **Send message**, and everyone sets the colour of that player's ball.
+- **A private room:** use **Create room** with no code, and show `netcode()` so a friend can **Join room** with it.

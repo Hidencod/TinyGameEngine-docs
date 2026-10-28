@@ -30,7 +30,7 @@ const sidebars: SidebarsConfig = {
     'templates',
     {
       type: 'category', label: 'Showcase',
-      items: ['showcase/street-racer', 'showcase/loot-room', 'showcase/crystal-vault', 'showcase/hungry-hole'],
+      items: ['showcase/street-racer', 'showcase/loot-room', 'showcase/crystal-vault', 'showcase/hungry-hole', 'showcase/ball-arena'],
     },
     {
       type: 'category', label: 'Help',
