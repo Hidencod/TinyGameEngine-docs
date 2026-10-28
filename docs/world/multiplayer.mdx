@@ -62,6 +62,7 @@ Things to know:
 
 - **Whose is it?** The condition **Is mine** (`entity.isMine`) is true for objects this player drives. Use it before reading input: *when the joystick moves, if the Car is mine, move it*. `entity.owner` is the player who drives it.
 - **Copies stand still on their own.** The behaviors of an object someone else drives do not run on your side (their Platformer would otherwise walk to *your* joystick), and its physics body follows what it is told. Your own scripts and events still run, so check **Is mine** in anything that reads input.
+- **Smooth motion.** Positions go out with the owner's clock, and the others draw the object a moment (about 1.6 update intervals, 0.16 s at the default 10 a second) in the past, gliding between the two positions around that moment. So movement stays smooth even though only ten updates a second travel. If you need it tighter for something fast, raise *Updates / s* on the Net sync component (up to 30; each update costs a message).
 - Only the owner can move an object: a position sent by anyone else is ignored.
 - Movements smaller than half a centimetre are not sent, and an object that stands still sends one update a second.
 
