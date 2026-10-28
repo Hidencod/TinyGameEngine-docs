@@ -47,7 +47,9 @@ The balls of other players do not run their behaviors on your device, so even wi
 
 ### Coins
 
-When a ball touches a coin, the coin is destroyed on your screen. Under it, a sub-event with **Ball is mine** adds to your score. A friend's ball that rolls through a coin removes it from your screen but not from your count.
+Each coin has its own name (`Coin0` to `Coin11`), so every device means the same coin. **Your own ball decides** when it takes one: when **Distance** between `Ball` and `Coin3` is under 0.9 (measured flat) and **Ball is mine**, the coin is destroyed, you score, and **Send message** `coin3` tells the others. Under **On message** `coin3` the other devices destroy `Coin3` too.
+
+Two details came from testing with two phones. A collision would be decided on each device separately, and a spinning coin changes shape and the other player's ball is a little behind, so one device could see a touch and the other not. And the **distance** check looks at the owner's own ball only, which is always exactly where its player sees it. Players who join late still see coins that were taken before they came.
 
 ## Make it yours
 
