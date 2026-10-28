@@ -16,7 +16,7 @@ Actions are the **DO** part of an event. They run from top to bottom when the ev
 Number and text fields accept expressions, e.g. `Score + 1`, `"Score: " + Score`, `Player.x`, `random(1, 6)`. See [Expressions](./expressions).
 :::
 
-There are **191 actions**, grouped by category as in the action picker.
+There are **195 actions**, grouped by category as in the action picker.
 
 [⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🎬 Timeline](#timeline) · [🌐 Language](#language) · [🏆 Services](#services) · [🔗 Web](#web) · [👥 Multiplayer](#multiplayer) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera) · [🎚️ Graphics](#graphics)
 
@@ -1501,6 +1501,21 @@ How much a layer of the Animator counts: 0 = not at all, 1 = fully. The Base Lay
 | --- | --- | --- | --- |
 | Your name | Expression | `"Player"` |  |
 | Most players (2 to 8) | Number (expression) | `4` |  |
+| Room code (empty = random; an existing room is joined) | Expression | `""` | *Optional.* |
+| Listed for Quick match | Choice | `no` | Options: no, yes |
+
+### Quick match {/* #net-quickmatch */}
+
+<span class="tge-ace-display">Quick match as ‹Your name›</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `net.quickMatch` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Your name | Expression | `"Player"` |  |
 
 ### Join room {/* #net-join */}
 
@@ -1557,6 +1572,44 @@ How much a layer of the Animator counts: 0 = not at all, 1 = fully. The Base Lay
 | X | Number (expression) | `0` |  |
 | Y | Number (expression) | `0` |  |
 | Z | Number (expression) | `0` |  |
+
+### Set shared value {/* #net-setshared */}
+
+<span class="tge-ace-display">Set shared ‹Name› to ‹Value›</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `net.setShared` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Name | Text | `round` |  |
+| Value | Expression | `0` |  |
+
+### Add to shared value {/* #net-addshared */}
+
+<span class="tge-ace-display">Add ‹Amount› to shared ‹Name›</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `net.addShared` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Name | Text | `score` |  |
+| Amount | Expression | `1` |  |
+
+### Take control {/* #net-claim */}
+
+<span class="tge-ace-display">‹Object› is taken over by me</span>
+
+
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `net.claim` (as saved in project files)
+- **Parameters:** none
 
 ## 🧱 Physics {/* #physics */}
 

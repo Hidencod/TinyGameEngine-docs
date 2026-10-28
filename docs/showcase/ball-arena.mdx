@@ -27,9 +27,9 @@ It is a tour of the **multiplayer** blocks: a room with a code of your own, obje
 
 ## How it works
 
-### One room for everyone
+### Finding a room
 
-**Play online** runs **Create room** with the room code `"ARENA"`. The first player makes the room; anyone else who uses the same code joins it. That is a lobby without anybody typing a code. If it cannot connect, **On room failed** says why with `neterror()`.
+**Play online** runs **Quick match**. It joins the fullest open room of the game, or, when there is none, makes a public room that the next player will find. Nobody types a code. If it cannot connect, **On room failed** says why with `neterror()`.
 
 ### A ball for each player
 
@@ -45,14 +45,17 @@ Every ball is called `Ball`, so the movement event has a second condition: **Bal
 
 The balls of other players do not run their behaviors on your device, so even without that check they would not move by themselves. The check is there so *your* joystick does not steer *their* ball in your own copy of the scene.
 
-### Coins
+### Coins and the team count
 
-Each coin has its own name (`Coin0` to `Coin11`), so every device means the same coin. **Your own ball decides** when it takes one: when **Distance** between `Ball` and `Coin3` is under 0.9 (measured flat) and **Ball is mine**, the coin is destroyed, you score, and **Send message** `coin3` tells the others. Under **On message** `coin3` the other devices destroy `Coin3` too.
+Each coin has its own name (`Coin0` to `Coin11`), so every device means the same coin. **Your own ball decides** when it takes one: when **Distance** between `Ball` and `Coin3` is under 0.9 (measured flat) and **Ball is mine**, the coin is destroyed and you score. Then **Set shared value** `coin3` to `1` and **Add to shared value** `team` `1`.
 
-Two details came from testing with two phones. A collision would be decided on each device separately, and a spinning coin changes shape and the other player's ball is a little behind, so one device could see a touch and the other not. And the **distance** check looks at the owner's own ball only, which is always exactly where its player sees it. Players who join late still see coins that were taken before they came.
+Everybody else (and you, a moment later) runs **On shared `coin3` changed** and destroys `Coin3` too. Because the room *remembers* shared values, a player who joins late gets `coin3 = 1` as soon as they arrive, and the coin is gone for them as well. That is why a coin is a shared value and not a message. **On shared `team` changed** keeps the text *Team: n / 12* up to date; two players taking coins at the same moment cannot lose a count, because the room does the adding.
+
+Two details came from testing with two phones. A collision would be decided on each device separately, and a spinning coin changes shape and the other player's ball is a little behind, so one device could see a touch and the other not. The **distance** check looks at the owner's own ball only, which is always exactly where its player sees it.
 
 ## Make it yours
 
-- **A shared score:** send a `coin` message with **Send message** when you collect one, and let the host add them up. See [Multiplayer](../world/multiplayer).
+- **A round timer:** the host sets a shared `timeLeft` every second; everyone shows it with `netshared("timeLeft")`. See [Multiplayer](../world/multiplayer).
+- **Pick up the ball:** put a ball with **Net sync** in the scene and use **Take control** when a player touches it: they drive it, the others see it glide.
 - **Different colours:** each player sends the colour they picked with **Send message**, and everyone sets the colour of that player's ball.
-- **A private room:** use **Create room** with no code, and show `netcode()` so a friend can **Join room** with it.
+- **A private room:** use **Create room** (not listed) and show `netcode()` so a friend can **Join room** with it.

@@ -128,6 +128,7 @@ If you mistype a name, the game keeps running: it shows a friendly message once 
 | `netwhoid()` | In "On player joined", "On player left" and "On message": the id of that player |
 | `netmessage()` | The name of the latest message received |
 | `netdata("x")` | In "On message": what the message carries. Without a name it is the whole value; with one it is that part of an object ("x" or "pos.z") |
+| `netshared("name")` | A value the whole room shares (set with Set shared value); empty when it is not set. A late joiner gets them at once |
 | `neterror()` | In "On room failed": why (notfound, full, busy or offline) |
 
 ### Web

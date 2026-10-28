@@ -23,9 +23,14 @@ Category **Multiplayer**.
 | **On player joined**, **On player left** | Triggers when someone else comes or goes. `netwho()` is their name. |
 | **On message** | Trigger for a message another player sent, for one name or any. |
 | **On disconnected** | The connection to the room was lost. |
+| **Quick match** | Joins the fullest open room, or makes a public one for the next player. |
+| **Set shared value**, **Add to shared value** | A value the whole room shares and remembers (see below). |
+| **On shared value changed** | Trigger: someone changed a shared value, or you just joined and it was already set. |
+| **Take control** | You drive this synced object from now on (see below). |
+| **Is mine** | Condition: this player drives the object. |
 | **I am the host**, **In a room** | Conditions. |
 
-Expressions: `netcode()` (show it so friends can join), `netplayers()`, `netishost()`, `netmyname()`, `netwho()` (the player of the latest join, leave or message), `netmessage()`, `netdata()`, `netdata("x")` (a part of what the message carries), `netplayername(i)` and `netplayerid(i)` (go through the players with a loop), `nethostname()`, `neterror()`.
+Expressions: `netshared("name")`, `netcode()` (show it so friends can join), `netplayers()`, `netishost()`, `netmyname()`, `netwho()` (the player of the latest join, leave or message), `netmessage()`, `netdata()`, `netdata("x")` (a part of what the message carries), `netplayername(i)` and `netplayerid(i)` (go through the players with a loop), `nethostname()`, `neterror()`.
 
 **Send message** carries up to three values. One value arrives as it is; two or three arrive as a list, read with `netdata("0")`, `netdata("1")`, `netdata("2")`.
 
@@ -60,11 +65,72 @@ The **Net sync** component (Add component → Net sync) chooses what is sent: up
 
 Things to know:
 
-- **Whose is it?** The condition **Is mine** (`entity.isMine`) is true for objects this player drives. Use it before reading input: *when the joystick moves, if the Car is mine, move it*. `entity.owner` is the player who drives it.
+- **Whose is it?** Every synced object has one **driver**, and **Is mine** tells you whether that is you. See [Who drives an object](#who-drives-an-object) below: it is the most important idea in multiplayer.
 - **Copies stand still on their own.** The behaviors of an object someone else drives do not run on your side (their Platformer would otherwise walk to *your* joystick), and its physics body follows what it is told. Your own scripts and events still run, so check **Is mine** in anything that reads input.
 - **Smooth motion.** Positions go out with the owner's clock, and the others draw the object a moment (about 1.6 update intervals, 0.16 s at the default 10 a second) in the past, gliding between the two positions around that moment. So movement stays smooth even though only ten updates a second travel. If you need it tighter for something fast, raise *Updates / s* on the Net sync component (up to 30; each update costs a message).
 - Only the owner can move an object: a position sent by anyone else is ignored.
 - Movements smaller than half a centimetre are not sent, and an object that stands still sends one update a second.
+
+## Who drives an object
+
+In a room every player runs their **own copy of the game**, on their own device. Every event and every script runs on every device. So for each synced object the room needs one answer to *whose job is it to move this?* That player is the object's **driver**. On the driver's device the object is the real one: it moves, it collides, and it sends its position. On every other device it is a **copy** that glides to where the driver says it is.
+
+| The object | Its driver |
+| --- | --- |
+| Made with **Spawn for everyone** (`game.net.spawn`) | The player who spawned it |
+| Placed in the scene, with a **Net sync** component | The host |
+| After somebody uses **Take control** on it | That player |
+| Anything else (no Net sync, not spawned for everyone) | Nobody: it is **not shared**. Every player has their own copy of it, and each is free to do what they like with it. |
+| Any object, when you are not in a room | You |
+
+### Is mine
+
+**Is mine** (the condition, or `entity.isMine` in scripts) is true when **this player is the driver** of the object. It is:
+
+- `true` for the objects you drive, on your device;
+- `false` for the copies of other players' objects;
+- always `true` for objects that are not synced, and for every object outside a room. So a game that also plays alone needs no special case: put **Is mine** in and it just works.
+
+`entity.owner` is the same thing as a player: the driver as `{ id, name, isHost, isMe }`, or `null` outside a room. Use it for a name tag or a message: *"Ann's car"*.
+
+### Why it matters
+
+Say the player moves a ball with the joystick: **Every tick** → **Set move input** `Ball` to the joystick. In a room there are several balls named `Ball` on your device: yours, and a copy of each friend's. The event would steer **all of them** with **your** finger. (A copy does not run its behaviors, so it would not move by itself, but the event still pushes it.) The fix is one extra condition:
+
+- **Every tick**, **Ball is mine** → **Set move input** `Ball` to the joystick.
+
+**Ball is mine** keeps only the balls you drive, and the action then works on just those. In a script:
+
+```ts
+function update(dt) {
+  if (!entity.isMine) return;            // a copy of somebody else's: they move it, not me
+  entity.translate(input.axis.x * 5 * dt, 0, -input.axis.y * 5 * dt);
+}
+```
+
+The rule of thumb: **anything that reads the player's input, or decides what happens to an object, goes behind Is mine.** That includes hits: a bullet that touches a target is seen on every device, so let only the bullet's driver decide *"that was a hit"* and tell the others (a shared value or a message). Do not let each device decide on its own: a copy is about a fifth of a second behind the real thing, so devices would disagree. The *Ball Arena* showcase does it this way with coins.
+
+### Taking control
+
+A driver is not for ever. **Take control** on an object (or `entity.claim()`) makes **you** its driver from then on: you send its position, and everyone else, the old driver included, sees a copy. Use it for a ball somebody picks up, a car they get into, a crate they push. If two players ask in the same moment, the room's order decides, and it is the same on every device. After it, **Is mine** is `true` for the new driver and `false` for everybody else.
+
+- A **placed** object goes back to the host when its driver leaves.
+- An object a player **spawned** disappears when that player leaves, unless somebody else has taken control of it by then.
+- Take control needs the object to be synced (a **Net sync** component, or spawned for everyone). On any other object it does nothing, because there is no one copy to hand over.
+
+## Shared values
+
+Messages only reach the players who are there when they are sent. For things a **late joiner must also know** (the score, the round, which coins are taken) use a **shared value**. The room remembers it and sends the current ones to everyone who joins.
+
+- **Set shared value** `round` to `3`, or `game.net.setShared('round', 3)`. A value is a number, text, or a small list or object (about 500 characters); there can be 64 of them. Setting it to nothing (`null`) removes it.
+- **Add to shared value** `score` `1`, or `game.net.addShared('score', 1)`: safe when two players add at the same moment, because the room does the adding.
+- **On shared value changed** `round` (or `game.on('netShared', e => ...)`) fires on every player when it changes, **you included**, and once for each value that was already set when you joined. Read it with `netshared("round")` or `game.net.getShared('round')`.
+
+Changes come back in the **room's order**, the same for everybody, so you see your own change a moment after you make it. Anyone can change a shared value, so, as with messages, check what is sensible before you rely on it.
+
+## Finding a game
+
+**Quick match** (or `await game.net.quickMatch({ name })`) looks at the open rooms of your game and joins the fullest one that has space. If there is none it makes a **public** room for the next player to find. You can list rooms yourself: `const rooms = await game.net.listRooms()` gives `{ code, players, max, title }` for each open one. To list a room you make, tick **Listed for Quick match** on **Create room**, or `game.net.create({ public: true, title: 'Friday game' })`.
 
 ## A room everyone lands in
 
@@ -78,7 +144,7 @@ The **host** is the player who has been in the room the longest. When the host l
 
 These keep the shared relay affordable for everyone:
 
-- At most **8 players** in a room.
+- At most **8 players** in a room, and **64 shared values** of about 500 characters.
 - A message is at most **about 2000 characters**, and a player can send **30 messages a second**. Ten a second is plenty for positions; more are dropped.
 - A room closes after **3 hours**.
 - The relay has a **daily limit on new rooms** across all games. When it is reached, joining says `busy` until the next day; rooms already open keep going.

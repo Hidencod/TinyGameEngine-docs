@@ -8987,6 +8987,65 @@
           "optional": false,
           "hint": null,
           "varScope": null
+        },
+        {
+          "id": "code",
+          "label": "Room code (empty = random; an existing room is joined)",
+          "type": "expression",
+          "options": null,
+          "default": "\"\"",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "public",
+          "label": "Listed for Quick match",
+          "type": "choice",
+          "options": [
+            {
+              "value": "no",
+              "label": "no"
+            },
+            {
+              "value": "yes",
+              "label": "yes"
+            }
+          ],
+          "default": "no",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "net.quickMatch",
+      "kind": "action",
+      "category": "Multiplayer",
+      "label": "Quick match",
+      "hint": "Join the fullest open room, or make one others can find. Then use On room joined",
+      "display": "Quick match as {name}",
+      "displayNoObject": null,
+      "icon": "⚡",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "name",
+          "label": "Your name",
+          "type": "expression",
+          "options": null,
+          "default": "\"Player\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
         }
       ]
     },
@@ -9168,6 +9227,135 @@
           "varScope": null
         }
       ]
+    },
+    {
+      "id": "net.setShared",
+      "kind": "action",
+      "category": "Multiplayer",
+      "label": "Set shared value",
+      "hint": "A value the whole room shares and remembers: a late joiner gets it at once. Read it with netshared(\"name\")",
+      "display": "Set shared {name} to {value}",
+      "displayNoObject": null,
+      "icon": "🧩",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "name",
+          "label": "Name",
+          "type": "string",
+          "options": null,
+          "default": "round",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "expression",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "net.addShared",
+      "kind": "action",
+      "category": "Multiplayer",
+      "label": "Add to shared value",
+      "hint": "Safe when several players add at the same moment (a team score)",
+      "display": "Add {amount} to shared {name}",
+      "displayNoObject": null,
+      "icon": "➕",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "name",
+          "label": "Name",
+          "type": "string",
+          "options": null,
+          "default": "score",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "amount",
+          "label": "Amount",
+          "type": "expression",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "net.onShared",
+      "kind": "condition",
+      "category": "Multiplayer",
+      "label": "On shared value changed",
+      "hint": "Someone changed it (and once for each value already set when you join): netshared(\"name\") is the new value",
+      "display": "On shared {name} changed",
+      "displayNoObject": null,
+      "icon": "🧩",
+      "description": "",
+      "isTrigger": true,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "name",
+          "label": "Name (empty = any)",
+          "type": "string",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "net.claim",
+      "kind": "action",
+      "category": "Multiplayer",
+      "label": "Take control",
+      "hint": "You drive this object from now on and the others see a copy (a ball you picked up). Needs a Net sync component",
+      "display": "{object} is taken over by me",
+      "displayNoObject": null,
+      "icon": "🫳",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
     },
     {
       "id": "net.isMine",

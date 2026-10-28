@@ -414,6 +414,13 @@
       "insert": "netdata()"
     },
     {
+      "name": "netshared",
+      "signature": "netshared(\"name\")",
+      "description": "A value the whole room shares (set with Set shared value); empty when it is not set. A late joiner gets them at once",
+      "category": "Multiplayer",
+      "insert": "netshared(\"\")"
+    },
+    {
       "name": "neterror",
       "signature": "neterror()",
       "description": "In \"On room failed\": why (notfound, full, busy or offline)",
