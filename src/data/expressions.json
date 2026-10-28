@@ -323,6 +323,55 @@
       "insert": "productprice(\"\")"
     },
     {
+      "name": "webstatus",
+      "signature": "webstatus()",
+      "description": "In \"On web response\" / \"On web error\": the status code of the reply (200, 404…; 0 when no reply came)",
+      "category": "Web",
+      "insert": "webstatus()"
+    },
+    {
+      "name": "webok",
+      "signature": "webok()",
+      "description": "1 when the latest web request got a 2xx reply, else 0",
+      "category": "Web",
+      "insert": "webok()"
+    },
+    {
+      "name": "webtext",
+      "signature": "webtext()",
+      "description": "The reply of the latest web request as text",
+      "category": "Web",
+      "insert": "webtext()"
+    },
+    {
+      "name": "webjson",
+      "signature": "webjson(\"scores.0.name\")",
+      "description": "A value inside the JSON reply of the latest web request: dots go into objects, numbers pick from lists. Empty when it is not there",
+      "category": "Web",
+      "insert": "webjson(\"\")"
+    },
+    {
+      "name": "webjsoncount",
+      "signature": "webjsoncount(\"scores\")",
+      "description": "How many items the list (or keys the object) at that place in the JSON reply has",
+      "category": "Web",
+      "insert": "webjsoncount(\"\")"
+    },
+    {
+      "name": "weberror",
+      "signature": "weberror()",
+      "description": "In \"On web error\": what went wrong, in words",
+      "category": "Web",
+      "insert": "weberror()"
+    },
+    {
+      "name": "webname",
+      "signature": "webname()",
+      "description": "The name given to the request that the latest reply answers",
+      "category": "Web",
+      "insert": "webname()"
+    },
+    {
       "name": "rayhitname",
       "signature": "rayhitname()",
       "description": "After a \"Raycast\" condition: the name of the object the ray hit (empty when nothing)",

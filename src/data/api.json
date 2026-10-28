@@ -1176,6 +1176,12 @@
           "doc": "Achievements, leaderboards, ads and purchases from Files → Services: game.services.unlockAchievement(\"first\"), .submitScore(\"score\", 12), .showRewarded(), .buy(\"noAds\"), .owns(\"noAds\"). Set game.services.provider = { showRewarded: () => …, buy: p => … } to handle any of them yourself (your own ad network or store); the results come back as game.on(\"adFinished\" / \"purchaseFinished\" / \"achievementUnlocked\", …)."
         },
         {
+          "name": "http",
+          "kind": "property",
+          "type": "HttpAPI",
+          "doc": "Web requests: const r = await game.http.get(\"https://…\"); r.ok, r.status, r.json, r.text. Also .post(url, body) (an object is sent as JSON) and .request(url, { method, headers, body, timeout, name }). It never throws: a failure is r.ok === false with r.error. https only (Project settings → Web requests → Allow HTTP for plain http); a game played from the gallery may only contact the domains listed there. Replies also come as game.on(\"webResponse\" / \"webError\", …)."
+        },
+        {
           "name": "timeline",
           "kind": "method",
           "sig": "(name)",

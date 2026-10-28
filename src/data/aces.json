@@ -12,6 +12,7 @@
     "Timeline",
     "Language",
     "Services",
+    "Web",
     "Physics",
     "Health",
     "Curve",
@@ -45,6 +46,7 @@
     "Animator": "🔀",
     "Timeline": "🎬",
     "Language": "🌐",
+    "Web": "🔗",
     "Services": "🏆"
   },
   "list": [
@@ -8801,6 +8803,143 @@
           "id": "product",
           "label": "Product (empty = any)",
           "type": "product",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "web.send",
+      "kind": "action",
+      "category": "Web",
+      "label": "Send web request",
+      "hint": "Then use On web response (reply: webjson(\"score\"), webtext(), webstatus())",
+      "display": "{method} {url}{body}{name}",
+      "displayNoObject": null,
+      "icon": "🌐",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "method",
+          "label": "Method",
+          "type": "choice",
+          "options": [
+            {
+              "value": "GET",
+              "label": "GET"
+            },
+            {
+              "value": "POST",
+              "label": "POST"
+            },
+            {
+              "value": "PUT",
+              "label": "PUT"
+            },
+            {
+              "value": "DELETE",
+              "label": "DELETE"
+            }
+          ],
+          "default": "GET",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "url",
+          "label": "Address",
+          "type": "expression",
+          "options": null,
+          "default": "\"https://\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "body",
+          "label": "Body (text, sent as it is)",
+          "type": "expression",
+          "options": null,
+          "default": "\"\"",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "name",
+          "label": "Name",
+          "type": "string",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "web.onResponse",
+      "kind": "condition",
+      "category": "Web",
+      "label": "On web response",
+      "hint": "A request got a reply",
+      "display": "On web response {name}",
+      "displayNoObject": null,
+      "icon": "🌐",
+      "description": "",
+      "isTrigger": true,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "name",
+          "label": "Name (empty = any)",
+          "type": "string",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "web.onError",
+      "kind": "condition",
+      "category": "Web",
+      "label": "On web error",
+      "hint": "A request failed: blocked, no network, too slow, or not a 2xx reply (weberror() says why)",
+      "display": "On web error {name}",
+      "displayNoObject": null,
+      "icon": "⚠️",
+      "description": "",
+      "isTrigger": true,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "name",
+          "label": "Name (empty = any)",
+          "type": "string",
           "options": null,
           "default": "",
           "optional": true,

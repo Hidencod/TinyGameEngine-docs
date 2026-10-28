@@ -1,0 +1,66 @@
+---
+title: Web requests
+description: Talk to a web server from your game — scores, saves, weather, anything with an address. Event blocks, a script call, and the rules that keep games from the gallery safe.
+---
+
+# Web requests
+
+A game can ask a web server for something (**GET**) or send it something (**POST**): a leaderboard, a cloud save, the weather, a list of levels. The reply comes back as text, usually **JSON**.
+
+## With event blocks
+
+Category **Web**.
+
+| Block | Does |
+| --- | --- |
+| **Send web request** | Sends it. Pick the **Method**, the **Address**, an optional **Body** (text, sent as it is) and an optional **Name**. |
+| **On web response** | Trigger: a reply came with a good status (2xx). Fill in the **Name** to react to one request only. |
+| **On web error** | Trigger: the request failed. It was blocked, there was no network, the server was too slow, or the status was not 2xx. |
+
+Read the reply inside those events with expressions:
+
+| Expression | Gives |
+| --- | --- |
+| `webjson("scores.0.name")` | A value inside the JSON reply. Dots go into objects, numbers pick from a list. Empty when it is not there. |
+| `webjsoncount("scores")` | How many items the list has. Use it with a loop. |
+| `webtext()` | The whole reply as text. |
+| `webstatus()`, `webok()` | The status code (200, 404… and 0 when no reply came) and 1/0 for a good one. |
+| `weberror()` | What went wrong, in words. |
+| `webname()` | The name you gave the request. |
+
+For example: **Send web request** `GET "https://example.com/scores"` named *scores*; then under **On web response** *scores*, **Set variable** `top` to `webjson("list.0.name")`.
+
+## In scripts
+
+```ts
+const r = await game.http.get('https://example.com/scores');
+if (r.ok) game.log(r.json.list[0].name);
+else game.log('No scores: ' + r.error);
+
+// an object is sent as JSON
+await game.http.post('https://example.com/score', { name: 'Ann', score: 120 });
+
+// everything in one place
+const r2 = await game.http.request(url, { method: 'PUT', headers: { Authorization: 'Bearer …' }, body: '…', timeout: 5, name: 'save' });
+```
+
+A reply has `ok`, `status`, `statusText`, `text`, `json` (undefined when the reply is not JSON), `headers`, `error` and `name`. **It never throws**: a failure is `ok: false` with an `error`, so a lost connection cannot crash the game. The wait is 15 seconds unless you pass `timeout` (in seconds).
+
+Every request also fires `game.on('webResponse', …)` or `game.on('webError', …)`, the same events the blocks use.
+
+## Rules that keep it safe
+
+Like Unity, only **https://** addresses work. Turn on **Project settings → Web requests → Allow HTTP** to use plain `http://` (an address on your own computer, `localhost`, always works while you test).
+
+Games played from the gallery run on other people's phones, so they get one more rule: **they may only contact the domains you list** under **Project settings → Web requests → Allowed domains**. A listed domain includes its subdomains (`example.com` allows `api.example.com`). A request to any other domain is refused and the debugger says which domain to add. The editor's **Play**, a downloaded HTML game and an app you build are not limited by the list, so remember to fill it in before you publish.
+
+Also, for every game:
+
+- The player's cookies and sign-ins are never sent, and no referrer.
+- A redirect to a domain that is not allowed is refused.
+- At most 8 requests can be on their way at once, and a reply over 5 million characters is refused.
+- Browsers only let a game **read** a reply when the server allows it (CORS). If your own server is the target, send the header `Access-Control-Allow-Origin: *` (or your game's address).
+
+:::caution
+Never put a secret key in a game: anyone can read the project and watch the requests. Let your own server hold the secret, and have the game call that server.
+:::

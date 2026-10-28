@@ -16,9 +16,9 @@ Actions are the **DO** part of an event. They run from top to bottom when the ev
 Number and text fields accept expressions, e.g. `Score + 1`, `"Score: " + Score`, `Player.x`, `random(1, 6)`. See [Expressions](./expressions).
 :::
 
-There are **185 actions**, grouped by category as in the action picker.
+There are **186 actions**, grouped by category as in the action picker.
 
-[⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🎬 Timeline](#timeline) · [🌐 Language](#language) · [🏆 Services](#services) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera) · [🎚️ Graphics](#graphics)
+[⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🎬 Timeline](#timeline) · [🌐 Language](#language) · [🏆 Services](#services) · [🔗 Web](#web) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera) · [🎚️ Graphics](#graphics)
 
 ## ⚙️ System {/* #system */}
 
@@ -1467,6 +1467,24 @@ How much a layer of the Animator counts: 0 = not at all, 1 = fully. The Base Lay
 - **Where:** Found under **System** in the picker.
 - **ID:** `services.restore` (as saved in project files)
 - **Parameters:** none
+
+## 🔗 Web {/* #web */}
+
+### Send web request {/* #web-send */}
+
+<span class="tge-ace-display">‹Method› ‹Address›‹Body (text, sent as it is)›‹Name›</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `web.send` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Method | Choice | `GET` | Options: GET, POST, PUT, DELETE |
+| Address | Expression | `"https://"` |  |
+| Body (text, sent as it is) | Expression | `""` | *Optional.* |
+| Name | Text |  | *Optional.* |
 
 ## 🧱 Physics {/* #physics */}
 

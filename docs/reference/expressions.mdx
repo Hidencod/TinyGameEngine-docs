@@ -111,6 +111,18 @@ If you mistype a name, the game keeps running: it shows a friendly message once 
 | `replace(text, find, with)` | Replace every occurrence |
 | `pad(value, length, char?)` | Pad with leading zeros, e.g. 007 |
 
+### Web
+
+| Function | What it does |
+| --- | --- |
+| `webstatus()` | In "On web response" / "On web error": the status code of the reply (200, 404…; 0 when no reply came) |
+| `webok()` | 1 when the latest web request got a 2xx reply, else 0 |
+| `webtext()` | The reply of the latest web request as text |
+| `webjson("scores.0.name")` | A value inside the JSON reply of the latest web request: dots go into objects, numbers pick from lists. Empty when it is not there |
+| `webjsoncount("scores")` | How many items the list (or keys the object) at that place in the JSON reply has |
+| `weberror()` | In "On web error": what went wrong, in words |
+| `webname()` | The name given to the request that the latest reply answers |
+
 ### Raycast
 
 | Function | What it does |
