@@ -23,7 +23,8 @@ Category **Multiplayer**.
 | **On player joined**, **On player left** | Triggers when someone else comes or goes. `netwho()` is their name. |
 | **On message** | Trigger for a message another player sent, for one name or any (leave the name empty). |
 | **Message is** | Condition for a sub-event under an On message with an empty name: only goes on when the message has this name. |
-| **On disconnected** | The connection to the room was lost. |
+| **On connection lost**, **On reconnected** | The connection dropped and the game is getting back in by itself; then it is back (see [When the connection drops](#when-the-connection-drops)). |
+| **On disconnected** | The connection to the room was lost for good. `neterror()` says why. |
 | **Quick match** | Joins the fullest open room, or makes a public one for the next player. |
 | **Set shared value**, **Add to shared value** | A value the whole room shares and remembers (see below). |
 | **On shared value changed** | Trigger: someone changed a shared value, or you just joined and it was already set. |
@@ -56,7 +57,7 @@ game.on('netPlayerJoined', (e) => game.log(e.player.name + ' joined'));
 game.on('netPlayerLeft', (e) => game.log(e.player.name + ' left'));
 ```
 
-`game.net.players`, `.me`, `.host`, `.isHost`, `.code` and `.state` (`offline`, `connecting`, `online`) tell where you are. Nothing throws: a room that cannot be joined is `ok: false` with an `error`. The editor's **Snippets** has a **Multiplayer room (global)** example.
+`game.net.players`, `.me`, `.host`, `.isHost`, `.code` and `.state` (`offline`, `connecting`, `online`, `reconnecting`) tell where you are. Nothing throws: a room that cannot be joined is `ok: false` with an `error`. The editor's **Snippets** has a **Multiplayer room (global)** example.
 
 ## Syncing objects
 
@@ -144,21 +145,40 @@ Changes come back in the **room's order**, the same for everybody, so you see yo
 
 The **host** is the player who has been in the room the longest. When the host leaves, the next player becomes host and everyone is told. Use it for decisions that must come from one place: only the host spawns the enemies, only the host counts the score.
 
+## When the connection drops
+
+Phones lose their connection all the time: switching from Wi-Fi to mobile data, going into a tunnel, a few seconds in the background. The game gets back into the room **by itself**:
+
+1. **On connection lost** (`netReconnecting`) fires and `game.net.state` is `reconnecting`. Messages and shared changes sent now are dropped. Your objects stay where they are, for you and for the others.
+2. The relay keeps your **seat for 20 seconds**. The other players are not told you left; your objects simply stand still for them.
+3. Back in: **On reconnected** (`netReconnected`) fires. You are the **same player** (same id, still host if you were), and you still drive the same objects. Whatever you missed arrives as the usual events: **On player left** / **On player joined** for anyone who came or went, **On shared value changed** for values that changed. **On room joined** does *not* fire again, so a game that spawns its player there does not spawn a second one.
+4. Not back within the 20 seconds (or the room closed): **On disconnected** fires with `neterror()` = `gone` (or `offline`). For everyone else you then leave the room, as if you had pressed Leave.
+
+A game that wants to show it: a "Reconnecting…" text that **On connection lost** shows and **On reconnected** hides.
+
+A player who leaves properly (**Leave room**, closing the game) leaves at once, without the 20 seconds.
+
+## Every player is trusted
+
+The room never runs your game, so it cannot check what players do. Any player could, with a modified copy of your game:
+
+- send any message, with any data, as often as the limits allow;
+- set or add to any shared value;
+- **Take control** of any synced object and move it anywhere.
+
+That is fine for playing with friends, for co-op and for party games. It is not enough for competitive games with rankings or prizes: those need a server that runs the rules, which this relay deliberately is not. Within a game, keep it fair the usual way: let the **host** decide results, check that numbers coming in are sensible (a speed, a distance moved since the last message), and never put secrets in messages or shared values, since every player in the room sees them.
+
 ## Limits
 
 These keep the shared relay affordable for everyone:
 
 - At most **8 players** in a room, and **64 shared values** of about 500 characters.
-- A message is at most **about 2000 characters**, and a player can send **30 messages a second**. Ten a second is plenty for positions; more are dropped.
+- A message is at most **about 2000 characters**, and a player can send **30 messages and shared changes a second** together. Ten a second is plenty for positions; more are dropped, with one warning in the console. Don't add to a shared value every frame: add up locally and send the total now and then.
 - A room closes after **3 hours**.
-- The relay has a **daily limit on new rooms** across all games. When it is reached, joining says `busy` until the next day; rooms already open keep going.
+- The relay has a **daily limit on joins** across all games, and one game can use at most **half** of it. One player can join **150 times a day**. When a limit is reached, joining says `busy` until the next day (midnight UTC); rooms already open keep going.
 
 Rooms are separate for each game, and a room code only works in the game that made it.
 
 ## Your own relay
 
 **Project settings → Multiplayer → Server** is empty by default (the engine's relay). If you run your own relay, put its `wss://` address there and the game uses it instead. A game published to the gallery can always reach the server you set.
-
-:::caution
-Players can send anything, so treat what comes in as untrusted: check that numbers are sensible, and let only the host decide shared results. Do not put secrets in messages; every player in the room sees them.
-:::
