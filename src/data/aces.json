@@ -9495,7 +9495,7 @@
       "kind": "condition",
       "category": "Multiplayer",
       "label": "On message",
-      "hint": "Another player sent one: netdata() is what it carries, netwho() who sent it",
+      "hint": "Another player sent one: netdata() is what it carries, netwho() who sent it. Leave the name empty to catch every message, then add a \"Message is\" sub-event for each name",
       "display": "On message {name}",
       "displayNoObject": null,
       "icon": "📨",
@@ -9515,6 +9515,36 @@
           "options": null,
           "default": "",
           "optional": true,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "net.messageIs",
+      "kind": "condition",
+      "category": "Multiplayer",
+      "label": "Message is",
+      "hint": "Inside On message with an empty name: only go on when the message has this name (netdata() and netwho() still work)",
+      "display": "Message is {name}",
+      "displayNoObject": null,
+      "icon": "📨",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "name",
+          "label": "Name",
+          "type": "string",
+          "options": null,
+          "default": "",
+          "optional": false,
           "hint": null,
           "varScope": null
         }

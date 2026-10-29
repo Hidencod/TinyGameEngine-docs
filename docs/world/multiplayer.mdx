@@ -21,7 +21,8 @@ Category **Multiplayer**.
 | **Send message** | Sends a named message with one value (number or text) to every other player. |
 | **On room joined**, **On room failed** | Triggers for the room you made or tried to join. On failed, `neterror()` says why: `notfound`, `full`, `busy` or `offline`. |
 | **On player joined**, **On player left** | Triggers when someone else comes or goes. `netwho()` is their name. |
-| **On message** | Trigger for a message another player sent, for one name or any. |
+| **On message** | Trigger for a message another player sent, for one name or any (leave the name empty). |
+| **Message is** | Condition for a sub-event under an On message with an empty name: only goes on when the message has this name. |
 | **On disconnected** | The connection to the room was lost. |
 | **Quick match** | Joins the fullest open room, or makes a public one for the next player. |
 | **Set shared value**, **Add to shared value** | A value the whole room shares and remembers (see below). |
@@ -35,6 +36,8 @@ Expressions: `netshared("name")`, `netcode()` (show it so friends can join), `ne
 **Send message** carries up to three values. One value arrives as it is; two or three arrive as a list, read with `netdata("0")`, `netdata("1")`, `netdata("2")`.
 
 For example, two players, each with an object the other one sees as `Friend`: **Create room** (and the other player **Join room**); then under **On room joined**, set a Text to `"Code: " + netcode()`. Under **Every 0.1 seconds**, **Send message** `pos` with `Player.x` and `Player.z`. Under **On message** `pos`, **Set position** of `Friend` to (`netdata("0")`, 0, `netdata("1")`).
+
+To handle many messages with one trigger, leave the name of **On message** empty and add a **Message is** sub-event for each name (`coin`, `reset`, ...). `netdata()` and `netwho()` work inside each sub-event.
 
 ## In scripts
 
