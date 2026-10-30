@@ -118,7 +118,7 @@ Add a **Ragdoll** component to the object to tune it (without one every bone get
 - **Enabled** off: the bone gets no body and follows the bone above it (fingers, toes).
 - **Swing** and **Twist**: how many degrees the bone may bend away from its starting pose, and turn about its own length.
 - **Thickness**: the capsule's radius as a share of the bone's length (0 is automatic).
-- **Shape**: **Capsule** or **Box**. Either one is fitted to the bone's own mesh, so the body encloses the model and a leg does not sink into the floor. Thickness 0 uses that fit; a number overrides it.
+- **Shape**: **Capsule** or **Box**. Either one is fitted to the bone's own mesh, so the body encloses the model and a leg does not sink into the floor. Thickness 0 uses that fit; a number overrides it. A number much thinner than the mesh makes that part a thin rod: the model sinks into the floor there, and the body may twitch instead of coming to rest. Leave it at 0 unless a part needs to be thinner or thicker than it looks.
 - **Power**: this bone's share of the ragdoll's Power, 0 to 1 (default 1). Only matters for a [powered ragdoll](#powered-ragdoll).
 
 **Mass** is the whole body's weight in kg, shared out by size, though no bone gets less than a twentieth or more than a third of it (a feather-light hip joined to a heavy torso would spin like a top). With the object selected, the view draws a capsule along every bone that gets a body and a cross at each joint, and they follow an animation preview. A bone shown in red is not in this model any more: fill again after changing the model.
