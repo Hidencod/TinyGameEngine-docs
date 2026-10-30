@@ -21,6 +21,7 @@
     "UI",
     "Behaviors",
     "Particles",
+    "Effects",
     "Audio",
     "Camera",
     "Graphics"
@@ -41,6 +42,7 @@
     "UI": "🖼️",
     "Behaviors": "🧩",
     "Particles": "✨",
+    "Effects": "☄️",
     "Audio": "🔊",
     "Camera": "🎥",
     "Graphics": "🎚️",
@@ -7054,6 +7056,10 @@
               "label": "Rotation by Speed"
             },
             {
+              "value": "externalForces",
+              "label": "External Forces"
+            },
+            {
               "value": "noise",
               "label": "Noise"
             },
@@ -7080,6 +7086,10 @@
             {
               "value": "trails",
               "label": "Trails"
+            },
+            {
+              "value": "customData",
+              "label": "Custom Data"
             }
           ],
           "default": "noise",
@@ -7137,6 +7147,154 @@
           "varScope": null
         }
       ]
+    },
+    {
+      "id": "object.setLinePoint",
+      "kind": "action",
+      "category": "Effects",
+      "label": "Set line point",
+      "hint": "Move one point of its line",
+      "display": "Set {object} line point {index} to ({x}, {y}, {z})",
+      "displayNoObject": null,
+      "icon": "📏",
+      "description": "Move one point of the object's Line renderer, e.g. a laser's end to where it hits. A point past the end makes the line longer.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "index",
+          "label": "Point (from 0)",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "x",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Z",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.setLinePointCount",
+      "kind": "action",
+      "category": "Effects",
+      "label": "Set line point count",
+      "hint": "Add or drop points",
+      "display": "Set {object} line to {count} points",
+      "displayNoObject": null,
+      "icon": "🔢",
+      "description": "How many points the object's Line renderer has: more copies the last point, fewer drops points from the end.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "count",
+          "label": "Points",
+          "type": "number",
+          "options": null,
+          "default": "2",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.setTrailEmitting",
+      "kind": "action",
+      "category": "Effects",
+      "label": "Turn trail on/off",
+      "hint": "Start or stop leaving a trail",
+      "display": "Turn {object} trail {state}",
+      "displayNoObject": null,
+      "icon": "☄️",
+      "description": "Start or stop the object's Trail renderer leaving a trail (what is already there fades out).",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "state",
+          "label": "State",
+          "type": "choice",
+          "options": [
+            {
+              "value": "on",
+              "label": "On"
+            },
+            {
+              "value": "off",
+              "label": "Off"
+            }
+          ],
+          "default": "on",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.clearTrail",
+      "kind": "action",
+      "category": "Effects",
+      "label": "Clear trail",
+      "hint": "Remove the trail left so far",
+      "display": "Clear {object} trail",
+      "displayNoObject": null,
+      "icon": "🧹",
+      "description": "Remove the trail the object has left so far, e.g. after teleporting it.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
     },
     {
       "id": "object.playSound",

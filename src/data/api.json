@@ -640,6 +640,18 @@
           "doc": "The Particle System (like Unity's): every module live — particleSystem.main.startSpeed = 8, particleSystem.noise.enabled = true — plus play(), pause(), stop(), emit(count, params), simulate(t), getParticles() / setParticles(). Null without a Particles component."
         },
         {
+          "name": "lineRenderer",
+          "kind": "property",
+          "type": "LineRenderer|null",
+          "doc": "The Line Renderer (like Unity's): its settings live — lineRenderer.loop = true, lineRenderer.width.scale = 0.05 — plus setPosition(i, v), setPositions([...]), getPosition(i), getPositions() and positionCount. Null without a Line renderer component."
+        },
+        {
+          "name": "trailRenderer",
+          "kind": "property",
+          "type": "TrailRenderer|null",
+          "doc": "The Trail Renderer (like Unity's): its settings live — trailRenderer.emitting = false, trailRenderer.time = 0.2, trailRenderer.width.scale = 0.5 — plus clear(), positionCount, getPosition(i), getPositions(), addPosition(v). Null without a Trail renderer component."
+        },
+        {
           "name": "emitParticles",
           "kind": "method",
           "sig": "(count: number)",
@@ -1852,6 +1864,12 @@
           "doc": "The rotationBySpeed module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
         },
         {
+          "name": "externalForces",
+          "kind": "property",
+          "type": "module",
+          "doc": "The externalForces module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
+        },
+        {
           "name": "noise",
           "kind": "property",
           "type": "module",
@@ -1892,6 +1910,12 @@
           "kind": "property",
           "type": "module",
           "doc": "The trails module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
+        },
+        {
+          "name": "customData",
+          "kind": "property",
+          "type": "module",
+          "doc": "The customData module, live: change any setting (the same names as the Inspector). Numbers can be a constant or { mode: \"twoConstants\", constantMin, constantMax, … }."
         },
         {
           "name": "renderer",
@@ -2004,6 +2028,198 @@
           "sig": "(index, particles?)",
           "type": "void",
           "doc": "Fire a sub emitter from every particle, or the given ones."
+        },
+        {
+          "name": "getCustomParticleData",
+          "kind": "method",
+          "sig": "(stream = 1)",
+          "type": "{x,y,z,w}[]",
+          "doc": "Custom Data stream 1 or 2 per particle (what a renderer shader gets as vCustom1 / vCustom2)."
+        },
+        {
+          "name": "setCustomParticleData",
+          "kind": "method",
+          "sig": "(data, stream = 1)",
+          "type": "void",
+          "doc": "Set Custom Data per particle (getParticles() order); keep the stream Disabled in the module so it is not worked out again."
+        }
+      ]
+    },
+    {
+      "name": "trailRenderer",
+      "title": "entity.trailRenderer",
+      "doc": "An object's Trail Renderer, like Unity's TrailRenderer.",
+      "members": [
+        {
+          "name": "time",
+          "kind": "property",
+          "type": "number",
+          "doc": "Seconds a point lasts."
+        },
+        {
+          "name": "minVertexDistance",
+          "kind": "property",
+          "type": "number",
+          "doc": "Meters moved before a new point is dropped."
+        },
+        {
+          "name": "emitting",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "Off: no new points; the trail left so far still fades."
+        },
+        {
+          "name": "autodestruct",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "Destroy the object once its trail has faded out."
+        },
+        {
+          "name": "width",
+          "kind": "property",
+          "type": "{ scale, keys }",
+          "doc": "Width along the trail: scale is the width, keys shape it from the object (t 0) to the tail (t 1)."
+        },
+        {
+          "name": "color",
+          "kind": "property",
+          "type": "{ colors, alphas }",
+          "doc": "Color gradient along the trail, object to tail."
+        },
+        {
+          "name": "alignment",
+          "kind": "property",
+          "type": "\"view\" | \"transformZ\"",
+          "doc": "Face the camera, or the object's Z axis."
+        },
+        {
+          "name": "textureMode",
+          "kind": "property",
+          "type": "\"stretch\" | \"tile\" | \"distributePerSegment\" | \"repeatPerSegment\"",
+          "doc": "How the texture runs along the trail."
+        },
+        {
+          "name": "blending",
+          "kind": "property",
+          "type": "\"alpha\" | \"additive\"",
+          "doc": "Additive glows."
+        },
+        {
+          "name": "positionCount",
+          "kind": "property",
+          "type": "number",
+          "doc": "Points in the trail now."
+        },
+        {
+          "name": "getPosition",
+          "kind": "method",
+          "sig": "(index)",
+          "type": "{x,y,z}|null",
+          "doc": "A point, oldest first (world space)."
+        },
+        {
+          "name": "getPositions",
+          "kind": "method",
+          "sig": "()",
+          "type": "{x,y,z}[]",
+          "doc": "Every point, oldest first."
+        },
+        {
+          "name": "addPosition",
+          "kind": "method",
+          "sig": "(position)",
+          "type": "void",
+          "doc": "Add a point by hand."
+        },
+        {
+          "name": "clear",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Remove every point (after a teleport, so no streak joins the two places)."
+        }
+      ]
+    },
+    {
+      "name": "lineRenderer",
+      "title": "entity.lineRenderer",
+      "doc": "An object's Line Renderer, like Unity's LineRenderer.",
+      "members": [
+        {
+          "name": "positionCount",
+          "kind": "property",
+          "type": "number",
+          "doc": "Points on the line; setting it adds copies of the last point or drops points from the end."
+        },
+        {
+          "name": "loop",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "Join the last point back to the first."
+        },
+        {
+          "name": "useWorldSpace",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "Points are world positions (true) or in the object's own space."
+        },
+        {
+          "name": "width",
+          "kind": "property",
+          "type": "{ scale, keys }",
+          "doc": "Width along the line: scale is the width, keys shape it from the first point (t 0) to the last (t 1)."
+        },
+        {
+          "name": "color",
+          "kind": "property",
+          "type": "{ colors, alphas }",
+          "doc": "Color gradient along the line, first point to last."
+        },
+        {
+          "name": "alignment",
+          "kind": "property",
+          "type": "\"view\" | \"transformZ\"",
+          "doc": "Face the camera, or the object's Z axis."
+        },
+        {
+          "name": "textureMode",
+          "kind": "property",
+          "type": "\"stretch\" | \"tile\" | \"distributePerSegment\" | \"repeatPerSegment\"",
+          "doc": "How the texture runs along the line."
+        },
+        {
+          "name": "blending",
+          "kind": "property",
+          "type": "\"alpha\" | \"additive\"",
+          "doc": "Additive glows."
+        },
+        {
+          "name": "getPosition",
+          "kind": "method",
+          "sig": "(index)",
+          "type": "{x,y,z}|null",
+          "doc": "A point."
+        },
+        {
+          "name": "setPosition",
+          "kind": "method",
+          "sig": "(index, position)",
+          "type": "void",
+          "doc": "Move a point, e.g. a laser's end to where its ray hit."
+        },
+        {
+          "name": "getPositions",
+          "kind": "method",
+          "sig": "()",
+          "type": "{x,y,z}[]",
+          "doc": "Every point."
+        },
+        {
+          "name": "setPositions",
+          "kind": "method",
+          "sig": "(positions)",
+          "type": "void",
+          "doc": "Replace every point."
         }
       ]
     }

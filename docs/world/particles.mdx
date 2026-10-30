@@ -1,6 +1,6 @@
 ---
 title: Particles
-description: Fire, smoke, sparks, explosions, rain and confetti with the Particles component.
+description: Fire, smoke, sparks, explosions, rain and confetti with the Particles component; force fields, Custom Data and particle shaders; Trail and Line renderers.
 ---
 
 # Particles
@@ -76,3 +76,111 @@ Particles are many tiny sprites that make effects: fire, smoke, sparkles, explos
 - Scripts: `entity.emitParticles(30)`, `game.spawnParticles('Explosion', x, y, z, { burst: 50 })`.
 
 The project’s **Max particles** setting caps all effects together. See [Performance](../help/performance).
+
+## Force fields
+
+A **Particle force field** pushes, pulls or swirls particles that pass through it: wind, a whirlpool, a black hole, a magic vortex. It works like Unity's Particle System Force Field.
+
+1. Make an object for the field (**Objects → ＋ Add → Empty object**), then **Add component → Particle force field**. The editor draws its range as purple rings.
+2. On the Particle System, open **External Forces** and tick it. Only systems with External Forces on are pushed.
+
+**Force field settings**
+
+| Field | What it does |
+| --- | --- |
+| **Shape** | Sphere, Hemisphere (top half only), Cylinder (along the object's Y axis) or Box. |
+| **Start Range / End Range** | The field works between these distances from its middle. Start Range above 0 leaves a hole in the middle. For a box, End Range is half its size. |
+| **Length** | Cylinder height. |
+| **Direction X / Y / Z** | A steady push along the object's own axes, like wind. Turn the object to turn the wind. |
+| **Gravity → Strength** | Pulls particles to the middle; negative pushes them away. |
+| **Gravity → Gravity Focus** | 0 pulls to the middle, 1 to the outer edge, so particles gather on a shell (or a ring for a cylinder). |
+| **Rotation → Speed** | Swirls particles around the object's Y axis, in radians per second (3.14 = half a turn a second). |
+| **Rotation → Attraction** | 0 to 1: how hard swirling particles are drawn into the middle of the vortex. |
+| **Drag → Strength** | Slows particles down inside the field, optionally more for big or fast ones. |
+
+Every force can be a constant, a curve over each particle's lifetime, or random, like other particle values. The ranges grow with the object's scale.
+
+**External Forces** (on the Particle System)
+
+| Field | What it does |
+| --- | --- |
+| **Multiplier** | Scales every field's forces for this system (0 = not pushed, 2 = twice as hard). |
+| **Influence Filter** | **Everything** = every field in the scene; **List** = only the fields you add to **Influence List**. |
+
+The preview in the editor shows the fields' effect too. From a script: `entity.particleSystem.externalForces.multiplier = 2`, or `entity.addComponent('forceField', { endRange: 4, rotationSpeed: 3 })`.
+
+## Custom Data and particle shaders
+
+A Particle System can draw with your own [shader](./shaders) instead of the built-in soft dot: pick it in **Renderer → Shader**. The engine still places each particle; your shader's **fragment** part colours it. The shader's own settings show as fields under the Shader picker.
+
+**Custom Data** sends values per particle to that shader, like Unity's Custom Data module and custom vertex streams. Turn the module on and set **Custom1** and/or **Custom2**:
+
+| Mode | Gives the shader |
+| --- | --- |
+| **Disabled** | Nothing new (a value a script set stays). |
+| **Vector** | 1 to 4 numbers (X, Y, Z, W), each a constant, a curve over the particle's lifetime, or random. The rest are 0. |
+| **Color** | A colour (or gradient over its lifetime) as rgba. |
+
+In the shader, declare what you use:
+
+| Name | Is |
+| --- | --- |
+| `varying vec2 vUv` | Position on the particle's quad (0 to 1); with a texture sheet, on its frame. |
+| `varying vec4 vColor` | The particle's colour after every module. |
+| `varying vec4 vCustom1`, `vCustom2` | Custom Data streams 1 and 2. |
+| `varying float vAgePercent` | 0 when the particle is born, 1 when it dies. |
+| `uniform float uTime` | Seconds since the scene started. |
+| `uniform sampler2D uMap`, `uniform float uHasMap` | The Renderer's texture, and 1 when it has one. |
+
+**Example: burning particles.** **Files → New → Shader → Particle dissolve.** On the Particle System pick it in **Renderer → Shader**, turn on **Custom Data**, set **Custom1** to **Vector** with **X** as a curve from 0 up to 1. Each particle burns away with a glowing edge as it gets older.
+
+From a script, Unity's calls: `entity.particleSystem.getCustomParticleData(1)` gives `{ x, y, z, w }` per particle, `setCustomParticleData(list, 1)` sets them (leave that stream **Disabled** so the module does not overwrite it).
+
+Only the fragment part of the shader is used on particles; the engine's own vertex part places them.
+
+## Trail renderer
+
+A **Trail renderer** leaves a ribbon behind an object as it moves: sword swings, dashes, bullets, comets, tire marks. Like Unity's Trail Renderer, it is a component: **Add component → Trail renderer**. The trail appears when the game runs and the object moves.
+
+| Field | What it does |
+| --- | --- |
+| **Width** | The ribbon's width (the number) and its shape along the trail (the curve: left = at the object, right = the tail). |
+| **Time (s)** | How long each bit of trail lasts before it is gone. |
+| **Min vertex distance** | How far the object moves before the trail adds a point. Smaller = smoother, more work. |
+| **Autodestruct** | Destroy the object once it has stood still for **Time** and its trail is gone. Handy for projectiles. |
+| **Emitting** | Off: no new trail (what is there fades). |
+| **Color** | Gradient from the object to the tail; transparency fades it out. |
+| **Alignment** | **View**: the ribbon always faces the camera. **Transform Z**: it lies flat, facing the object's Z axis (blade trails). |
+| **Texture mode** | How the texture runs along it: **Stretch** once over the whole trail, **Tile** every meter, **Distribute / Repeat Per Segment** once over / once per piece. |
+| **Texture** | A picture along the ribbon; none = plain colour. |
+| **Blending** | **Additive** glows (sparks, magic, lasers). |
+
+**Sword trail:** put an empty object on the blade (a child of the sword), add a Trail renderer with **Time** about 0.2, **Width** about the blade length, **Alignment → Transform Z** and **Additive** blending. Turn the empty so its Z axis points across the swing.
+
+Blocks: **Turn trail on/off** and **Clear trail** (category **Effects**). Scripts: `entity.trailRenderer.emitting = false`, `entity.trailRenderer.clear()` (after teleporting, so no streak joins the two places), `positionCount`, `getPositions()`.
+
+## Line renderer
+
+A **Line renderer** draws a ribbon through a list of points: lasers, lightning, ropes, aim lines, outlines. **Add component → Line renderer**. Unlike a trail, it shows in the editor too.
+
+| Field | What it does |
+| --- | --- |
+| **Loop** | Join the last point back to the first (a ring, an outline). |
+| **Use world space** | Off: points are in the object's own space and move, turn and scale with it. On: points are world positions and stay put. |
+| **Positions** | The points. ✕ removes one; **＋ Add point** carries on in the last direction. |
+| **Width, Color, Alignment, Texture mode, Texture, Blending** | As for the Trail renderer, from the first point (left of the curve) to the last. |
+
+**Laser:** a Line renderer with two points and **Use world space** on, on the gun. Every frame, set point 0 to the gun and point 1 to where a [raycast](./physics#raycasts) hits (or 50 m ahead):
+
+```js
+function update(dt) {
+  const lr = entity.lineRenderer;
+  const dir = entity.getForward();
+  const hit = game.raycast(entity.position, { direction: dir, length: 50 });
+  const p = entity.position;
+  lr.setPosition(0, p);
+  lr.setPosition(1, hit ? hit.point : { x: p.x + dir.x * 50, y: p.y + dir.y * 50, z: p.z + dir.z * 50 });
+}
+```
+
+Blocks: **Set line point** (a point past the end makes the line longer) and **Set line point count** (category **Effects**). Scripts: `setPosition(i, v)`, `setPositions([...])`, `getPosition(i)`, `getPositions()`, `positionCount`, and every setting, e.g. `entity.lineRenderer.width.scale = 0.05`.

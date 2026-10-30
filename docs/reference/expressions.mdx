@@ -123,6 +123,7 @@ If you mistype a name, the game keeps running: it shows a friendly message once 
 | `netplayerid(index)` | The id of a player by number (0 is the first to have joined) |
 | `netmyname()` | Your name in the room |
 | `netmyid()` | Your id in the room (0 when not in one) |
+| `netping()` | The round trip to the room in milliseconds (a reading every few seconds); 0 when not in a room or before the first one |
 | `nethostname()` | The name of the host |
 | `netwho()` | In "On player joined", "On player left" and "On message": the name of that player |
 | `netwhoid()` | In "On player joined", "On player left" and "On message": the id of that player |
@@ -211,6 +212,8 @@ Write the object’s name (or `Self` inside an action on that object), a dot, th
 | `.hipsX` | X of the hips of a ragdoll (the object stays put); its own position when not limp |
 | `.hipsY` | Y of the hips of a ragdoll |
 | `.hipsZ` | Z of the hips of a ragdoll |
+| `.ownerName` | Multiplayer: the name of the player who drives this object (empty when nobody does, or it is not synced) |
+| `.ownerId` | Multiplayer: the id of the player who drives this object (0 when nobody does) |
 | `.text` | Text shown (text objects) |
 | `.visible` | true if visible |
 | `.name` | Object name |

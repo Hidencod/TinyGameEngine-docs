@@ -1,6 +1,6 @@
 ---
 title: Shaders (GLSL) and starters
-description: Make your own look with a GLSL shader, or begin from a ready-made starter — Hologram, Dissolve, Toon outline, Fresnel glow, Water, Wind sway. What a shader can read, how its settings become fields, and how to use it on an object.
+description: Make your own look with a GLSL shader, or begin from a ready-made starter — Hologram, Dissolve, Toon outline, Fresnel glow, Water, Wind sway, Particle dissolve. What a shader can read, how its settings become fields, render settings (Blend, ZWrite, ZTest, Cull, Queue), and how to use it on an object.
 ---
 
 # Shaders (GLSL) and starters
@@ -24,6 +24,7 @@ A **shader** is a small program that decides how a surface is drawn. In TinyGame
 | **Fresnel glow** | The object is lit normally and glows at its edges. | Glow colour (#4cc3ff), Power (3), Strength (1.2), Pulse (1) |
 | **Water** | A wavy, slightly see-through surface with sparkles. Best on a plane. | Wave height (0.08), Wave speed (1), Scale (4), Deep colour (#0b4f7a), Shine (0.5) |
 | **Wind sway** | The top of the object sways, the base stays still. For grass, trees and flags. The base of the object has to be at its origin (y = 0 is the bottom). | Strength (0.15), Speed (1.5), Height (1) |
+| **Particle dissolve** | For a Particle System's **Renderer → Shader**: each particle burns away with a glowing edge as its Custom Data rises. See [Custom Data and particle shaders](./particles#custom-data-and-particle-shaders). | Edge colour (#ffb347), Scale (6), Edge (0.08) |
 
 Notes:
 
@@ -59,7 +60,23 @@ Without a comment a float starts at 0 and a colour at white. A uniform declared 
 
 ### See-through shaders
 
-Add a line `// @transparent` to the fragment shader and it blends with what is behind it, using the alpha you output (`gl_FragColor = vec4(colour, alpha)`). Without it, a material draws solid unless its **Opacity** is below 1.
+Add a line `// @transparent` to the fragment shader and it blends with what is behind it, using the alpha you output (`gl_FragColor = vec4(colour, alpha)`). Without it, a material draws solid unless its **Opacity** is below 1. For more control (glows that add light, multiply, drawing through walls) use the **Render** tab below.
+
+## Render settings
+
+The shader editor's **Render** tab sets how the shader is drawn, with the same names as Unity's ShaderLab:
+
+| Setting | Choices | What it does |
+| --- | --- | --- |
+| **Blend** | Auto, Off, Alpha, Premultiplied, Additive, Multiply | How its pixels mix with what is already drawn. **Additive** adds light: glows, auras, fire, force fields. **Multiply** darkens: shadows, stains. **Auto** = Alpha for a `// @transparent` shader or a see-through material, else Off. |
+| **ZWrite** | Auto, On, Off | Whether it hides what is drawn after it. Auto = On for solid shaders, Off for blended ones. |
+| **ZTest** | LEqual, Less, Equal, GEqual, Greater, NotEqual, Always | When a pixel is drawn compared to what is in front. **Always** draws through walls (x-ray outlines); **Greater** draws only the hidden part. |
+| **Cull** | Back, Front, Off | Which side of the faces is skipped. **Front** shows only the inside: the usual trick for a glowing shell around a character. **Off** draws both sides (so does the material's double-sided setting). |
+| **Queue** | Background 1000, Geometry 2000, AlphaTest 2450, Transparent 3000, Overlay 4000, or a number | Draw order: lower first. Above 2500 it is drawn with the see-through objects, back to front. **From Blend** = 3000 when it blends, else 2000. |
+
+A material with a custom shader also has **Render queue**: **From Shader**, or a number of its own (Unity's material Render Queue), to put one material in front of another.
+
+**Aura around a character:** a copy of the character (or a slightly bigger sphere) with a Fresnel-style shader set to **Blend → Additive**, **Cull → Front**, **Queue → 3100**.
 
 ### Errors
 

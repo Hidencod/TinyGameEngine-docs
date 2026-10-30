@@ -16,9 +16,9 @@ Actions are the **DO** part of an event. They run from top to bottom when the ev
 Number and text fields accept expressions, e.g. `Score + 1`, `"Score: " + Score`, `Player.x`, `random(1, 6)`. See [Expressions](./expressions).
 :::
 
-There are **195 actions**, grouped by category as in the action picker.
+There are **199 actions**, grouped by category as in the action picker.
 
-[⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🎬 Timeline](#timeline) · [🌐 Language](#language) · [🏆 Services](#services) · [🔗 Web](#web) · [👥 Multiplayer](#multiplayer) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera) · [🎚️ Graphics](#graphics)
+[⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🎬 Timeline](#timeline) · [🌐 Language](#language) · [🏆 Services](#services) · [🔗 Web](#web) · [👥 Multiplayer](#multiplayer) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [☄️ Effects](#effects) · [🔊 Audio](#audio) · [🎥 Camera](#camera) · [🎚️ Graphics](#graphics)
 
 ## ⚙️ System {/* #system */}
 
@@ -2254,7 +2254,7 @@ Switch one module of its Particle System on or off while the game runs.
 
 | Parameter | Type | Default | Notes |
 | --- | --- | --- | --- |
-| Module | Choice | `noise` | Options: Emission, Shape, Velocity over Lifetime, Limit Velocity over Lifetime, Inherit Velocity, Lifetime by Emitter Speed, Force over Lifetime, Color over Lifetime, Color by Speed, Size over Lifetime, Size by Speed, Rotation over Lifetime, Rotation by Speed, Noise, Collision, Triggers, Sub Emitters, Texture Sheet Animation, Lights, Trails |
+| Module | Choice | `noise` | Options: Emission, Shape, Velocity over Lifetime, Limit Velocity over Lifetime, Inherit Velocity, Lifetime by Emitter Speed, Force over Lifetime, Color over Lifetime, Color by Speed, Size over Lifetime, Size by Speed, Rotation over Lifetime, Rotation by Speed, External Forces, Noise, Collision, Triggers, Sub Emitters, Texture Sheet Animation, Lights, Trails, Custom Data |
 | State | Choice | `on` | Options: On, Off |
 
 ### Set particle rate {/* #object-setparticlerate */}
@@ -2285,6 +2285,60 @@ Play a ready-made effect once at a position, e.g. an Explosion at Enemy.x, Enemy
 | X | Number (expression) | `0` |  |
 | Y | Number (expression) | `1` |  |
 | Z | Number (expression) | `0` |  |
+
+## ☄️ Effects {/* #effects */}
+
+### Set line point {/* #object-setlinepoint */}
+
+<span class="tge-ace-display">Set ‹Object› line point ‹Point (from 0)› to (‹X›, ‹Y›, ‹Z›)</span>
+
+Move one point of the object's Line renderer, e.g. a laser's end to where it hits. A point past the end makes the line longer.
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.setLinePoint` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Point (from 0) | Number (expression) | `1` |  |
+| X | Number (expression) | `0` |  |
+| Y | Number (expression) | `0` |  |
+| Z | Number (expression) | `0` |  |
+
+### Set line point count {/* #object-setlinepointcount */}
+
+<span class="tge-ace-display">Set ‹Object› line to ‹Points› points</span>
+
+How many points the object's Line renderer has: more copies the last point, fewer drops points from the end.
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.setLinePointCount` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Points | Number (expression) | `2` |  |
+
+### Turn trail on/off {/* #object-settrailemitting */}
+
+<span class="tge-ace-display">Turn ‹Object› trail ‹State›</span>
+
+Start or stop the object's Trail renderer leaving a trail (what is already there fades out).
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.setTrailEmitting` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| State | Choice | `on` | Options: On, Off |
+
+### Clear trail {/* #object-cleartrail */}
+
+<span class="tge-ace-display">Clear ‹Object› trail</span>
+
+Remove the trail the object has left so far, e.g. after teleporting it.
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.clearTrail` (as saved in project files)
+- **Parameters:** none
 
 ## 🔊 Audio {/* #audio */}
 

@@ -18,7 +18,7 @@ Conditions are the **WHEN / IF** part of an event. All conditions of an event mu
 - Most other conditions can be **inverted** (NOT) from the condition’s menu.
 :::
 
-There are **105 conditions**, grouped by category as in the condition picker.
+There are **108 conditions**, grouped by category as in the condition picker.
 
 [⚙️ System](#system) · [🔢 Variables](#variables) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🎬 Timeline](#timeline) · [🌐 Language](#language) · [🏆 Services](#services) · [🔗 Web](#web) · [👥 Multiplayer](#multiplayer) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🖼️ UI](#ui) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎚️ Graphics](#graphics)
 
@@ -965,6 +965,39 @@ Compares one of the Animator's parameters with a value. A bool reads as 1 or 0.
 | Parameter | Type | Default | Notes |
 | --- | --- | --- | --- |
 | Name (empty = any) | Text |  | *Optional.* |
+
+### Message is {/* #net-messageis */}
+
+<span class="tge-ace-display">Message is ‹Name›</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `net.messageIs` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Name | Text |  |  |
+
+### On connection lost {/* #net-onreconnecting */}
+
+<span class="tge-ace-display">On connection lost</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `net.onReconnecting` (as saved in project files)
+- **Parameters:** none
+
+### On reconnected {/* #net-onreconnected */}
+
+<span class="tge-ace-display">On reconnected</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `net.onReconnected` (as saved in project files)
+- **Parameters:** none
 
 ### On disconnected {/* #net-onclosed */}
 

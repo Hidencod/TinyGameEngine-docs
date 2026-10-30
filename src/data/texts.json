@@ -206,7 +206,11 @@
   "debug.drawBox": "Debug: draw a wire box around a position to check a size or an area, e.g. a trigger zone.",
   "camera.shake": "Shake the screen, great for hits and explosions.",
   "camera.lookAt": "Turn the main camera toward an object.",
-  "camera.setPosition": "Move the main camera."
+  "camera.setPosition": "Move the main camera.",
+  "object.setLinePoint": "Move one point of the object's Line renderer, e.g. a laser's end to where it hits. A point past the end makes the line longer.",
+  "object.setLinePointCount": "How many points the object's Line renderer has: more copies the last point, fewer drops points from the end.",
+  "object.setTrailEmitting": "Start or stop the object's Trail renderer leaving a trail (what is already there fades out).",
+  "object.clearTrail": "Remove the trail the object has left so far, e.g. after teleporting it."
  },
  "behaviors": {
   "platformer": "Walk and jump when your events or scripts tell it to (needs a Physics body)",
@@ -238,7 +242,10 @@
   "particles": "Sparks, smoke, fire, confetti",
   "terrain": "Hills you sculpt by dragging",
   "water": "Lake or sea: things float, characters swim",
-  "volume": "Puts a post-processing profile (glow, depth of field, vignette…) on the screen: everywhere, or while the camera is inside its box"
+  "volume": "Puts a post-processing profile (glow, depth of field, vignette…) on the screen: everywhere, or while the camera is inside its box",
+  "trail": "A ribbon left behind the object as it moves: sword swings, dashes, projectiles, tire marks",
+  "line": "A ribbon through a list of points: lasers, lightning, ropes, aim lines",
+  "forceField": "Pushes, pulls or swirls the particles of Particle Systems that have External Forces on"
  },
  "snippets": {
   "joystick": "Walk around with the on-screen joystick (or WASD / arrow keys).",

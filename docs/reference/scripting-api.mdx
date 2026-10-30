@@ -146,6 +146,8 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `attachTo(parent, part?)` | `void` | Carry this object along with another (keeps its place in the world), e.g. a picked-up key. part: the name of a part of the 3D model of the other object, such as a hand bone. |
 | `detach()` | `void` | Let go: back to the top level where it is now. |
 | `particleSystem` | `ParticleSystem\|null` | The Particle System (like Unity's): every module live — particleSystem.main.startSpeed = 8, particleSystem.noise.enabled = true — plus play(), pause(), stop(), emit(count, params), simulate(t), getParticles() / setParticles(). Null without a Particles component. |
+| `lineRenderer` | `LineRenderer\|null` | The Line Renderer (like Unity's): its settings live — lineRenderer.loop = true, lineRenderer.width.scale = 0.05 — plus setPosition(i, v), setPositions([...]), getPosition(i), getPositions() and positionCount. Null without a Line renderer component. |
+| `trailRenderer` | `TrailRenderer\|null` | The Trail Renderer (like Unity's): its settings live — trailRenderer.emitting = false, trailRenderer.time = 0.2, trailRenderer.width.scale = 0.5 — plus clear(), positionCount, getPosition(i), getPositions(), addPosition(v). Null without a Trail renderer component. |
 | `emitParticles(count: number)` | `void` | Shoot particles at once from the Particle System, e.g. emitParticles(30) on a hit. |
 | `startParticles()` | `void` | Play the Particle System (bursts at time 0 go out). Safe to call every frame: already playing means nothing changes. |
 | `restartParticles()` | `void` | Play the Particle System from the beginning even if it is already playing. |
@@ -234,7 +236,7 @@ The running game.
 | `navmesh` | `NavMesh` | The baked navigation mesh (Project settings → Navigation): game.navmesh.findPath(from, to, &#123; radius, height &#125;) gives &#123; complete, points: [&#123;x,y,z,leap&#125;] &#125; over slopes, stairs and floors; sample(point) the nearest place to stand; rebuild() after walls change; enabled, lastBakeMs. |
 | `services` | `ServicesAPI` | Achievements, leaderboards, ads and purchases from Files → Services: game.services.unlockAchievement("first"), .submitScore("score", 12), .showRewarded(), .buy("noAds"), .owns("noAds"). Set game.services.provider = &#123; showRewarded: () =&gt; …, buy: p =&gt; … &#125; to handle any of them yourself (your own ad network or store); the results come back as game.on("adFinished" / "purchaseFinished" / "achievementUnlocked", …). |
 | `http` | `HttpAPI` | Web requests: const r = await game.http.get("https://…"); r.ok, r.status, r.json, r.text. Also .post(url, body) (an object is sent as JSON) and .request(url, &#123; method, headers, body, timeout, name &#125;). It never throws: a failure is r.ok === false with r.error. https only (Project settings → Web requests → Allow HTTP for plain http); a game played from the gallery may only contact the domains listed there. Replies also come as game.on("webResponse" / "webError", …). |
-| `net` | `NetAPI` | Rooms for realtime multiplayer: const r = await game.net.create(); r.code is the room code to share; a friend does await game.net.join(code). Then game.net.send("move", &#123; x: 1 &#125;) reaches the others, and game.on("netMessage", m =&gt; m.name, m.data, m.from.name) receives. game.net.players, .me, .host, .isHost, .code. Also "netPlayerJoined" / "netPlayerLeft" / "netClosed". The room only relays messages (it never runs your game): each player moves their own objects and sends where they are; the host decides shared things like the score. Up to 8 players, 30 messages a second each, about 2000 characters a message. game.net.spawn("Car", &#123; x, y, z &#125;) makes a prefab that every player sees: you drive it, the others see a copy that glides along (give prefabs and placed objects a Net Sync component to choose what is sent). game.net.setShared("round", 3) / addShared("score", 1) / getShared("round") are values the whole room shares and remembers (a late joiner gets them; game.on("netShared", e =&gt; e.name, e.value) fires on each change, and once per value when you join). game.net.quickMatch() joins the fullest open room or makes a public one; game.net.listRooms() lists the open ones; create(&#123; public: true, title &#125;) lists yours. entity.claim() takes control of a synced object. entity.isMine says whether this player drives an object (a placed object belongs to the host); only run input on objects that are yours. |
+| `net` | `NetAPI` | Rooms for realtime multiplayer: const r = await game.net.create(); r.code is the room code to share; a friend does await game.net.join(code). Then game.net.send("move", &#123; x: 1 &#125;) reaches the others, and game.on("netMessage", m =&gt; m.name, m.data, m.from.name) receives. game.net.players, .me, .host, .isHost, .code. Also "netPlayerJoined" / "netPlayerLeft" / "netClosed". A dropped connection gets back into the same seat by itself ("netReconnecting", then "netReconnected"; "netClosed" if it cannot). The room only relays messages (it never runs your game): each player moves their own objects and sends where they are; the host decides shared things like the score. Up to 8 players, 30 messages a second each, about 2000 characters a message. game.net.spawn("Car", &#123; x, y, z &#125;) makes a prefab that every player sees: you drive it, the others see a copy that glides along (give prefabs and placed objects a Net Sync component to choose what is sent). game.net.setShared("round", 3) / addShared("score", 1) / getShared("round") are values the whole room shares and remembers (a late joiner gets them; game.on("netShared", e =&gt; e.name, e.value) fires on each change, and once per value when you join). game.net.quickMatch() joins the fullest open room or makes a public one; game.net.listRooms() lists the open ones; create(&#123; public: true, title &#125;) lists yours. entity.claim() takes control of a synced object. entity.isMine says whether this player drives an object (a placed object belongs to the host); only run input on objects that are yours. |
 | `timeline(name)` | `Timeline` | A cutscene made in Files → Timeline: game.timeline("Intro").play(). Also pause(), stop(), skip() (the signals still to come fire), seek(seconds), time, duration, isPlaying, finished, speed, loop. game.on("timelineSignal", e =&gt; …) hears its signals (e.signal), "timelineFinished" its end. |
 | `renderTexture(name)` | `RenderTexture` | A render texture made in Files (what a camera with it as Target Texture draws): game.renderTexture("Monitor").paused = true freezes the picture, false starts it again; refresh() draws one more picture even while paused; name, width, height. |
 | `getCamera()` | `entity\|null` | The active camera entity. |
@@ -370,6 +372,7 @@ An object's Particle System, like Unity's ParticleSystem.
 | `sizeBySpeed` | `module` | The sizeBySpeed module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
 | `rotationOverLifetime` | `module` | The rotationOverLifetime module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
 | `rotationBySpeed` | `module` | The rotationBySpeed module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
+| `externalForces` | `module` | The externalForces module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
 | `noise` | `module` | The noise module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
 | `collision` | `module` | The collision module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
 | `triggers` | `module` | The triggers module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
@@ -377,6 +380,7 @@ An object's Particle System, like Unity's ParticleSystem.
 | `textureSheetAnimation` | `module` | The textureSheetAnimation module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
 | `lights` | `module` | The lights module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
 | `trails` | `module` | The trails module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
+| `customData` | `module` | The customData module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
 | `renderer` | `module` | The renderer module, live: change any setting (the same names as the Inspector). Numbers can be a constant or &#123; mode: "twoConstants", constantMin, constantMax, … &#125;. |
 | `isPlaying` | `boolean` | Playing (emitting, or particles still flying), not paused. |
 | `isEmitting` | `boolean` | Making new particles. |
@@ -394,6 +398,48 @@ An object's Particle System, like Unity's ParticleSystem.
 | `getParticles()` | `Particle[]` | Every live particle: position, velocity, remainingLifetime, startSize, startColor, rotation, … (a copy). |
 | `setParticles(particles, size?)` | `void` | Write particles back (change getParticles() results); extra ones are removed. |
 | `triggerSubEmitter(index, particles?)` | `void` | Fire a sub emitter from every particle, or the given ones. |
+| `getCustomParticleData(stream = 1)` | `{x,y,z,w}[]` | Custom Data stream 1 or 2 per particle (what a renderer shader gets as vCustom1 / vCustom2). |
+| `setCustomParticleData(data, stream = 1)` | `void` | Set Custom Data per particle (getParticles() order); keep the stream Disabled in the module so it is not worked out again. |
+
+## `trailRenderer` — entity.trailRenderer {/* #trailrenderer */}
+
+An object's Trail Renderer, like Unity's TrailRenderer.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `time` | `number` | Seconds a point lasts. |
+| `minVertexDistance` | `number` | Meters moved before a new point is dropped. |
+| `emitting` | `boolean` | Off: no new points; the trail left so far still fades. |
+| `autodestruct` | `boolean` | Destroy the object once its trail has faded out. |
+| `width` | `{ scale, keys }` | Width along the trail: scale is the width, keys shape it from the object (t 0) to the tail (t 1). |
+| `color` | `{ colors, alphas }` | Color gradient along the trail, object to tail. |
+| `alignment` | `"view" \| "transformZ"` | Face the camera, or the object's Z axis. |
+| `textureMode` | `"stretch" \| "tile" \| "distributePerSegment" \| "repeatPerSegment"` | How the texture runs along the trail. |
+| `blending` | `"alpha" \| "additive"` | Additive glows. |
+| `positionCount` | `number` | Points in the trail now. |
+| `getPosition(index)` | `{x,y,z}\|null` | A point, oldest first (world space). |
+| `getPositions()` | `{x,y,z}[]` | Every point, oldest first. |
+| `addPosition(position)` | `void` | Add a point by hand. |
+| `clear()` | `void` | Remove every point (after a teleport, so no streak joins the two places). |
+
+## `lineRenderer` — entity.lineRenderer {/* #linerenderer */}
+
+An object's Line Renderer, like Unity's LineRenderer.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `positionCount` | `number` | Points on the line; setting it adds copies of the last point or drops points from the end. |
+| `loop` | `boolean` | Join the last point back to the first. |
+| `useWorldSpace` | `boolean` | Points are world positions (true) or in the object's own space. |
+| `width` | `{ scale, keys }` | Width along the line: scale is the width, keys shape it from the first point (t 0) to the last (t 1). |
+| `color` | `{ colors, alphas }` | Color gradient along the line, first point to last. |
+| `alignment` | `"view" \| "transformZ"` | Face the camera, or the object's Z axis. |
+| `textureMode` | `"stretch" \| "tile" \| "distributePerSegment" \| "repeatPerSegment"` | How the texture runs along the line. |
+| `blending` | `"alpha" \| "additive"` | Additive glows. |
+| `getPosition(index)` | `{x,y,z}\|null` | A point. |
+| `setPosition(index, position)` | `void` | Move a point, e.g. a laser's end to where its ray hit. |
+| `getPositions()` | `{x,y,z}[]` | Every point. |
+| `setPositions(positions)` | `void` | Replace every point. |
 
 ## Globals
 

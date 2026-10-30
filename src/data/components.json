@@ -124,6 +124,21 @@
       "icon": "🌐",
       "title": "Net sync",
       "desc": ""
+    },
+    "trail": {
+      "icon": "☄️",
+      "title": "Trail renderer",
+      "desc": "A ribbon left behind the object as it moves: sword swings, dashes, projectiles, tire marks"
+    },
+    "line": {
+      "icon": "📏",
+      "title": "Line renderer",
+      "desc": "A ribbon through a list of points: lasers, lightning, ropes, aim lines"
+    },
+    "forceField": {
+      "icon": "🌀",
+      "title": "Particle force field",
+      "desc": "Pushes, pulls or swirls the particles of Particle Systems that have External Forces on"
     }
   }
 }
