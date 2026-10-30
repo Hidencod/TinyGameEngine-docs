@@ -113,7 +113,7 @@ Add a **Ragdoll** component to the object to tune it (without one every bone get
 
 <Crop name="card-ragdoll" width={360} />
 
-**Mass**, **Power** (see [Powered ragdoll](#powered-ragdoll)) and **Follow hips** apply to the whole body. With **Follow hips** on, the object itself travels with the hips while the character is limp, so a camera that follows the object keeps the body in view, and the spot where the character gets up is where it fell. Off (the default), the object stays where it was and `hipsX`, `hipsY` and `hipsZ` tell you where the hips are. **Fill from model** lists the bones that get a body; then open a bone to change:
+**Mass**, **Power** (see [Powered ragdoll](#powered-ragdoll)) and **Follow hips** apply to the whole body. With **Follow hips** on, the object itself travels with the hips while the character is limp, staying on the floor under them (it follows them down through the air when the body falls), so a camera that follows the object keeps the body in view, and the spot where the character gets up is where it fell. Off (the default), the object stays where it was and `hipsX`, `hipsY` and `hipsZ` tell you where the hips are. **Fill from model** lists the bones that get a body; then open a bone to change:
 
 - **Enabled** off: the bone gets no body and follows the bone above it (fingers, toes).
 - **Swing** and **Twist**: how many degrees the bone may bend away from its starting pose, and turn about its own length.
