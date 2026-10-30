@@ -1,6 +1,6 @@
 ---
 title: Layers
-description: Put objects on layers, then leave layers out of a camera's picture, look at only some layers with a raycast, or choose which layers collide — like Unity's layers and culling mask.
+description: Put objects on layers, then leave layers out of any camera's picture, look at only some layers with a raycast, or choose which layers collide — like Unity's layers and culling mask.
 ---
 
 # Layers
@@ -16,7 +16,9 @@ Renaming a layer in Project settings moves its objects and the cameras' choices 
 
 ## Leave layers out of a camera
 
-A camera with a **Target texture** (see [Render textures](render-textures)) has a **Draw** switch for every layer. Switch **Draw Clouds** off and that camera's picture shows no clouds. Only the object itself is left out: things attached to it, on other layers, still draw. This applies to render-texture cameras, not to the game's own view.
+Every camera has a **Draw** switch for every layer (Unity's culling mask). Switch **Draw Clouds** off and that camera's picture shows no clouds. Only the object itself is left out: things attached to it, on other layers, still draw.
+
+It works for the game's own camera as well as for cameras with a **Target texture** (see [Render textures](render-textures)). That is how you make minimap icons: put a flat marker above each enemy on a `Minimap` layer, switch **Draw Minimap** off on the main camera and leave it on for the minimap camera. The player sees the enemies and the minimap shows the markers. The camera preview in the 3D view follows these switches too.
 
 ## Look at only some layers with a raycast
 

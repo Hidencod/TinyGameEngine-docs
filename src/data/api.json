@@ -27,7 +27,7 @@
           "name": "layer",
           "kind": "property",
           "type": "string",
-          "doc": "The layer the object is on (\"Default\" unless changed; Project settings → Layers). Writable: entity.layer = \"Water\". Cameras with a target texture can leave layers out; game.raycast takes layers."
+          "doc": "The layer the object is on (\"Default\" unless changed; Project settings → Layers). Writable: entity.layer = \"Water\". Cameras can leave layers out (Draw switches); game.raycast takes layers."
         },
         {
           "name": "persist",

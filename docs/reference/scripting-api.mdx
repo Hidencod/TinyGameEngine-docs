@@ -56,7 +56,7 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `id` | `string` | Unique id of this entity. |
 | `name` | `string` | Object type name (clones share it), e.g. "Coin". |
 | `tags` | `Set` | Tags of this entity (read-only set). Use hasTag/addTag. |
-| `layer` | `string` | The layer the object is on ("Default" unless changed; Project settings → Layers). Writable: entity.layer = "Water". Cameras with a target texture can leave layers out; game.raycast takes layers. |
+| `layer` | `string` | The layer the object is on ("Default" unless changed; Project settings → Layers). Writable: entity.layer = "Water". Cameras can leave layers out (Draw switches); game.raycast takes layers. |
 | `persist` | `boolean` | True: the object stays when the game goes to another scene (with its children, position and variables) instead of being made again. An object of the same name in the next scene that also has persist on is replaced by it, never doubled. Also the "Keep across scenes" switch in the inspector. |
 | `destroyed` | `boolean` | True once the entity has been destroyed. |
 | `position` | `{x,y,z}` | Local position in meters. Writable: entity.position.y += 1 |
