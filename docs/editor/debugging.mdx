@@ -86,11 +86,43 @@ Breakpoints belong to you, not to the game: they are kept in this browser or app
 
 Tap the margin beside a line number in the code editor to put a **red dot** on that line. It stays in the script as you edit around it, and tapping it again removes it.
 
-When playing, the game pauses as soon as that line is reached, at the end of that frame. The debugger shows **🔴 Walker · 3** (the script and the line) and the object whose script ran, so you can read its fields in **Objects** and any expression in **Watch**. **Show** opens the script at that line, **▶** goes on to the next time the line runs, **Step** runs one frame, and **Remove** takes the breakpoint away.
+When playing, the game stops on that line. The debugger shows **🔴 Walker · 12 · Player** (the script, the line and the object it runs on), the line of code, and the variables as they were **just before that line ran**:
 
-This pauses *at* a line and lets you look around. It does not walk through the script line by line: the line itself has already run when the game stops. Put dots on several lines to follow the order the code runs in. A dot on a line that is not the start of a statement (a closing bracket, a line that carries on the one above) is ignored.
+| Part | What it shows |
+| --- | --- |
+| **Locals** | the function's parameters and the variables it has set so far |
+| **Script** | the script's own top-level variables, its fields (`export let speed`) among them, and `entity` |
+| **Call stack** | which function called which, the running one first. Tap a row to see that function's line and variables |
 
-Breakpoints are changed for scripts when Play starts, so add or remove them before pressing Play.
+A list or an object opens with a tap (**▸**) to show what is inside it.
+
+#### Stepping
+
+| Button | Key | What it does |
+| --- | --- | --- |
+| **↷** Step over | F10 | to the next line of this function (a function it calls runs without stopping) |
+| **↓** Step into | F11 | to the very next line that runs, inside a function this line calls if it calls one |
+| **↑** Step out | Shift+F11 | on until this function has returned, to the line that called it |
+| **▶** Continue | F8 | on to the next breakpoint |
+
+When the function ends and nothing of yours called it (`update()` is called by the engine), Step over and Step out go to the same script on the same object the next time it runs, usually the next frame. Step into goes to the next line of any script.
+
+**Watch** expressions are read in the stopped line's own scope, so `step * 10` or `this.hp` work there too. A name that isn't there (inside another function) is read in the game instead.
+
+#### How it works
+
+A browser can't freeze a script half-way through, so the debugger records instead. From the breakpoint's line to the end of that frame, every line your scripts run is noted with its variables. The game then holds, and stepping walks through that record.
+
+So:
+
+- Variables, locals and watch values are as they were **on that line**. The **Objects** and **Variables** tabs show the game as it is now, at the end of the frame, with the rest of the frame's code already run.
+- A watch expression is read on every recorded line. Avoid ones that change something (`count++`).
+- Changing a value in **Objects** while stopped doesn't change what the recorded lines did. It counts from the next frame.
+- A frame that runs more than 20,000 lines (a very long loop) is recorded up to there. Stepping past it lets the game run on.
+
+Scripts run a little slower while any script has a breakpoint: every line notes where it is. Without breakpoints they run as usual.
+
+Adding a breakpoint takes effect the next time Play starts. Removing one works at once. A dot on a line that is not the start of a statement (a closing bracket, a line that carries on the one above) is ignored.
 
 ## Events: what ran this frame
 
