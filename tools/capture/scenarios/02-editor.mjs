@@ -56,9 +56,16 @@ export async function run({ page, s, H }) {
   await s.shot('viewport-snap-on', { hl: { target: page.getByRole('button', { name: 'Snap', exact: true }) }, wait: 300 });
   await page.getByRole('button', { name: 'Snap', exact: true }).click();
 
-  await page.getByRole('button', { name: 'Colliders', exact: true }).click();
+  // Gizmos menu: turn Colliders on, picture the menu, then the outlines without it.
+  const gizmos = page.getByRole('button', { name: 'Gizmos', exact: true });
+  await gizmos.click();
+  await page.getByRole('menuitemcheckbox', { name: 'Colliders' }).click();
+  await s.shot('viewport-gizmos', { hl: { target: page.locator('.vp-menu') }, wait: 600 });
+  await gizmos.click();
   await s.shot('viewport-colliders', { wait: 900 });
-  await page.getByRole('button', { name: 'Colliders', exact: true }).click();
+  await gizmos.click();
+  await page.getByRole('menuitemcheckbox', { name: 'Colliders' }).click();
+  await gizmos.click();
 
   // Multi select: two coins.
   await page.getByRole('button', { name: 'Select several', exact: true }).click();

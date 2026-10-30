@@ -49,7 +49,7 @@ game.navmesh.rebuild();                               // after walls changed
 
 ## See the mesh
 
-**In the editor:** the **Navmesh** button in the scene view's toolbar draws the walkable area as green cells on your floors, before you press Play. It follows what you move: walls cut holes, steps and slopes join or split areas. It is made from the objects' shapes, so it is a close picture, not the exact mesh the game builds. The tops of cubes show as separate green islands when they are too high to step onto.
+**In the editor:** **Gizmos → Navmesh** in the scene view's toolbar draws the walkable area as green cells on your floors, before you press Play. It follows what you move: walls cut holes, steps and slopes join or split areas. It is made from the objects' shapes, so it is a close picture, not the exact mesh the game builds. The tops of cubes show as separate green islands when they are too high to step onto.
 
 **In the game:** Press **Play**, then the **Show colliders** button. The places a character can walk are drawn as **green cells** on the floor, with the colliders outlined. A wall that has no green hole under it and no outline has **no collider**, or it is not **static**: add a **Collider** and set the **Rigidbody** to *Static* (or leave out the Rigidbody) and it blocks paths.
 

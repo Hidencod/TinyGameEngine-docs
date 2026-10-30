@@ -40,7 +40,7 @@ The grid shows the ground plane. One grid square is 1 meter.
   <><b>Preview</b> — always show the game camera's picture in the corner: see <a href="#camera-preview">Camera preview</a>.</>,
   <><b>2D</b> — a flat side view that never turns: see <a href="#the-2d-view">The 2D view</a>.</>,
   <><b>Focus</b> — center the view on the selection.</>,
-  <><b>Colliders</b> — show the invisible physics shapes (green outlines).</>,
+  <><b>Gizmos</b> — draw mode and what else the view shows: see <a href="#gizmos-menu">Gizmos menu</a>.</>,
   <><b>UI</b> — UI mode: edit the on-screen buttons and text. See <a href="../world/ui">Game UI</a>.</>,
 ]} />
 
@@ -101,11 +101,40 @@ Turn on **Snap** to move in 0.5 m steps and rotate in 15° steps — handy for l
 
 </Side>
 
-## Show colliders
+## Gizmos menu
+
+<Side shot="viewport-gizmos">
+
+**Gizmos** in the toolbar (like Unity's Gizmos menu and draw mode) chooses how the scene is drawn and which editor guides show. Guides are never part of the game. Your choices are remembered in this browser.
+
+**Draw**
+
+| Mode | What you see |
+| --- | --- |
+| **Shaded** | The scene as the game draws it. |
+| **Wireframe** | Only the triangle edges of every object. |
+| **Shaded wireframe** | The scene with the edges drawn on top. |
+
+</Side>
+
+**Show**
+
+| Guide | What it draws | When |
+| --- | --- | --- |
+| **Grid** | The ground grid (the 2D grid in the [2D view](#the-2d-view)) | Always |
+| **Selection bounds** | The orange box around the selection | Selected objects |
+| **Light & camera icons** | The bulb and camera frame. They can still be clicked when hidden | Always |
+| **Particle shapes** | Where a Particle System's particles start: the *Shape* module's cone, sphere, box, circle… with its arc, position, rotation and scale. A *Mesh* shape boxes its source object | Selected objects |
+| **Sound ranges** | A 3D sound's *Min distance* and *Max distance* spheres | Selected objects |
+| **Force fields** | The start and end range of each [Force Field](../world/particles#force-fields) | Always |
+| **Colliders** | The physics shapes: green = solid, yellow = trigger | Always |
+| **Navmesh** | Where characters can walk. See [Navmesh](../world/navmesh) | Always |
+
+### Show colliders
 
 <Side shot="viewport-colliders">
 
-Physics uses **collider** shapes that can differ from what you see. Turn on **Colliders** to draw them as outlines. Useful when something falls through the floor or bumps into air. See [Physics](../world/physics).
+Physics uses **collider** shapes that can differ from what you see. Turn on **Gizmos → Colliders** to draw them as outlines. Useful when something falls through the floor or bumps into air. See [Physics](../world/physics).
 
 </Side>
 
