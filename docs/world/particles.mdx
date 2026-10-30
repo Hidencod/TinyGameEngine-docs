@@ -33,47 +33,101 @@ Particles are many tiny sprites that make effects: fire, smoke, sparkles, explos
 
 ## Particles settings
 
-<Side shot="card-particles-fire" crop>
+The Particles component is laid out like Unity's Particle System: the main settings, then a list of **modules**. Tick a module to switch it on; tap its name to open it. If you know Unity, every module and field has the same name and does the same thing.
 
-**▶ Preview / ⏹ Stop preview** plays the effect in the editor; **↻** restarts it.
+<Side shot="particles-modules" crop>
 
-**Emission**
+**Preset → Start from a preset…** replaces every setting with a ready-made effect. **▶ Preview** plays it in the editor; edits show while it plays.
+
+Most numbers have a little menu next to them, as in Unity:
+
+| Mode | Means |
+| --- | --- |
+| **Constant** | One value. |
+| **Curve** | Changes over time: over the particle's lifetime for most settings, over the system's Duration for start values. |
+| **Random Between Two Constants** | Each particle picks its own value between Min and Max. |
+| **Random Between Two Curves** | Each particle picks a value between two curves. |
+
+Colours have the same idea: **Color**, **Gradient**, **Random Between Two Colors / Gradients**, **Random Color**.
+
+</Side>
+
+### Particle System (main)
+
+<Side shot="particles-main" crop>
 
 | Field | What it does |
 | --- | --- |
-| **Per second** | Particles made every second (0 = bursts only). |
-| **Burst** | Particles shot at once when it starts. |
-| **Play on start** | Starts with the scene. Off = wait for *Start particles*. |
-| **Loop / Duration** | Keep going, or stop after Duration seconds. |
-| **Shape** | Fountain (cone), Ball (sphere), Point, Box (area). |
-| **Radius / Area size / Spread** | Size of the emitter; cone angle. |
+| **Duration / Looping** | Length of one cycle in seconds; Looping starts the next one straight away. **Prewarm** starts a looping effect as if it had already run a cycle. |
+| **Start Delay** | Wait before it starts emitting. |
+| **Start Lifetime** | Seconds each particle lives. |
+| **Start Speed** | Speed it is shot out at, along the Shape's direction. |
+| **Start Size** (or **3D Start Size**) | Size when born (per axis with 3D). |
+| **Start Rotation** (or **3D**) / **Flip Rotation** | Angle when born; share of particles spinning the other way. |
+| **Start Color** | Colour when born. |
+| **Gravity Modifier** | 1 = falls like objects, 0 = floats, negative = rises. |
+| **Simulation Space** | **Local**: particles move with the object. **World**: they stay where they were made (smoke trails, sparks from a moving car). **Custom**: move with another object. |
+| **Simulation Speed** | Plays the whole effect faster or slower. |
+| **Delta Time** | **Unscaled** keeps playing while the game is in slow motion or paused by time scale. |
+| **Scaling Mode** | Whether the object's scale (and its parents') sizes the particles. |
+| **Play On Awake** | Starts with the scene. Off = wait for *Start particles*. |
+| **Max Particles** | Limit for this effect. Lower is faster on old phones. |
+| **Stop Action** | When a one-shot effect is done: nothing, **Disable** or **Destroy** the object, or **Callback** (fires *On particles stopped*). |
 
-**Motion**
+</Side>
+
+### Modules
+
+<Row>
+  <Crop name="particles-emission" caption="Emission" />
+  <Crop name="particles-shape" caption="Shape" />
+</Row>
+
+| Module | What it does |
+| --- | --- |
+| **Emission** | **Rate over Time** (per second), **Rate over Distance** (per meter the object moves: footprints, tire smoke) and **Bursts** (a number at a time, repeated in cycles). |
+| **Shape** | Where particles are born and which way they go: Sphere, Hemisphere, Cone, Donut, Box, Mesh (a model's surface), Circle, Edge, Rectangle. Position, rotation and scale move the shape off the object. |
+| **Velocity over Lifetime** | Extra speed along X/Y/Z, orbiting around a point, or out from the middle (Radial). |
+| **Limit Velocity over Lifetime** | Caps the speed and adds **Drag** (air resistance). |
+| **Inherit Velocity** | Particles take some of the object's own movement. |
+| **Lifetime by Emitter Speed** | A moving object's particles live longer or shorter. |
+| **Force over Lifetime** | A steady push along X/Y/Z, like wind. |
+| **Color over Lifetime / by Speed** | Colour and transparency change as the particle ages, or with its speed. |
+| **Size over Lifetime / by Speed** | Grows or shrinks as it ages, or with its speed. |
+| **Rotation over Lifetime / by Speed** | Spins as it ages, or with its speed. |
+| **External Forces** | Lets [force fields](#force-fields) push the particles. |
+| **Noise** | Turbulence: wobbly, swirling paths (fire, smoke, magic). |
+| **Collision** | Particles bounce off **Planes** you pick, or off the **World** (any collider), losing speed or life on each hit. |
+| **Triggers** | Do something when particles are inside / outside / enter / leave chosen colliders: kill them, or fire an event. |
+| **Sub Emitters** | Another Particle System fires where particles are born, die or collide (a firework that bursts at the top). |
+| **Texture Sheet Animation** | Plays frames of a sprite sheet on each particle (flickering flames, animated smoke). |
+| **Lights** | Gives some particles a real light (glowing sparks). Costly: keep **Max Lights** small on phones. |
+| **Trails** | Each particle leaves a ribbon behind it, or ribbons join the particles together. |
+| **Custom Data** | Values per particle for your own [particle shader](#custom-data-and-particle-shaders). |
+
+### Renderer
+
+<Side shot="particles-renderer" crop>
 
 | Field | What it does |
 | --- | --- |
-| **Lifetime (s)** | Min–max seconds each particle lives. |
-| **Speed** | Min–max start speed. |
-| **Gravity** | 1 = falls like objects, 0 = floats, negative = rises. |
-| **Air drag** | Slows particles down. |
-| **Leave behind** | On: particles stay where they were made (trails, smoke). Off: they move with the object. |
-
-**Look**
-
-| Field | What it does |
-| --- | --- |
-| **Size over lifetime** | A curve from birth (left) to death (right). |
-| **Color over lifetime** | A gradient: keys above the bar set transparency, below set color. |
-| **Glow** | Additive, light-adding look (fire, sparks). Off for smoke and confetti. |
-| **Texture** | An image per particle; none = a soft round dot. |
-| **Max particles** | Limit for this effect. Lower is faster on old phones. |
+| **Render Mode** | **Billboard** (always faces the camera), **Stretched Billboard** (streaks along its movement: rain, sparks), **Horizontal / Vertical Billboard**, **Mesh** (a shape or model per particle: confetti, debris), **None**. |
+| **Shader** | **Built-in**, or a project shader (see [Custom Data and particle shaders](#custom-data-and-particle-shaders)). |
+| **Texture** | A picture per particle; none = a soft round dot (billboards) or plain colour (meshes). |
+| **Blending** | **Alpha** (smoke, confetti), **Additive (glow)** (fire, sparks, magic), **Premultiply**, **Multiply** (darkening). |
+| **Render Alignment** | Which way billboards face: the view, the camera itself, the world or object axes, or along their velocity. |
+| **Sort Mode** | Draw order of the particles: by distance, oldest or youngest in front. |
+| **Order in Layer** | Draw order against other see-through things. |
+| **Min / Max Particle Size** | Keeps particles between these sizes on screen (share of the screen height). |
+| **Flip / Pivot** | Mirror a share of particles; move the quad off the particle's centre. |
 
 </Side>
 
 ## Particles from events and scripts
 
-- Actions: **Start particles**, **Stop particles**, **Burst particles** (N at once), **Set particle rate**, **Spawn particles here** (a one-off effect at the object) and **Spawn particles** (a preset at any position — great for an explosion where something was destroyed). Condition: **Is emitting particles**.
-- Scripts: `entity.emitParticles(30)`, `game.spawnParticles('Explosion', x, y, z, { burst: 50 })`.
+- Actions (category **Particles**): **Start**, **Restart**, **Stop**, **Pause** and **Clear particles**, **Burst particles** (N at once), **Emit particles with values** (N with their own speed, colour, size…), **Set particle rate**, **Set particle start color**, **Set particle start value**, **Turn particle module on/off**, **Spawn particles here** (a one-off effect at the object) and **Spawn particles** (a preset at any position — great for an explosion where something was destroyed).
+- Conditions: **Is emitting / playing / paused**, **Compare particle count**, **On particle collision**, **On particles stopped**.
+- Scripts: `entity.particleSystem` is Unity's ParticleSystem — every module live (`entity.particleSystem.main.startSpeed = 8`, `entity.particleSystem.noise.enabled = true`), plus `play()`, `stop()`, `emit(count, params)`, `getParticles()` / `setParticles()`. One-off effects: `game.spawnParticles('Explosion', x, y, z)`, with settings changed by module: `game.spawnParticles('Sparkles', x, y, z, { main: { startColor: '#66ccff' } })`.
 
 The project’s **Max particles** setting caps all effects together. See [Performance](../help/performance).
 
@@ -83,6 +137,11 @@ A **Particle force field** pushes, pulls or swirls particles that pass through i
 
 1. Make an object for the field (**Objects → ＋ Add → Empty object**), then **Add component → Particle force field**. The editor draws its range as purple rings.
 2. On the Particle System, open **External Forces** and tick it. Only systems with External Forces on are pushed.
+
+<Row>
+  <Crop name="card-force-field" caption="Particle force field" />
+  <Crop name="particles-external-forces" caption="External Forces on the Particle System" />
+</Row>
 
 **Force field settings**
 
@@ -115,6 +174,8 @@ A Particle System can draw with your own [shader](./shaders) instead of the buil
 
 **Custom Data** sends values per particle to that shader, like Unity's Custom Data module and custom vertex streams. Turn the module on and set **Custom1** and/or **Custom2**:
 
+<Crop name="particles-custom-data" caption="Custom Data with Custom1 as a Vector" />
+
 | Mode | Gives the shader |
 | --- | --- |
 | **Disabled** | Nothing new (a value a script set stays). |
@@ -142,6 +203,8 @@ Only the fragment part of the shader is used on particles; the engine's own vert
 
 A **Trail renderer** leaves a ribbon behind an object as it moves: sword swings, dashes, bullets, comets, tire marks. Like Unity's Trail Renderer, it is a component: **Add component → Trail renderer**. The trail appears when the game runs and the object moves.
 
+<Side shot="card-trail" crop>
+
 | Field | What it does |
 | --- | --- |
 | **Width** | The ribbon's width (the number) and its shape along the trail (the curve: left = at the object, right = the tail). |
@@ -155,6 +218,8 @@ A **Trail renderer** leaves a ribbon behind an object as it moves: sword swings,
 | **Texture** | A picture along the ribbon; none = plain colour. |
 | **Blending** | **Additive** glows (sparks, magic, lasers). |
 
+</Side>
+
 **Sword trail:** put an empty object on the blade (a child of the sword), add a Trail renderer with **Time** about 0.2, **Width** about the blade length, **Alignment → Transform Z** and **Additive** blending. Turn the empty so its Z axis points across the swing.
 
 Blocks: **Turn trail on/off** and **Clear trail** (category **Effects**). Scripts: `entity.trailRenderer.emitting = false`, `entity.trailRenderer.clear()` (after teleporting, so no streak joins the two places), `positionCount`, `getPositions()`.
@@ -163,12 +228,16 @@ Blocks: **Turn trail on/off** and **Clear trail** (category **Effects**). Script
 
 A **Line renderer** draws a ribbon through a list of points: lasers, lightning, ropes, aim lines, outlines. **Add component → Line renderer**. Unlike a trail, it shows in the editor too.
 
+<Side shot="card-line" crop>
+
 | Field | What it does |
 | --- | --- |
 | **Loop** | Join the last point back to the first (a ring, an outline). |
 | **Use world space** | Off: points are in the object's own space and move, turn and scale with it. On: points are world positions and stay put. |
 | **Positions** | The points. ✕ removes one; **＋ Add point** carries on in the last direction. |
 | **Width, Color, Alignment, Texture mode, Texture, Blending** | As for the Trail renderer, from the first point (left of the curve) to the last. |
+
+</Side>
 
 **Laser:** a Line renderer with two points and **Use world space** on, on the gun. Every frame, set point 0 to the gun and point 1 to where a [raycast](./physics#raycasts) hits (or 50 m ahead):
 
