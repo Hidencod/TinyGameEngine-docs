@@ -80,7 +80,7 @@ When the event's conditions are true while playing:
 - with the event sheet open beside the game (on a computer), the event is highlighted in yellow. **Show** opens the sheet at that event;
 - **▶** goes on to the next time the event runs. For an event that runs every frame, that is the next frame. **Remove** deletes the breakpoint.
 
-To play on without stopping, close the debugger (**✕**) and press **▶**: breakpoints are turned off and 🔍 is crossed out in red. Opening 🔍 again turns them back on.
+To play on without stopping, close the debugger (**✕**): the game goes on with breakpoints turned off, and 🔍 is crossed out in red. Opening 🔍 again turns them back on.
 
 Breakpoints belong to you, not to the game: they are kept in this browser or app only, and are never saved in the project or in an exported game.
 
@@ -122,9 +122,9 @@ So:
 - Changing a value in **Objects** while stopped doesn't change what the recorded lines did. It counts from the next frame.
 - A frame that runs more than 20,000 lines (a very long loop) is recorded up to there. Stepping past it lets the game run on.
 
-Scripts run a little slower while any script has a breakpoint: every line notes where it is. Without breakpoints they run as usual.
+Scripts run slower while any script has a breakpoint: every line notes where it is. Without breakpoints they run as usual.
 
-Adding a breakpoint takes effect the next time Play starts. Removing one works at once. A dot on a line that is not the start of a statement (a closing bracket, a line that carries on the one above) is ignored.
+A breakpoint added while the game plays works from the next time its function runs, if the function is written `function name() { … }` at the top of the script (as `update` and `start` are). Code elsewhere (a class's methods, `const f = () => { … }`, lines outside any function) stops only when there was already a breakpoint (in any script) as Play started. Removing a breakpoint works at once. A dot on a line that is not the start of a statement (a closing bracket, a line that carries on the one above) is ignored.
 
 ## Events: what ran this frame
 
