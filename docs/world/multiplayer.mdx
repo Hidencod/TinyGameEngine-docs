@@ -88,6 +88,12 @@ In a room every player runs their **own copy of the game**, on their own device.
 | Anything else (no Net sync, not spawned for everyone) | Nobody: it is **not shared**. Every player has their own copy of it, and each is free to do what they like with it. |
 | Any object, when you are not in a room | You |
 
+### Whose object is it
+
+Name labels, team colours and score boards are yours to design, so the engine gives you the facts and no label. Any object has two properties: **`ownerName`** is the name of the player who drives it (empty when nobody does), and **`ownerId`** is that player's id (0 when nobody does). To label a player, give the player's prefab a 3D text child and set its text to `Self.ownerName` once the object exists; or read `Ball.ownerName` from a UI text. In a script it is `entity.owner?.name`.
+
+**`netping()`** (`game.net.ping` in a script) is the round trip to the room in milliseconds, a new reading every few seconds, and 0 when you are not in a room. Put it in any text you like.
+
 ### Is mine
 
 **Is mine** (the condition, or `entity.isMine` in scripts) is true when **this player is the driver** of the object. It is:

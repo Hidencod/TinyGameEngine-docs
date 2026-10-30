@@ -379,6 +379,13 @@
       "insert": "netmyid()"
     },
     {
+      "name": "netping",
+      "signature": "netping()",
+      "description": "The round trip to the room in milliseconds (a reading every few seconds); 0 when not in a room or before the first one",
+      "category": "Multiplayer",
+      "insert": "netping()"
+    },
+    {
       "name": "nethostname",
       "signature": "nethostname()",
       "description": "The name of the host",
@@ -796,6 +803,14 @@
     {
       "name": "hipsZ",
       "description": "Z of the hips of a ragdoll"
+    },
+    {
+      "name": "ownerName",
+      "description": "Multiplayer: the name of the player who drives this object (empty when nobody does, or it is not synced)"
+    },
+    {
+      "name": "ownerId",
+      "description": "Multiplayer: the id of the player who drives this object (0 when nobody does)"
     },
     {
       "name": "text",
