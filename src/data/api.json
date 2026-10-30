@@ -254,6 +254,13 @@
           "doc": "Set a setting (uniform) of this object's custom shader while the game runs: a number, or a colour as text. entity.setUniform(\"uAmount\", 0.7). Only this object changes; false when its shader has no such uniform."
         },
         {
+          "name": "setRenderTexture",
+          "kind": "method",
+          "sig": "(name)",
+          "type": "boolean",
+          "doc": "Show a render texture (Files) as this object's picture: its surfaces, sprite, or UI Image. tv.setRenderTexture(\"Cam B\"); null puts its own picture back. False when it has nothing that can show one."
+        },
+        {
           "name": "setText",
           "kind": "method",
           "sig": "(text)",

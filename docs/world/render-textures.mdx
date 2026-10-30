@@ -52,7 +52,16 @@ A camera with a Target texture has a **Draw** switch for every [layer](layers). 
 - Event block **Render texture**: **Pause** freezes the picture (the last one stays), **Resume** starts it again, **Draw once** draws a single new picture even while paused.
 - Script: `game.renderTexture('Monitor').paused = true`, `.paused = false`, `.refresh()`; also `name`, `width`, `height`. It throws when the project has no render texture of that name.
 
-A pause is for the running game only; it is not saved.
+### Switch what a surface shows
+
+A TV that flips between security cameras: make a render texture per camera, then change which one the screen shows while the game runs.
+
+- Event block **Show render texture** (Graphics): pick the object and the render texture. Leave the texture empty to put the object's own picture back.
+- Script: `tv.setRenderTexture('Cam B')`, and `tv.setRenderTexture(null)` for its own picture. It returns false when the object has nothing to show it on, and throws for a name the project doesn't have.
+
+It works on a mesh with a built-in style (every surface of the object), a **Sprite**, and a UI **Image** or **Panel**. Only that object changes, not the other objects sharing its material.
+
+A pause or a switch is for the running game only; it is not saved.
 
 ## Good to know
 

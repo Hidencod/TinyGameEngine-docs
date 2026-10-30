@@ -4931,6 +4931,36 @@
       ]
     },
     {
+      "id": "object.setRenderTexture",
+      "kind": "action",
+      "category": "Graphics",
+      "label": "Show render texture",
+      "hint": "Show what a camera draws into a render texture as this object's picture, e.g. a TV switching feeds (empty = its own picture)",
+      "display": "Show render texture {texture} on {object}",
+      "displayNoObject": null,
+      "icon": "📺",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "texture",
+          "label": "Render texture",
+          "type": "renderTexture",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "object.focusDepthOfField",
       "kind": "action",
       "category": "Graphics",
