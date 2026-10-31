@@ -1226,6 +1226,13 @@
           "doc": "A cutscene made in Files → Timeline: game.timeline(\"Intro\").play(). Also pause(), stop(), skip() (the signals still to come fire), seek(seconds), time, duration, isPlaying, finished, speed, loop. game.on(\"timelineSignal\", e => …) hears its signals (e.signal), \"timelineFinished\" its end."
         },
         {
+          "name": "windAt",
+          "kind": "method",
+          "sig": "(x, y, z)",
+          "type": "{x,y,z}",
+          "doc": "The wind of every Wind Zone at a world point (m/s², pulses and gusts included): make a flag, sail or tree sway with it."
+        },
+        {
           "name": "renderTexture",
           "kind": "method",
           "sig": "(name)",

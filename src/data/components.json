@@ -139,6 +139,11 @@
       "icon": "🌀",
       "title": "Particle force field",
       "desc": "Pushes, pulls or swirls the particles of Particle Systems that have External Forces on"
+    },
+    "windZone": {
+      "icon": "🌬️",
+      "title": "Wind zone",
+      "desc": ""
     }
   }
 }

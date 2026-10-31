@@ -168,6 +168,35 @@ Every force can be a constant, a curve over each particle's lifetime, or random,
 
 The preview in the editor shows the fields' effect too. From a script: `entity.particleSystem.externalForces.multiplier = 2`, or `entity.addComponent('forceField', { endRange: 4, rotationSpeed: 3 })`.
 
+## Wind zones
+
+A **Wind zone** blows on every Particle System with **External Forces** on: smoke leaning over, sparks carried off, leaves drifting. It works like Unity's Wind Zone. Scripts can read it too, so flags, sails and trees can sway with the same wind.
+
+1. Make an object for the wind (**Objects → ＋ Add → Empty object**), then **Add component → Wind zone**. The editor draws teal arrows the way it blows, or the sphere it fills.
+2. On the Particle System, tick **External Forces**. Wind zones always count, whatever the **Influence List** says; the list only picks force fields.
+
+| Field | What it does |
+| --- | --- |
+| **Mode** | **Directional**: blows along the object's forward (its blue axis pointing away, -Z) everywhere in the scene; turn the object to turn the wind. **Spherical**: blows outwards from the object, strongest in the middle and fading to nothing at **Radius**. |
+| **Radius** | Spherical only: how far it reaches. It grows with the object's scale. |
+| **Main** | How hard it blows (meters per second², a steady push). |
+| **Turbulence** | Gusts: the wind changes direction and strength from place to place and moment to moment, smoothly, so neighbouring particles sway together. |
+| **Pulse Magnitude** | How much the strength swells and drops: 0 steady, 0.5 between half and one and a half times **Main**. |
+| **Pulse Frequency** | Swells per second (0.01 = one every 100 seconds, 1 = every second). |
+
+Several wind zones add up. **External Forces → Multiplier** scales the wind for that system too.
+
+From a script, `game.windAt(x, y, z)` gives the wind at a point as `{ x, y, z }` (pulses and gusts included):
+
+```ts
+export function update(dt: number) {
+  const w = game.windAt(entity.position.x, entity.position.y, entity.position.z);
+  entity.rotation.z = w.x * 3; // a flag or a tree leans with it
+}
+```
+
+The **Gizmos** menu's **Force fields & wind** switch shows or hides the purple and teal guides.
+
 ## Custom Data and particle shaders
 
 A Particle System can draw with your own [shader](./shaders) instead of the built-in soft dot: pick it in **Renderer → Shader**. The engine still places each particle; your shader's **fragment** part colours it. The shader's own settings show as fields under the Shader picker.
@@ -217,6 +246,8 @@ A **Trail renderer** leaves a ribbon behind an object as it moves: sword swings,
 | **Texture mode** | How the texture runs along it: **Stretch** once over the whole trail, **Tile** every meter, **Distribute / Repeat Per Segment** once over / once per piece. |
 | **Texture** | A picture along the ribbon; none = plain colour. |
 | **Blending** | **Additive** glows (sparks, magic, lasers). |
+| **Corner Vertices** | 0 = sharp corners. More (up to 16) rounds each bend with that many extra points; the ribbon then runs just inside the exact corner. |
+| **End Cap Vertices** | 0 = square ends. More (up to 16) rounds both ends into half circles. |
 
 </Side>
 
@@ -235,7 +266,7 @@ A **Line renderer** draws a ribbon through a list of points: lasers, lightning, 
 | **Loop** | Join the last point back to the first (a ring, an outline). |
 | **Use world space** | Off: points are in the object's own space and move, turn and scale with it. On: points are world positions and stay put. |
 | **Positions** | The points. ✕ removes one; **＋ Add point** carries on in the last direction. |
-| **Width, Color, Alignment, Texture mode, Texture, Blending** | As for the Trail renderer, from the first point (left of the curve) to the last. |
+| **Width, Color, Alignment, Texture mode, Texture, Blending, Corner Vertices, End Cap Vertices** | As for the Trail renderer, from the first point (left of the curve) to the last. A loop has no ends, so no end caps. |
 
 </Side>
 
