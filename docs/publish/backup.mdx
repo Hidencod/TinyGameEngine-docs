@@ -7,7 +7,15 @@ description: Save a project as a .tge file, import it on another phone, and keep
 
 <Art name="cube-stone" size={90} />
 
-Projects are saved **only on your phone**. Uninstalling the app or clearing its data deletes them. A **backup** is a single `.tge` file with everything — scenes, events, scripts and assets.
+Projects are saved inside the app (or the browser), on your device. A **backup** is a single `.tge` file with everything — scenes, events, scripts and assets.
+
+## Where projects are kept
+
+- **Android app:** besides the app's own storage, the app keeps a copy of every project in the phone's **Documents/TinyGameEngine** folder, as a `.tge` file. It is written a couple of minutes after you change something, and right away when you close the project or switch to another app. Uninstalling the app or clearing its data deletes the app's own storage, but not this folder: reinstall, tap **Import .tge** and pick the file from that folder. Android 10 and older ask once for permission to use the folder.
+- **Web editor:** projects are in the browser's storage for this site. Clearing the browser's data for the site deletes them. The editor asks the browser to keep them for good; if the browser won't promise that, the home screen shows **Browser storage can be cleared**. Installing the editor as an app (**Install app**) usually makes the browser keep them, and Safari clears a site not used for 7 days unless it is installed. Either way, back up the projects you care about.
+- The web editor and the Android app don't share projects: move one with a backup or [GitHub sync](./github-sync).
+
+A project changed more than a week ago that has not been backed up since gets an orange **No backup** (or **Backup 9 days ago**) tag on the home screen. Tap the tag to back it up. A `.tge` backup, the Android app's copy and a push to GitHub all count as a backup.
 
 ## Make a backup
 
