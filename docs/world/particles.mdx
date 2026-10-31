@@ -37,7 +37,7 @@ The Particles component is laid out like Unity's Particle System: the main setti
 
 <Side shot="particles-modules" crop>
 
-**Preset → Start from a preset…** replaces every setting with a ready-made effect. **▶ Preview** plays it in the editor; edits show while it plays.
+**Preset → Start from a preset…** replaces every setting with a ready-made effect. **▶ Preview** plays it in the editor; edits show while it plays. Selecting an object with particles plays its preview by itself; **■ Stop** keeps it stopped until you select the object again.
 
 Most numbers have a little menu next to them, as in Unity:
 
@@ -230,7 +230,7 @@ Only the fragment part of the shader is used on particles; the engine's own vert
 
 ## Trail renderer
 
-A **Trail renderer** leaves a ribbon behind an object as it moves: sword swings, dashes, bullets, comets, tire marks. Like Unity's Trail Renderer, it is a component: **Add component → Trail renderer**. The trail appears when the game runs and the object moves.
+A **Trail renderer** leaves a ribbon behind an object as it moves: sword swings, dashes, bullets, comets, tire marks. Like Unity's Trail Renderer, it is a component: **Add component → Trail renderer**. The trail appears when the game runs and the object moves. In the editor, moving the object in the 3D view draws its trail too, which then fades.
 
 <Side shot="card-trail" crop>
 
@@ -269,6 +269,8 @@ A **Line renderer** draws a ribbon through a list of points: lasers, lightning, 
 | **Width, Color, Alignment, Texture mode, Texture, Blending, Corner Vertices, End Cap Vertices** | As for the Trail renderer, from the first point (left of the curve) to the last. A loop has no ends, so no end caps. |
 
 </Side>
+
+**Editing in the 3D view:** tap the line to select it (anywhere along it, even a thin one). Each point then shows as an orange dot: drag a dot to slide the point over its height, or Shift + drag (mouse) to move it up and down. A tapped dot turns white and gets the move arrows, for moving it along one axis. Add and remove points on the card.
 
 **Laser:** a Line renderer with two points and **Use world space** on, on the gun. Every frame, set point 0 to the gun and point 1 to where a [raycast](./physics#raycasts) hits (or 50 m ahead):
 
