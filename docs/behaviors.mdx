@@ -191,7 +191,8 @@ Put it **on the camera**: it smoothly follows a target.
 | --- | --- | --- |
 | **Target** | Player | The object to follow. |
 | **Offset X / Y / Z** | 0, 6, 10 | Where the camera stays, relative to the target (6 up, 10 behind). |
-| **Smoothing** | 5 | Higher = snappier, lower = floatier. |
+| **Smoothing** | 5 | Higher = snappier, lower = floatier. 0 = no lag at all. |
+| **Smoothing X** | −1 | Left / right on its own. −1 = the same as Smoothing. 0 keeps a 2D camera exactly on the player sideways (no sliding back on screen once the player stops) while Smoothing still eases it up and down. |
 | **Look at target** | on | Keep pointing at the target. |
 | **Stay behind** | off | Turn the offset with the target’s heading — a chase camera for cars and runners. |
 | **Fade in way** | off | Objects between the camera and the target turn see-through (to about a third) and fade back once they are out of the way, so walls, trees and buildings never hide the player. Only objects with a Collider count; moving ones (other cars, enemies) and the ground stay as they are. |
