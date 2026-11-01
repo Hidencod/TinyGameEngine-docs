@@ -1,0 +1,113 @@
+---
+title: Claude link
+description: Let Claude build and change your game while you watch. Claude Code or Claude Desktop on your computer works on the project open in the editor, with your own Claude plan.
+---
+
+# Claude link
+
+Ask Claude for a change in plain words ("add ten coins and a score", "let the player drive the car") and watch it happen in the editor. Claude reads your project, adds objects, components, behaviors, events and scripts, then plays the game to check its work, and tells you what it did.
+
+It runs on your own Claude plan (Pro and up) through **Claude Code** or **Claude Desktop** on your computer. Nothing passes through our servers: Claude talks to a small program on your computer, and the editor in your browser talks to that program.
+
+## What you need
+
+- A computer (Windows, macOS or Linux). The link doesn't work on a phone.
+- [Node.js](https://nodejs.org) 20 or newer.
+- [Claude Code](https://claude.com/claude-code) or [Claude Desktop](https://claude.ai/download), signed in to your Claude account.
+- The editor open in **Chrome** or **Edge**.
+
+## Set it up (once)
+
+**1. Download the link.** Save [claude-link.mjs](https://editor.jeevagames.com/claude-link.mjs) in a folder where it can stay, for example `Documents/TinyGameEngine/claude-link.mjs`.
+
+**2. Add it to Claude.**
+
+With **Claude Code**, run this in a terminal, with the path of the file you saved:
+
+```bash
+claude mcp add tiny-game-engine -- node "C:/Users/you/Documents/TinyGameEngine/claude-link.mjs"
+```
+
+Keep the quotes, and type the whole command on one line. `claude mcp list` should then show `tiny-game-engine`.
+
+With **Claude Desktop**, open **Settings → Developer → Edit Config** and add the link to `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "tiny-game-engine": {
+      "command": "node",
+      "args": ["C:/Users/you/Documents/TinyGameEngine/claude-link.mjs"]
+    }
+  }
+}
+```
+
+Then quit Claude Desktop and start it again.
+
+**3. Turn the link on in the editor.** Open [editor.jeevagames.com/?mcp=1](https://editor.jeevagames.com/?mcp=1) once. The editor remembers it. `?mcp=0` turns it off again. If the browser asks whether the page may reach devices on your local network, allow it: that is how it reaches the link on your computer.
+
+**4. Open a project.** The editor connects while a project is open. Start Claude (or a new Claude Code session) and ask away.
+
+## Using it
+
+Say what you want, as you would to a person:
+
+- *Make the player a character from the library and give it a joystick and a jump button.*
+- *Put a car next to the player. The Enter button gets in and out.*
+- *Add twelve coins around the map, a coin counter and a 60-second timer, then a Game over panel with Play again.*
+- *The car drives too fast and slides on corners. Fix it.*
+- *Why does my player fall through the floor?*
+
+Each change shows up in the editor as Claude makes it. Claude starts by reading the project and the parts it will change, so it builds on what you have rather than replacing it.
+
+### Events first
+
+Claude writes game logic as [event sheets](../logic/event-sheets) so you can read and change it yourself. It uses [scripts](../logic/scripting) for heavy logic, when you ask for code, or when your project already keeps its logic in scripts. Events it adds come in named groups with comments.
+
+Every event is checked before it goes in: a wrong condition, a missing value or a broken expression is sent back to Claude to fix, and nothing half-done reaches the sheet. Scripts go through the same type checker as the [code editor](../logic/scripting).
+
+### Play tests
+
+After building gameplay, Claude runs the game in the editor's dock to test it. It can hold keys on a timeline (walk, jump, press Enter at 2 seconds) and tap on-screen buttons by name, then gets back:
+
+- errors and log messages,
+- where the objects it follows went, second by second, and which vehicle they ride,
+- the values of variables, and the texts shown on screen,
+- a picture of the game at the end.
+
+The game runs frame by frame for this, so the same test gives the same result every time.
+
+### Undo
+
+Changes Claude makes close together (within a minute, with nothing of yours in between) are **one undo step**, named **Claude: …** in the undo list. One **Undo** takes back a whole request.
+
+## What Claude can change
+
+| | |
+| --- | --- |
+| **Objects** | Add shapes, models and empty objects, copy them, move, rename, parent, hide, delete. Objects with the same name are one object type, so a change to "Coin" changes every coin. |
+| **Components and behaviors** | Add, change and remove any component (collider, rigidbody, light, UI, particles, sound…) and behavior (platformer, car, camera follow…). Field names and values are checked. |
+| **Models** | Search the free model library and bring models into the project. |
+| **Event sheets** | Read a sheet, find conditions and actions, add events (with sub-events, Else, OR, groups, comments and variables), change and delete them. |
+| **Scripts** | Read, write, attach and delete scripts, and look up the scripting API. |
+| **Scene and project** | The environment (sky, fog, light) and project settings, including the joystick and on-screen buttons. |
+| **Looking** | A picture of the editor's view, and play tests. |
+
+Claude works on the scene open in the editor. It can't make new scenes or prefabs yet: make them yourself, open the scene, and ask Claude to fill it.
+
+## Good to know
+
+- **One Claude at a time.** The link uses port 7310 on your computer, and one Claude session holds it. A second session waits and takes over when the first one closes. In Claude Code, `/mcp` reconnects the link.
+- **Keep the editor open.** Claude works through the open editor tab. If you close it, Claude asks you to open it again.
+- **Only the editor can connect.** The link answers only the editor's own site, so other web pages can't reach it.
+- **It is your project.** Claude changes what you ask for and keeps the rest. Save, or keep a [backup](../publish/backup), before big changes, as you would with any edit.
+
+## When it doesn't work
+
+| What you see | What to do |
+| --- | --- |
+| Claude says **the editor isn't connected** | Open the editor with `?mcp=1` in Chrome or Edge and open a project. Reload the tab if it was already open. |
+| Claude has **no Tiny Game Engine tools** | In Claude Code, run `claude mcp list` and check the path in the command. Restart Claude Desktop after changing its config. |
+| The link **never connects** | Another Claude session may be holding it: close that session, or run `/mcp` in the one you want. Check that Node.js is 20 or newer (`node --version`). |
+| **New tools are missing** after an editor update | Reload the editor tab, then run `/mcp` in Claude Code (or restart Claude Desktop). |
