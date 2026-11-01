@@ -98,11 +98,11 @@ The on-screen controls shown while playing (also in [Project settings](./project
 | --- | --- |
 | **Joystick** | Show the virtual joystick. It drives the Platformer, Top-down and Car behaviors and the `joystickX` / `joystickY` values. |
 | **Joystick side** | Left or Right. The buttons go on the other side. |
-| **Buttons** | Round on-screen buttons. Each has a **Name** used by events, behaviors and scripts (e.g. `jump`), a **Label** shown on it (e.g. `A`), a **Color**, the **Keys** and **Gamepad** button that press it, and **On screen** (off = a keyboard / gamepad only button, e.g. `pause` on Esc). **Add button** adds one; 🗑 deletes it. Events can hide a button until it's useful and change its label with *Show*, *Hide* and *Set label* under **Input** — the same names as for UI buttons — see [getting into a boat](../behaviors#boat). |
+| **Buttons** | Round on-screen buttons. Each has a **Name** used by events and scripts (e.g. `jump`), a **Label** shown on it (e.g. `A`), a **Color**, the **Keys** and **Gamepad** button that press it, and **On screen** (off = a keyboard / gamepad only button, e.g. `pause` on Esc). **Add button** adds one; 🗑 deletes it. Events can hide a button until it's useful and change its label with *Show*, *Hide* and *Set label* under **Input** — the same names as for UI buttons — see [getting into a boat](../behaviors#boat). |
 
 <Side shot="controls-card" crop>
 
-New projects have one button, `jump`, labelled **A**, pressed by **Space**, **J** and gamepad **A** — the Platformer behavior jumps with it (its **Jump button** setting names the button). WASD or the arrow keys and the left stick move.
+New projects have one button, `jump`, labelled **A**, pressed by **Space**, **J** and gamepad **A** — your events make the player jump with it: *On button jump pressed* → *Simulate control* Jump. WASD or the arrow keys and the left stick are the joystick (`joystickX`, `joystickY` in events, `input.axis` in scripts).
 
 **Keys:** tap **＋ Key**, then press the key on your keyboard (or pick one from the list on a phone); ✕ removes one. A button can have several keys, and the same key can press several buttons.
 

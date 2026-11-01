@@ -7,7 +7,7 @@ description: Ready-made movement and logic — platformer, top-down, car, camera
 
 <Art name="penguin" size={95} />
 
-A **behavior** is ready-made movement or logic you add to an object in one tap: walk and jump with the joystick, drive like a car, follow the player, spin, float up and down… Add one with **Inspect → ＋ Add behavior**.
+A **behavior** is ready-made movement or logic you add to an object in one tap: walk and jump, drive like a car, follow the player, spin, float up and down… Add one with **Inspect → ＋ Add behavior**.
 
 <Row>
   <Phone name="add-behavior-menu" caption="＋ Add behavior" />
@@ -64,28 +64,30 @@ The Platformer, Top-down, Car and Boat never read the joystick or keys themselve
 
 Put the action under a *Button is held* condition, for example *Button Gas is held* → *Drive car: steer 0, gas 1, brake 0*. The action has to run every frame the controls are held. When it stops, the vehicle coasts and the character stops.
 
-Make the buttons in **Scene → Controls**. Each button can also have keyboard keys, so you can test on a computer. Jump still uses the *Jump button* name, so it works with any movement mode.
-
-Pick `events` from the **Driver** or **Control** dropdown in the inspector.
+Make the buttons in **Scene → Controls**. Each button can also have keyboard keys, so you can test on a computer. A jump is *On button jump pressed* → *Simulate control* Jump.
 
 ## 🏃 Platformer {/* #platformer */}
 
 <Side shot="behavior-platformer" crop>
 
-Walk with the joystick (or WASD / arrows) and jump with a button. Needs a **dynamic Physics body** — adding the behavior adds one that doesn’t tip over, and a Collider.
+Walks and jumps with the input your events or scripts pass in every frame: *Move with input* (x `joystickX`, y `joystickY` for the joystick) and *Simulate control* Jump on a button (see [Custom controls](#custom-controls)). Needs a **dynamic Physics body** — adding the behavior adds one that doesn’t tip over, and a Collider.
 
 | Setting | Default | What it does |
 | --- | --- | --- |
 | **Speed** | 5 | Walking speed (m/s). |
 | **Jump strength** | 7 | How high it jumps. |
-| **Control** | joystick | Where the movement comes from: **joystick** (joystick, WASD or arrow keys) or **events** (*Move with input* from your own buttons, see [Custom controls](#custom-controls)). |
-| **Jump button** | jump | The touch button that jumps (see *Touch controls*). |
 | **Turn to direction** | on | Face the way it moves. |
-| **Camera relative** | on | “Up” on the joystick means *away from the camera*, not a fixed direction. |
+| **Camera relative** | on | “Up” (input y) means *away from the camera*, not a fixed direction. |
 | **Side view** | off | For [2D games](world/2d-games): only left / right count and it moves along the world X axis. A sprite flips to face where it goes. |
 | **Climb** | off | Climb ladders: [climbable tiles](world/tilemaps#climbing) of a tilemap, or objects tagged `ladder`. **Up / down** next to one grabs it and climbs; **left / right** or **Jump** lets go. |
 | **Climb speed** | 3 | How fast it climbs (m/s). |
 | **Animate** | on | Play the model’s idle / walk / sprint / jump / fall clips automatically, or a sprite’s animations named *Idle*, *Walk*, *Sprint*, *Jump*, *Fall* and *Climb*. |
+| **Controller** | physics | How the body is moved. **physics**: it is a physics body pushed along by its speed, like everything else. **kinematic**: Rapier's character controller moves it instead, which is steadier on slopes and steps and when pushing boxes. Picked when the game starts. |
+| **Max slope** | 50 | The steepest ground it can walk up, in degrees. A steeper slope stops it. |
+| **Slide slope** | 45 | Standing still on ground steeper than this (degrees), it slides down. On flatter ground it stays put. |
+| **Snap distance** | 0.5 | Walking down a slope or over a bump, it keeps to the ground if the ground is no farther than this below its feet (m), instead of running off into the air. 0 = off. |
+| **Step height** | 0.3 | Ledges up to this high (m) are stepped onto while walking: kerbs, stairs. |
+| **Step width** | 0.1 | How deep a ledge's top must be (m) to step onto it. |
 
 </Side>
 
@@ -93,15 +95,20 @@ Walk with the joystick (or WASD / arrows) and jump with a button. Needs a **dyna
 
 <Side shot="behavior-topdown" crop>
 
-Move in 8 directions on the ground with the joystick — no jumping. For top-down, twin-stick and rolling-ball games. Works with or without a Physics body (with one, it pushes and gets blocked by things).
+Moves in any direction on the ground — no jumping — with the input your events or scripts pass in every frame (*Move with input*, see [Custom controls](#custom-controls)). For top-down, twin-stick and rolling-ball games. Works with or without a Physics body (with one, it pushes and gets blocked by things).
 
 | Setting | Default | What it does |
 | --- | --- | --- |
 | **Speed** | 5 | Movement speed. |
-| **Control** | joystick | Where the movement comes from: **joystick** (joystick, WASD or arrow keys) or **events** (*Move with input* from your own buttons, see [Custom controls](#custom-controls)). |
 | **Turn to direction** | on | Face the way it moves. |
-| **Camera relative** | on | Joystick directions follow the camera. |
+| **Camera relative** | on | Input directions follow the camera. |
 | **Animate** | on | Idle / walk / sprint clips automatically. |
+| **Controller** | physics | How the body is moved. **physics**: it is a physics body pushed along by its speed, like everything else. **kinematic**: Rapier's character controller moves it instead, which is steadier on slopes and steps and when pushing boxes. Picked when the game starts. |
+| **Max slope** | 50 | The steepest ground it can walk up, in degrees. A steeper slope stops it. |
+| **Slide slope** | 45 | Standing still on ground steeper than this (degrees), it slides down. On flatter ground it stays put. |
+| **Snap distance** | 0.5 | Walking down a slope or over a bump, it keeps to the ground if the ground is no farther than this below its feet (m), instead of running off into the air. 0 = off. |
+| **Step height** | 0.3 | Ledges up to this high (m) are stepped onto while walking: kerbs, stairs. |
+| **Step width** | 0.1 | How deep a ledge's top must be (m) to step onto it. |
 
 </Side>
 
@@ -187,8 +194,8 @@ Put it **on the camera**: it smoothly follows a target.
 | **Smoothing** | 5 | Higher = snappier, lower = floatier. |
 | **Look at target** | on | Keep pointing at the target. |
 | **Stay behind** | off | Turn the offset with the target’s heading — a chase camera for cars and runners. |
-| **Avoid walls** | off | When a wall, building or other **static** body is between the target and the camera, the camera comes in front of it instead of showing the inside of the wall. Moving objects (other cars, enemies) don’t count. The wall needs a Collider that covers its shape, e.g. *Convex* for models. |
-| **Ignore tag** | (empty) | With Avoid walls on: objects with this tag never push the camera in, e.g. `#tree` in a forest, so it doesn't jump forward every time a trunk passes in front. They still block the player. |
+| **Fade in way** | off | Objects between the camera and the target turn see-through (to about a third) and fade back once they are out of the way, so walls, trees and buildings never hide the player. Only objects with a Collider count; moving ones (other cars, enemies) and the ground stay as they are. |
+| **Fade tag** | (empty) | With Fade in way on: only objects with this tag fade, e.g. `#tree` so trunks turn see-through but houses don't. Empty = any object in the way. |
 | **Mouse look** | off | Let the player turn the camera around the target: on a computer, click the game and move the mouse (Esc frees the mouse); with a gamepad, the right stick; on a phone, drag the free side of the screen. Platformer and Top-down movement follow the camera, so *forward* is always away from it. With **Stay behind** on, the camera drifts back behind the target a second after the player stops looking. |
 | **Look speed** | 1 | How fast Mouse look turns. 2 = twice as fast. |
 | **Use limits** | off | Keep the camera inside a box, for a 2D level: it stops at the edges instead of showing empty space. With an *Orthographic* camera the whole view stays inside the box (a box smaller than the view is centered); with any other camera, the camera itself does. |
