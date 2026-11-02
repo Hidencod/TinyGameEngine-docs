@@ -166,14 +166,17 @@ export function editorHelpers(page, s) {
     async closeSheet() {
       const n = await page.locator('.sheet-layer').count();
       if (!n) return;
-      await page.locator('.sheet-layer .sheet-backdrop').last().click({ position: { x: 10, y: 10 }, force: true });
+      // The project sidebar covers the top left, where a backdrop tap would land: Escape closes it.
+      if (await page.locator('.sheet-layer.is-drawer').count()) await page.keyboard.press('Escape');
+      else await page.locator('.sheet-layer .sheet-backdrop').last().click({ position: { x: 10, y: 10 }, force: true });
       await s.settle(350);
     },
     async closeAllSheets() { for (let i = 0; i < 5 && (await page.locator('.sheet-layer').count()); i++) await H.closeSheet(); },
     /** Click an item in the open pick sheet. */
     async pick(label, { exact = false } = {}) {
       const sh = H.sheet();
-      const item = sh.locator('.pick-item').filter({ has: page.locator('.pick-label', { hasText: exact ? new RegExp('^' + esc(label) + '$') : label }) }).first();
+      // Pick lists, and the project sidebar's rows (☰).
+      const item = sh.locator('.pick-item, .drawer-row').filter({ has: page.locator('.pick-label, .drawer-lbl', { hasText: exact ? new RegExp('^' + esc(label) + '$') : label }) }).first();
       await item.scrollIntoViewIfNeeded();
       await item.click();
       await s.settle(400);

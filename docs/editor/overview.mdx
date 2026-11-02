@@ -1,6 +1,6 @@
 ---
 title: Editor overview
-description: The parts of the editor screen — top bar, 3D view, dock tabs — and the project menu.
+description: The parts of the editor screen — top bar, 3D view, dock tabs — and the project sidebar.
 ---
 
 # Editor overview
@@ -12,7 +12,7 @@ When you open a project you see the editor. It has three areas: the **top bar**,
 <Side shot="editor-overview-annotated">
 
 <Legend items={[
-  <><b>Top bar</b> — back, project name, undo/redo, Play and the project menu.</>,
+  <><b>Top bar</b> — the project sidebar (☰), project name, undo/redo, Play.</>,
   <><b>Viewport tools</b> — move/rotate/scale, snap, multi-select, focus, colliders, UI mode. See <a href="./viewport">The 3D view</a>.</>,
   <><b>3D view</b> — your scene as it looks in the game. Tap to select, drag to look around.</>,
   <><b>Split handle</b> — drag to resize the two areas; tap to hide the dock and get a big 3D view.</>,
@@ -27,13 +27,12 @@ When you open a project you see the editor. It has three areas: the **top bar**,
 <Crop name="editor-topbar-annotated" width={420} />
 
 <Legend items={[
-  <><b>←</b> Back to the home screen. Your work is already saved.</>,
+  <><b>☰</b> — the project sidebar: settings, scenes, export, backup, help, and <b>Close project</b> to go back to the home screen. See <a href="#the-project-sidebar-">below</a>.</>,
   <><b>Project name</b> — tap to rename the project.</>,
   <><b>↶ Undo</b> — undo the last change (every change can be undone).</>,
   <><b>↷ Redo</b> — redo what you undid.</>,
   <><b>⚙ Project settings</b> — orientation, controls, graphics, physics. See <a href="./project-settings">Project settings</a>.</>,
   <><b>▶ Play</b> — play the game from its start scene. See <a href="./play-mode">Play mode</a>.</>,
-  <><b>⋮</b> — the project menu. On a computer the same things are in the <b>File · Edit · Scene · Help</b> menus beside the project name.</>,
 ]} />
 
 :::info[Saving]
@@ -71,21 +70,23 @@ Drag the **split handle** (the small bar between the 3D view and the tabs) up or
 
 **Landscape:** turn the phone sideways and the 3D view goes on the left with the dock on the right.
 
-## The project menu (⋮)
+## The project sidebar (☰)
 
 <Side shot="editor-project-menu">
 
-| Item | What it does |
+Tap **☰** at the top left. The sidebar groups everything about the project:
+
+| Group | Items |
 | --- | --- |
-| **Project settings** | Orientation, graphics, controls, gravity. [More](./project-settings) |
-| **Scenes** | Add, rename, switch levels. [More](./scenes) |
-| **Play this scene** | Play starting from the scene you are editing (▶ Play always starts from the start scene). |
-| **Export game (HTML)** | One file that runs in any browser. [More](../publish/export-html) |
-| **Export game (APK)** | An Android app you can install and share. [More](../publish/export-apk) |
-| **Backup project (.tge)** | Save a copy you can import later. [More](../publish/backup) |
-| **APK signing key** | Back up or restore the key your APKs are signed with. [More](../publish/export-apk#signing-key) |
-| **Rename project** | Same as tapping the name. |
-| **Help & feedback** | Send an idea, report a problem. [More](../help/feedback) |
-| **Back to projects** | The home screen. |
+| **Project** | [Project settings](./project-settings) (the **▾** beside it lists its sections: tap one to open the settings there), [Scenes](./scenes), [GitHub](../publish/github-sync), Rename project. |
+| **Play** | Run project (from the start scene), Run this scene (from the scene you are editing). On a computer also *Play mode*. See [Play mode](./play-mode). |
+| **Share** | [Publish game (link)](../publish/publish-link), [Export game (HTML)](../publish/export-html), Export for web (itch.io), [Export game (APK)](../publish/export-apk), [APK signing key](../publish/export-apk#signing-key). |
+| **Save** | Save, [Backup project (.tge)](../publish/backup), Project as folder (.zip). |
+| **Editor** | Editor layout (phone or desktop); on a computer *Keyboard shortcuts*. |
+| **Help** | Documentation, What's new, [Help & feedback](../help/feedback). |
+
+**Close project** at the bottom goes back to the home screen. Your work is already saved. Tap outside the sidebar (or press Back or Escape) to close it.
+
+On a computer the **File · Edit · Object · View · Scene · Help** menus beside **☰** hold the same actions, with their keyboard shortcuts.
 
 </Side>

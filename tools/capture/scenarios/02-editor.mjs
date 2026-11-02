@@ -21,12 +21,12 @@ export async function run({ page, s, H }) {
   await s.shot('editor-topbar-annotated', {
     clip: page.locator('.topbar'), pad: 0, padBottom: 34,
     hl: [
-      { target: page.getByRole('button', { name: 'Back to projects' }), label: 1, pad: 1, badge: 'below' },
+      { target: page.locator('.topbar').getByRole('button', { name: 'Menu', exact: true }), label: 1, pad: 1, badge: 'below' },
       { target: page.locator('.topbar-name'), label: 2, pad: 1, badge: 'below' },
       { target: page.locator('.topbar').getByRole('button', { name: 'Undo' }), label: 3, pad: 1, badge: 'below' },
       { target: page.locator('.topbar').getByRole('button', { name: 'Redo' }), label: 4, pad: 1, badge: 'below' },
-      { target: page.locator('.play-btn'), label: 5, pad: 1, badge: 'below' },
-      { target: page.locator('.topbar').getByRole('button', { name: 'Menu' }), label: 6, pad: 1, badge: 'below' },
+      { target: page.locator('.topbar .settings-btn'), label: 5, pad: 1, badge: 'below' },
+      { target: page.locator('.play-btn'), label: 6, pad: 1, badge: 'below' },
     ],
   });
   await s.shot('editor-viewport-toolbar', { clip: tb, pad: 16 });
