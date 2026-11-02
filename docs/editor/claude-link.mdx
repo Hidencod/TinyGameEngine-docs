@@ -67,7 +67,22 @@ Each change shows up in the editor as Claude makes it. Claude starts by reading 
 
 Claude writes game logic as [event sheets](../logic/event-sheets) so you can read and change it yourself. It uses [scripts](../logic/scripting) for heavy logic, when you ask for code, or when your project already keeps its logic in scripts. Events it adds come in named groups with comments.
 
-Every event is checked before it goes in: a wrong condition, a missing value or a broken expression is sent back to Claude to fix, and nothing half-done reaches the sheet. Scripts go through the same type checker as the [code editor](../logic/scripting).
+Claude reads and writes events as short indented text, one line per event or row, with the same ids the sheet uses:
+
+```
+group "Coin hunt":
+  when object.collidesWith Player(other: Coin):
+    object.destroy Coin
+    system.addToVar(var: Score, value: 10)
+```
+
+This reaches the sheet as normal events: you see and edit them in the event sheet as usual.
+
+Every event is checked before it goes in: a wrong condition, a missing value or a broken expression is sent back to Claude to fix, with the line it is on, and nothing half-done reaches the sheet. Scripts go through the same type checker as the [code editor](../logic/scripting).
+
+### Many steps at once
+
+For a batch of work (ten coins, a HUD and the events for them), Claude can send one short script that makes all the changes in a row instead of asking the editor for each one. That is much faster and uses less of your Claude plan. The script can only use Claude's editor tools: it can't reach the page or the internet. It stops at the first step that fails and tells Claude which one; what ran before stays done.
 
 ### Play tests
 
@@ -96,7 +111,7 @@ Changes Claude makes close together (within a minute, with nothing of yours in b
 | **Components and behaviors** | Add, change and remove any component (collider, rigidbody, light, UI, particles, sound…) and behavior (platformer, car, camera follow…). Field names and values are checked. |
 | **Models** | Search the free model library and bring models into the project. |
 | **2D** | Bring in the bundled 2D platformer art as ready sprites (hero, slime, coin, flag, spikes, tiles, hills), turn any picture into a sprite sheet with frames and animations, add sprite objects, and paint and read tilemaps. |
-| **Event sheets** | Read a sheet, find conditions and actions, add events (with sub-events, Else, OR, groups, comments and variables), change and delete them. |
+| **Event sheets** | Read a sheet, find conditions and actions, add events anywhere in it (with sub-events, Else, OR, groups, comments, variables, functions and JavaScript blocks), change and delete them. |
 | **Scripts** | Read, write, attach and delete scripts, and look up the scripting API. |
 | **Scene and project** | The environment (sky, fog, light) and project settings, including the joystick and on-screen buttons. |
 | **Looking** | A picture of the editor's view (as you see it, or side on with the whole level in frame), and play tests. |
