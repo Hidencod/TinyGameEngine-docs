@@ -491,6 +491,13 @@
       "insert": "rayhitname()"
     },
     {
+      "name": "scenename",
+      "signature": "scenename()",
+      "description": "The name of the running scene",
+      "category": "Game",
+      "insert": "scenename()"
+    },
+    {
       "name": "tablecount",
       "signature": "tablecount(\"Item\")",
       "description": "How many rows a data table has",

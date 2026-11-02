@@ -1,0 +1,66 @@
+---
+title: Gameplay tests
+description: Save tests that play your game for a few seconds with keys held and buttons tapped, then check that things happened. Run them all with one tap after every change.
+---
+
+# Gameplay tests
+
+A **test** plays your game for a few seconds, holding keys and tapping buttons at set times, and checks that the right things happened: the player reached the flag, a coin added 10 to the score, the Play button opened Level 1. It works like a play mode test in Unity's Test Runner.
+
+Save a test for each thing that must keep working. After a change, press **Run all** and you know at once whether something broke.
+
+Open the tests from **☰ → Play → Tests** (on desktop also **Scene → Tests…**).
+
+<Row>
+  <Crop name="tests-list" caption="Two tests passed, one failed (with the check that failed and its value)" />
+  <Phone name="tests-edit" caption="A test: what the player does, and what must be true" />
+</Row>
+
+## Running tests
+
+| Button | What it does |
+| --- | --- |
+| **▶ Run all** | Runs every test, one after another. |
+| **▶ Run failed** | Runs only the tests that failed last time. |
+| **▶** on a test | Runs that test. |
+
+While the tests run, the game plays in the editor (fast, frame by frame), so you can watch. Then the list comes back with a **✓** or **✗** on each test. Tap a test that has run to see each check and the value it found.
+
+A test fails when one of its checks is false, or when the game shows a runtime error, a tap misses its button (hidden or covered), or the test sets a variable the game doesn't have.
+
+## Making a test
+
+Tap **+ New test**, or **✏** on a test to change it.
+
+| Setting | What it is |
+| --- | --- |
+| **Scene** | Where the game starts. **★** = the start scene, through the loading screen, as a player would start it. |
+| **Seconds** | How long the test plays (game time, up to 120 s). |
+| **Inputs** | What the player does. **+ ⌨** holds a key (or an on-screen button's key) from **at** for **hold** seconds. **+ 👆** taps a UI element at **at** seconds. |
+| **Set** | Variables set after the first frame (after *On start of scene*), to start in a certain state: `TimeLeft` = 2 to test the end of the timer, `Lives` = 1 to test game over. Global, scene and static event variables all work. |
+| **Checks** | Expressions that must be true, in the same form as event expressions. |
+
+A check is tested:
+
+- **End**: when the test ends.
+- **At**: at a moment (seconds from the start).
+- **Always**: the whole way through (ten times a second). The first time it is false, the test fails.
+
+Some checks:
+
+| Check | Means |
+| --- | --- |
+| `Score >= 10` | The score reached 10. |
+| `Player.x > 20` | The player got past x = 20. |
+| `Coin.count = 0` | Every coin was picked up. |
+| `Lives = 3` with **Always** | The player never lost a life. |
+| `scenename() = "Level 2"` | The game moved on to Level 2. |
+
+Tests are saved in your project, but they are not part of exported or published games.
+
+## With Claude
+
+Through the [Claude link](./claude-link), Claude can save tests, run them and read the results. Ask it to save a test for each feature it builds, and to run them all after a change:
+
+- *Save tests for the coins, the timer and the Play button.*
+- *Run the tests and fix whatever fails.*
