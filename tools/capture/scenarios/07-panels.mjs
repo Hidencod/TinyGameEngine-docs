@@ -161,6 +161,25 @@ export async function run({ page, s, H }) {
   await page.getByRole('button', { name: /Free sounds/ }).click();
   await H.waitSheet();
   await s.shot('sounds-library');
+  await page.locator('.sound-make').click();
+  await H.waitSheet();
+  await page.locator('.sfx-sheet .chip', { hasText: /^Laser$/ }).click();
+  await s.shot('sound-maker');
+  await H.closeSheet();
+  // The music editor (BeepBox in an iframe), with a little tune tapped into the grid.
+  await page.locator('.sound-make button', { hasText: 'Make music' }).click();
+  await s.settle(4000);
+  {
+    const fr = page.frames().find((f) => f.url().includes('beepbox'));
+    const grid = await fr.evaluate(() => { const r = [...document.querySelectorAll('.beepboxEditor svg')].map((e) => e.getBoundingClientRect()).sort((a, b) => b.width * b.height - a.width * a.height)[0]; return { x: r.left, y: r.top, w: r.width, h: r.height }; });
+    const top = await page.locator('iframe.sprite-frame').boundingBox();
+    const tune = [2, 4, 6, 4, 7, 6, 4, 2];
+    for (let i = 0; i < tune.length; i++) { await page.touchscreen.tap(top.x + grid.x + grid.w * (i + 0.5) / 8, top.y + grid.y + grid.h * (1 - (tune[i] + 0.5) / 18)); await s.settle(120); }
+  }
+  await s.shot('music-maker');
+  await page.locator('.sprite-editor .sheet-x').click();
+  await page.getByRole('button', { name: 'Discard' }).click();
+  await s.settle(500);
   await H.closeSheet();
   await page.getByRole('button', { name: /Free assets/ }).click();
   await s.settle(4000);

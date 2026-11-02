@@ -19,6 +19,55 @@ description: Free sounds, the Sound component, 3D sound, music, the audio mixer,
 </Side>
 
 
+## Make a sound
+
+<Side shot="sound-maker">
+
+**Free sounds → 🎛 Make a sound** (or **Files → ＋ New → Sound**) makes a retro sound effect, the kind 8-bit games use, right in the editor.
+
+1. Pick a preset: **Coin**, **Jump**, **Laser**, **Explosion**, **Hit**, **Power-up**, **Blip**, **Click**, **Win** or **Lose**. It plays at once.
+2. **🎲** makes another take on the same preset. Tap it until one sounds right.
+3. Change it if you like (it plays again each time you let go of a slider).
+4. Give it a name and tap **Save**. It is in your project's sounds, ready for *Play sound*.
+
+</Side>
+
+| Setting | What it does |
+| --- | --- |
+| **Square / Saw / Triangle / Sine / Noise** | The tone: square is classic chiptune, saw is buzzy, triangle and sine are soft, noise hisses (explosions, hits, wind). |
+| **Pitch** | How high it starts. For noise, how rough: low rumbles, high hisses. |
+| **Slide to** | The pitch it ends on. Higher rises (a jump), lower falls (a laser, a game over). The same as **Pitch** stays on one note. |
+| **Length** | How long it stays at full volume. |
+| **Fade** | How long it takes to fade out after that. |
+| **Wobble** | A vibrato: the pitch wobbles up and down. |
+| **Volume** | How loud it is. |
+
+The picture beside ▶ shows the sound, with its length in seconds.
+
+The sound maker keeps its settings with the sound. To change one later, tap it in **Files** and choose **Edit sound**. **Save** then changes it in place, so every *Play sound* and Sound component using it plays the new one. Sounds [Claude](../editor/claude-link) makes open the same way.
+
+## Make music
+
+<Side shot="music-maker">
+
+**Free sounds → 🎹 Make music** (or **Files → ＋ New → Music**) opens a music editor: [BeepBox](https://www.beepbox.co), a free song maker for chiptune-style game music, built into the editor (it works offline).
+
+- **The grid:** tap to put a note in, tap it again to take it out, drag one to make it longer. Up is higher.
+- **The numbers below it:** the song from left to right, one row per channel (the top rows are tunes, the bottom one drums). Each number is a pattern: tap a box to edit that part of the song, and give two boxes the same number to repeat a pattern.
+- **Play** listens to the song from the start.
+- **Instrument Settings** choose each channel's sound (**Type**: piano, synth, guitar, drums…) and **Customize Instrument** changes it further.
+- **Song Settings** set the **Tempo** (speed), **Key**, **Scale** and **Rhythm**.
+
+Tap **Done** and name it: the song becomes a sound in your project, played once from start to end. Play it with *Play sound* and **Loop** on for background music.
+
+</Side>
+
+To change it later, tap it in **Files** and choose **Edit music**. **Done** changes the sound in place, so everything using it plays the new one.
+
+:::tip[Keep songs short]
+A song is saved as a sound file of about 2 MB per 30 seconds. A short loop with **Loop** on sounds the same in a game as a long song and keeps the game small. The song's length is in **Edit → Change Song Length**.
+:::
+
 **Your own sounds:** **Assets → ⬆ Import** an MP3, OGG, WAV or M4A. Preview any sound from its menu in the Assets tab (**Preview sound**).
 
 ## Play a sound from an event
