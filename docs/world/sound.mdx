@@ -48,34 +48,43 @@ The sound maker keeps its settings with the sound. To change one later, tap it i
 
 ## Make a beat
 
-**Free sounds → 🥁 Make a beat** (or **Files → ＋ New → Beat**) opens the beat maker, laid out like FL Studio's channel rack and piano roll. Everything plays while you change it, so you hear each change on the next pass.
+**Free sounds → 🥁 Make a beat** (or **Files → ＋ New → Beat**) opens the beat maker, laid out like FL Studio: a **Rack** of channels with step pads, a **piano roll** for tunes, a **Playlist** that puts patterns together into a song, and a **Mixer**. Everything plays while you change it, so you hear each change on the next pass.
 
 <Row>
-  <Phone name="beat-rack" caption="The channel rack: one row per sound, 16 steps a bar" />
+  <Phone name="beat-rack" caption="The rack: one row per sound, 16 steps a bar" />
   <Phone name="beat-roll" caption="The piano roll: a bass line" />
 </Row>
 
-### The channel rack
+### The rack
 
 A new beat starts with a kick on every beat, claps on 2 and 4, hats in between, an empty Snare row and a Bass line.
 
-- **Tap a step** to turn it on or off. The bar is 16 steps (16th notes), in groups of four, one group per beat.
-- **▶** plays the beat over and over; the step that is sounding lights up.
+- **Tap a step** to turn it on or off. A bar is 16 steps (16th notes), in groups of four, one group per beat.
+- **▶** plays the pattern over and over; the step that is sounding lights up.
 - **The dot** at the start of a row mutes it.
 - **+ Channel** adds a row: a drum (**Kick**, **Snare**, **Clap**, **Hat**, **Open hat**, **Tom**, **Rim**, **Crash**), a synth (**Bass**, **Lead**, **Pluck**, **Pad**, **Keys**, **Chip**), a sound from your project, or a free sound.
-- **Tap a row's name** for its menu: **Piano roll**, **Step pads**, **Sound…** (change what it plays), **Volume and pan…**, **Rename**, **Duplicate**, **Clear** and **Delete**.
+- **Tap a row's name** for its menu: **Piano roll**, **Step pads**, **Sound…** (change what it plays), **Mixer**, **Rename**, **Duplicate**, **Clear** and **Delete**.
 
 | Setting | What it does |
 | --- | --- |
 | **BPM** | The tempo: beats per minute (− and + change it by one). |
-| **1 bar / 2 bars / 4 bars** | How long the pattern is: 16, 32 or 64 steps. |
 | **Swing** | Makes every second step a little late, for a shuffle or hip-hop feel. |
 | **🔁** | On: saved as a seamless loop (what rings on past the end comes in at the start, so it repeats without a gap). Off: saved once, ringing out at the end (a jingle). |
 | **↶ ↷** | Undo and redo inside the beat maker. |
 
+### Patterns
+
+A **pattern** is a bar or a few of every channel's steps and notes: a beat, a fill, a chorus. The bar under the tabs shows the pattern you are editing.
+
+- **The pattern menu** switches patterns. **＋** makes a new, empty one.
+- **⋯** renames, duplicates, clears or deletes it.
+- **1 bar / 2 bars / 4 bars** is the pattern's length (16, 32 or 64 steps).
+
+The channels are the same in every pattern; each pattern has its own steps and notes for them. To make a variation, duplicate a pattern and change the copy.
+
 ### The piano roll
 
-**Piano roll** in a row's menu opens its notes (a row in the piano roll shows them small in place of its steps: tap them to open it again). Up is higher, and each column is a step.
+**Piano roll** in a row's menu opens its notes in the current pattern (a row in the piano roll shows them small in place of its steps: tap them to open it again). Up is higher, and each column is a step.
 
 - **Tap** an empty spot to put a note in. Drag while you put it in to make it longer.
 - **Drag a note** to move it (higher, lower, earlier, later), or **drag its end** to make it longer or shorter.
@@ -87,9 +96,49 @@ A new beat starts with a kick on every beat, claps on 2 and 4, hats in between, 
 
 A drum or sound in the piano roll plays higher or lower with each note, so a single sound can become a tune.
 
+### The playlist
+
+<Side shot="beat-playlist">
+
+The **Playlist** is the song: patterns placed in time, one bar per column, like FL Studio's playlist.
+
+- **Tap an empty spot** to put the current pattern there. Pick another pattern in the pattern menu to place that one.
+- **Drag a clip** to move it to another bar or track.
+- **Tap a clip** for **Edit pattern** (opens it in the rack), **Make unique** (a copy only this clip plays, to change it alone) and **Remove**.
+- Clips on different tracks play together: drums on one track and a melody pattern on another, say.
+- **▶** in the playlist plays the song from the start; in the rack and piano roll it plays the current pattern.
+
+With an empty playlist, the song is the current pattern.
+
+</Side>
+
+### The mixer
+
+<Side shot="beat-mixer">
+
+The **Mixer** has a strip for each channel and one for the whole song (**Master**). Changes are heard at once.
+
+| Channel | What it does |
+| --- | --- |
+| **Volume** | How loud the channel is. |
+| **Pan** | Left or right. |
+| **Filter** | Cuts the highs above this (muffled, far away, underwater); **Open** lets everything through. |
+| **Resonance** | Makes the filter ring at its cutoff: the classic squelchy synth sound. |
+| **Reverb** | How much of the channel goes into the shared reverb (a room around it). |
+| **Delay** | How much goes into the shared echo. |
+
+| Master | What it does |
+| --- | --- |
+| **Volume** | The whole song. |
+| **Room** | The reverb's size, from a small room to a long hall. |
+| **Delay** | The echo's timing, in step with the tempo: **1/8**, **3/16** (dotted eighth) or **1/4**. |
+| **Feedback** | How many times the echo repeats. |
+
+</Side>
+
 ### Saving
 
-Tap **Done** and name it: the beat becomes a sound in your project. Play it with *Play sound*, with **Loop** on for background music. A bar at 120 BPM is 2 seconds, about 250 KB.
+Tap **Done** and name it: the song (or the pattern, with an empty playlist) becomes a sound in your project. Play it with *Play sound*, with **Loop** on for background music. A bar at 120 BPM is 2 seconds, about 250 KB, so an 8-bar song is about 2 MB.
 
 To change it later, tap it in **Files** and choose **Edit beat**. **Done** changes the sound in place, so everything using it plays the new one.
 
