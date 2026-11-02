@@ -28,6 +28,20 @@ While the tests run, the game plays in the editor (fast, frame by frame), so you
 
 A test fails when one of its checks is false, or when the game shows a runtime error, a tap misses its button (hidden or covered), or the test sets a variable the game doesn't have.
 
+## Record a test by playing
+
+Tap **⏺ Record**. The scene you are editing starts, and you play it as usual: keys, on-screen buttons, the joystick, UI buttons. Press **Stop** when you are done.
+
+The new test has everything you did as its **inputs**:
+
+- Keys you held, at the moments you held them.
+- On-screen buttons as the keys they stand for (Jump → Space), and the joystick as arrow keys, so a test recorded on a phone also runs on a computer.
+- UI buttons you tapped.
+
+Under **Suggested** are checks for what changed while you played: a variable (`Score = 30`), the scene (`scenename() = "Level 2"`), how many of an object are left (`Coin.count = 2`), and who moved (`Player.x > 8`). Tap one to add it, or **+ all**.
+
+The test then plays your recording back exactly, frame by frame. Joystick moves come back at full tilt, so a check on how far something moved may need a little room.
+
 ## Making a test
 
 Tap **+ New test**, or **✏** on a test to change it.
