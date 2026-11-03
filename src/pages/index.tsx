@@ -14,6 +14,7 @@ const GAMES = [
   {to: '/docs/showcase/hungry-hole', shot: 'hungry-hole-big', title: 'Hungry Hole', text: 'A hole that grows as it swallows a city: layers and a custom shader.'},
   {to: '/docs/showcase/ball-arena', shot: 'ball-arena-play', title: 'Ball Arena', text: 'Multiplayer: a room everyone joins, and balls you see move.'},
   {to: '/docs/showcase/loot-room', shot: 'loot-room-room', title: 'Loot Room', text: 'An inventory, a book of items and a health bar.'},
+  {to: '/docs/showcase/firefly-grove', shot: 'firefly-grove-chase', title: 'Firefly Grove', text: 'Adaptive music: layers that follow the danger, and a chase that starts on the bar.'},
 ];
 
 const SCRIPT = `export let speed = 2;   // set per object in the Inspector

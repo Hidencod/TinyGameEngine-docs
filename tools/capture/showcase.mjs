@@ -34,6 +34,7 @@ const GAMES = [
   { module: 'crystalVault', slug: 'crystal-vault', shots: crystalVaultShots, expect: 'Crystals: 0 / 6' },
   { module: 'holeRush', slug: 'hungry-hole', shots: holeRushShots, expect: 'Hungry Hole' },
   { module: 'netBalls', slug: 'ball-arena', shots: ballArenaShots, expect: 'Ball Arena' },
+  { module: 'fireflyGrove', slug: 'firefly-grove', shots: fireflyGroveShots, expect: 'Fireflies: 0 / 8' },
 ];
 
 const filter = process.argv.slice(2).filter((a) => !a.startsWith('--'));
@@ -64,7 +65,7 @@ for (const game of GAMES.filter((g) => !filter.length || filter.some((f) => g.sl
   const out = await page.evaluate(async (mod) => {
     const m = await import(`/showcase/${mod}.ts`);
     const ex = await import('/src/export/index.ts');
-    const project = m.createShowcase();
+    const project = await m.createShowcase();
     const html = await ex.exportGameHtml(project, async () => null);
     // The .tge carries every asset (library models included), so it opens without internet.
     const full = structuredClone(project);
@@ -179,6 +180,61 @@ async function lootRoomShots({ page, shot, tge, module }) {
   await page.waitForSelector('.editor.desktop', { timeout: 60000 });
   await page.waitForTimeout(5000);
   await shot('editor');
+}
+
+async function fireflyGroveShots({ page, shot, tge, module }) {
+  await page.goto(`${TGE}/showcase/dev.html?game=${module}`, { timeout: 120000 });
+  await page.waitForFunction(() => window.__tgeReady, null, { timeout: 120000 });
+  // The wisps are moved by hand for the pictures: one near (the danger layer), then closer (the chase music).
+  const wispAt = (dx, dz) => page.evaluate(([dx, dz]) => {
+    const g = window.__tgeGame;
+    const p = g.find('Player').position;
+    const [a, b] = g.select('Wisp');
+    a.setPosition(p.x + dx, 0.7, p.z + dz);
+    b.setPosition(-10, 0.7, -10);
+  }, [dx, dz]);
+  await page.waitForFunction(() => window.__tgeGame.audio.musicBeat >= 2, null, { timeout: 120000 });
+  await page.evaluate(() => { for (const w of window.__tgeGame.select('Wisp')) w.setPosition(-10, 0.7, -10); });
+  await page.waitForTimeout(1500);
+  await shot('play');
+  for (let i = 0; i < 10; i++) { await wispAt(5.5, 3.5); await page.waitForTimeout(100); }
+  await shot('danger');
+  await wispAt(3, 2.5);
+  // Seen: the chase music starts on the next bar; the wisp is kept a little way off meanwhile.
+  await page.waitForFunction(() => window.__tgeGame.getVar('Chasing') === 1, null, { timeout: 20000 });
+  for (let i = 0; i < 25; i++) { await wispAt(6.5, 4); await page.waitForTimeout(100); }
+  await page.waitForFunction(() => window.__tgeGame.audio.music === 'Chase', null, { timeout: 20000 });
+  await shot('chase');
+  // Catch them all (the wisps kept outside), for the win screen.
+  await page.evaluate(async () => {
+    const g = window.__tgeGame;
+    const p = g.find('Player');
+    for (const f of g.select('#firefly')) {
+      for (let i = 0; i < 6; i++) {
+        for (const w of g.select('Wisp')) w.setPosition(30, 0.7, 30);
+        p.setPosition(f.position.x, 0.6, f.position.z);
+        await new Promise((r) => setTimeout(r, 40));
+      }
+    }
+  });
+  await page.waitForTimeout(2500);
+  await shot('win');
+  // The project in the editor, with its event sheet open.
+  await page.goto(TGE + '/', { timeout: 120000 });
+  await page.waitForSelector('.hm', { timeout: 30000 });
+  await importTge(page, tge);
+  await page.locator('.hm-card', { hasText: 'Firefly Grove' }).first().click({ timeout: 60000 });
+  await page.waitForSelector('.editor.desktop', { timeout: 60000 });
+  await page.waitForTimeout(5000);
+  await shot('editor');
+  await page.locator('.desk-area .tab[data-tab="logic"]').click();
+  await page.locator('.list-row', { hasText: 'Main events' }).first().click();
+  await page.waitForSelector('.es-root', { timeout: 30000 });
+  await page.waitForTimeout(1500);
+  // The layers and the chase on the bar.
+  await page.locator('.es-root').getByText('How near the nearest wisp is').first().evaluate((el) => el.scrollIntoView({ block: 'start' }));
+  await page.waitForTimeout(800);
+  await shot('events');
 }
 
 async function crystalVaultShots({ page, shot, tge, module }) {
@@ -354,10 +410,13 @@ async function importTge(page, tge) {
     await page.locator('.sheet-layer.open .dialog-actions .btn.primary').last().click();
     await page.waitForSelector('.editor', { timeout: 60000 });
     await page.waitForTimeout(2000);
-    // The arrow at the top left goes back to the project list (a reload would reopen the project).
-    await page.mouse.click(16, 15);
-    await page.waitForSelector('.hm', { timeout: 30000 });
+    // ☰ → Close project (a reload would reopen the project).
+    await page.getByRole('button', { name: 'Menu', exact: true }).first().click();
+    await page.locator('.drawer-row', { hasText: 'Close project' }).first().click();
+    await page.waitForSelector('.hm', { state: 'visible', timeout: 30000 });
   }
+  // Chrome's own file dialog (File System Access) can't be answered from a test: the editor then uses a file input.
+  await page.evaluate(() => { window.showOpenFilePicker = undefined; window.showSaveFilePicker = undefined; });
   const chooser = page.waitForEvent('filechooser');
   await importBtn.click();
   await (await chooser).setFiles(tge);

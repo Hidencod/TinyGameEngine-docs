@@ -34,7 +34,7 @@ const TARGET_LABEL = { system: 'System', input: 'Input', audio: 'Audio', camera:
 
 /** "{object} collides with {other}" → "Player collides with other" style sample. */
 function displayOf(a) {
-  return a.display.replace(/\{object\}/g, '‹Object›').replace(/\{(\w+)\}/g, (_, id) => {
+  return a.display.replace(/\{\?\w+\}/g, '').replace(/\{object\}/g, '‹Object›').replace(/\{(\w+)\}/g, (_, id) => {
     const p = a.params.find((x) => x.id === id);
     return '‹' + (p ? p.label : id) + '›';
   });

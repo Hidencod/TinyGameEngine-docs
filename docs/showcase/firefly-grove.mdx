@@ -1,0 +1,81 @@
+---
+title: Firefly Grove
+description: A small night-time chase game that shows adaptive music made in Tiny Game Engine's beat maker — drums that come in as danger nears, a chase track that starts on the bar, and fireflies that pulse on the beat. Play it in your browser, then open the project and see how it works.
+---
+
+# Firefly Grove
+
+Catch eight fireflies in a grove at night while two wisps hunt you. Listen to the music: the drums grow as a wisp comes closer, a darker bass and melody join when one is near, and when a wisp sees you the chase music takes over, right on the bar. Lose them and the grove music comes back, on the bar again. The fireflies pulse on every beat.
+
+It shows the game music the engine makes. **Both songs were made in the beat maker, and everything else is an event sheet: there are no code scripts.**
+
+<PlayEmbed
+  src="https://hidencod.github.io/tge-assets/showcase/firefly-grove/"
+  poster="/img/showcase/firefly-grove-play.webp"
+  title="Firefly Grove"
+  size="8 MB"
+/>
+
+**Controls:** the joystick moves the ball (**WASD** or the **arrow keys** on a computer). Play with the sound on.
+
+## Open it in the editor
+
+1. Download **[firefly-grove.tge](https://hidencod.github.io/tge-assets/showcase/firefly-grove/firefly-grove.tge)** (500 KB).
+2. Open the editor: **[editor.jeevagames.com](https://editor.jeevagames.com)** on a computer, or the Android app.
+3. On the home screen tap **Import .tge** and pick the file, then open **Firefly Grove (imported)**.
+4. Press **▶ Play**, or open **Logic → Main events** to read the rules. **Files → music** has the two songs: tap one and choose **Edit beat** to open it in the beat maker.
+
+![Firefly Grove's event sheet in the editor](/img/showcase/firefly-grove-events.webp)
+
+## How it works
+
+### The grove music, in layers
+
+*Grove* is one beat with three parts (see [Layers](../world/sound#layers-adaptive-music)):
+
+| Channels | Layer | When it plays |
+| --- | --- | --- |
+| Pad, Pluck | none | always |
+| Kick, Hat, Shaker | **Drums** | louder as the nearest wisp comes closer |
+| Bass, Lead | **Danger** | when a wisp is within 8 m |
+
+Its playlist is a 1-bar intro and the main part twice, with **↻** set to bar 2: the intro plays once, then the rest loops.
+
+**On start of scene** sets both layers to 0 and then plays the music, so it starts calm. Every tick the nearest wisp's distance goes into `Near`:
+
+- **Pick nearest** `Wisp` to `Player` → **Set Near** to `distance(Player.x, Player.z, Wisp.x, Wisp.z)`.
+- **Set music layer** `Drums` to `clamp((15 - Near) / 7, 0, 1)` (fade 0.3 s): silent beyond 15 m, full at 8 m.
+- A sub-event: `Near < 8` → **Set music layer** `Danger` to 1; **Else** → to 0 (fade 2 s).
+
+![A wisp near: the drums and the danger layer are in](/img/showcase/firefly-grove-danger.webp)
+
+### The chase, on the bar
+
+*Chase* is a second beat at the same tempo (120 BPM), so the two line up.
+
+- A wisp within 5 m → **Play music** `Chase`, *In time with the music*: **On the next bar**. The grove keeps playing until that bar, then the chase starts on it. The alarm (**Play sound** `Zap`, **On the next beat**) waits for the beat.
+- While chasing, the wisps **Move to position** `Player.x`, `Player.z` every tick.
+- More than 9 m away for 3 seconds → **Play music** `Grove` on the next bar, and the wisps go back to wandering.
+
+![Seen: the chase music](/img/showcase/firefly-grove-chase.webp)
+
+### On the beat
+
+- **On music beat** → the fireflies **Set size** to 0.85, then **Tween** size back to 0.5 in 0.35 s: a pulse on every beat.
+- **On music bar** (every 2 bars), when no one is chasing → the wisps **Move to position** a random spot: they wander in time with the music.
+- The last firefly → the win jingle (**Play sound** `Win`) **On the next bar**, the grove music back with full drums.
+
+The text at the top right says what the music is doing, to watch it while you play.
+
+### The night
+
+A night sky, a little fog and **bloom** (glow). The fireflies and wisps have *Unlit* materials, so they glow. A warm point light is a child of the ball, a lantern that goes where it goes, and each wisp has a red one.
+
+## Make it yours
+
+- Open *Grove* with **Edit beat** and change the parts. The **🧅** chips at the top of the **Mixer** play it with layers turned off, as the game does. **Done** saves the layers too.
+- Make a new layer: **🧅 → New layer…** on a channel, then a **Set music layer** with its name.
+- A different chase: make another beat at 120 BPM and change `Chase` in the **Play music** action. Another tempo works too, but the change lands on the old song's bar, not on the new one's.
+- Harder: more `Wisp` objects (duplicate one), a faster chase (3.4), or a shorter "lost them" time (3 s).
+
+![All the fireflies](/img/showcase/firefly-grove-win.webp)
