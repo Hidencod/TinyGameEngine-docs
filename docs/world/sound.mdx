@@ -172,7 +172,7 @@ The **Mixer** has a strip for each channel and one for the whole song (**Master*
 
 ### Saving
 
-Tap **Done** and name it: the song (or the pattern, with an empty playlist) becomes a sound in your project. Play it with *Play sound*, with **Loop** on for background music. A bar at 120 BPM is 2 seconds, about 250 KB, so an 8-bar song is about 2 MB.
+Tap **Done** and name it: the song (or the pattern, with an empty playlist) becomes a sound in your project. Play it with *Play sound*, with **Loop** on for background music. A bar at 120 BPM is 2 seconds; saved as OGG (see [Sound files](#sound-files)) an 8-bar song is about 100-300 KB.
 
 To change it later, tap it in **Files** and choose **Edit beat**. **Done** changes the sound in place, so everything using it plays the new one.
 
@@ -205,7 +205,7 @@ Tap **Done** and name it: the song becomes a sound in your project, played once 
 To change it later, tap it in **Files** and choose **Edit music**. **Done** changes the sound in place, so everything using it plays the new one.
 
 :::tip[Keep songs short]
-A song is saved as a sound file of about 2 MB per 30 seconds. A short loop with **Loop** on sounds the same in a game as a long song and keeps the game small. The song's length is in **Edit → Change Song Length**.
+A song is saved as a sound file (OGG: about 200 KB per 30 seconds; WAV: about 2 MB). A short loop with **Loop** on sounds the same in a game as a long song and keeps the game small. The song's length is in **Edit → Change Song Length**.
 :::
 
 **Your own sounds:** **Assets → ⬆ Import** an MP3, OGG, WAV or M4A. Preview any sound from its menu in the Assets tab (**Preview sound**); tap the player bar at the bottom to stop it.
@@ -246,6 +246,26 @@ Browsers only allow sound after the player touches the screen. Exported games sh
 ## Music
 
 **Play music** plays one track at a time: starting another **cross-fades** from the one playing over the time you give (1 s by default), and asking for the track that is already playing only changes its volume. **Stop music** fades it out; **Is music playing** checks it. Use it for level music, a menu theme, or a boss fight that takes over.
+
+## Sound files
+
+Sounds you make (the sound maker, the beat maker, the music editor and Claude) are saved as **OGG**, compressed about 10 to 20 times smaller than a WAV and sounding the same in a game, as the free sounds are. Loops stay seamless.
+
+**Project settings → Audio mixer → Saved sounds** picks how:
+
+| Saved sounds | What it gives |
+| --- | --- |
+| **OGG, smaller** | The smallest files; fine for effects and busy music. |
+| **OGG, balanced** | The default: small, and clear for music. |
+| **OGG, best** | About twice the size of balanced, for music with quiet, detailed parts. |
+| **WAV** | Not compressed (about 10 times bigger). |
+
+Sounds already in the project (imported WAVs, or made before) stay as they are:
+
+- **Compress…** in a sound's menu in **Files** makes that one OGG, at the quality you pick. Everything using it plays the new file.
+- **🗜 Compress all sounds** under **Saved sounds** does every sound that isn't OGG yet, at the project's quality. It shows how many there are and their size, and goes away when there are none.
+
+Compressing keeps a made sound's settings: **Edit beat**, **Edit music** and **Edit sound** still open it, and saving there makes it again.
 
 ## The audio mixer
 
