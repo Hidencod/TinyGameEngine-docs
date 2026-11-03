@@ -18,7 +18,7 @@ Conditions are the **WHEN / IF** part of an event. All conditions of an event mu
 - Most other conditions can be **inverted** (NOT) from the condition’s menu.
 :::
 
-There are **108 conditions**, grouped by category as in the condition picker.
+There are **110 conditions**, grouped by category as in the condition picker.
 
 [⚙️ System](#system) · [🔢 Variables](#variables) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🎬 Timeline](#timeline) · [🌐 Language](#language) · [🏆 Services](#services) · [🔗 Web](#web) · [👥 Multiplayer](#multiplayer) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🖼️ UI](#ui) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎚️ Graphics](#graphics)
 
@@ -1330,6 +1330,33 @@ True while a sound you played (or any, when empty) is still playing. A sound tha
 | Parameter | Type | Default | Notes |
 | --- | --- | --- | --- |
 | Sound (empty = any) | Sound |  | *Optional.* |
+
+### On music beat {/* #audio-onmusicbeat */}
+
+<span class="tge-ace-display">On every ‹Every … beats› music beat(s)</span>
+
+True once on each beat of the music (a beat, or a sound given a tempo in Files), or every few beats from the one given: things that move or flash to the music.
+
+- **Where:** Found under **Audio** in the picker.
+- **ID:** `audio.onMusicBeat` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Every … beats | Number (expression) | `1` |  |
+| Starting at beat | Number (expression) | `0` |  |
+
+### On music bar {/* #audio-onmusicbar */}
+
+<span class="tge-ace-display">On every ‹Every … bars› music bar(s)</span>
+
+True once on each bar of the music (4 beats), or every few bars.
+
+- **Where:** Found under **Audio** in the picker.
+- **ID:** `audio.onMusicBar` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Every … bars | Number (expression) | `1` |  |
 
 ### Is music playing {/* #audio-ismusicplaying */}
 

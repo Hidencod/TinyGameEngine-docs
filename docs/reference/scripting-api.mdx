@@ -287,10 +287,14 @@ Sound playback.
 | `play(nameOrId, {volume, loop, tag, group, pitch, fadeIn}?)` | `SoundHandle` | Play an audio asset, e.g. audio.play("coin") or audio.play(hit) with a sound field. Returns its handle: handle.stop(fadeOut), handle.fadeTo(volume, seconds), handle.volume, handle.pitch, handle.playing. |
 | `stop(tag?, fadeOut?)` | `void` | Stop sounds with a tag (or all), fading out over fadeOut seconds. |
 | `isPlaying(tag?)` | `boolean` | A sound with that tag (or any) is playing. |
-| `playMusic(nameOrId, {volume, fade, group, loop}?)` | `void` | Play music, cross-fading from the track playing (fade defaults to 1 s). Asking for the same track only changes its volume. |
+| `playMusic(nameOrId, {volume, fade, group, loop, sync}?)` | `void` | Play music, cross-fading from the track playing (fade defaults to 1 s). Asking for the same track only changes its volume. sync: "bar" or "beat" starts it on the next bar / beat of the music playing. |
 | `stopMusic(fade = 1)` | `void` | Fade the music out. |
 | `setMusicLayer(layer, volume, fade = 1)` | `void` | Adaptive music: fade a layer of the music (a beat made with layers) to a volume, 0 … 1. It stays so until changed. |
 | `getMusicLayer(layer)` | `number` | The volume of a music layer (1 unless changed). |
+| `musicBeat` | `number` | Beats since the music started (0, 1, 2 …; 4 to a bar), -1 when no music with a tempo plays (a beat, or a sound given a tempo in Files). |
+| `musicBar` | `number` | Bars since the music started, -1 when none. |
+| `musicTime` | `number` | Seconds into the music playing. |
+| `musicBpm` | `number` | The music’s tempo (0 when unknown). |
 | `music` | `string` | Name of the music playing, or "". |
 | `setGroupVolume(group, 0..1, fade?)` | `void` | Volume of a mixer group (Project settings → Audio mixer), smoothly over fade seconds. "Master" is the master volume. |
 | `getGroupVolume(group)` | `number` | Volume of a mixer group. |

@@ -10713,7 +10713,7 @@
       "display": "Play sound {sound} (volume {volume}, loop {loop})",
       "displayNoObject": null,
       "icon": "🔊",
-      "description": "Play a sound from your assets.",
+      "description": "Play a sound from your assets. In time with the music: on its next beat or bar, so a sting fits the music.",
       "isTrigger": false,
       "objectRequired": false,
       "objectOptional": false,
@@ -10778,6 +10778,29 @@
           "type": "number",
           "options": null,
           "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "sync",
+          "label": "In time with the music",
+          "type": "choice",
+          "options": [
+            {
+              "value": "now",
+              "label": "At once"
+            },
+            {
+              "value": "beat",
+              "label": "On the next beat"
+            },
+            {
+              "value": "bar",
+              "label": "On the next bar"
+            }
+          ],
+          "default": "now",
           "optional": false,
           "hint": null,
           "varScope": null
@@ -10863,7 +10886,7 @@
       "display": "Play music {sound} (volume {volume}, cross-fade {fade} s)",
       "displayNoObject": null,
       "icon": "🎵",
-      "description": "Plays music, one track at a time: another track cross-fades from the one playing; the same track only changes its volume. Loops unless you turn Loop off.",
+      "description": "Plays music, one track at a time: another track cross-fades from the one playing; the same track only changes its volume. Loops unless you turn Loop off. In time with the music: the new track starts on the next beat or bar of the one playing.",
       "isTrigger": false,
       "objectRequired": false,
       "objectOptional": false,
@@ -10921,6 +10944,29 @@
           "optional": false,
           "hint": null,
           "varScope": null
+        },
+        {
+          "id": "sync",
+          "label": "In time with the music",
+          "type": "choice",
+          "options": [
+            {
+              "value": "now",
+              "label": "At once (cross-fade)"
+            },
+            {
+              "value": "beat",
+              "label": "On the next beat"
+            },
+            {
+              "value": "bar",
+              "label": "On the next bar"
+            }
+          ],
+          "default": "now",
+          "optional": false,
+          "hint": null,
+          "varScope": null
         }
       ]
     },
@@ -10965,6 +11011,76 @@
         {
           "id": "fade",
           "label": "Fade (s)",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "audio.onMusicBeat",
+      "kind": "condition",
+      "category": "Audio",
+      "label": "On music beat",
+      "hint": "In time with the music",
+      "display": "On every {every} music beat(s)",
+      "displayNoObject": null,
+      "icon": "🥁",
+      "description": "True once on each beat of the music (a beat, or a sound given a tempo in Files), or every few beats from the one given: things that move or flash to the music.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "audio",
+      "loop": null,
+      "noInvert": true,
+      "isWait": false,
+      "params": [
+        {
+          "id": "every",
+          "label": "Every … beats",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "offset",
+          "label": "Starting at beat",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "audio.onMusicBar",
+      "kind": "condition",
+      "category": "Audio",
+      "label": "On music bar",
+      "hint": "In time with the music",
+      "display": "On every {every} music bar(s)",
+      "displayNoObject": null,
+      "icon": "🥁",
+      "description": "True once on each bar of the music (4 beats), or every few bars.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "audio",
+      "loop": null,
+      "noInvert": true,
+      "isWait": false,
+      "params": [
+        {
+          "id": "every",
+          "label": "Every … bars",
           "type": "number",
           "options": null,
           "default": "1",

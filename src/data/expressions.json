@@ -484,6 +484,34 @@
       "insert": "webname()"
     },
     {
+      "name": "musicbeat",
+      "signature": "musicbeat()",
+      "description": "Beats since the music started (0, 1, 2 …; 4 to a bar), -1 when no music with a tempo plays",
+      "category": "Audio",
+      "insert": "musicbeat()"
+    },
+    {
+      "name": "musicbar",
+      "signature": "musicbar()",
+      "description": "Bars since the music started, -1 when none. musicbeat() % 4 is the beat in the bar (0-3)",
+      "category": "Audio",
+      "insert": "musicbar()"
+    },
+    {
+      "name": "musictime",
+      "signature": "musictime()",
+      "description": "Seconds into the music playing (0 when none)",
+      "category": "Audio",
+      "insert": "musictime()"
+    },
+    {
+      "name": "musicbpm",
+      "signature": "musicbpm()",
+      "description": "The music's tempo in beats a minute (0 when unknown)",
+      "category": "Audio",
+      "insert": "musicbpm()"
+    },
+    {
       "name": "rayhitname",
       "signature": "rayhitname()",
       "description": "After a \"Raycast\" condition: the name of the object the ray hit (empty when nothing)",

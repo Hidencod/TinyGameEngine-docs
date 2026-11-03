@@ -145,6 +145,15 @@ If you mistype a name, the game keeps running: it shows a friendly message once 
 | `weberror()` | In "On web error": what went wrong, in words |
 | `webname()` | The name given to the request that the latest reply answers |
 
+### Audio
+
+| Function | What it does |
+| --- | --- |
+| `musicbeat()` | Beats since the music started (0, 1, 2 …; 4 to a bar), -1 when no music with a tempo plays |
+| `musicbar()` | Bars since the music started, -1 when none. musicbeat() % 4 is the beat in the bar (0-3) |
+| `musictime()` | Seconds into the music playing (0 when none) |
+| `musicbpm()` | The music's tempo in beats a minute (0 when unknown) |
+
 ### Raycast
 
 | Function | What it does |

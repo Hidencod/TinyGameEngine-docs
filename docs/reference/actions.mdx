@@ -2369,7 +2369,7 @@ Stop the sound of the object's Audio component.
 
 <span class="tge-ace-display">Play sound ‹Sound› (volume ‹Volume›, loop ‹Loop›)</span>
 
-Play a sound from your assets.
+Play a sound from your assets. In time with the music: on its next beat or bar, so a sting fits the music.
 
 - **Where:** Found under **Audio** in the picker.
 - **ID:** `audio.play` (as saved in project files)
@@ -2382,6 +2382,7 @@ Play a sound from your assets.
 | Mixer group (optional) | Text |  | *Optional.* |
 | Pitch | Number (expression) | `1` |  |
 | Fade in (s) | Number (expression) | `0` |  |
+| In time with the music | Choice | `now` | Options: At once, On the next beat, On the next bar |
 
 ### Stop sound {/* #audio-stop */}
 
@@ -2401,7 +2402,7 @@ Stop a sound (leave empty to stop all sounds).
 
 <span class="tge-ace-display">Play music ‹Music› (volume ‹Volume›, cross-fade ‹Cross-fade (s)› s)</span>
 
-Plays music, one track at a time: another track cross-fades from the one playing; the same track only changes its volume. Loops unless you turn Loop off.
+Plays music, one track at a time: another track cross-fades from the one playing; the same track only changes its volume. Loops unless you turn Loop off. In time with the music: the new track starts on the next beat or bar of the one playing.
 
 - **Where:** Found under **Audio** in the picker.
 - **ID:** `audio.playMusic` (as saved in project files)
@@ -2413,6 +2414,7 @@ Plays music, one track at a time: another track cross-fades from the one playing
 | Cross-fade (s) | Number (expression) | `1` |  |
 | Mixer group (optional) | Text |  | *Optional.* |
 | Loop | Yes / No (expression) | `true` |  |
+| In time with the music | Choice | `now` | Options: At once (cross-fade), On the next beat, On the next bar |
 
 ### Set music layer {/* #audio-setmusiclayer */}
 

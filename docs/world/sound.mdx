@@ -164,6 +164,8 @@ The **Playlist** is the song: patterns placed in time, one bar per column, like 
 - **Tap a bar number** to play the song from that bar. The ▲ marks where ▶ starts from.
 - **Drag along the ruler** to loop those bars: they play over and over, so you can work on a part. **🔁 2–3 ✕** above shows the loop; tap it to play the whole song again. Like solo, the loop is only for listening; Done saves the whole song.
 
+**↻** (when the beat loops) picks the bar the loop starts again from: a song with an **intro**. Pick **Bar 3** and bars 1-2 play once, then bar 3 to the end repeats; a dashed green line marks it. **Bar 1** loops all of it. The game plays it the same way.
+
 **⬚ Select** picks clips: tap them, or drag a box across empty space. Drag one to move them all together. **All** picks every clip, **⧉** copies them right after themselves (a 4-bar section becomes 8 bars), **🗑** removes them. **✏ Draw** goes back to placing clips.
 
 With an empty playlist, the song is the current pattern.
@@ -228,6 +230,7 @@ Through the [Claude link](../editor/claude-link), Claude can make beats and song
 - *Make a calm 8-bar song for the menu in C major: soft keys, a bass line, and a drum fill at the end.*
 - *Make the hats in my Groove beat softer and add a clap on 2 and 4.*
 - *Make a house loop at 124 BPM: punch kick, an 808 bass line with glide, and supersaw chords pumping to the kick.*
+- *Make boss music at 140 BPM with a 2-bar intro that plays once, then loops.*
 - *Make adaptive music for the forest level: a calm base, a Drums layer and a Danger layer, and bring the drums in when an enemy is near the player.*
 
 Claude can't hear: listen with ▶ and say what to change.
@@ -301,6 +304,23 @@ Browsers only allow sound after the player touches the screen. Exported games sh
 | Enemy is near the player (distance under 10) | *Danger* to 1 (fade 2) |
 | Else | *Danger* to 0 (fade 3) |
 
+### In time with the music
+
+A beat knows its tempo, so the game can keep to its beat. For other music (imported, or from the music editor) set it in **Files → Tempo** (in beats a minute; 4 beats to a bar).
+
+- **Play music** with **In time with the music** set to **On the next bar** (or beat) starts the new track there, and the one playing fades out from there: going from explore to fight music lands on the beat instead of cutting in mid-note. Use tracks at the same tempo.
+- **Play sound** has the same choice: a sting or jingle (an enemy spotted, a level up) waits for the next beat or bar so it fits the music.
+- **On music beat** is true once on each beat of the music (or every 2nd, 4th… from the beat you give), and **On music bar** once on each bar: lights that pulse, enemies that hop or shoot on the beat, a rhythm game.
+- `musicbeat()` counts the beats since the music started (0, 1, 2 …; -1 with no music that has a tempo), `musicbar()` the bars, `musictime()` the seconds, `musicbpm()` the tempo. `musicbeat() % 4` is the beat in the bar (0-3).
+
+| Event | Actions |
+| --- | --- |
+| On music beat | *Lights*: Set scale to 1.2, then Tween scale to 1 in 0.2 s |
+| Enemy sees the player, Trigger once while true | **Play music** *Fight* (on the next bar) |
+| On music beat (every 2) | *Turret* spawns *Bullet* |
+
+When the music changes on a bar, the beats count from 0 again for the new track (the old one keeps counting until then).
+
 ## Sound files
 
 Sounds you make (the sound maker, the beat maker, the music editor and Claude) are saved as **OGG**, compressed about 10 to 20 times smaller than a WAV and sounding the same in a game, as the free sounds are. Loops stay seamless.
@@ -351,9 +371,12 @@ engine.stop(1)                          // fade out over 1 s
 
 audio.playMusic('Boss', { fade: 2 })     // cross-fade from the level music
 audio.setMusicLayer('Danger', 1, 2)      // a layer of the music in, over 2 s
+audio.playMusic('Fight', { sync: 'bar' })  // on the next bar
+audio.play('Sting', { sync: 'beat' })      // on the next beat
+if (audio.musicBeat % 4 === 0) { }        // the first beat of a bar
 audio.setGroupVolume('Music', 0.3, 1)    // duck the music for a cutscene
 audio.setGroupLowpass('SFX', 600, 0.3)   // under water
 audio.pauseAll()
 ```
 
-`audio.play()` returns the sound: `volume`, `pitch`, `playing`, `stop(fadeOut)` and `fadeTo(volume, seconds)`. Also `audio.stop(tag, fadeOut)`, `audio.isPlaying(tag)`, `audio.music`, `audio.stopMusic(fade)`, `audio.getMusicLayer(layer)`, `audio.getGroupVolume(group)`, `audio.setGroupMuted(group, muted)`, `audio.resumeAll()`, and `entity.stopSound(fadeOut)`.
+`audio.play()` returns the sound: `volume`, `pitch`, `playing`, `stop(fadeOut)` and `fadeTo(volume, seconds)`. Also `audio.stop(tag, fadeOut)`, `audio.isPlaying(tag)`, `audio.music`, `audio.stopMusic(fade)`, `audio.getMusicLayer(layer)`, `audio.musicBeat`, `audio.musicBar`, `audio.musicTime`, `audio.musicBpm`, `audio.getGroupVolume(group)`, `audio.setGroupMuted(group, muted)`, `audio.resumeAll()`, and `entity.stopSound(fadeOut)`.

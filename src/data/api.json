@@ -1468,9 +1468,9 @@
         {
           "name": "playMusic",
           "kind": "method",
-          "sig": "(nameOrId, {volume, fade, group, loop}?)",
+          "sig": "(nameOrId, {volume, fade, group, loop, sync}?)",
           "type": "void",
-          "doc": "Play music, cross-fading from the track playing (fade defaults to 1 s). Asking for the same track only changes its volume."
+          "doc": "Play music, cross-fading from the track playing (fade defaults to 1 s). Asking for the same track only changes its volume. sync: \"bar\" or \"beat\" starts it on the next bar / beat of the music playing."
         },
         {
           "name": "stopMusic",
@@ -1492,6 +1492,34 @@
           "sig": "(layer)",
           "type": "number",
           "doc": "The volume of a music layer (1 unless changed)."
+        },
+        {
+          "name": "musicBeat",
+          "kind": "method",
+          "sig": "",
+          "type": "number",
+          "doc": "Beats since the music started (0, 1, 2 …; 4 to a bar), -1 when no music with a tempo plays (a beat, or a sound given a tempo in Files)."
+        },
+        {
+          "name": "musicBar",
+          "kind": "method",
+          "sig": "",
+          "type": "number",
+          "doc": "Bars since the music started, -1 when none."
+        },
+        {
+          "name": "musicTime",
+          "kind": "method",
+          "sig": "",
+          "type": "number",
+          "doc": "Seconds into the music playing."
+        },
+        {
+          "name": "musicBpm",
+          "kind": "method",
+          "sig": "",
+          "type": "number",
+          "doc": "The music’s tempo (0 when unknown)."
         },
         {
           "name": "music",
