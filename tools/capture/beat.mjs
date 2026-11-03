@@ -49,6 +49,11 @@ export async function beatSteps(page, s, H) {
   await at(3, 0); await at(7, 0);
   await page.selectOption('.beat-pattern', { label: 'Pattern 1' });
   for (const b of [0, 1, 2, 4, 5, 6]) await at(b, 0);
+  // Loop bars 5-8: a drag along the ruler.
+  const ru = await page.locator('.beat-pl-ruler').boundingBox();
+  await page.mouse.move(ru.x + 4 * 46 + 10, ru.y + 10); await page.mouse.down();
+  await page.mouse.move(ru.x + 7 * 46 + 20, ru.y + 10, { steps: 8 }); await page.mouse.up();
+  await s.settle(300);
   await s.shot('beat-playlist');
   await page.locator('.beat-tabs .chip', { hasText: 'Mixer' }).tap();
   await s.settle(400);

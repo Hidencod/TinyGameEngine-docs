@@ -61,9 +61,9 @@ A new beat starts with a kick on every beat, claps on 2 and 4, hats in between, 
 
 - **Tap a step** to turn it on or off. A bar is 16 steps (16th notes), in groups of four, one group per beat.
 - **▶** plays the pattern over and over; the step that is sounding lights up.
-- **The dot** at the start of a row mutes it.
-- **+ Channel** adds a row: a drum (**Kick**, **Snare**, **Clap**, **Hat**, **Open hat**, **Tom**, **Rim**, **Crash**), a synth (**Bass**, **Lead**, **Pluck**, **Pad**, **Keys**, **Chip**), a sound from your project, or a free sound.
-- **Tap a row's name** for its menu: **Piano roll**, **Step pads**, **Sound…** (change what it plays), **Instrument…**, **Mixer**, **Rename**, **Duplicate**, **Clear** and **Delete**.
+- **The dot** at the start of a row mutes it. **Hold the dot** (or right-click it) to **solo** the row: only it plays, so you can hear it alone. Hold it again to hear everything. Solo is only for listening: it isn't saved with the beat.
+- **+ Channel** adds a row: a drum (**Kick**, **Snare**, **Clap**, **Hat**, **Open hat**, **Tom**, **Rim**, **Crash**), one from the second kit (🪘 **808**, **Punch kick**, **Tight snare**, **Snap**, **Shaker**, **Cowbell**, **Conga**, **Ride**), a synth (**Bass**, **Lead**, **Pluck**, **Pad**, **Keys**, **Chip**), a sound from your project, or a free sound.
+- **Tap a row's name** for its menu: **Solo**, **Piano roll**, **Step pads**, **Sound…** (change what it plays), **Instrument…**, **Mixer**, **Rename**, **Duplicate**, **Clear** and **Delete**.
 
 <Side shot="beat-velocity">
 
@@ -92,6 +92,11 @@ A new beat starts with a kick on every beat, claps on 2 and 4, hats in between, 
 | **Release** | How long it rings on after the note ends. |
 | **Tone** | Dark (low) to bright (high). |
 | **Tune** | Shifts every note up or down, in semitones (12 = an octave). |
+| **Wave** | The oscillator: the synth's own voice (its name), or a plain **Saw**, **Square**, **Tri** (triangle) or **Sine**. |
+| **Octave** | Plays every note one or two octaves higher or lower. |
+| **Unison** | Plays each note with up to 5 voices at once, spread apart by **Detune**: thick and wide. A saw with 5 voices and some detune is the "supersaw" of trance and EDM. |
+| **Glide** | Each note slides from the pitch of the one before, taking this long: the rubbery 303 and 808 bass lines. **Off** jumps straight there. |
+| **LFO** | A slow wobble. **To** picks what it moves: the **Pitch** (vibrato), the **Filter** (a wobble bass, at a **Rate** of 2-4 Hz) or the **Volume** (tremolo). **Depth** is how much; **Off** turns it off. |
 
 Drums and sounds have **Tune**, **Tone**, **Attack** and **Length** (how long it plays: **Full**, or cut short for a tight, dry hit).
 
@@ -126,6 +131,17 @@ A drum or sound in the piano roll plays higher or lower with each note, so a sin
 - **Tap a note** to select it, or **drag a box** around some. Drag a selected note to move them all.
 - **All** selects every note; **Copy** and **Paste** copy them to the same steps in another pattern or channel (or another beat); **⧉** repeats them right after themselves; **↑ ↓** move them up or down; **🗑** deletes them.
 
+**♬ Chord** (in Draw) puts a whole chord in with each tap, on the note you tap: **Triad (scale)** and **7th (scale)** build it from the scale's notes (so in A minor, tapping A gives A minor and tapping C gives C major), or pick a fixed **Major**, **Minor**, **Diminished**, **Sus2**, **Sus4**, **7**, **Maj7**, **Min7**, **Power** (root, fifth, octave) or **Octave**. Dragging stretches the whole chord. **Single notes** turns it off.
+
+**⋯** changes the selected notes (in Select), or all of the channel's notes in the pattern:
+
+| Tool | What it does |
+| --- | --- |
+| **Arpeggiate** | Plays each chord one note after another through its length: **Up**, **Down** or **Up and down**, at **1/16**, **1/8** or **1/4**. Single notes stay. |
+| **Quantize** | Moves notes to the nearest 1/8, 1/4, 1/2 or whole bar. |
+| **Humanize** | Varies each note's velocity a little, as a player would. |
+| **Legato** | Holds each note until the next one starts. |
+
 **Vel**, along the bottom, has a bar for each note: drag up and down on it to make notes softer or louder (in Select, only the selected ones).
 
 **Scale** picks a key and scale (**Major**, **Minor**, **Dorian**, **Pentatonic**, **Minor pentatonic**, **Blues**). The notes outside it are shaded and the key's note is marked, and new and moved notes land on the scale, so every note fits. **↑ ↓** then move along the scale. **Chromatic** turns it off.
@@ -138,9 +154,17 @@ The **Playlist** is the song: patterns placed in time, one bar per column, like 
 
 - **Tap an empty spot** to put the current pattern there. Pick another pattern in the pattern menu to place that one.
 - **Drag a clip** to move it to another bar or track.
-- **Tap a clip** for **Edit pattern** (opens it in the rack), **Make unique** (a copy only this clip plays, to change it alone) and **Remove**.
+- **Drag a clip's right edge** to make it longer or shorter, in quarter bars. Longer repeats the pattern (lines mark each repeat), so one 1-bar drum pattern can run under a whole verse; shorter cuts it off.
+- **Tap a clip** for **Edit pattern** (opens it in the rack), **Duplicate** (a copy right after it), **Make unique** (a copy only this clip plays, to change it alone), **Pattern length** (after a resize) and **Remove**.
 - Clips on different tracks play together: drums on one track and a melody pattern on another, say.
-- **▶** in the playlist plays the song from the start; in the rack and piano roll it plays the current pattern.
+- **▶** in the playlist plays the song; in the rack and piano roll it plays the current pattern.
+
+**The ruler** along the top (the bar numbers):
+
+- **Tap a bar number** to play the song from that bar. The ▲ marks where ▶ starts from.
+- **Drag along the ruler** to loop those bars: they play over and over, so you can work on a part. **🔁 2–3 ✕** above shows the loop; tap it to play the whole song again. Like solo, the loop is only for listening; Done saves the whole song.
+
+**⬚ Select** picks clips: tap them, or drag a box across empty space. Drag one to move them all together. **All** picks every clip, **⧉** copies them right after themselves (a 4-bar section becomes 8 bars), **🗑** removes them. **✏ Draw** goes back to placing clips.
 
 With an empty playlist, the song is the current pattern.
 
@@ -160,6 +184,10 @@ The **Mixer** has a strip for each channel and one for the whole song (**Master*
 | **Resonance** | Makes the filter ring at its cutoff: the classic squelchy synth sound. |
 | **Reverb** | How much of the channel goes into the shared reverb (a room around it). |
 | **Delay** | How much goes into the shared echo. |
+| **Drive** | Distortion: warm and fuzzy at a little, crunchy and loud at a lot. Good on bass and leads. |
+| **Pump** | Sidechain: the channel ducks every time a kick (**Kick**, **Punch kick** or **808**) hits and swells back up, the pumping sound of house and EDM. Try it on pads and bass. |
+
+**M** and **S** by a channel's name mute and solo it.
 
 | Master | What it does |
 | --- | --- |
@@ -183,6 +211,7 @@ Through the [Claude link](../editor/claude-link), Claude can make beats and song
 - *Make a fast chiptune loop for the boss fight, 160 BPM.*
 - *Make a calm 8-bar song for the menu in C major: soft keys, a bass line, and a drum fill at the end.*
 - *Make the hats in my Groove beat softer and add a clap on 2 and 4.*
+- *Make a house loop at 124 BPM: punch kick, an 808 bass line with glide, and supersaw chords pumping to the kick.*
 
 Claude can't hear: listen with ▶ and say what to change.
 

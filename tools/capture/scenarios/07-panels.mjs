@@ -162,7 +162,7 @@ export async function run({ page, s, H }) {
   await page.getByRole('button', { name: /Free sounds/ }).click();
   await H.waitSheet();
   await s.shot('sounds-library');
-  await page.locator('.sound-make').click();
+  await page.locator('.sound-make button', { hasText: 'Make a sound' }).click();
   await H.waitSheet();
   await page.locator('.sfx-sheet .chip', { hasText: /^Laser$/ }).click();
   await s.shot('sound-maker');
