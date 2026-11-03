@@ -192,6 +192,7 @@
   "audio.isPlaying": "True while a sound you played (or any, when empty) is still playing. A sound that is fading out no longer counts.",
   "audio.playMusic": "Plays music, one track at a time: another track cross-fades from the one playing; the same track only changes its volume. Loops unless you turn Loop off.",
   "audio.stopMusic": "Fades the music out over the time given.",
+  "audio.setMusicLayer": "Adaptive music: fades a layer of the music (a beat made with layers in the beat maker) to a volume, 0 = off, 1 = full, while the music goes on in time. Set before Play music, the music starts that way.",
   "audio.isMusicPlaying": "True while music (or that music) is playing.",
   "audio.setGroupVolume": "Sets the volume of a group of the audio mixer (Project settings → Audio mixer), faded over the time given. Master is the master volume.",
   "audio.muteGroup": "Silences a mixer group, or brings it back at its volume.",

@@ -10925,6 +10925,56 @@
       ]
     },
     {
+      "id": "audio.setMusicLayer",
+      "kind": "action",
+      "category": "Audio",
+      "label": "Set music layer",
+      "hint": "Adaptive music: a layer of a beat",
+      "display": "Set music layer {layer} to {volume} (fade {fade} s)",
+      "displayNoObject": null,
+      "icon": "🎚️",
+      "description": "Adaptive music: fades a layer of the music (a beat made with layers in the beat maker) to a volume, 0 = off, 1 = full, while the music goes on in time. Set before Play music, the music starts that way.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "audio",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "layer",
+          "label": "Layer",
+          "type": "string",
+          "options": null,
+          "default": "Drums",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "volume",
+          "label": "Volume",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "fade",
+          "label": "Fade (s)",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "audio.stopMusic",
       "kind": "action",
       "category": "Audio",

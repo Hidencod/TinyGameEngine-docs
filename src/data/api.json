@@ -1480,6 +1480,20 @@
           "doc": "Fade the music out."
         },
         {
+          "name": "setMusicLayer",
+          "kind": "method",
+          "sig": "(layer, volume, fade = 1)",
+          "type": "void",
+          "doc": "Adaptive music: fade a layer of the music (a beat made with layers) to a volume, 0 … 1. It stays so until changed."
+        },
+        {
+          "name": "getMusicLayer",
+          "kind": "method",
+          "sig": "(layer)",
+          "type": "number",
+          "doc": "The volume of a music layer (1 unless changed)."
+        },
+        {
           "name": "music",
           "kind": "property",
           "type": "string",

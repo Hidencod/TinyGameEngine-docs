@@ -1,5 +1,5 @@
 /**
- * The beat maker shots (beat-rack, beat-roll), from the open Free sounds sheet: a snare on 2 and 4 and a bass
+ * The beat maker shots (beat-rack, beat-roll, … beat-mixer, beat-layers), from the open Free sounds sheet: a snare on 2 and 4 and a bass
  * line drawn in the piano roll. Leaves the beat maker closed (discarded) and the Free sounds sheet open.
  */
 export async function beatSteps(page, s, H) {
@@ -58,6 +58,19 @@ export async function beatSteps(page, s, H) {
   await page.locator('.beat-tabs .chip', { hasText: 'Mixer' }).tap();
   await s.settle(400);
   await s.shot('beat-mixer');
+  // Adaptive music: the drums in a layer "Drums", the bass in "Bass"; the drums turned off to listen.
+  const layerOf = async (name, layer, isNew) => {
+    await page.locator('.beat-mix-card', { has: page.locator('.beat-mix-name span', { hasText: new RegExp('^' + name + '$') }) }).locator('.beat-mix-layer').tap();
+    await H.waitSheet();
+    if (isNew) { await H.pick('New layer'); await H.prompt(layer); } else await H.pick(layer, { exact: true });
+  };
+  await layerOf('Kick', 'Drums', true);
+  for (const n of ['Clap', 'Hat', 'Snare']) await layerOf(n, 'Drums', false);
+  await layerOf('Bass', 'Bass', true);
+  await page.locator('.beat-layers .chip', { hasText: 'Drums' }).tap();
+  await page.locator('.beat-mixer').evaluate((el) => { el.scrollTop = 0; });
+  await s.settle(300);
+  await s.shot('beat-layers');
   await page.locator('.beat-maker .sheet-x').click();
   await page.getByRole('button', { name: 'Discard' }).click();
   await s.settle(500);

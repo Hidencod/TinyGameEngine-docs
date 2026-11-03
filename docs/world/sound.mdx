@@ -198,6 +198,22 @@ The **Mixer** has a strip for each channel and one for the whole song (**Master*
 
 </Side>
 
+### Layers (adaptive music)
+
+<Side shot="beat-layers">
+
+A beat can be saved in **layers** that the game turns up and down while it plays, all in time: calm music while the player explores, the drums coming in when an enemy sees them, a danger melody on top in a fight. It's the vertical layering of FMOD and Wwise, made in the beat maker.
+
+- **🧅** on a channel's mixer card, or **Layer** in its menu in the rack, puts it in a layer: one there is, or **New layer…** with a name (*Drums*, *Danger*…). **None** takes it out.
+- Channels in no layer always play.
+- The chips at the top of the **Mixer** turn each layer off and on, to hear what the game will do. Like solo, that's only for listening: the beat saves with every layer.
+
+**Done** saves the beat as usual, and each layer as well (they don't show in **Files**: they go with the beat). The layers together sound exactly like the beat; each one takes as much space as the beat again.
+
+In the game, play the beat with **Play music** and fade layers with **Set music layer** (see [Music](#music)).
+
+</Side>
+
 ### Saving
 
 Tap **Done** and name it: the song (or the pattern, with an empty playlist) becomes a sound in your project. Play it with *Play sound*, with **Loop** on for background music. A bar at 120 BPM is 2 seconds; saved as OGG (see [Sound files](#sound-files)) an 8-bar song is about 100-300 KB.
@@ -212,6 +228,7 @@ Through the [Claude link](../editor/claude-link), Claude can make beats and song
 - *Make a calm 8-bar song for the menu in C major: soft keys, a bass line, and a drum fill at the end.*
 - *Make the hats in my Groove beat softer and add a clap on 2 and 4.*
 - *Make a house loop at 124 BPM: punch kick, an 808 bass line with glide, and supersaw chords pumping to the kick.*
+- *Make adaptive music for the forest level: a calm base, a Drums layer and a Danger layer, and bring the drums in when an enemy is near the player.*
 
 Claude can't hear: listen with ▶ and say what to change.
 
@@ -276,6 +293,14 @@ Browsers only allow sound after the player touches the screen. Exported games sh
 
 **Play music** plays one track at a time: starting another **cross-fades** from the one playing over the time you give (1 s by default), and asking for the track that is already playing only changes its volume. **Stop music** fades it out; **Is music playing** checks it. Use it for level music, a menu theme, or a boss fight that takes over.
 
+**Set music layer** fades one [layer of a beat](#layers-adaptive-music) to a volume (0 = off, 1 = full) over the time you give, while the music goes on in time. A layer set before the music starts starts that way: set *Danger* to 0 just before **Play music**, and the music starts calm. A layer keeps its volume until you change it, from track to track.
+
+| Event | Set music layer |
+| --- | --- |
+| On start of scene | *Danger* to 0 (fade 0), then **Play music** *Forest* |
+| Enemy is near the player (distance under 10) | *Danger* to 1 (fade 2) |
+| Else | *Danger* to 0 (fade 3) |
+
 ## Sound files
 
 Sounds you make (the sound maker, the beat maker, the music editor and Claude) are saved as **OGG**, compressed about 10 to 20 times smaller than a WAV and sounding the same in a game, as the free sounds are. Loops stay seamless.
@@ -325,9 +350,10 @@ engine.pitch = 0.8 + speed / 20        // change it while it plays
 engine.stop(1)                          // fade out over 1 s
 
 audio.playMusic('Boss', { fade: 2 })     // cross-fade from the level music
+audio.setMusicLayer('Danger', 1, 2)      // a layer of the music in, over 2 s
 audio.setGroupVolume('Music', 0.3, 1)    // duck the music for a cutscene
 audio.setGroupLowpass('SFX', 600, 0.3)   // under water
 audio.pauseAll()
 ```
 
-`audio.play()` returns the sound: `volume`, `pitch`, `playing`, `stop(fadeOut)` and `fadeTo(volume, seconds)`. Also `audio.stop(tag, fadeOut)`, `audio.isPlaying(tag)`, `audio.music`, `audio.stopMusic(fade)`, `audio.getGroupVolume(group)`, `audio.setGroupMuted(group, muted)`, `audio.resumeAll()`, and `entity.stopSound(fadeOut)`.
+`audio.play()` returns the sound: `volume`, `pitch`, `playing`, `stop(fadeOut)` and `fadeTo(volume, seconds)`. Also `audio.stop(tag, fadeOut)`, `audio.isPlaying(tag)`, `audio.music`, `audio.stopMusic(fade)`, `audio.getMusicLayer(layer)`, `audio.getGroupVolume(group)`, `audio.setGroupMuted(group, muted)`, `audio.resumeAll()`, and `entity.stopSound(fadeOut)`.

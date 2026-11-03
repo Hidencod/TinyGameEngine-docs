@@ -289,6 +289,8 @@ Sound playback.
 | `isPlaying(tag?)` | `boolean` | A sound with that tag (or any) is playing. |
 | `playMusic(nameOrId, {volume, fade, group, loop}?)` | `void` | Play music, cross-fading from the track playing (fade defaults to 1 s). Asking for the same track only changes its volume. |
 | `stopMusic(fade = 1)` | `void` | Fade the music out. |
+| `setMusicLayer(layer, volume, fade = 1)` | `void` | Adaptive music: fade a layer of the music (a beat made with layers) to a volume, 0 … 1. It stays so until changed. |
+| `getMusicLayer(layer)` | `number` | The volume of a music layer (1 unless changed). |
 | `music` | `string` | Name of the music playing, or "". |
 | `setGroupVolume(group, 0..1, fade?)` | `void` | Volume of a mixer group (Project settings → Audio mixer), smoothly over fade seconds. "Master" is the master volume. |
 | `getGroupVolume(group)` | `number` | Volume of a mixer group. |
