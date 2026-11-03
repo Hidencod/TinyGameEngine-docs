@@ -167,7 +167,7 @@ export async function run({ page, s, H }) {
   await page.locator('.sfx-sheet .chip', { hasText: /^Laser$/ }).click();
   await s.shot('sound-maker');
   await H.closeSheet();
-  await beatSteps(page, s);
+  await beatSteps(page, s, H);
   // The music editor (BeepBox in an iframe), with a little tune tapped into the grid.
   await page.locator('.sound-make button', { hasText: 'Make music' }).click();
   await s.settle(4000);

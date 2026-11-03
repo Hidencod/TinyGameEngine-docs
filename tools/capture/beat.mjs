@@ -2,7 +2,7 @@
  * The beat maker shots (beat-rack, beat-roll), from the open Free sounds sheet: a snare on 2 and 4 and a bass
  * line drawn in the piano roll. Leaves the beat maker closed (discarded) and the Free sounds sheet open.
  */
-export async function beatSteps(page, s) {
+export async function beatSteps(page, s, H) {
   await page.locator('.sound-make button', { hasText: 'Make a beat' }).click();
   await s.settle(900);
   const snare = page.locator('.beat-row', { hasText: 'Snare' }).locator('.beat-pad');
@@ -19,6 +19,24 @@ export async function beatSteps(page, s) {
   await page.locator('.beat-roll-head button', { hasText: 'Rack' }).tap();
   await s.settle(500);
   await s.shot('beat-rack');
+  // Velocity: the hats soft and loud.
+  await page.locator('.beat-rack-tools .chip', { hasText: 'Velocity' }).tap();
+  await s.settle(300);
+  {
+    const hat = await page.locator('.beat-row').nth(2).locator('.beat-pads').boundingBox();
+    const steps = [2, 6, 10, 14];
+    const heights = [0.15, 0.6, 0.3, 0.75];
+    for (let i = 0; i < steps.length; i++) await page.touchscreen.tap(hat.x + hat.width * (steps[i] + 0.5) / 16, hat.y + hat.height * heights[i]);
+  }
+  await s.shot('beat-velocity');
+  await page.locator('.beat-rack-tools .chip', { hasText: 'Velocity' }).tap();
+  // The bass's instrument.
+  await page.locator('.beat-name', { hasText: 'Bass' }).tap();
+  await H.waitSheet();
+  await page.locator('.sheet-layer.open').last().getByText('Instrument…').tap();
+  await H.waitSheet();
+  await s.shot('beat-instrument');
+  await H.closeSheet();
   // A second pattern (a fill), then a song: Pattern 1 three times and the fill, twice.
   await page.locator('[aria-label="New pattern"]').tap();
   const rows = page.locator('.beat-row');
