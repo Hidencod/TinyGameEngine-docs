@@ -52,28 +52,13 @@
   },
   {
    "file": "src/editor/app/editorScreen.ts",
-   "label": "Export game (HTML)",
-   "text": "One file that runs in any browser"
-  },
-  {
-   "file": "src/editor/app/editorScreen.ts",
-   "label": "Export for web (itch.io)",
-   "text": "A .zip to upload as an HTML5 game"
-  },
-  {
-   "file": "src/editor/app/editorScreen.ts",
-   "label": "Export game (APK)",
-   "text": "Android app you can install and share"
+   "label": "Build",
+   "text": "Web or Android, with the scenes that go in"
   },
   {
    "file": "src/editor/app/editorScreen.ts",
    "label": "Backup project (.tge)",
    "text": "Save a copy you can import later"
-  },
-  {
-   "file": "src/editor/app/editorScreen.ts",
-   "label": "APK signing key",
-   "text": "Back up or restore the key your APKs are signed with"
   },
   {
    "file": "src/editor/app/editorScreen.ts",

@@ -1,0 +1,40 @@
+---
+title: Build
+description: The Build panel makes your game for the web or for Android, and lets you choose which scenes go in.
+---
+
+# Build
+
+<Art name="flag-small" size={85} />
+
+**☰ → Build** (on a computer **File → Build…**, `Ctrl+Shift+B`) turns your project into a game you can share. Pick a platform, choose the scenes that go in, and tap **Build**.
+
+<Side shot="build-web">
+
+| Part | What it does |
+| --- | --- |
+| **Web / Android** | The platform. Your choice is remembered with the project. |
+| **Start scene** | The scene the game opens with. It is the same start scene **Run project** uses. |
+| **Scenes in build** | One checkbox per scene. Untick a scene to leave it out of the game, for example a test level. The start scene always goes in. |
+| **Settings** | The options of the chosen platform. |
+
+</Side>
+
+## Web
+
+Makes a game that runs in any browser. **Output** has two choices:
+
+- **Single file (.html)** — one file with everything inside. It plays offline, even from a double-click. See [Web build](./export-html).
+- **Folder (.zip)** — a page plus separate files, for web hosts and **itch.io**. See [Web build](./export-html#folder).
+
+## Android
+
+Makes a signed **APK** on your phone, with your own app name, package, version, icon and orientation. See [Android build](./export-apk).
+
+## While it builds
+
+A panel shows the steps (*Player*, *Scripts*, *Files 3 / 19*, *Packing*, …). If your project has [saved tests](../editor/tests), they run first and the build stops if one fails. When it is done, a message shows the size of the game and the file is saved or shared.
+
+## Publish is separate
+
+**☰ → Publish game (link)** puts the game online with a link and does not use the Build panel. See [Publish a link](./publish-link).

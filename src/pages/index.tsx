@@ -107,7 +107,7 @@ export default function Home(): ReactNode {
           <div className={styles.rowText}>
             <h2 className={styles.h2}>Ship it as an app or a web page</h2>
             <p>Export a signed Android APK or a single HTML file, built on your device with nothing uploaded. Back the project up to GitHub and open it on another device.</p>
-            <Link className={styles.link} to="/docs/publish/export-apk">How exporting works</Link>
+            <Link className={styles.link} to="/docs/publish/build">How building works</Link>
           </div>
           <ul className={styles.outputs}>
             <li><b>.apk</b><span>Signed Android app</span></li>

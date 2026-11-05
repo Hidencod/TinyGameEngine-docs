@@ -1,31 +1,46 @@
 ---
-title: Export as HTML
-description: One self-contained file that runs your game in any browser, offline.
+title: Web build
+description: Build your game as one HTML file, or as a folder for web hosts and itch.io.
 ---
 
-# Export as HTML
+# Web build
 
 <Art name="flag-small" size={85} />
 
-**⋮ → Export game (HTML)** builds your game as **one `.html` file**: the engine, your project and all its assets packed together. It runs **offline** in any modern browser — on phones, tablets and computers.
+In the [Build panel](./build) choose **Web**. **Output** decides what you get.
 
-<Phone name="editor-project-menu" size="small" caption="☰ → Export game (HTML)" />
+## Single file {/* #single */}
 
-## What happens
+**Single file (.html)** builds your game as **one `.html` file**: the engine, your project and all its assets packed together. It runs **offline** in any modern browser — on phones, tablets and computers.
 
-1. The editor builds the file (a *Building game…* message shows).
-2. In the Android app, the **share sheet** opens: save it to Files or Google Drive, or send it to a friend by chat or email. In a browser it downloads.
+1. Tap **Build**. A panel shows the steps while the file is made.
+2. In the Android app the **share sheet** opens: save it to Files or Google Drive, or send it to a friend. In a browser it downloads.
 
 The file is named after your project, e.g. `Coin_Hunt.html`.
 
-## Playing the file
-
 - Open it in a browser (Chrome, Firefox, Safari, Edge). On phones a **Tap to play** screen appears first: it unlocks sound and enters full screen.
 - It doesn’t need the internet or Tiny Game Engine.
-- You can upload it to web game sites such as **itch.io** (as an HTML game), or to any web host.
+- It also runs in Safari on iPhone and iPad.
+
+## Folder {/* #folder */}
+
+**Folder (.zip)** builds a normal web page: `index.html`, the game’s parts, `game.json` and an `assets` folder, all in `Coin_Hunt-web.zip`. Use it for web hosts and **itch.io**, where the files can be sent compressed.
+
+:::note
+A folder needs a web address (`http://` or `https://`). Opening its `index.html` straight from the disk shows a message that says so. For a game you open from the disk, use the single file.
+:::
+
+### Upload to itch.io
+
+1. Build with **Folder (.zip)** and save the zip.
+2. On itch.io, **Create new project** and set **Kind of project** to **HTML**.
+3. **Upload files** and pick the zip. Tick **This file will be played in the browser**.
+4. Set the embed size (for a phone game, a tall size such as 480 × 800, or tick **Fullscreen button**), save, and open the page to try it.
+
+You can also upload the single `.html` file the same way: itch.io accepts a zip that holds one `index.html`.
 
 ## Tips
 
-- The file contains every asset in your project, used or not. Delete unused assets in the Assets tab to make it smaller.
-- Compressed images (JPG/WebP) and MP3/OGG sounds keep the file small.
-- For an installable Android app, use [Export as APK](./export-apk).
+- Both outputs contain every asset in your project, used or not. Delete unused assets in the Assets tab to make the game smaller, and leave test scenes out in **Scenes in build**.
+- Compressed images (JPG/WebP) and MP3/OGG sounds keep it small. A game with nothing in it is under 2 MB.
+- For an installable Android app, use [Android build](./export-apk).

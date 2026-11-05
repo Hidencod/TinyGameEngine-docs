@@ -149,13 +149,6 @@ export async function run({ page, s, H }) {
   await page.locator('.panel-back').click();
   await s.settle(600);
 
-  // --- APK export dialog --------------------------------------------------------
-  await H.menu();
-  await H.pick('Export game (APK)');
-  await s.settle(900);
-  await s.shot('apk-dialog');
-  await H.closeSheet();
-
   // --- libraries -----------------------------------------------------------------
   await H.tab('assets');
   await s.shot('assets-tab-coins');
