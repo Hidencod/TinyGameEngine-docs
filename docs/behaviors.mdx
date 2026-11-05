@@ -269,22 +269,58 @@ Events: **On reached end of curve**, **Compare curve progress**, **Set curve pro
 
 ## 🔁 Repeat along curve {/* #repeat-on-curve */}
 
-Put it **on an object with a [Curve](./world/curve)**. When the game starts it places copies of another object along the line, a set distance apart: fence posts, street lamps, trees along a road, coins on a path.
+Put it **on an object with a [Curve](./world/curve)**. It places copies of other objects along the line: fence posts, street lamps, trees along a road, coins on a path. It works like Blender's Array along a curve: you choose how many, how each copy is turned, where it sits next to the line, and what it copies.
+
+**What to copy**
 
 | Setting | Default | What it does |
 | --- | --- | --- |
 | **Object** | (pick one) | What to copy: another object of this scene, or a prefab. |
-| **Spacing** | 2 | Meters between copies, measured along the line. |
+| **Object 2 / Object 3** | (none) | More objects to copy. The copies take them **in turn**, or **at random** (the **Pick** setting appears once you choose a second object). |
+| **Start cap / End cap** | (none) | One object placed at the very start, and one at the very end, of an open line (a gate post at each end). A closed line has no ends. |
+
+**How many**
+
+| Setting | Default | What it does |
+| --- | --- | --- |
+| **Count mode** | spacing | **spacing**: a copy every *Spacing* meters. **count**: exactly *Count* copies, spread from start to end. **fit**: about every *Spacing* meters, but stretched a little so the last copy lands exactly on the end of the line. |
+| **Spacing** | 2 | Meters between copies, measured along the line (with *spacing* and *fit*). |
+| **Count** | 10 | How many copies (with *count*). |
 | **Start offset** | 0 | Meters from the start of the curve to the first copy. |
-| **Face forward** | on | Turn each copy to look along the line. |
+
+**How each copy is turned**
+
+| Setting | Default | What it does |
+| --- | --- | --- |
+| **Face forward** | on | Turn each copy to run along the line. Off = every copy keeps the turn of the original. |
 | **Upright** | on | Keep copies standing up on slopes. |
+| **Align axis** | -Z | Which side of your object points along the line. Models face different ways: if a fence piece lies across the line, try **+X** or **-X**. |
+| **Keep rotation** | on | Every copy keeps the original's own turn on top of the line's turn. Turn a post 90° in the scene and every copy is turned 90° too. |
+| **Rotate X / Y / Z** | 0 | An extra turn for every copy, in degrees, measured from the way it runs along the line. |
+| **Random rot X / Y / Z** | 0 | Each copy turns up to this many degrees more or less, a different amount each. |
+| **Flip alternate** | off | Turn every second copy around, so lamps on both sides of a road face it. |
 | **Use tilt** | on | Lean copies by the curve's **Tilt** at that spot. |
+
+**Where each copy sits**
+
+| Setting | Default | What it does |
+| --- | --- | --- |
+| **Side / Up / Along offset** | 0 | Move every copy away from the line, in meters: to its right (negative = left), up, or forward along it. |
+| **Alternate sides** | off | Every second copy goes to the other side of the line (lamps left and right). |
 | **Use scale** | on | Size copies by the curve's **Scale** at that spot. |
-| **Hide source** | on | Hide the original object, so only the copies show. |
+| **Random scale** | 0 | Each copy is bigger or smaller by up to this share: 0.2 = anything from 80% to 120%. |
+| **Seed** | 1 | Changes the random picks. The same seed always gives the same result, and changing the count does not reshuffle the copies you already have. |
 
-The copies are children of the curve object, so moving the curve moves them all. They are placed once at the start (at most 500); in scripts, `entity.behavior('repeatOnCurve').rebuild()` places them again, and `.count` says how many there are. Copies have everything the original has (collider, physics, behaviors), so use plain objects for scenery.
+**Other**
 
-The editor shows the copies too (as the object itself, or small boxes for a prefab), so you can move the curve's points and watch them follow. The original is hidden only when the game runs.
+| Setting | Default | What it does |
+| --- | --- | --- |
+| **Hide source** | on | Hide the original objects, so only the copies show. |
+| **Live** | on | While the game runs, place the copies again when the curve's points or these settings change (from a script, an event or a tween). Off = placed once at the start. |
+
+The copies are children of the curve object, so moving the curve moves them all. At most 500 copies are placed. In scripts, `entity.behavior('repeatOnCurve').rebuild()` places them again, and `.count` says how many there are. Copies have everything the original has (collider, physics, behaviors), so use plain objects for scenery.
+
+The editor shows the copies too (as the object itself, or small boxes for a prefab), with the same turns, offsets and random picks, so you can move the curve's points or change a setting and watch them follow. The original is hidden only when the game runs.
 
 ## 🏞️ Parallax {/* #parallax */}
 
