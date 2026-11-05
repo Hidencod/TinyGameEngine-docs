@@ -25,6 +25,25 @@ Anything you can see has a **Shape & look** component. Add a shape from **Object
 
 </Side>
 
+## Shape settings
+
+Under **Shape**, the **Shape settings** group changes how a shape is made. Sizes here are the shape's own, and the object's **Scale** still multiplies them. Nothing is set by default: a shape keeps its usual size and detail until you change a value, and a value you set back to the usual one is simply forgotten.
+
+| Shape | Settings |
+| --- | --- |
+| **Cube** | **Width / Height / Depth segments**: cuts across each side. Useful for bending or waving a cube with a shader. |
+| **Sphere** | **Radius**, **Width / Height segments** (fewer = a low-poly ball), **Arc** (how much of the way around), **Height arc** (90° = a half sphere). Turn on **Icosphere** for even triangles instead of rings; **Detail** says how many times they are split (0 = 20 triangles). |
+| **Plane** | **Width / Depth segments**. |
+| **Circle** | **Radius**, **Segments**, **Arc** (a pie slice). |
+| **Capsule** | **Radius**, **Length** (the straight part between the caps), **Radial / Cap segments**. |
+| **Cylinder** | **Top radius** and **Bottom radius** (make them different for a tapered pipe), **Radial / Height segments**, **Arc**, **Open ended** (no lids). |
+| **Cone** | **Radius**, **Top radius** (above 0 makes a flat-topped cone), the same segments, **Arc** and **Open ended**. |
+| **Torus** | **Radius** (of the ring), **Tube radius** (how thick), **Ring / Tube segments**, **Arc** (less than 360° is a bent pipe). |
+
+- Objects with the same settings share one shape, so many of them are still drawn together quickly. More segments cost more on a phone: keep them as low as the look allows.
+- An automatic collider follows the settings (a sphere's radius, a cylinder's two radii, a capsule's length). A torus gets a box that fits around it.
+- The settings can change while the game runs: in a script, `entity.component('mesh').radius = 2` (or `tube`, `segW`, `segH`, `arc`, `ico`, `detail`…) rebuilds the object (its collider too) at the end of the frame. Set them once when something happens, not every frame.
+
 ## Material styles
 
 | Style | Look | Speed |
