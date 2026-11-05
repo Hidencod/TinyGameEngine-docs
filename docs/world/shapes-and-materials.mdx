@@ -41,7 +41,7 @@ Under **Shape**, the **Shape settings** group changes how a shape is made. Sizes
 | **Torus** | **Radius** (of the ring), **Tube radius** (how thick), **Ring / Tube segments**, **Arc** (less than 360° is a bent pipe). |
 
 - Objects with the same settings share one shape, so many of them are still drawn together quickly. More segments cost more on a phone: keep them as low as the look allows.
-- An automatic collider follows the settings (a sphere's radius, a cylinder's two radii, a capsule's length). A torus gets a box that fits around it.
+- An automatic collider follows the settings (a sphere's radius, a cylinder's two radii, a capsule's length). Shapes with a hole or a hollow side (a torus, an open-ended cylinder or cone, a sphere or cylinder with an arc) keep it open: an object that never moves gets a collider that follows the real surface, so a ball goes through the ring and a car through the pipe. An object that moves (or a trigger) gets a ring of small pieces around the Y axis instead; a moving bowl is the one case it still fills in. Choose **Convex** on the collider when you do want the whole shape solid.
 - The settings can change while the game runs: in a script, `entity.component('mesh').radius = 2` (or `tube`, `segW`, `segH`, `arc`, `ico`, `detail`…) rebuilds the object (its collider too) at the end of the frame. Set them once when something happens, not every frame.
 
 ## Material styles
