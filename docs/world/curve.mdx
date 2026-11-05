@@ -7,7 +7,7 @@ description: A smooth path through points you drag in the viewport — for roads
 
 <Art name="island" size={110} />
 
-A **Curve** is a smooth line through a list of points. It draws nothing in the game; it is a path. Put an object on it with the [Follow curve](../behaviors#follow-curve) behavior and it travels along: a train on rails, a patrolling guard, a camera flythrough, a moving platform with a curvy route.
+A **Curve** is a smooth line through a list of points. By itself it draws nothing in the game; it is a path (it can also be [drawn as a tube, a road or a beam](#draw-it)). Put an object on it with the [Follow curve](../behaviors#follow-curve) behavior and it travels along: a train on rails, a patrolling guard, a camera flythrough, a moving platform with a curvy route.
 
 ## Add a curve
 
@@ -50,6 +50,32 @@ Tilt rolls an object around the direction it is travelling, the way a plane bank
 Between two points the tilt eases smoothly from one value to the other, so give a banked corner a tilt and the points on each side 0.
 
 Tilt only affects objects that follow the curve with **Face forward** on.
+
+## Draw it as a solid {/* #draw-it */}
+
+Give the curve object a **Shape & look** component (**Add component**) and set its **Shape** to **Along curve (tube, road)**. The curve is now drawn in the game as a solid, with the usual material, texture, shadows and glow: a pipe, a rope, a rail, a road, a path, a ribbon. This is like the bevel of a curve in Blender.
+
+| Setting | What it does |
+| --- | --- |
+| **Profile** | **Tube** is round (pipe, rope, cable). **Flat strip** is a flat band (road, path, river bank). **Beam** is a rectangle (a plank, a rail, a girder). |
+| **Radius** | (Tube) How thick it is. |
+| **Width** | (Flat strip and Beam) How wide it is, in meters. |
+| **Thickness** | (Beam) How thick it is. |
+| **Sides** | (Tube) How many flat sides make the round shape. 8 is fine for most things. |
+| **Detail** | How many pieces each stretch between two points is cut into. More looks smoother on tight bends and costs more. |
+| **Closed ends** | (Tube and Beam) Close the two ends of an open line. |
+| **Tile length** | How many meters of line one repeat of the texture covers, so a road texture keeps its size however long the road is. **0** stretches the texture once over the whole line. |
+
+The curve's points shape it:
+
+- **Scale** on a point makes it wider or thicker there (a road that widens at a junction, a rope that thins out).
+- **Tilt** banks it, so a road leans into a corner.
+
+A flat strip stays level; across a slope it keeps its width and follows the line up and down.
+
+**Colliders.** Add a **Collider** with the shape **Auto** (or leave the shape alone) and an object that never moves gets a collider that follows the real surface, so a car drives on the road and a ball rolls through the pipe. A moving object, or a trigger, gets a row of small pieces along the line instead. **Convex** wraps the whole curve in one hull.
+
+You can still put copies along the same curve with [Repeat along curve](../behaviors#repeat-on-curve), for example fence posts beside a road you drew with this.
 
 ## Events
 
