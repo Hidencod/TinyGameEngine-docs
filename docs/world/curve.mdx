@@ -7,7 +7,7 @@ description: A smooth path through points you drag in the viewport — for roads
 
 <Art name="island" size={110} />
 
-A **Curve** is a smooth line through a list of points. By itself it draws nothing in the game; it is a path (it can also be [drawn as a tube, a road or a beam](#draw-it)). Put an object on it with the [Follow curve](../behaviors#follow-curve) behavior and it travels along: a train on rails, a patrolling guard, a camera flythrough, a moving platform with a curvy route.
+A **Curve** is a smooth line through a list of points. By itself it draws nothing in the game; it is a path. It can also be [drawn as a tube, a road or a beam](#draw-it), or [bend an object's mesh](#bend) along it. Put an object on it with the [Follow curve](../behaviors#follow-curve) behavior and it travels along: a train on rails, a patrolling guard, a camera flythrough, a moving platform with a curvy route.
 
 ## Add a curve
 
@@ -17,6 +17,8 @@ A **Curve** is a smooth line through a list of points. By itself it draws nothin
 - **Tap a dot** to pick it. The move handles appear on it: drag an arrow to slide it along one axis, or a square to slide it in a plane.
 - Switch to the **Rotate** tool with a point picked to **tilt** it (below).
 - **Tap empty space** to let go of the point.
+- **Double-tap on the line** (with the curve selected) to put a new point there. The line keeps its shape.
+- **Delete** (keyboard) removes the picked point.
 
 Moving or rotating the curve object moves the whole path, so you can place a finished track anywhere.
 
@@ -26,14 +28,24 @@ Moving or rotating the curve object moves the whole path, so you can place a fin
 | --- | --- |
 | **Curve type** | *Smooth (centripetal)* is the default and never loops or overshoots at tight corners. *Catmull-Rom (tension)* adds a **Tension** slider (0–1). *Chordal* hugs the points more tightly. *Bezier (handles)* gives every point a handle you drag to shape the bend (below). |
 | **Closed** | Joins the last point back to the first, for a race track or a patrol circuit. |
-| **Points** | Each point has **X / Y / Z**, **Tilt (°)** and **Scale**. **Add point** puts a new one after the last (up to 64); 🗑 removes one (a curve keeps at least 2). |
+| **Points** | Each point has a **Position** (X Y Z) and **Tilt° · Scale**. **＋** next to a point's number puts a new point halfway to the next one, **×** removes the point (a curve keeps at least 2). **＋ Add point** adds one after the last (up to 64). **Subdivide** puts a new point in the middle of every stretch, for finer control; the line keeps its shape. |
 
 ## Bezier handles
 
-With **Curve type: Bezier (handles)**, pick a point and two cyan dots appear on a line through it: the point's **handle**. Drag a dot to bend the curve at that point. The farther the dot, the wider the bend; the line shows which way the curve passes through. Both dots move together, so the curve stays smooth.
+With **Curve type: Bezier (handles)**, pick a point and two cyan dots appear on a line through it: the point's **handle**. Drag a dot to bend the curve at that point. The farther the dot, the wider the bend; the line shows which way the curve passes through.
+
+Each point's **Handles** setting says how its two dots behave:
+
+| Handles | What it does |
+| --- | --- |
+| **Auto** | Worked out from the neighbouring points, so the line is always smooth. The default for every point. Dragging a dot switches the point to Aligned. |
+| **Aligned** | The two dots stay on one straight line, so the curve stays smooth through the point. |
+| **Free** | Each dot moves on its own: the line can turn sharply at the point. The card shows **Out** and **In**. |
+| **Sharp corner** | No handles: the line comes into the point and leaves it in a straight corner. |
 
 - **Shift + drag** (mouse) moves the dot up and down instead of over the ground.
-- The point's card has **Handle X / Y / Z** if you want numbers. **Auto handle** goes back to a handle worked out from the neighbouring points (the default for every point).
+- The point's card has **Handle** (or **Out** and **In**) X Y Z if you want numbers.
+- Inserting a point (**＋**, double-tap, **Subdivide**) splits the bend so the line does not change.
 
 ## Scale
 
@@ -53,7 +65,7 @@ Tilt only affects objects that follow the curve with **Face forward** on.
 
 ## Draw it as a solid {/* #draw-it */}
 
-Give the curve object a **Shape & look** component (**Add component**) and set its **Shape** to **Along curve (tube, road)**. The curve is now drawn in the game as a solid, with the usual material, texture, shadows and glow: a pipe, a rope, a rail, a road, a path, a ribbon. This is like the bevel of a curve in Blender.
+In the Curve card's **Geometry** group, set **Profile** to *Tube*, *Flat strip* or *Beam*. The curve object gets a **Shape & look** component with the shape **Along curve**, and the line is drawn in the game as a solid, with the usual material, texture, shadows and glow: a pipe, a rope, a rail, a road, a path, a ribbon. This is like the bevel of a curve in Blender. **None** takes the solid away again.
 
 | Setting | What it does |
 | --- | --- |
@@ -76,6 +88,30 @@ A flat strip stays level; across a slope it keeps its width and follows the line
 **Colliders.** Add a **Collider** with the shape **Auto** (or leave the shape alone) and an object that never moves gets a collider that follows the real surface, so a car drives on the road and a ball rolls through the pipe. A moving object, or a trigger, gets a row of small pieces along the line instead. **Convex** wraps the whole curve in one hull.
 
 You can still put copies along the same curve with [Repeat along curve](../behaviors#repeat-on-curve), for example fence posts beside a road you drew with this.
+
+## Bend a mesh along it {/* #bend */}
+
+A shape or a 3D model can follow the line itself, bending as it goes: a snake, a curved pipe made from a model, a rail track, a fence, a twisting bridge. This is Blender's Curve modifier.
+
+1. Select the object you want to bend (a cube, a cylinder, an imported model…).
+2. **Add component → Curve**. The curve is in the object's own space, so it starts where the object is.
+3. In the Curve card's **Geometry** group, set **Profile** to **Bend the mesh**.
+4. Drag the curve's points; the mesh follows.
+
+| Setting | What it does |
+| --- | --- |
+| **Axis** | Which side of the mesh runs along the line. **-Z** (the default) is the way objects face; pick **+X** for a model that is long from left to right. |
+| **Fit** | **Stretch to the end**: the mesh (or its copies) is stretched to reach exactly to the end of the line. **Keep length**: it keeps its own length and covers only that much of the line. **Fill with copies**: as many copies as fit, end to end, stretched a little so the last one ends at the end. |
+| **Copies** | (Stretch and Keep length) How many copies are put end to end. |
+| **Offset** | Where along the line it starts, in meters. |
+| **Gap** | Space between copies, in meters. |
+
+- The curve's points shape it as they do a drawn solid: **Scale** makes it bigger there, **Tilt** banks it.
+- The other two sides stay across the line (to its right and up), so a fence stays upright and a rail keeps its shape.
+- A cube, plane or cylinder is cut into more pieces along the bend by itself, so it bends smoothly. A model bends at its own vertices: a model with long, flat faces and few points along its length bends in steps. Model it with more cuts along that axis.
+- On an open line, a mesh longer than the line carries straight on past the end.
+- **Colliders** follow the bent shape: an object that never moves gets its real surface, a moving one gets convex pieces.
+- Animated (skinned) parts of a model and blend shapes are not bent.
 
 ## Events
 
