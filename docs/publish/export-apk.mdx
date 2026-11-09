@@ -48,8 +48,12 @@ Android only installs apps that are **signed**. An update installs over an older
   own). The key is kept on this device; the project only remembers which key it uses, so on another device import
   the same file again. **Remove** takes it off this device (the file itself is not changed). Only RSA keys work.
 
+<Side shot="build-keystore">
+
 Under the choice you see the key's **SHA-1** and **SHA-256** fingerprints with **Copy** buttons — Google Play Console
 and Google Cloud ask for them.
+
+</Side>
 
 :::warning[Back up your key]
 If you reinstall Tiny Game Engine, switch phones or clear its data, the key is gone and your next APK can’t update the old one (players would have to uninstall first). Back it up once:
@@ -69,6 +73,13 @@ The menu shows your key’s short fingerprint, so you can check two phones use t
 APKs are for sharing and installing directly. Google Play needs an **App Bundle (.aab)**: set **Format** to
 **App Bundle**. App Bundles are part of **Pro** (a monthly or yearly subscription under **Account**); the bundle is
 made out to your app on our server and signed **on your device** with your keystore — your key never leaves it.
+
+<Side shot="build-account">
+
+**Account** shows your Google account and plan. **Monthly** or **Yearly** opens the checkout; after paying tap
+**Refresh** and the plan turns **Pro**. **Manage** (Pro) changes or cancels the subscription.
+
+</Side>
 
 1. Import your Play **upload key** under **Keystore** (or use the editor key and back it up — Play needs every update
    signed with the same upload key).

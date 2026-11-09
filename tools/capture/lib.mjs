@@ -153,6 +153,12 @@ export function editorHelpers(page, s) {
     async home() {
       await page.goto(TGE + '/');
       await page.waitForSelector('.hm', { timeout: 30000 });
+      // Signed out, the editor starts on the sign-in screen: continue as a guest (opts.keepWelcome leaves it up).
+      await page.waitForSelector('.wl-layer', { timeout: 4000 }).catch(() => {});
+      if (!H.keepWelcome && await page.locator('.wl-layer').count()) {
+        await page.getByRole('button', { name: 'Try the engine' }).click();
+        await page.waitForSelector('.wl-layer', { state: 'detached' });
+      }
       await s.settle(800);
       // A first visit lands on What's new: go to Projects, where the scenarios start.
       if (!(await page.getByRole('button', { name: /New project/ }).count())) {
