@@ -101,7 +101,10 @@ const config: Config = {
         {
           title: 'More',
           items: [
-            {label: 'Privacy policy', href: 'https://hidencod.github.io/tge-assets/privacy/'},
+            {label: 'Pricing', href: 'https://jeevagames.com/engine'},
+            {label: 'Privacy policy', href: 'https://jeevagames.com/engine/privacy'},
+            {label: 'Terms of service', href: 'https://jeevagames.com/engine/terms'},
+            {label: 'Refund policy', href: 'https://jeevagames.com/engine/refunds'},
             {label: 'Contact', href: 'mailto:contact@jeevagames.com'},
             {label: 'Free assets by Kenney', href: 'https://kenney.nl'},
           ],
