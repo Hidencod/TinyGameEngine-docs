@@ -1,6 +1,6 @@
 ---
 title: Android build
-description: Build a signed Android APK on your phone, set its name, package, version, icon and orientation, and keep your signing key safe.
+description: Build a signed Android APK or a Google Play App Bundle, set its name, package, version, icon and orientation, and sign it with your own keystore.
 ---
 
 # Android build
@@ -13,16 +13,18 @@ In the [Build panel](./build) (**☰ → Build**) choose **Android**. It turns y
 
 <Side shot="apk-dialog">
 
-Fill in the **Settings** and tap **Build**:
+Android builds need you to be [signed in](./build#accounts). Fill in the **Settings** and tap **Build**:
 
 | Field | What it does |
 | --- | --- |
+| **Format** | **APK** — install it directly or share it. **App Bundle (.aab)** — for [Google Play](#google-play) (Pro). |
+| **Account** | Your Google account and plan (**Free** or **Pro**), **Monthly** / **Yearly** to subscribe, **Manage**, **Sign out**. |
 | **App name** | Shown under the icon on the home screen. |
 | **Package name** | The app’s unique id, like `com.yourname.coinhunt`. **Keep it the same** so a new export installs as an **update**; changing it makes a separate app. **Use default** restores the suggested one. |
 | **Version** | Shown in Android settings (1.0, 1.1…). The internal build number goes up automatically, so every export can be installed over the previous one. |
 | **App icon** | An image from your assets. A square image works best; it is used for the normal, round and adaptive icons. |
 | **Screen orientation** | Landscape, Portrait or Any. |
-| **Signing key** | **Key…** opens the [signing key](#signing-key) menu. |
+| **Keystore** | Which key signs the app: **Editor key** or a keystore you imported. See [Signing key](#signing-key). |
 
 Your choices are remembered for the next export.
 
@@ -38,13 +40,22 @@ After a few seconds the **share sheet** opens with the `.apk` file: save it, or 
 
 ## Signing key {/* #signing-key */}
 
-Android only installs apps that are **signed**. The first time you export, Tiny Game Engine creates a **signing key** on your phone and signs every APK with it. An update installs over an older version **only if it has the same package name and the same key**.
+Android only installs apps that are **signed**. An update installs over an older version **only if it has the same package name and the same key**. **Keystore** chooses the key, per project:
+
+- **Editor key** — Tiny Game Engine makes one the first time you build and keeps it on this device.
+- **Import keystore…** — your own `.jks`, `.keystore`, `.p12` or `.pfx` file, for example the **upload key** you
+  made in Android Studio or with `keytool`. Pick the file and type its password (and the key password, if it has its
+  own). The key is kept on this device; the project only remembers which key it uses, so on another device import
+  the same file again. **Remove** takes it off this device (the file itself is not changed). Only RSA keys work.
+
+Under the choice you see the key's **SHA-1** and **SHA-256** fingerprints with **Copy** buttons — Google Play Console
+and Google Cloud ask for them.
 
 :::warning[Back up your key]
 If you reinstall Tiny Game Engine, switch phones or clear its data, the key is gone and your next APK can’t update the old one (players would have to uninstall first). Back it up once:
 :::
 
-**Key…** in the Android settings:
+**Key…** (next to **Editor key**):
 
 | Item | What it does |
 | --- | --- |
@@ -53,6 +64,13 @@ If you reinstall Tiny Game Engine, switch phones or clear its data, the key is g
 
 The menu shows your key’s short fingerprint, so you can check two phones use the same key.
 
-## Google Play
+## Google Play {/* #google-play */}
 
-APKs are for sharing and installing directly. Google Play needs an **App Bundle (AAB)** instead, which Tiny Game Engine does not export yet.
+APKs are for sharing and installing directly. Google Play needs an **App Bundle (.aab)**: set **Format** to
+**App Bundle**. App Bundles are part of **Pro** (a monthly or yearly subscription under **Account**); the bundle is
+made out to your app on our server and signed **on your device** with your keystore — your key never leaves it.
+
+1. Import your Play **upload key** under **Keystore** (or use the editor key and back it up — Play needs every update
+   signed with the same upload key).
+2. **Build** and upload the `.aab` in Play Console (**Test and release → Production / Testing → Create new release**).
+3. Keep the **Package name** the same for every update; the version number goes up by itself.
