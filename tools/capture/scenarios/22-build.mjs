@@ -50,5 +50,13 @@ export async function run({ page, s, H }) {
   await s.settle(900);
   await panel.evaluate((el) => { el.scrollTop = 0; });
   await s.shot('build-account', { clip: page.locator('.build-account'), pad: 40 });
+
+  // Build on Free → the Pro page.
+  await page.locator('.build-sheet .btn.primary', { hasText: 'Build' }).click();
+  await page.waitForSelector('.pw-plans');
+  await s.settle(900);
+  await s.shot('paywall', { clip: page.locator('.pw-sheet'), pad: 0 });
+  await page.locator('.pw-sheet .sheet-x').click();
+  await s.settle(400);
   await H.closeSheet();
 }

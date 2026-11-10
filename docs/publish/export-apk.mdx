@@ -18,7 +18,7 @@ Android builds need you to be [signed in](./build#accounts). Fill in the **Setti
 | Field | What it does |
 | --- | --- |
 | **Format** | **APK** — install it directly or share it. **App Bundle (.aab)** — for [Google Play](#google-play) (Pro). |
-| **Account** | Your Google account and plan (**Free** or **Pro**), **Monthly** / **Yearly** to subscribe, **Manage**, **Sign out**. |
+| **Account** | Your Google account and plan (**Free** or **Pro**), **Upgrade** (opens [Pro](#pro)) or **Manage**, **Sign out**. |
 | **App name** | Shown under the icon on the home screen. |
 | **Package name** | The app’s unique id, like `com.yourname.coinhunt`. **Keep it the same** so a new export installs as an **update**; changing it makes a separate app. **Use default** restores the suggested one. |
 | **Version** | Shown in Android settings (1.0, 1.1…). The internal build number goes up automatically, so every export can be installed over the previous one. |
@@ -76,8 +76,24 @@ made out to your app on our server and signed **on your device** with your keyst
 
 <Side shot="build-account">
 
-**Account** shows your Google account and plan. **Monthly** or **Yearly** opens the checkout; after paying tap
-**Refresh** and the plan turns **Pro**. **Manage** (Pro) changes or cancels the subscription.
+**Account** shows your Google account and plan. **Upgrade** opens the Pro page; **Manage** (Pro) changes or cancels the
+subscription.
+
+</Side>
+
+### Pro {/* #pro */}
+
+<Side shot="paywall">
+
+**Build** with **App Bundle** on a Free account opens the Pro page (also **Account → Upgrade**, and **Home → your
+email → Upgrade to Pro**). Pick **Monthly** ($4) or **Yearly** ($29, about 40% less), then **Upgrade to Pro**:
+
+- **On the web** the checkout opens in a new tab. Pay there and come back: the page notices the payment by itself,
+  shows **You're Pro**, and **Continue** carries on with the build.
+- **In the Android app** Google Play's purchase sheet opens.
+
+Cancel any time; Pro lasts until the end of the period you paid for. A full refund within 14 days of the first
+payment — see [prices, terms and refunds](https://jeevagames.com/engine).
 
 </Side>
 
