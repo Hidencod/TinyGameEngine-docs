@@ -1,57 +1,60 @@
-/** Home screen, templates, tutorials picker, project cards and menus, help menu. */
+/** Home screen: first start, templates page, Continue building + Recent projects, All projects, project menu, Help. */
 export async function run({ page, s, H }) {
+  // The editor reopens on a reload, so leave a project the way people do: ☰ → Close project.
+  const backHome = async () => {
+    await H.menu();
+    await page.locator('.drawer-close').click();
+    await page.locator('.hm').waitFor();
+    await s.settle(800);
+  };
   await H.home();
   await s.shot('home-empty');
-  await s.shot('home-empty-annotated', {
-    hl: [
-      { target: page.getByRole('button', { name: /New project/ }), label: 1 },
-      { target: page.getByRole('button', { name: /Import .tge/ }), label: 2 },
-      { target: page.locator('.learn-card'), label: 3 },
-      { target: page.locator('.home-help'), label: 4 },
-    ],
-  });
 
-  await page.locator('.home-help').click();
+  await page.locator('.hm-nav button.help').click();
   await H.waitSheet();
   await s.shot('help-menu');
   await H.closeSheet();
 
-  await page.locator('.learn-card').click();
-  await H.waitSheet();
-  await s.shot('tutorials-picker');
-  await H.closeSheet();
-
-  await page.getByRole('button', { name: /New project/ }).click();
-  await H.waitSheet();
+  // New project opens the templates page.
+  await page.getByRole('button', { name: /New project/ }).first().click();
+  await page.locator('.hm-card.template').first().waitFor();
   await s.settle(1200);
   await s.shot('templates-picker');
-  await H.sheet().locator('.sheet-body').evaluate((el) => { el.scrollTop = el.scrollHeight; });
+  await page.locator('.hm-main').evaluate((el) => { el.scrollTop = el.scrollHeight; });
   await s.settle(600);
   await s.shot('templates-picker-end');
-  await H.pick('Roll-a-ball');
+  await page.locator('.hm-card.template').filter({ has: page.locator('.hm-name', { hasText: /^Roll-a-ball/ }) }).first().click();
   await page.locator('.prompt-input').waitFor();
   await s.shot('new-project-name');
   await H.prompt('Coin Hunt');
-  await page.waitForSelector('.editor');
+  await page.waitForSelector('.editor', { timeout: 30000 });
   await s.settle(2500);
-  await page.getByRole('button', { name: 'Back to projects' }).click();
-  await s.settle(800);
 
-  await page.getByRole('button', { name: /New project/ }).click();
-  await H.waitSheet();
-  await H.pick('3D Platformer');
-  await H.prompt('Jump Quest');
-  await page.waitForSelector('.editor');
-  await s.settle(2500);
-  await page.getByRole('button', { name: 'Back to projects' }).click();
-  await s.settle(800);
+  for (const [template, name] of [['Hill explorer', 'Gem Hills'], ['3D Platformer', 'Jump Quest']]) {
+    await backHome();
+    await H.newProject(template, name);
+  }
+  await backHome();
+  await page.locator('.hm-continue').waitFor();
+  await s.settle(1200);
 
-  await s.shot('home-projects');
-  await s.shot('home-project-card', { hl: [{ target: page.locator('.project-card').first(), label: 1 }, { target: page.locator('.project-card .icon-btn').first(), label: 2 }] });
-  await page.locator('.project-card .icon-btn').first().click();
+  await s.shot('home-projects', {
+    hl: [
+      { target: page.locator('.hm-continue'), label: 1 },
+      { target: page.locator('.hm-section .hm-card').first(), label: 2 },
+      { target: page.locator('.hm-link', { hasText: 'See all' }), label: 3 },
+      { target: page.locator('.hm-account'), label: 4 },
+    ],
+  });
+
+  await page.locator('.hm-section .hm-more').first().click();
   await H.waitSheet();
   await s.shot('project-menu');
   await H.pick('Rename');
   await s.shot('project-rename');
-  await H.closeSheet();
+  await H.closeAllSheets();
+
+  await page.locator('.hm-link', { hasText: 'See all' }).click();
+  await s.settle(800);
+  await s.shot('home-all-projects');
 }

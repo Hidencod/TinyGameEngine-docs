@@ -7,16 +7,11 @@ description: Create, open, rename, duplicate, back up, import and delete project
 
 <Art name="sprout-block" size={90} />
 
-The home screen lists your projects and is where you start new ones.
+The home screen lists your projects and is where you start new ones. The bar at the bottom (a menu on the left on a computer) has **Projects**, **Learn** (the tutorials), **What's new**, **Help** and **Profile**.
 
-<Side shot="home-empty-annotated">
+<Side shot="home-empty">
 
-<Legend items={[
-  <><b>＋ New project</b> — start from a template.</>,
-  <><b>⬇ Import .tge</b> — open a project backup file.</>,
-  <><b>New here? Make your first game</b> — the guided tutorials.</>,
-  <><b>?</b> — Help & feedback.</>,
-]} />
+The first time, there are three ways to start: **New project**, **Import from Git** and **Learn**.
 
 </Side>
 
@@ -24,7 +19,7 @@ The home screen lists your projects and is where you start new ones.
 
 <Step n={1} title="Tap ＋ New project">
 
-The template picker opens. Every template is a complete, playable game (except *Empty 3D scene*). Scroll to see all nine.
+The template page opens. Every template is a complete, playable game (except *Empty 3D scene*). Scroll to see them all.
 
 <Row>
   <Phone name="templates-picker" caption="Choose a template" />
@@ -43,7 +38,7 @@ Type a name and tap **OK**. You can rename it later.
 
 <Step n={3} title="Start building">
 
-The [editor](../editor/overview) opens with your new project. Tap **←** at the top left to come back to the home screen.
+The [editor](../editor/overview) opens with your new project. To come back here, open **☰** and tap **Close project**.
 
 </Step>
 
@@ -51,16 +46,28 @@ See [Templates](../templates) for what each template contains and how it works.
 
 ## Your projects
 
-<Side shot="home-project-card">
-
-Each card shows the project name, when it was last changed, how many scenes and objects it has.
+<Side shot="home-projects">
 
 <Legend items={[
-  <>Tap the card to <b>open</b> the project.</>,
-  <>Tap <b>⋮</b> for the project menu.</>,
+  <><b>Continue building</b> — the project you changed last. Tap it to carry on.</>,
+  <><b>Recent projects</b> — the next four. Tap a card to open it, <b>☆</b> to add it to Favorites, <b>⋮</b> for the project menu.</>,
+  <><b>See all</b> — every project, with search and filters.</>,
+  <><b>Profile</b> — your account and plan (<b>Free</b> or <b>Pro</b>). See [Build](../publish/build).</>,
 ]} />
 
-The most recently changed project is at the top.
+</Side>
+
+### All projects
+
+<Side shot="home-all-projects">
+
+**See all** lists every project, most recently changed first.
+
+- **Search** by name.
+- **Grid / list** switches the view.
+- **All**, **Recent** and **Favorites** filter the list; **＋** makes a group of your own (*Move to group* in the project menu puts a project in it; hold a group to rename or delete it).
+
+Tap **←** or **Projects** to go back.
 
 </Side>
 
@@ -72,6 +79,7 @@ The most recently changed project is at the top.
 | --- | --- |
 | **Open** | Opens the project in the editor. |
 | **Rename** | Changes the project name. |
+| **Move to group** | Puts the project in one of your groups (see *All projects*). |
 | **Duplicate** | Makes a full copy (scenes, assets, events). Great before trying something risky. |
 | **Backup (.tge)** | Saves the whole project as one `.tge` file you can keep or share. See [Backup](../publish/backup). |
 | **Delete** | Deletes the project from this phone **forever** (asks first). |
@@ -80,16 +88,18 @@ The most recently changed project is at the top.
 
 ## Import a project
 
-Tap **⬇ Import .tge** and choose a `.tge` file (a backup made on this or another phone). It is added as a **new** project — it never overwrites one you already have.
+Tap **⬇** (next to *Import from Git*) and choose a `.tge` file (a backup made on this or another phone). It is added as a **new** project — it never overwrites one you already have.
 
 ## Help & feedback
 
 <Side shot="help-menu">
 
-Tap **?** at the top right (also in the editor’s **☰** sidebar, under *Help*).
+Tap **Help** in the bar (also in the editor’s **☰** sidebar: *Help & feedback*).
 
 | Item | What it does |
 | --- | --- |
+| **Guide & documentation** | Opens this guide. |
+| **Use it on your computer** | The web address of the editor (Android app only). |
 | **Send feedback** | Opens your email app with a message to the developer. Ideas and things that confused you are very welcome. |
 | **Report a problem** | Same, and attaches the app’s recent error log to help fix the bug. |
 | **Usage statistics** | Turns anonymous statistics on or off (Android app only). |

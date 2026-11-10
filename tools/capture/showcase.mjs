@@ -126,7 +126,7 @@ async function streetRacerShots({ page, shot, tge, module }) {
   await page.goto(TGE + '/', { timeout: 120000 });
   await page.waitForSelector('.hm', { timeout: 30000 });
   await importTge(page, tge);
-  await page.locator('.hm-card', { hasText: 'Street Racer' }).first().click({ timeout: 60000 });
+  await page.locator('.hm-card, .hm-continue', { hasText: 'Street Racer' }).first().click({ timeout: 60000 });
   await page.waitForSelector('.editor.desktop', { timeout: 60000 });
   await page.waitForTimeout(6000);
   await shot('editor');
@@ -176,7 +176,7 @@ async function lootRoomShots({ page, shot, tge, module }) {
   await page.goto(TGE + '/', { timeout: 120000 });
   await page.waitForSelector('.hm', { timeout: 30000 });
   await importTge(page, tge);
-  await page.locator('.hm-card', { hasText: 'Loot Room' }).first().click({ timeout: 60000 });
+  await page.locator('.hm-card, .hm-continue', { hasText: 'Loot Room' }).first().click({ timeout: 60000 });
   await page.waitForSelector('.editor.desktop', { timeout: 60000 });
   await page.waitForTimeout(5000);
   await shot('editor');
@@ -223,7 +223,7 @@ async function fireflyGroveShots({ page, shot, tge, module }) {
   await page.goto(TGE + '/', { timeout: 120000 });
   await page.waitForSelector('.hm', { timeout: 30000 });
   await importTge(page, tge);
-  await page.locator('.hm-card', { hasText: 'Firefly Grove' }).first().click({ timeout: 60000 });
+  await page.locator('.hm-card, .hm-continue', { hasText: 'Firefly Grove' }).first().click({ timeout: 60000 });
   await page.waitForSelector('.editor.desktop', { timeout: 60000 });
   await page.waitForTimeout(5000);
   await shot('editor');
@@ -269,7 +269,7 @@ async function crystalVaultShots({ page, shot, tge, module }) {
   await page.goto(TGE + '/', { timeout: 120000 });
   await page.waitForSelector('.hm', { timeout: 30000 });
   await importTge(page, tge);
-  await page.locator('.hm-card', { hasText: 'Crystal Vault' }).first().click({ timeout: 60000 });
+  await page.locator('.hm-card, .hm-continue', { hasText: 'Crystal Vault' }).first().click({ timeout: 60000 });
   await page.waitForSelector('.editor.desktop', { timeout: 60000 });
   await page.waitForTimeout(5000);
   await shot('editor');
@@ -356,7 +356,7 @@ async function holeRushShots({ page, shot, tge, module }) {
   await page.goto(TGE + '/', { timeout: 120000 });
   await page.waitForSelector('.hm', { timeout: 30000 });
   await importTge(page, tge);
-  await page.locator('.hm-card', { hasText: 'Hungry Hole' }).first().click({ timeout: 60000 });
+  await page.locator('.hm-card, .hm-continue', { hasText: 'Hungry Hole' }).first().click({ timeout: 60000 });
   await page.waitForSelector('.editor.desktop', { timeout: 60000 });
   await page.waitForTimeout(6000);
   await shot('editor');
