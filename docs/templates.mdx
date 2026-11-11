@@ -19,6 +19,7 @@ Start a project from a template with **＋ New project** on the home screen. Eve
   <Card to="#platformer2d" img="/img/templates/platformer2d.webp" title="🟦 2D Platformer">Side view, sprites, tilemap.</Card>
   <Card to="#runner" img="/img/templates/runner.webp" title="🏁 Endless runner">Swipe lanes, jump, high score.</Card>
   <Card to="#shooter" img="/img/templates/shooter.webp" title="🎯 Arena shooter">Waves, health, auto-aim.</Card>
+  <Card to="#dungeon" img="/img/templates/dungeon.webp" title="🗡️ Dungeon RPG">Sword, orcs, a key and a gate.</Card>
   <Card to="#explorer" img="/img/templates/explorer.webp" title="⛰️ Hill explorer">Terrain, gems, a hunter.</Card>
   <Card to="#firstperson" img="/img/templates/explorer.webp" title="👁️ First person">Walk and look, collect coins.</Card>
   <Card to="#racing" img="/img/templates/racing.webp" title="🏎️ Kart racing">3 laps, checkpoints, best lap.</Card>
@@ -65,6 +66,14 @@ The hero runs forward by itself. **Swipe** left/right (or ←/→) to change lan
 Dodge waves of slimes with the joystick while your hero automatically shoots the **nearest** one. Slimes take 2 hits and brutes 5, with a health bar over each one once it's hit; you have 3 lives. Enemies walk around the rocks to reach you. Waves grow over time — survive as long as you can.
 
 **Learn:** *Pick nearest*, *Look at*, *Spawn object* (bullets), the Health behavior (*Damage*, *On hurt*, *On death*, knockback), *Repeat*, the Follow target behavior with *Pathfinding*, a lives bar, best-score saving.
+
+## 🗡️ Dungeon RPG {/* #dungeon */}
+
+A top-down dungeon with two rooms, built from Kenney's Mini Dungeon models. Walk with the joystick and swing your sword with ⚔ (Space): orcs notice you within 8 m and chase you, take 3 hits each and hurt you when they touch you. Collect coins, drink potions to heal, find the key in the far corner and leave through the gate in the north wall.
+
+**Learn:** a touch-control button (*On button pressed*), *Play animation* (the sword swing, die), the Health behavior on both sides (*Damage*, *Heal*, *On hurt*, *On death*), the Follow target behavior with *Pathfinding* turned on and off by distance (*Set behavior enabled*), pickups with trigger colliders, a key variable that opens the gate (*Else*), a health bar, start / game over / win screens.
+
+The AI assistant starts from this kit when you ask it for an RPG in a new project.
 
 ## ⛰️ Hill explorer {/* #explorer */}
 

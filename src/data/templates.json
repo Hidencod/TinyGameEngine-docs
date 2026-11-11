@@ -42,6 +42,12 @@
     "icon": "🎯"
   },
   {
+    "id": "dungeon",
+    "name": "Dungeon RPG",
+    "description": "Swing your sword at the orcs, grab coins and potions, find the key and escape through the gate.",
+    "icon": "🗡️"
+  },
+  {
     "id": "explorer",
     "name": "Hill explorer",
     "description": "Find the gems on rolling hills while a hunter chases you around the trees.",
