@@ -1175,6 +1175,34 @@
           "doc": "Load a saved value."
         },
         {
+          "name": "saveGame",
+          "kind": "method",
+          "sig": "(slot?)",
+          "type": "boolean",
+          "doc": "Save the whole game in a named slot on the device: the scene, every variable and every object as it is now (position, variables, health, text, animation). game.saveGame(\"mysave\"); false when storage is full. Scripts hear onGameSaved(slot)."
+        },
+        {
+          "name": "loadGame",
+          "kind": "method",
+          "sig": "(slot?)",
+          "type": "boolean",
+          "doc": "Bring a saved game back after this tick: the saved scene is rebuilt as it was. Its start() / On start of scene do not run again; onGameLoaded(slot) and \"On game loaded\" do, so set up there what the save does not hold (music, script locals). False when nothing is saved there (\"loadFailed\")."
+        },
+        {
+          "name": "hasSaveGame",
+          "kind": "method",
+          "sig": "(slot?)",
+          "type": "boolean",
+          "doc": "Is there a saved game in the slot? Show a Continue button when there is."
+        },
+        {
+          "name": "deleteSaveGame",
+          "kind": "method",
+          "sig": "(slot?)",
+          "type": "void",
+          "doc": "Remove a saved game from the device."
+        },
+        {
           "name": "table",
           "kind": "method",
           "sig": "(name)",
@@ -2430,6 +2458,16 @@
       "name": "onDestroy",
       "args": "",
       "doc": "This entity is about to be destroyed."
+    },
+    {
+      "name": "onGameSaved",
+      "args": "slot",
+      "doc": "The game was saved in a slot (game.saveGame / the Save game block): show a \"Saved\" message."
+    },
+    {
+      "name": "onGameLoaded",
+      "args": "slot",
+      "doc": "A saved game came back. start() has run on the rebuilt scene; the object's variables and position are the saved ones, so read them here. What the save does not hold (the music, a script's own lets) is set up here."
     }
   ],
   "helpers": [

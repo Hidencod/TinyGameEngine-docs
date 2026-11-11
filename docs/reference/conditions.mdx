@@ -18,7 +18,7 @@ Conditions are the **WHEN / IF** part of an event. All conditions of an event mu
 - Most other conditions can be **inverted** (NOT) from the condition’s menu.
 :::
 
-There are **110 conditions**, grouped by category as in the condition picker.
+There are **114 conditions**, grouped by category as in the condition picker.
 
 [⚙️ System](#system) · [🔢 Variables](#variables) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🎬 Timeline](#timeline) · [🌐 Language](#language) · [🏆 Services](#services) · [🔗 Web](#web) · [👥 Multiplayer](#multiplayer) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🖼️ UI](#ui) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎚️ Graphics](#graphics)
 
@@ -122,6 +122,58 @@ True if the event group is active.
 | Parameter | Type | Default | Notes |
 | --- | --- | --- | --- |
 | Group | Event group |  |  |
+
+### Has saved game {/* #system-hassavegame */}
+
+<span class="tge-ace-display">Slot ‹Slot› has a saved game</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `system.hasSaveGame` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Slot | Text | `Save 1` |  |
+
+### On game saved {/* #system-ongamesaved */}
+
+<span class="tge-ace-display">On game saved ‹Slot (empty: any)›</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `system.onGameSaved` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Slot (empty: any) | Text |  | *Optional.* |
+
+### On game loaded {/* #system-ongameloaded */}
+
+<span class="tge-ace-display">On game loaded ‹Slot (empty: any)›</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `system.onGameLoaded` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Slot (empty: any) | Text |  | *Optional.* |
+
+### On load failed {/* #system-onloadfailed */}
+
+<span class="tge-ace-display">On load failed ‹Slot (empty: any)›</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+
+
+- **Where:** Found under **System** in the picker.
+- **ID:** `system.onLoadFailed` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Slot (empty: any) | Text |  | *Optional.* |
 
 ## 🔢 Variables {/* #variables */}
 

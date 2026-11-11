@@ -68,6 +68,8 @@ Define any of these; the engine calls them. `function update(dt)` and `export fu
 | `onClick()` | This UI button was tapped (game scripts get `onClick(button)` for every button) | ✔ | ✔ |
 | `onArrived()` | This object reached the point of its `entity.moveTo()` (game scripts get `onArrived(object)` for every object) | ✔ | ✔ |
 | `onDestroy()` | This object is about to be removed | ✔ | |
+| `onGameSaved(slot)` | The game was saved in a slot (`game.saveGame`, the *Save game* block) | ✔ | ✔ |
+| `onGameLoaded(slot)` | A saved game came back: `start()` has run on the rebuilt scene and the object's variables and position are the saved ones. Set up here what the save does not hold (see [save slots](variables#save-slots)) | ✔ | ✔ |
 
 Variables declared at the top of a script keep their values between frames (one set per object for object scripts):
 
@@ -206,6 +208,8 @@ const bag = game.load('bag');          // plain objects: Object.assign(new Item(
 ```
 
 Event sheets see such a variable as its JSON text.
+
+To keep the **whole game** rather than one value, use a [save slot](variables#save-slots): `game.saveGame('mysave')` and `game.loadGame('mysave')` store and rebuild the scene with every object and variable; `game.hasSaveGame('mysave')` tells whether a Continue button should show.
 
 ## Pick objects {/* #picking */}
 

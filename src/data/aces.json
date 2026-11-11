@@ -2195,6 +2195,216 @@
       ]
     },
     {
+      "id": "system.saveGame",
+      "kind": "action",
+      "category": "System",
+      "label": "Save game",
+      "hint": "Keep the whole game in a slot: scene, variables, every object",
+      "display": "Save game to slot {slot}",
+      "displayNoObject": null,
+      "icon": "💾",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "slot",
+          "label": "Slot",
+          "type": "string",
+          "options": null,
+          "default": "Save 1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.loadGame",
+      "kind": "action",
+      "category": "System",
+      "label": "Load game",
+      "hint": "Bring a saved game back after this tick",
+      "display": "Load game from slot {slot}",
+      "displayNoObject": null,
+      "icon": "📂",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "slot",
+          "label": "Slot",
+          "type": "string",
+          "options": null,
+          "default": "Save 1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.deleteSaveGame",
+      "kind": "action",
+      "category": "System",
+      "label": "Delete saved game",
+      "hint": "Remove a slot from the device",
+      "display": "Delete saved game in slot {slot}",
+      "displayNoObject": null,
+      "icon": "🗑️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "slot",
+          "label": "Slot",
+          "type": "string",
+          "options": null,
+          "default": "Save 1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.hasSaveGame",
+      "kind": "condition",
+      "category": "System",
+      "label": "Has saved game",
+      "hint": "A slot holds a saved game (show a Continue button)",
+      "display": "Slot {slot} has a saved game",
+      "displayNoObject": null,
+      "icon": "💾",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "slot",
+          "label": "Slot",
+          "type": "string",
+          "options": null,
+          "default": "Save 1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.onGameSaved",
+      "kind": "condition",
+      "category": "System",
+      "label": "On game saved",
+      "hint": "After Save game wrote the slot",
+      "display": "On game saved {slot}",
+      "displayNoObject": "On game saved",
+      "icon": "💾",
+      "description": "",
+      "isTrigger": true,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "slot",
+          "label": "Slot (empty: any)",
+          "type": "string",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.onGameLoaded",
+      "kind": "condition",
+      "category": "System",
+      "label": "On game loaded",
+      "hint": "The saved game is back (runs instead of On start of scene)",
+      "display": "On game loaded {slot}",
+      "displayNoObject": null,
+      "icon": "📂",
+      "description": "",
+      "isTrigger": true,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "slot",
+          "label": "Slot (empty: any)",
+          "type": "string",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.onLoadFailed",
+      "kind": "condition",
+      "category": "System",
+      "label": "On load failed",
+      "hint": "Load game found nothing in the slot",
+      "display": "On load failed {slot}",
+      "displayNoObject": null,
+      "icon": "⚠️",
+      "description": "",
+      "isTrigger": true,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "slot",
+          "label": "Slot (empty: any)",
+          "type": "string",
+          "options": null,
+          "default": "",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "system.setGroupActive",
       "kind": "action",
       "category": "System",

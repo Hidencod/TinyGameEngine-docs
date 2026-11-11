@@ -52,6 +52,34 @@ Example — best score:
 
 Scripts: `game.save('best', 10)`, `game.load('best')`.
 
+## Saving the whole game {/* #save-slots */}
+
+Save value keeps one value. A **save slot** keeps the whole game, so the player can stop in the middle of a level and carry on later, like Construct's *Save game to slot*:
+
+- **Save game** `slot` — writes the scene that is open, every global and scene variable, and every object as it is now: where it is, its instance variables (health among them), its text, slider value, colour, the animation it plays and how fast it moves. Objects destroyed since the scene started are left out; objects created while playing are in. The event sheet's static variables and running timers are kept too.
+- **Load game** `slot` — brings it back. The current scene ends and the saved one is rebuilt from the save, after the tick. **On start of scene does not run again**; **On game loaded** does.
+- **Has saved game** `slot` — true when the slot holds a save: show a *Continue* button.
+- **Delete saved game** `slot` — removes it from the device.
+- **On game saved**, **On game loaded**, **On load failed** — triggers; leave their *Slot* empty to hear about every slot. *On load failed* fires when nothing is saved there (or the scene it was saved in has been deleted from the game), and the game goes on unchanged.
+
+Slot names are free text (`mysave`, `Slot 1`); each game's saves are kept apart on the device.
+
+Example — a pause menu with Save and Continue:
+
+| Conditions | Actions |
+| --- | --- |
+| ⚡ On clicked `SaveButton` | Save game to slot `mysave` |
+| ⚡ On game saved | Set text of `Toast` to `"Saved"` |
+| ⚡ On clicked `ContinueButton` | Load game from slot `mysave` |
+| ⚡ On start of scene · Slot `mysave` has a saved game | Show `ContinueButton` |
+| ⚡ On game loaded | Play music `Level` |
+
+**What a save does not hold:** sounds and music playing, particles in the air, tweens and timelines half-way, a *Wait* that was counting down, and the local `let`s of code scripts. Start those again in *On game loaded* (the music that was playing comes back by itself unless the event plays another). A script reads its object's variables in `onGameLoaded(slot)` to pick up where it was.
+
+A save is as big as the scene's objects; a very large scene (big terrains, thousands of tiles) may not fit the device's storage, and *Save game* then reports it in the console and returns without saving.
+
+Scripts: `game.saveGame('mysave')`, `game.loadGame('mysave')`, `game.hasSaveGame('mysave')`, `game.deleteSaveGame('mysave')`; hooks `onGameSaved(slot)`, `onGameLoaded(slot)`; events `gameSaved`, `gameLoaded`, `loadFailed` for `game.on`.
+
 ## Names
 
 Variable names use letters, numbers and `_`, and can’t start with a number. They are case-sensitive: `score` and `Score` are different.

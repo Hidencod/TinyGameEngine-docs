@@ -46,6 +46,8 @@ Define any of these in a script; the engine calls them.
 | `onArrived()` | It reached the point of entity.moveTo() (or got as close as it could). | ✔ |  |
 | `onCurveEnd()` | This entity (with Follow curve) reached the end of its curve: each time round when it loops, each end when it ping-pongs. | ✔ |  |
 | `onDestroy()` | This entity is about to be destroyed. | ✔ |  |
+| `onGameSaved(slot)` | The game was saved in a slot (game.saveGame / the Save game block): show a "Saved" message. | ✔ |  |
+| `onGameLoaded(slot)` | A saved game came back. start() has run on the rebuilt scene; the object's variables and position are the saved ones, so read them here. What the save does not hold (the music, a script's own lets) is set up here. | ✔ |  |
 
 ## `entity` — entity {/* #entity */}
 
@@ -231,6 +233,10 @@ The running game.
 | `resume()` | `void` | Resume the game. |
 | `save(key, value)` | `void` | Save a value on the device (high scores...). |
 | `load(key)` | `value` | Load a saved value. |
+| `saveGame(slot?)` | `boolean` | Save the whole game in a named slot on the device: the scene, every variable and every object as it is now (position, variables, health, text, animation). game.saveGame("mysave"); false when storage is full. Scripts hear onGameSaved(slot). |
+| `loadGame(slot?)` | `boolean` | Bring a saved game back after this tick: the saved scene is rebuilt as it was. Its start() / On start of scene do not run again; onGameLoaded(slot) and "On game loaded" do, so set up there what the save does not hold (music, script locals). False when nothing is saved there ("loadFailed"). |
+| `hasSaveGame(slot?)` | `boolean` | Is there a saved game in the slot? Show a Continue button when there is. |
+| `deleteSaveGame(slot?)` | `void` | Remove a saved game from the device. |
 | `table(name)` | `table` | A data table made in Files: game.table("Item").get("Sword"), .all(), .where(r =&gt; r.damage &gt; 5), .ids(), .has(name), .length. |
 | `language` | `string` | Current language code from Files → Localization ("en", "fr"). Set it to switch: every object with a text key changes, and it is remembered. game.languages lists the codes. |
 | `t(key, ...args)` | `string` | A text from Files → Localization in the current language; &#123;0&#125;, &#123;1&#125; in it are filled by the arguments: game.t("score", points). game.on("languageChanged", …) tells when it changes. |
