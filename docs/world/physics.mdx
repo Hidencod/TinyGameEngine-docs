@@ -42,10 +42,24 @@ Shapes added from the ＋ Add menu already have a Collider. A new scene’s Grou
 | **Box** | Crates, walls, platforms. |
 | **Sphere** | Balls, round pickups. |
 | **Capsule** | Characters — slides smoothly over steps and bumps. |
+| **Polygon (2D outline)** | An outline of this object's own in its X / Y plane, pushed **Depth** metres deep: a sprite's exact edge, a slope, an L-shaped ledge. Concave outlines keep their shape on moving bodies too. See [Polygon collider](#polygon-collider). |
 | **Convex hull (models)** | One shrink-wrapped hull around a model. Fast; fills in gaps and dents. |
 | **Exact mesh (models)** | Follows every triangle. Best for still scenery: trees, arches, ramps, race tracks. |
 
 Turn on **Gizmos → Colliders** in the viewport toolbar (or **Colliders** in Play mode) to see them.
+
+### Polygon collider {/* #polygon-collider */}
+
+Like Unity's Polygon Collider 2D. The points belong to the object, so two sprites with the same picture can have different collision: one slime with a tall hit area, another with a small one.
+
+- Set **Shape** to **Polygon (2D outline)**. On a sprite it starts from the sprite's collision polygon (or its whole frame); on anything else from a 1 m square.
+- With the object selected, the outline and its points show in the scene view. **Drag a point** to move it. **Double-tap the outline** to add a point there. Tap a point and press **Delete** to remove it (three points stay).
+- The card lists every point as X / Y in metres around the object's origin, before its scale. **+ Add point** adds one on the closing edge, **⟲ From sprite** starts over from the sprite.
+- **Depth** is how thick it is front to back (0: the sprite's collider depth, else 1 m). **Offset** moves the whole outline.
+
+A convex outline is one hull. A concave one keeps its notches: a triangle mesh on an object that never moves, one hull per triangle on a moving body or a trigger. Up to 64 points.
+
+In scripts and with Set component: `collider { shape: "polygon", points: [[x, y], …], depth }`.
 
 ## Physics body
 
