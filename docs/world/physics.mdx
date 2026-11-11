@@ -52,9 +52,9 @@ Turn on **Gizmos → Colliders** in the viewport toolbar (or **Colliders** in Pl
 
 Like Unity's Polygon Collider 2D. The points belong to the object, so two sprites with the same picture can have different collision: one slime with a tall hit area, another with a small one.
 
-- Set **Shape** to **Polygon (2D outline)**. On a sprite it starts from the sprite's collision polygon (or its whole frame); on anything else from a 1 m square.
+- Set **Shape** to **Polygon (2D outline)**. On a sprite it is traced round the drawn pixels of the frame the scene shows (up to 16 points, like Construct's *Guess polygon shape*); on anything else it starts as a 1 m square.
 - With the object selected, the outline and its points show in the scene view. **Drag a point** to move it. **Double-tap the outline** to add a point there. Tap a point and press **Delete** to remove it (three points stay).
-- The card lists every point as X / Y in metres around the object's origin, before its scale. **+ Add point** adds one on the closing edge, **⟲ From sprite** starts over from the sprite.
+- The card lists every point as X / Y in metres around the object's origin, before its scale. **+ Add point** adds one on the closing edge, **✨ Fit to sprite** traces the sprite's pixels again (after you change its picture, frame or Flip).
 - **Depth** is how thick it is front to back (0: the sprite's collider depth, else 1 m). **Offset** moves the whole outline.
 
 A convex outline is one hull. A concave one keeps its notches: a triangle mesh on an object that never moves, one hull per triangle on a moving body or a trigger. Up to 64 points.
