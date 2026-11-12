@@ -1,6 +1,6 @@
 ---
 title: Build
-description: The Build panel makes your game for the web or for Android, and lets you choose which scenes go in.
+description: The Build panel makes your game for the web, Android or Windows, and lets you choose which scenes go in.
 ---
 
 # Build
@@ -13,7 +13,7 @@ description: The Build panel makes your game for the web or for Android, and let
 
 | Part | What it does |
 | --- | --- |
-| **Web / Android** | The platform. Your choice is remembered with the project. |
+| **Web / Android / Windows** | The platform. Your choice is remembered with the project. |
 | **Start scene** | The scene the game opens with. It is the same start scene **Run project** uses. |
 | **Scenes in build** | One checkbox per scene. Untick a scene to leave it out of the game, for example a test level. The start scene always goes in. |
 | **Settings** | The options of the chosen platform. |
@@ -39,6 +39,7 @@ and any action that needs an account asks then.
 | AI assistant: about 500 credits' worth a month, and the Claude models | | | ✓ |
 | [AI credits](#ai-credits): more AI past the allowance (Claude models on Free too) | | ✓ | ✓ |
 | [Android App Bundle](./export-apk#google-play) (Google Play) | | | ✓ |
+| [Windows game](#windows) (.exe) | | | ✓ |
 | No *Made with Tiny Game Engine* splash | | | ✓ |
 
 Everyone starts on **Free**, shown on **Home → Profile** (next to your email on a computer). Tap it to sign in at
@@ -72,6 +73,29 @@ Makes a game that runs in any browser. **Output** has two choices:
 
 Makes a signed **APK** on your phone, or an **App Bundle** for Google Play, with your own app name, package, version,
 icon, orientation and [keystore](./export-apk#signing-key). See [Android build](./export-apk).
+
+## Windows {/* #windows */}
+
+Makes one **.exe** that runs your game in its own window on Windows 10 and 11. There is no installer and no other
+file to send: share the .exe or upload it to **itch.io**. Needs **Pro**.
+
+| Setting | What it does |
+| --- | --- |
+| **Window** | The window's size when the game opens (1280 × 720 unless you pick another). |
+| **Fullscreen** | Start fullscreen instead of in a window. |
+| **Resizable** | Let players resize the window. The game fits itself as it does in a browser. |
+| **App icon** | The icon in Explorer, the title bar and the taskbar. It is the same picture as the Android app icon. |
+
+- Players switch fullscreen with **F11** or **Alt+Enter**. The **Enter fullscreen** and **Exit fullscreen** actions
+  fill the whole screen too.
+- A **Quit** button: the **Quit game** action (System), or `game.quit()` in a script, closes the window. In the
+  editor it stops the play-test.
+- Saves ([save slots](../logic/variables#save-slots), `localStorage`) stay on the player's PC in
+  `%APPDATA%\<game name>-<id>`. They survive new versions of the game as long as it is the same project.
+- The game runs on **Microsoft Edge WebView2**, which comes with Windows 10 and 11. On the rare PC without it, the game
+  says so and links to the download.
+- The .exe is not code-signed, so the first time someone runs it Windows may show *Windows protected your PC*. They
+  click **More info → Run anyway**. Games on itch.io are often shared this way.
 
 ## While it builds
 
