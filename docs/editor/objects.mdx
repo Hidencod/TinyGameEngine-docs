@@ -13,6 +13,7 @@ The Objects tab lists every object in the scene you are editing, and is where yo
 
 <Legend items={[
   <><b>Scene</b> — the scene you are editing. Tap to switch or add scenes (see <a href="./scenes">Scenes</a>).</>,
+  <><b>◫ Types</b> — switch the list to object types (see <a href="#types">Types</a>).</>,
   <><b>＋ Add</b> — add an object.</>,
   <><b>Object rows</b> — tap to select. Children are indented under their parent.</>,
 ]} />
@@ -36,6 +37,16 @@ Each row has an icon showing what the object is (🎥 camera, 💡 light, 🧊 s
 - A **▾ / ▸** arrow before a parent folds or unfolds its children.
 - **Drag a row** to reorganize: drop it onto the **middle** of another row to make it that object's child, onto a row's **top or bottom edge** to move it before or after, or onto the **empty space below the list** to bring it back to the top level. With a mouse, just drag; on a phone, **press and hold** a row a moment, then drag (a quick swipe still scrolls). It stays where it is in the 3D world. On-screen UI and 3D objects can't be mixed.
 - Greyed-out rows are **inactive** objects (see the Inspector’s *Active* switch).
+
+## Types {/* #types */}
+
+Objects that share a name are one **object type**: events and scripts address them together. Press **◫** at the top of the tab to list the types instead of the scene's tree, one row per name:
+
+- **This scene's types**, with how many instances the scene has.
+- **🌐 Global** — objects with **Keep across scenes** on in **another scene** (see [Scenes](./scenes#keep-an-object-across-scenes)). They come along into this scene while the game runs.
+- **📦 Prefabs** that this scene has no copy of.
+
+**Tap** a type to select all of its instances in the scene. **Drag** a type into the 3D view (on a phone, press and hold first) or press **＋** to place a copy: a prefab's copy if there is a prefab of that name, otherwise a copy of one instance with its children, taken from whichever scene has it. UI elements have no ＋, since they live under a canvas. Press **◫** again to go back to the tree.
 
 ## The Add menu {/* #add-menu */}
 

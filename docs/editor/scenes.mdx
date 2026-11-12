@@ -51,5 +51,6 @@ Select an object and switch on **Keep across scenes** (next to Visible and Activ
 - A scene's other objects are made as usual, and the ones you did not mark are left behind with the old scene.
 - Timers, running animations and scripts of the object start again in the new scene. Variables and position carry over.
 - An object under a parent that does not stay is moved to the top level where it stands.
+- These objects are **global**: the condition and action pickers of **every** scene's event sheet list them (marked 🌐 Global), with their children and variables, even when that scene has no copy. The Objects tab's [Types](./objects#types) view lists them too, to drag a copy into another scene.
 
 Each scene chooses which event sheet runs in it in the **Logic** tab (*This scene runs*). Several scenes can share one sheet, and a sheet can **include** another (see [Advanced events](../logic/advanced-events#include-sheets)).
