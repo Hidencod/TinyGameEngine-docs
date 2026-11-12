@@ -76,11 +76,12 @@ icon, orientation and [keystore](./export-apk#signing-key). See [Android build](
 
 ## Windows {/* #windows */}
 
-Makes one **.exe** that runs your game in its own window on Windows 10 and 11. There is no installer and no other
-file to send: share the .exe or upload it to **itch.io**. Needs a signed-in account; on Free the game opens with the *Made with* splash, with **Pro** it doesn't.
+Makes a game that runs in its own window on Windows 10 and 11, with no installer: one **.exe** to share or upload to
+**itch.io**, or a **folder** for Steam and other stores. Needs a signed-in account; on Free the game opens with the *Made with* splash, with **Pro** it doesn't.
 
 | Setting | What it does |
 | --- | --- |
+| **Output** | **Single file (.exe)**: the whole game in one file. **Folder (.zip)**: a folder with `<Game>.exe` and a `data` folder next to it. |
 | **Window** | The window's size when the game opens (1280 × 720 unless you pick another). |
 | **Fullscreen** | Start fullscreen instead of in a window. |
 | **Resizable** | Let players resize the window. The game fits itself as it does in a browser. |
@@ -95,6 +96,20 @@ file to send: share the .exe or upload it to **itch.io**. Needs a signed-in acco
 - The game runs on **Microsoft Edge WebView2**, which comes with Windows 10 and 11. On the rare PC without it, the game
   says so and links to the download.
 - The .exe carries your game's name: Task Manager and the file's **Properties → Details** show it.
+
+### Folder output {/* #windows-folder */}
+
+Unzip it and you get:
+
+```
+My Game/
+  My Game.exe
+  data/          index.html, game.json, assets/…, desktop.json
+```
+
+Keep `data` next to the .exe: the .exe runs whatever game is in it. Use the folder for **Steam** (upload the
+`My Game` folder as a depot; updates only send the files that changed) and other stores. Antivirus programs also
+warn less about it than about the single .exe, which has the game packed onto its end.
 
 ### Windows warnings {/* #windows-warnings */}
 
