@@ -94,8 +94,20 @@ file to send: share the .exe or upload it to **itch.io**. Needs a signed-in acco
   `%APPDATA%\<game name>-<id>`. They survive new versions of the game as long as it is the same project.
 - The game runs on **Microsoft Edge WebView2**, which comes with Windows 10 and 11. On the rare PC without it, the game
   says so and links to the download.
-- The .exe is not code-signed, so the first time someone runs it Windows may show *Windows protected your PC*. They
-  click **More info → Run anyway**. Games on itch.io are often shared this way.
+- The .exe carries your game's name: Task Manager and the file's **Properties → Details** show it.
+
+### Windows warnings {/* #windows-warnings */}
+
+The .exe is not code-signed, and every build is a new file Windows has not seen before, so players may meet a warning
+or two the first time. They are normal for small games shared on itch.io or sent to friends:
+
+| Where | What it says | What to do |
+| --- | --- | --- |
+| The browser's downloads | *isn't commonly downloaded* | **⋯ → Keep** (Edge: **Keep anyway**) |
+| SmartScreen, on opening | *Windows protected your PC* | **More info → Run anyway** |
+
+Uploading the .exe in a **.zip** on itch.io works the same way. If an antivirus reports the game as a threat, it is
+mistaking the packed game for something else: tell us at the Help page and we report it to the antivirus maker.
 
 ## While it builds
 
