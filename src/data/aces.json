@@ -9282,6 +9282,84 @@
       ]
     },
     {
+      "id": "steam.overlayOpen",
+      "kind": "condition",
+      "category": "Steam",
+      "label": "Steam overlay is open",
+      "hint": "Shift+Tab: pause the game",
+      "display": "Steam overlay is open",
+      "displayNoObject": null,
+      "icon": "♨️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "steam.openOverlay",
+      "kind": "action",
+      "category": "Steam",
+      "label": "Open Steam overlay",
+      "hint": "Or one of its pages",
+      "display": "Open Steam overlay {page}",
+      "displayNoObject": null,
+      "icon": "♨️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "page",
+          "label": "Page",
+          "type": "choice",
+          "options": [
+            {
+              "value": "",
+              "label": "Home"
+            },
+            {
+              "value": "achievements",
+              "label": "Achievements"
+            },
+            {
+              "value": "friends",
+              "label": "Friends"
+            },
+            {
+              "value": "stats",
+              "label": "Stats"
+            },
+            {
+              "value": "players",
+              "label": "Players"
+            },
+            {
+              "value": "community",
+              "label": "Community"
+            },
+            {
+              "value": "settings",
+              "label": "Settings"
+            }
+          ],
+          "default": "",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "steam.setStat",
       "kind": "action",
       "category": "Steam",

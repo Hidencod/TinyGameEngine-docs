@@ -131,6 +131,7 @@ What reaches Steam:
   Steam (on another PC) count in the game too. Leaderboard scores are whole numbers: send race times in milliseconds.
 - **Stats**: the **Set Steam stat** action, or `game.steam.setStat("kills", 12)`. They are sent within a second.
 - **Rich presence**: what friends see you doing (**Set rich presence**).
+- The **overlay**: **Steam overlay is open**, **Open Steam overlay**.
 - The player's **Steam name** (`steamname()`), Steam's **language** for the game (`steamlanguage()`), and owned
   **DLC** (**Owns DLC**). The **Steam is running** condition tells a Steam build started from Steam apart from
   everything else; in the editor and on the web it is false and the Steam blocks do nothing.
@@ -145,8 +146,9 @@ if (game.steam.available) {
 If a Steam build plays without Steam, `game.steam.error` says why (no DLL next to the .exe, Steam not running or
 signed in, an SDK newer than the player's Steam). Show it on a debug screen while you test.
 
-The **Steam overlay** (Shift+Tab) and its pop-ups don't show over the game, because the game is drawn by WebView2 in a
-separate process. Achievements still unlock, and players see them in their Steam library and profile.
+The **Steam overlay** works as in other Steam games: **Shift+Tab** opens it over the game, and achievement pop-ups
+show in the corner. Pause the game while it is open: the **Steam overlay is open** condition, or
+`game.steam.overlayOpen`. **Open Steam overlay** (or `game.steam.openOverlay("achievements")`) opens it from a button.
 
 ### Windows warnings {/* #windows-warnings */}
 

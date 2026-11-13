@@ -1246,7 +1246,7 @@
           "name": "steam",
           "kind": "property",
           "type": "SteamAPI",
-          "doc": "Steam in a Windows build made with a Steam App ID (steam_api64.dll next to the .exe); elsewhere game.steam.available is false and the calls do nothing. Files → Services achievements and leaderboards reach Steam by themselves. game.steam.userName, .language, .ownsDlc(appId), .setStat(\"kills\", 12), await .getStat(\"kills\"), .submitScore(\"Best\", 900), .setRichPresence(\"status\", \"In the forest\")."
+          "doc": "Steam in a Windows build made with a Steam App ID (steam_api64.dll next to the .exe); elsewhere game.steam.available is false and the calls do nothing. Files → Services achievements and leaderboards reach Steam by themselves. game.steam.userName, .language, .ownsDlc(appId), .setStat(\"kills\", 12), await .getStat(\"kills\"), .submitScore(\"Best\", 900), .setRichPresence(\"status\", \"In the forest\"), .overlayOpen (pause while true), .openOverlay(\"achievements\")."
         },
         {
           "name": "services",
