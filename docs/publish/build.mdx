@@ -1,6 +1,6 @@
 ---
 title: Build
-description: The Build panel makes your game for the web, Android or Windows, and lets you choose which scenes go in.
+description: The Build panel makes your game for the web, Android, Windows or Linux and the Steam Deck, and lets you choose which scenes go in.
 ---
 
 # Build
@@ -13,7 +13,7 @@ description: The Build panel makes your game for the web, Android or Windows, an
 
 | Part | What it does |
 | --- | --- |
-| **Web / Android / Windows** | The platform. Your choice is remembered with the project. |
+| **Web / Android / Windows / Linux** | The platform. Your choice is remembered with the project. |
 | **Start scene** | The scene the game opens with. It is the same start scene **Run project** uses. |
 | **Scenes in build** | One checkbox per scene. Untick a scene to leave it out of the game, for example a test level. The start scene always goes in. |
 | **Settings** | The options of the chosen platform. |
@@ -36,6 +36,7 @@ and any action that needs an account asks then.
 | [Publish with a link](./publish-link): 3 games / 50 with Pro | | ✓ | ✓ |
 | [Android APK](./export-apk) | | ✓ | ✓ |
 | [Windows game](#windows) (.exe) | | ✓ | ✓ |
+| [Linux and Steam Deck game](#linux) | | ✓ | ✓ |
 | AI assistant: a small task a day (DeepSeek) | | ✓ | |
 | AI assistant: about 500 credits' worth a month, and the Claude models | | | ✓ |
 | [AI credits](#ai-credits): more AI past the allowance (Claude models on Free too) | | ✓ | ✓ |
@@ -162,6 +163,43 @@ or two the first time. They are normal for small games shared on itch.io or sent
 
 Uploading the .exe in a **.zip** on itch.io works the same way. If an antivirus reports the game as a threat, it is
 mistaking the packed game for something else: tell us at the Help page and we report it to the antivirus maker.
+
+## Linux and Steam Deck {/* #linux */}
+
+Makes a game for 64-bit Linux PCs and the **Steam Deck**: a **folder** in a .zip, no installer. Needs a signed-in
+account; on Free the game opens with the *Made with* splash, with **Pro** it doesn't.
+
+The settings are the Windows ones without **Output** (a Linux build is always a folder): **Window**, **Fullscreen**,
+**Resizable**, **App icon**, **Steam App ID** and **Steam test**. Pick **1280 × 800** for the Steam Deck's screen.
+
+```
+My-Game/
+  My-Game        the game: run it (double-click, or ./My-Game in a terminal)
+  data/          index.html, game.json, assets/…, desktop.json
+  resources/ …   the player's own files
+```
+
+- The zip is about **120 MB** whatever the game: the player brings its own browser engine (Chromium, through
+  Electron), so the game looks and runs the same on every Linux. The first Linux build downloads the player (it is
+  kept for the next builds), so it takes a moment longer.
+- Unzip it with a tool that keeps file permissions (the file manager, `unzip`, Steam's depot upload all do). If
+  `My-Game` does not start, run `chmod +x My-Game` in the folder.
+- Saves stay on the player's PC in `~/.config/<game name>-<id>`, and survive new versions of the game.
+- **F11** or **Alt+Enter** switch fullscreen; **Quit game** closes the window.
+- The Steam Deck's controls reach the game as a gamepad, as an Xbox controller does on a PC.
+
+### Steam on Linux and the Steam Deck {/* #linux-steam */}
+
+The same as [Steam on Windows](#steam), with Valve's Linux library instead of the DLL:
+
+1. Copy `redistributable_bin/linux64/libsteam_api.so` from the Steamworks SDK next to `My-Game`.
+2. In Steamworks, add a **Linux** launch option whose executable is `My-Game`, and upload the folder as a Linux
+   depot. The Steam Deck uses the same depot.
+3. To test on a Linux PC, turn on **Steam test**, have Steam open and signed in, and run `My-Game`.
+
+Achievements, leaderboards, stats, rich presence, DLC, the player's name and language work as on Windows, and
+`game.steam.onSteamDeck` tells the Deck apart. If Steam is off,
+`game.steam.error` says why (`libsteam_api.so is not next to the game`, Steam not running…).
 
 ## While it builds
 
