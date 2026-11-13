@@ -142,6 +142,9 @@ if (game.steam.available) {
 }
 ```
 
+If a Steam build plays without Steam, `game.steam.error` says why (no DLL next to the .exe, Steam not running or
+signed in, an SDK newer than the player's Steam). Show it on a debug screen while you test.
+
 The **Steam overlay** (Shift+Tab) and its pop-ups don't show over the game, because the game is drawn by WebView2 in a
 separate process. Achievements still unlock, and players see them in their Steam library and profile.
 
