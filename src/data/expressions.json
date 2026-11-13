@@ -512,6 +512,20 @@
       "insert": "musicbpm()"
     },
     {
+      "name": "steamname",
+      "signature": "steamname()",
+      "description": "The player's Steam name (empty without Steam)",
+      "category": "Steam",
+      "insert": "steamname()"
+    },
+    {
+      "name": "steamlanguage",
+      "signature": "steamlanguage()",
+      "description": "The language picked for the game in Steam (\"english\", \"french\" …; empty without Steam)",
+      "category": "Steam",
+      "insert": "steamlanguage()"
+    },
+    {
       "name": "rayhitname",
       "signature": "rayhitname()",
       "description": "After a \"Raycast\" condition: the name of the object the ray hit (empty when nothing)",

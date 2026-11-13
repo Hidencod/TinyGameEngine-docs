@@ -86,6 +86,8 @@ Makes a game that runs in its own window on Windows 10 and 11, with no installer
 | **Fullscreen** | Start fullscreen instead of in a window. |
 | **Resizable** | Let players resize the window. The game fits itself as it does in a browser. |
 | **App icon** | The icon in Explorer, the title bar and the taskbar. It is the same picture as the Android app icon. |
+| **Steam App ID** | Your game's App ID from Steamworks. The build talks to Steam: see [Steam](#steam). Empty = no Steam. |
+| **Steam test** | Puts `steam_appid.txt` in the build so you can run it outside Steam while testing. Turn it off for the build you upload. |
 
 - Players switch fullscreen with **F11** or **Alt+Enter**. The **Enter fullscreen** and **Exit fullscreen** actions
   fill the whole screen too.
@@ -110,6 +112,38 @@ My Game/
 Keep `data` next to the .exe: the .exe runs whatever game is in it. Use the folder for **Steam** (upload the
 `My Game` folder as a depot; updates only send the files that changed) and other stores. Antivirus programs also
 warn less about it than about the single .exe, which has the game packed onto its end.
+
+### Steam {/* #steam */}
+
+A build with a **Steam App ID** is always a folder. It works with Steam once you add Valve's **steam_api64.dll**:
+
+1. Get the Steamworks SDK from [partner.steamgames.com](https://partner.steamgames.com) (you need a Steamworks
+   account and an App ID for your game).
+2. Copy `redistributable_bin/win64/steam_api64.dll` from the SDK next to `My Game.exe`.
+3. To test, turn on **Steam test**, have Steam open and signed in, and run the .exe. Without the test file, a copy
+   started outside Steam closes and Steam starts the game again, as Steam games do.
+4. Upload the folder (with the DLL, without `steam_appid.txt`) as your depot.
+
+What reaches Steam:
+
+- **Achievements** and **leaderboards** from [Files → Services](../world/services). Each card has a **Steam ID**: the
+  achievement's API name or the leaderboard's name in Steamworks. Empty = the card's **ID**. Achievements unlocked on
+  Steam (on another PC) count in the game too. Leaderboard scores are whole numbers: send race times in milliseconds.
+- **Stats**: the **Set Steam stat** action, or `game.steam.setStat("kills", 12)`. They are sent within a second.
+- **Rich presence**: what friends see you doing (**Set rich presence**).
+- The player's **Steam name** (`steamname()`), Steam's **language** for the game (`steamlanguage()`), and owned
+  **DLC** (**Owns DLC**). The **Steam is running** condition tells a Steam build started from Steam apart from
+  everything else; in the editor and on the web it is false and the Steam blocks do nothing.
+
+```js
+if (game.steam.available) {
+  game.steam.setStat("games_played", (await game.steam.getStat("games_played") ?? 0) + 1);
+  game.steam.setRichPresence("status", "Level " + level);
+}
+```
+
+The **Steam overlay** (Shift+Tab) and its pop-ups don't show over the game, because the game is drawn by WebView2 in a
+separate process. Achievements still unlock, and players see them in their Steam library and profile.
 
 ### Windows warnings {/* #windows-warnings */}
 

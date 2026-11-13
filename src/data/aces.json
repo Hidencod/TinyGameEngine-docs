@@ -12,6 +12,7 @@
     "Timeline",
     "Language",
     "Services",
+    "Steam",
     "Web",
     "Multiplayer",
     "Physics",
@@ -51,7 +52,8 @@
     "Language": "🌐",
     "Web": "🔗",
     "Multiplayer": "👥",
-    "Services": "🏆"
+    "Services": "🏆",
+    "Steam": "♨️"
   },
   "list": [
     {
@@ -9225,6 +9227,135 @@
           "options": null,
           "default": "",
           "optional": true,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "steam.running",
+      "kind": "condition",
+      "category": "Steam",
+      "label": "Steam is running",
+      "hint": "A Steam build started from Steam",
+      "display": "Steam is running",
+      "displayNoObject": null,
+      "icon": "♨️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "steam.ownsDlc",
+      "kind": "condition",
+      "category": "Steam",
+      "label": "Owns DLC",
+      "hint": "Owned and installed",
+      "display": "Owns DLC {app}",
+      "displayNoObject": null,
+      "icon": "♨️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "app",
+          "label": "DLC App ID",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "steam.setStat",
+      "kind": "action",
+      "category": "Steam",
+      "label": "Set Steam stat",
+      "hint": "By its API name in Steamworks",
+      "display": "Set Steam stat {stat} to {value}",
+      "displayNoObject": null,
+      "icon": "♨️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "stat",
+          "label": "Stat",
+          "type": "string",
+          "options": null,
+          "default": "",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "steam.setRichPresence",
+      "kind": "action",
+      "category": "Steam",
+      "label": "Set rich presence",
+      "hint": "What friends see",
+      "display": "Set Steam rich presence {key} to {value}",
+      "displayNoObject": null,
+      "icon": "♨️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "key",
+          "label": "Key",
+          "type": "string",
+          "options": null,
+          "default": "status",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "expression",
+          "options": null,
+          "default": "\"\"",
+          "optional": false,
           "hint": null,
           "varScope": null
         }

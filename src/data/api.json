@@ -1243,6 +1243,12 @@
           "doc": "The baked navigation mesh (Project settings → Navigation): game.navmesh.findPath(from, to, { radius, height }) gives { complete, points: [{x,y,z,leap}] } over slopes, stairs and floors; sample(point) the nearest place to stand; rebuild() after walls change; enabled, lastBakeMs."
         },
         {
+          "name": "steam",
+          "kind": "property",
+          "type": "SteamAPI",
+          "doc": "Steam in a Windows build made with a Steam App ID (steam_api64.dll next to the .exe); elsewhere game.steam.available is false and the calls do nothing. Files → Services achievements and leaderboards reach Steam by themselves. game.steam.userName, .language, .ownsDlc(appId), .setStat(\"kills\", 12), await .getStat(\"kills\"), .submitScore(\"Best\", 900), .setRichPresence(\"status\", \"In the forest\")."
+        },
+        {
           "name": "services",
           "kind": "property",
           "type": "ServicesAPI",
