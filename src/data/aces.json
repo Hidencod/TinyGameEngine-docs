@@ -2030,6 +2030,25 @@
       "params": []
     },
     {
+      "id": "system.quit",
+      "kind": "action",
+      "category": "System",
+      "label": "Quit game",
+      "hint": "Close the game (Windows and Android builds; a play-test stops)",
+      "display": "Quit game",
+      "displayNoObject": null,
+      "icon": "⏻",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
       "id": "system.lockOrientation",
       "kind": "action",
       "category": "System",
@@ -11567,6 +11586,89 @@
       "noInvert": false,
       "isWait": false,
       "params": []
+    },
+    {
+      "id": "camera.setDrawLayer",
+      "kind": "action",
+      "category": "Camera",
+      "label": "Draw layer",
+      "hint": "Make a camera draw a layer or leave it out (its Draw switches)",
+      "display": "{state} layer {layer} in {object}",
+      "displayNoObject": null,
+      "icon": "🗂️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "camera",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "state",
+          "label": "Mode",
+          "type": "choice",
+          "options": [
+            {
+              "value": "draw",
+              "label": "Draw"
+            },
+            {
+              "value": "hide",
+              "label": "Don't draw"
+            },
+            {
+              "value": "toggle",
+              "label": "Toggle"
+            }
+          ],
+          "default": "draw",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "layer",
+          "label": "Layer",
+          "type": "string",
+          "options": null,
+          "default": "Default",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "camera.drawsLayer",
+      "kind": "condition",
+      "category": "Camera",
+      "label": "Camera draws layer",
+      "hint": "Its Draw switch for the layer is on",
+      "display": "{object} draws layer {layer}",
+      "displayNoObject": null,
+      "icon": "🗂️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "camera",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "layer",
+          "label": "Layer",
+          "type": "string",
+          "options": null,
+          "default": "Default",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
     },
     {
       "id": "camera.shake",

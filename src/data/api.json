@@ -42,6 +42,20 @@
           "doc": "True once the entity has been destroyed."
         },
         {
+          "name": "drawsLayer",
+          "kind": "method",
+          "sig": "(layer)",
+          "type": "boolean",
+          "doc": "A camera: true while it draws objects on this layer (its Draw <layer> switch). False on an object without a camera."
+        },
+        {
+          "name": "setDrawLayer",
+          "kind": "method",
+          "sig": "(layer, draw)",
+          "type": "void",
+          "doc": "A camera: draw objects on this layer (true) or leave them out (false), e.g. minimapCam.setDrawLayer(\"Icons\", true). Works on the main camera and on render-texture cameras."
+        },
+        {
           "name": "position",
           "kind": "property",
           "type": "{x,y,z}",
@@ -1345,6 +1359,13 @@
           "sig": "()",
           "type": "Promise<void>",
           "doc": "Leave fullscreen."
+        },
+        {
+          "name": "quit",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Close the game: the window of a Windows build or the Android app. A play-test in the editor stops."
         },
         {
           "name": "lockOrientation",

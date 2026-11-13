@@ -61,6 +61,8 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `layer` | `string` | The layer the object is on ("Default" unless changed; Project settings → Layers). Writable: entity.layer = "Water". Cameras can leave layers out (Draw switches); game.raycast takes layers. |
 | `persist` | `boolean` | True: the object stays when the game goes to another scene (with its children, position and variables) instead of being made again. An object of the same name in the next scene that also has persist on is replaced by it, never doubled. Also the "Keep across scenes" switch in the inspector. |
 | `destroyed` | `boolean` | True once the entity has been destroyed. |
+| `drawsLayer(layer)` | `boolean` | A camera: true while it draws objects on this layer (its Draw &lt;layer&gt; switch). False on an object without a camera. |
+| `setDrawLayer(layer, draw)` | `void` | A camera: draw objects on this layer (true) or leave them out (false), e.g. minimapCam.setDrawLayer("Icons", true). Works on the main camera and on render-texture cameras. |
 | `position` | `{x,y,z}` | Local position in meters. Writable: entity.position.y += 1 |
 | `rotation` | `{x,y,z}` | Local rotation in DEGREES. Writable: entity.rotation.y += 90 * dt |
 | `scale` | `{x,y,z}` | Local scale. Writable: entity.scale.x = 2 |
@@ -259,6 +261,7 @@ The running game.
 | `vibrate(ms)` | `void` | Vibrate the phone, e.g. vibrate(40) on a hit (Android; ignored elsewhere). |
 | `enterFullscreen()` | `Promise<void>` | Fill the screen. Browsers only allow it inside a tap, so call it from a Button's On Click. |
 | `exitFullscreen()` | `Promise<void>` | Leave fullscreen. |
+| `quit()` | `void` | Close the game: the window of a Windows build or the Android app. A play-test in the editor stops. |
 | `lockOrientation(mode?)` | `Promise<void>` | Keep the screen 'landscape' or 'portrait'. 'project' (default) uses the project setting, 'free' lets it rotate. Call from a tap. |
 | `on(event, fn)` | `unsubscribe` | Listen: "sceneStart", "collisionStart", "entityCreated", "waterEnter", ... |
 | `after(seconds, fn, owner?)` | `cancel` | Run fn once after a delay of game time. In a script, plain after(seconds, fn) belongs to the object of the script already; this one takes the object to belong to, or none. |

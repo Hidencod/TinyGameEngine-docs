@@ -41,6 +41,8 @@ Open **Project settings → Layer collisions**. Every pair of layers (Default in
 
 - Event block **Set layer** moves an object to a layer by name.
 - Script: `entity.layer` reads the layer name and can be set: `crate.layer = 'Water'`.
+- Event block **Draw layer** (Camera) makes a camera draw a layer, leave it out, or toggle it, from the next frame: *Draw layer Minimap in MapCam* after the player picks up the map. The condition **Camera draws layer** is true while its switch is on.
+- Script: `cam.setDrawLayer('Minimap', true)` draws the layer, `false` leaves it out; `cam.drawsLayer('Minimap')` says whether it is drawn. `cam.component('camera').hideLayers = ['Minimap']` sets the whole list at once.
 
 ## Good to know
 
