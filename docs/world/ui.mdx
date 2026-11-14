@@ -296,7 +296,7 @@ function onValueChanged(index) {
 
 An **Input field** is a box the player types in, like Unity's Input Field. **＋ Add → UI → Input field** makes a white box with a grey *Enter text...* placeholder. Click or tap it and type: the caret, selecting, copy and paste and a phone's keyboard all work as in any text box, and while the player types, keys don't reach the game (typing a **W** doesn't walk).
 
-What the player typed is the element's **Text**: `NameBox.text` in events, `getText()` in scripts. **Set label** (`setText()`) changes it. Its look is the Text settings: font, size, color, align.
+What the player typed is the element's **Text**: `NameBox.text` (or `NameBox.value`) in events, `getText()` in scripts (`getUIValue()` gives it as a number, for a number field). **Set label** (`setText()`) changes it. Its look is the Text settings: font, size, color, align.
 
 | Field (Typing card) | What it does |
 | --- | --- |
