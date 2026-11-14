@@ -315,10 +315,12 @@ function onSubmit(text) {
 
 An **HTML element** draws your own HTML and CSS, like Construct's HTML element. Use it for what the built-in UI does not have: a form with many fields, a table, rich text with links, an embedded video. **＋ Add → UI → HTML** makes one with a small card to start from.
 
-| Field (UI card → HTML) | What it does |
+| Field (UI card → Code) | What it does |
 | --- | --- |
 | **HTML** | The markup. |
 | **CSS** | Styles for that markup only. They cannot change the rest of your UI or the editor, and the rest cannot change them. The element's Text color and Font are inherited. |
+
+Both are code editors with colours, suggestions for tags, attributes and CSS properties, and closing tags typed for you. Drag a box's bottom edge to make it taller, or tap **⤢** to edit in a full-size sheet. The scene shows each change as you type.
 
 The element is placed with its Rect Transform like any other, and **Raycast target** decides whether it takes taps. Taps and typing inside it never reach the game, so a key typed in its text box does not move the player.
 
