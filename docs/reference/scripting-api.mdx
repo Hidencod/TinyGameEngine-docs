@@ -34,6 +34,8 @@ Define any of these in a script; the engine calls them.
 | `onParticleSystemStopped()` | Its Particle System stopped and the last particle died (Stop Action: Callback). | ✔ |  |
 | `onTap()` | The player tapped this entity. | ✔ |  |
 | `onClick()` | This UI button was clicked. | ✔ |  |
+| `onSubmit(text)` | Enter was pressed in this Input Field; text is what was typed. | ✔ |  |
+| `onEndEdit(text)` | The player stopped typing in this Input Field (Enter, a tap elsewhere, Esc or B). | ✔ |  |
 | `onPointerDown(event)` | The player pressed this UI element (needs Raycast Target). event: &#123; x, y, entity &#125;. | ✔ |  |
 | `onPointerUp(event)` | The player let go of this UI element without dragging it. | ✔ |  |
 | `onPointerEnter(event)` | A mouse moved onto this UI element (touch screens have no hover). | ✔ |  |
@@ -109,6 +111,8 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `setUIInteractable(on)` | `void` | Grey a button or slider out, or turn it back on (Interactable). |
 | `selectUI()` | `void` | Choose this button or slider for the controller and arrow keys, e.g. when a menu opens (Unity Select()). |
 | `isUISelected()` | `boolean` | Is this button or slider the one the controller or arrow keys have chosen? |
+| `focusUI()` | `void` | Input Field: start typing in it. Read and set what is typed with getText() / setText(). |
+| `isUIFocused()` | `boolean` | Input Field: is the player typing in it right now? |
 | `getUIPosition()` | `{x, y}` | Where a UI element sits: its anchored position in canvas pixels from its anchor. |
 | `setUIPosition(x, y)` | `void` | Move a UI element to this anchored position (canvas px). Leave an axis out (undefined) to keep it. |
 | `isUI()` | `boolean` | Is this object a UI element (has a Rect Transform)? |

@@ -23,6 +23,7 @@ The UI follows Unity's uGUI on purpose, with the same names: **Canvas**, **Canva
 | 🔲 **Button** | A tappable button: Start, Pause, Retry… An Image with a **Button** component and a Text inside it for the label. |
 | 🖼️ **Image** | An icon or picture. |
 | 📊 **Slider** | A bar, or a value you can drag: health, energy, volume. |
+| ⌨️ **Input field** | A box the player types in: a name, a chat line, a code. See [Input fields](#input-field). |
 | 🪟 **Panel** | A box that holds other UI elements. |
 | 📱 **Screen (menu)** | A full-screen panel: title screen, pause menu, game over. |
 | 🖼️ **Canvas** | The surface the UI is drawn on. Made for you with the first element. |
@@ -92,7 +93,7 @@ A UI element is placed by its **Rect Transform**, exactly as in Unity.
 
 Y counts **up**, as in Unity: a Pos Y of −16 is 16 pixels below the anchor.
 
-## Text, Image, Slider and Panel
+## Text, Image, Slider, Panel and Input field
 
 The card shows the fields of the **Type** you picked. You can change the type later.
 
@@ -194,6 +195,42 @@ function openDoor(speed) {
 Choose *Door → Door script → openDoor()* with the argument `2` and the button opens the door. The same click still triggers *On clicked* events and the script's own `onClick()`.
 
 Old projects are converted when they open: each button becomes an Image with a Button component, and a label it drew itself becomes a child Text.
+
+## Input fields {/* #input-field */}
+
+An **Input field** is a box the player types in, like Unity's Input Field. **＋ Add → UI → Input field** makes a white box with a grey *Enter text...* placeholder. Click or tap it and type: the caret, selecting, copy and paste and a phone's keyboard all work as in any text box, and while the player types, keys don't reach the game (typing a **W** doesn't walk).
+
+What the player typed is the element's **Text**: `NameBox.text` in events, `getText()` in scripts. **Set label** (`setText()`) changes it. Its look is the Text settings: font, size, color, align.
+
+| Field (Typing card) | What it does |
+| --- | --- |
+| **Placeholder** | Shown greyed out while the box is empty. |
+| **Content type** | What may be typed. **Standard**: anything. **Integer number**, **Decimal number**: digits (a minus sign, one point), and a number keyboard on phones. **Alphanumeric**: letters and digits. **Name**: each word starts with a capital. **Email address**: no spaces, an email keyboard on phones. **Password**: shown as dots. **Pin**: digits, shown as dots. |
+| **Character limit** | The most characters it takes; 0 = no limit. |
+| **Multi-line** | Enter starts a new line instead of finishing. |
+| **Read only** | The text can be selected and copied, not changed. |
+
+It also has the **Interaction** settings (Interactable, Transition, Navigation), so a controller can reach it.
+
+| Event | When |
+| --- | --- |
+| **On submitted** ⚡ | The player pressed **Enter** (single-line boxes). Use it to send a chat line or accept a name. |
+| **On typing finished** ⚡ | The player stopped typing: Enter, a tap or click elsewhere, **Esc**, or **B** on a controller. |
+| **On value changed** ⚡ | The text changed (every letter). |
+| **Is being typed in** | The box has the keyboard right now: hold the player still while they type. |
+| **Start typing** (action) | Puts the keyboard in the box, e.g. when a "Your name" panel opens. |
+
+In scripts the box's own scripts get `onSubmit(text)` and `onEndEdit(text)`; `entity.focusUI()` starts typing, `entity.isUIFocused()` tells whether the player is typing.
+
+```js
+// On the ChatBox input field
+function onSubmit(text) {
+  if (text.trim()) game.net.send('chat', text);
+  entity.setText('');
+}
+```
+
+**With a controller**: select the box (see below) and press **A** to type; **B** stops. On the Steam Deck, and on a PC in Steam's Big Picture mode, Steam's on-screen keyboard opens next to the box, as Valve requires for games that ask for text.
 
 ## Controller and keyboard {/* #controller */}
 
@@ -318,8 +355,8 @@ Screens that start hidden are still shown in the editor when you select them or 
 
 ## UI in events and expressions
 
-- Conditions: **On clicked** ⚡, **Is held down**, **Is selected**, **Compare slider value**, **On value changed** ⚡.
-- Actions: **Show**, **Hide**, **Show / hide**, **Set label**, **Set position**, **Set size**, **Set anchors**, **Set pivot**, **Move to element**, **Put inside**, **Set slider value**, **Add to slider value**, **Set slider maximum / minimum**, **Enable / disable**, **Select**, **Set image**, **Set font**, **Set background color**, **Set text color**, **Set bar color**.
+- Conditions: **On clicked** ⚡, **Is held down**, **Is selected**, **On submitted** ⚡, **On typing finished** ⚡, **Is being typed in**, **Compare slider value**, **On value changed** ⚡.
+- Actions: **Show**, **Hide**, **Show / hide**, **Set label**, **Set position**, **Set size**, **Set anchors**, **Set pivot**, **Move to element**, **Put inside**, **Set slider value**, **Add to slider value**, **Set slider maximum / minimum**, **Enable / disable**, **Select**, **Start typing**, **Set image**, **Set font**, **Set background color**, **Set text color**, **Set bar color**.
   - **Move to element** puts the object's pivot on the middle of another element, plus an offset: a tooltip next to the slot you pressed, a marker on a map icon. It works from where both are drawn, so any anchors and scaling are fine.
   - **Put inside** moves an element into another (a slot into a panel, an item into a list). **Attach to** and **Detach** also work on UI elements.
 - Expressions: `HealthBar.value`, `HealthBar.min`, `HealthBar.max`, `PlayButton.pressed`, `ScoreText.text`.

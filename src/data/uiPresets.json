@@ -20,6 +20,11 @@
     "kind": "slider"
   },
   {
+    "id": "inputField",
+    "name": "Input Field",
+    "kind": "input"
+  },
+  {
     "id": "panel",
     "name": "Panel",
     "kind": "panel"

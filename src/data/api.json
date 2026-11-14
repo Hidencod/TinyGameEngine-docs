@@ -373,6 +373,20 @@
           "doc": "Is this button or slider the one the controller or arrow keys have chosen?"
         },
         {
+          "name": "focusUI",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Input Field: start typing in it. Read and set what is typed with getText() / setText()."
+        },
+        {
+          "name": "isUIFocused",
+          "kind": "method",
+          "sig": "()",
+          "type": "boolean",
+          "doc": "Input Field: is the player typing in it right now?"
+        },
+        {
           "name": "getUIPosition",
           "kind": "method",
           "sig": "()",
@@ -2451,6 +2465,16 @@
       "name": "onClick",
       "args": "",
       "doc": "This UI button was clicked."
+    },
+    {
+      "name": "onSubmit",
+      "args": "text",
+      "doc": "Enter was pressed in this Input Field; text is what was typed."
+    },
+    {
+      "name": "onEndEdit",
+      "args": "text",
+      "doc": "The player stopped typing in this Input Field (Enter, a tap elsewhere, Esc or B)."
     },
     {
       "name": "onPointerDown",

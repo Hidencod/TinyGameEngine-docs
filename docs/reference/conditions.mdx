@@ -18,7 +18,7 @@ Conditions are the **WHEN / IF** part of an event. All conditions of an event mu
 - Most other conditions can be **inverted** (NOT) from the condition’s menu.
 :::
 
-There are **121 conditions**, grouped by category as in the condition picker.
+There are **124 conditions**, grouped by category as in the condition picker.
 
 [⚙️ System](#system) · [🔢 Variables](#variables) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🎬 Timeline](#timeline) · [🌐 Language](#language) · [🏆 Services](#services) · [♨️ Steam](#steam) · [🔗 Web](#web) · [👥 Multiplayer](#multiplayer) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🖼️ UI](#ui) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera) · [🎚️ Graphics](#graphics)
 
@@ -1331,6 +1331,36 @@ True while the player holds a UI button (e.g. a custom fire button).
 
 - **Where:** Pick an **object** (or a #tag) first, then this condition.
 - **ID:** `ui.isPressed` (as saved in project files)
+- **Parameters:** none
+
+### On submitted {/* #ui-onsubmit */}
+
+<span class="tge-ace-display">On ‹Object› submitted</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+Fires when the player presses Enter in this input field: send the chat line, accept the name.
+
+- **Where:** Pick an **object** (or a #tag) first, then this condition.
+- **ID:** `ui.onSubmit` (as saved in project files)
+- **Parameters:** none
+
+### On typing finished {/* #ui-onendedit */}
+
+<span class="tge-ace-display">On ‹Object› typing finished</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+Fires when the player stops typing in this input field: Enter, a tap elsewhere, Esc or B on a controller.
+
+- **Where:** Pick an **object** (or a #tag) first, then this condition.
+- **ID:** `ui.onEndEdit` (as saved in project files)
+- **Parameters:** none
+
+### Is being typed in {/* #ui-istyping */}
+
+<span class="tge-ace-display">‹Object› is being typed in</span>
+
+True while the player is typing in this input field, e.g. to hold the character still.
+
+- **Where:** Pick an **object** (or a #tag) first, then this condition.
+- **ID:** `ui.isTyping` (as saved in project files)
 - **Parameters:** none
 
 ### Is selected {/* #ui-isselected */}
