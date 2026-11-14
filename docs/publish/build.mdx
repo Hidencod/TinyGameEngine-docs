@@ -123,7 +123,8 @@ A build with a **Steam App ID** is always a folder. It works with Steam once you
 2. Copy `redistributable_bin/win64/steam_api64.dll` from the SDK next to `My Game.exe`.
 3. To test, turn on **Steam test**, have Steam open and signed in, and run the .exe. Without the test file, a copy
    started outside Steam closes and Steam starts the game again, as Steam games do.
-4. Upload the folder (with the DLL, without `steam_appid.txt`) as your depot.
+4. Upload the folder (with the DLL, without `steam_appid.txt`) as your depot: [Upload to Steam](./steam-upload) goes
+   through it step by step.
 
 What reaches Steam:
 
@@ -215,7 +216,8 @@ The same as [Steam on Windows](#steam), with Valve's Linux library instead of th
 
 1. Copy `redistributable_bin/linux64/libsteam_api.so` from the Steamworks SDK next to `My-Game`.
 2. In Steamworks, add a **Linux** launch option whose executable is `My-Game`, and upload the folder as a Linux
-   depot. The Steam Deck uses the same depot.
+   depot ([Upload to Steam](./steam-upload#contentbuilder): upload it from Linux or WSL). The Steam Deck uses the
+   same depot.
 3. To test on a Linux PC, turn on **Steam test**, have Steam open and signed in, and run `My-Game`.
 
 Achievements, leaderboards, stats, rich presence, DLC, the player's name and language work as on Windows, and

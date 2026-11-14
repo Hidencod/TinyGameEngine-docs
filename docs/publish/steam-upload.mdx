@@ -1,0 +1,150 @@
+---
+title: Upload to Steam
+description: Put a Windows or Linux build of your game on Steam with Valve's SteamPipe tools, from the first upload to updates.
+---
+
+# Upload to Steam
+
+Your game goes to Steam as **depots**: one folder per platform, uploaded with Valve's **SteamPipe** tools. The editor
+makes the folders ([Build → Windows](./build#steam) and [Build → Linux](./build#linux-steam)). This page covers the
+rest, from setting up the app in Steamworks to putting a new version live. Valve's own guide,
+[Uploading to Steam](https://partner.steamgames.com/doc/sdk/uploading), has every option.
+
+## Before you start {/* #before */}
+
+- A **Steamworks** account at [partner.steamgames.com](https://partner.steamgames.com) and the **Steam Direct** fee
+  paid for the game. Steam then gives the game an **App ID**, such as `1234560`.
+- The **Steamworks SDK** (a free download there). You need two things from it: the Steam library for the game
+  (`redistributable_bin/`) and the upload tools (`tools/ContentBuilder/`).
+- Builds on **Free** open with the *Made with* splash; with **Pro** they don't.
+
+## 1. Set up the app in Steamworks {/* #setup */}
+
+Open your app in Steamworks (**App Admin**):
+
+1. **Installation → Depots.** Steam made one depot already, numbered App ID + 1 (`1234561`). Use it for Windows and
+   set its operating system to **Windows**. For Linux and the Steam Deck, **Add New Depot** (`1234562`) and set it
+   to **Linux + SteamOS**.
+2. **Installation → General Installation → Launch Options.** Add one per platform:
+
+   | Executable | Operating system |
+   | --- | --- |
+   | `My Game.exe` | Windows |
+   | `My-Game` | Linux + SteamOS |
+
+   Use your game's names: the Windows program is named after the game, the Linux one too with dashes for spaces.
+3. **Stats & Achievements**: add the achievements, stats and leaderboards with the names your game uses (each card's
+   **Steam ID** in Files → Services, or the names you give `game.steam.setStat`).
+4. Optional: [Steam Cloud saves](./build#steam-cloud).
+5. **Publish → Prepare for Publishing → Publish to Steam.** Steamworks changes do nothing until they are published.
+
+## 2. Make the builds {/* #builds */}
+
+In **Build → Windows** and **Build → Linux**, type the App ID, turn **Steam test** off and build. Unzip each and add
+Valve's library next to the program:
+
+- Windows: `redistributable_bin/win64/steam_api64.dll` next to `My Game.exe`.
+- Linux: `redistributable_bin/linux64/libsteam_api.so` next to `My-Game`.
+
+Check there is no `steam_appid.txt` in either folder: it is for testing only. Without it, a copy started outside
+Steam closes and Steam starts it, as Steam games do.
+
+## 3. Lay out ContentBuilder {/* #contentbuilder */}
+
+Copy `tools/ContentBuilder` from the SDK somewhere handy and put the builds in its `content` folder:
+
+```
+ContentBuilder/
+  builder/          steamcmd.exe (Windows)
+  builder_linux/    steamcmd.sh (Linux)
+  content/
+    windows/        what is inside the "My Game" folder: My Game.exe, steam_api64.dll, data/
+    linux/          what is inside the "My-Game" folder: My-Game, libsteam_api.so, data/, resources/…
+  output/           SteamPipe's logs and cache
+  scripts/          your build script
+```
+
+**Upload Linux builds from Linux.** A Linux game needs its program files marked as programs, and SteamPipe only
+records that when it uploads from Linux (or macOS). On Windows, use Ubuntu under
+[WSL](https://learn.microsoft.com/windows/wsl/install): unzip the Linux build there with `unzip` (which keeps the
+marks) and run `builder_linux/steamcmd.sh`. It uploads the Windows depot just as well, so one upload from Linux can
+send both. If your game is Windows-only, upload from Windows with `builder/steamcmd.exe`.
+
+## 4. Write the build script {/* #script */}
+
+Save this as `scripts/app_build_1234560.vdf`, with your App ID and depot numbers:
+
+```
+"AppBuild"
+{
+	"AppID" "1234560"
+	"Desc" "Version 1.0"
+	"ContentRoot" "../content/"
+	"BuildOutput" "../output/"
+	"Depots"
+	{
+		"1234561"
+		{
+			"FileMapping"
+			{
+				"LocalPath" "windows/*"
+				"DepotPath" "."
+				"Recursive" "1"
+			}
+		}
+		"1234562"
+		{
+			"FileMapping"
+			{
+				"LocalPath" "linux/*"
+				"DepotPath" "."
+				"Recursive" "1"
+			}
+		}
+	}
+}
+```
+
+- **Desc** is your note for the build; change it each time (`Version 1.1`).
+- Paths are relative to the script's folder. On Windows, backslashes work too.
+- A Windows-only game leaves out the second depot.
+
+## 5. Upload {/* #upload */}
+
+Valve suggests a separate Steam account just for uploading, with only the **Edit App Metadata** and **Publish App
+Changes To Steam** permissions (**Users & Permissions** in Steamworks). From the `builder_linux` folder (or
+`builder` on Windows, with `steamcmd.exe`):
+
+```
+./steamcmd.sh +login your_builder_account +run_app_build ../scripts/app_build_1234560.vdf +quit
+```
+
+The first time, it updates itself and asks for the account's password and **Steam Guard** code. When it ends with
+*Successfully finished AppID 1234560 build (BuildID …)*, the build is on Steam but not yet live. Updates only send the
+files that changed.
+
+## 6. Put it live and test {/* #live */}
+
+1. In Steamworks, **SteamPipe → Builds**: your build is at the top. To try it first, set it live on a beta branch
+   (**Manage Betas**, then pick the branch next to the build); to release it, pick **default**.
+2. **Preview Change → Set build live now.**
+3. Install the game from your Steam library as a player would, on Windows and on Linux or a Steam Deck, and check
+   that Steam starts it, achievements pop up and the game saves.
+
+To put a build live on a beta branch straight from the upload, add `"SetLive" "beta"` (your branch's name) under
+`"Desc"`. Steam does not let a script put a build live on **default**: that is always done in Steamworks.
+
+## 7. Release {/* #release */}
+
+Before the first release, Valve reviews your **store page** and your **build**, and the game shows as *Coming soon*
+for a while. The steps and times are in Valve's
+[review process](https://partner.steamgames.com/doc/store/review_process) and
+[release process](https://partner.steamgames.com/doc/store/releasing) guides. For the Steam Deck, Valve tests the
+game itself and gives it a compatibility rating; controls that work with a gamepad and text big enough on a 7-inch
+screen help it pass.
+
+## Updates {/* #updates */}
+
+1. Build again **from the same project** (saves are tied to it) with the same App ID, Steam test off.
+2. Replace the contents of `content/windows` and `content/linux`, keeping the Steam libraries.
+3. Change **Desc**, run the upload again, and set the new build live.
