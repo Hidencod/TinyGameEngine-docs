@@ -2531,6 +2531,16 @@
       "doc": "The player stopped typing in this Input Field (Enter, a tap elsewhere, Esc or B)."
     },
     {
+      "name": "onHTMLClick",
+      "args": "id, target",
+      "doc": "Something inside this HTML element was clicked. id is the id of the clicked part or the nearest one around it (empty if none); target is the element clicked."
+    },
+    {
+      "name": "onHTMLChange",
+      "args": "id, value, target",
+      "doc": "A form part inside this HTML element changed (a text box left, a box ticked, a list picked). value: the text, 1 / 0 for a checkbox, a number for a number or range input."
+    },
+    {
       "name": "onPointerDown",
       "args": "event",
       "doc": "The player pressed this UI element (needs Raycast Target). event: { x, y, entity }."

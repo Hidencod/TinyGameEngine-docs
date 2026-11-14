@@ -66,9 +66,11 @@ Define any of these; the engine calls them. `function update(dt)` and `export fu
 | `onCollisionEnd(other)` | This object stopped touching `other` | ✔ | |
 | `onTap()` | The player tapped this object | ✔ | |
 | `onClick()` | This UI button was tapped (game scripts get `onClick(button)` for every button) | ✔ | ✔ |
-| `onValueChanged(value)` | This slider moved (a number), this toggle switched (`true` / `false`), this dropdown's option was picked (its index) or this Input field was typed in (its text); game scripts get `onValueChanged(element, value)` | ✔ | ✔ |
+| `onValueChanged(value)` | This slider or scrollbar moved (a number), this toggle switched (`true` / `false`), this dropdown's option was picked (its index) or this Input field was typed in (its text); game scripts get `onValueChanged(element, value)` | ✔ | ✔ |
 | `onSubmit(text)` | Enter was pressed in this Input field (game scripts get `onSubmit(field, text)`) | ✔ | ✔ |
 | `onEndEdit(text)` | The player stopped typing in this Input field (game scripts get `onEndEdit(field, text)`) | ✔ | ✔ |
+| `onHTMLClick(id, target)` | Something inside this HTML element was clicked; `id` is the clicked part's id (game scripts get `onHTMLClick(element, id, target)`) | ✔ | ✔ |
+| `onHTMLChange(id, value, target)` | A form part inside this HTML element changed; `value` is its text, 1 / 0 for a checkbox, or a number (game scripts get `onHTMLChange(element, id, value, target)`) | ✔ | ✔ |
 | `onArrived()` | This object reached the point of its `entity.moveTo()` (game scripts get `onArrived(object)` for every object) | ✔ | ✔ |
 | `onDestroy()` | This object is about to be removed | ✔ | |
 | `onGameSaved(slot)` | The game was saved in a slot (`game.saveGame`, the *Save game* block) | ✔ | ✔ |

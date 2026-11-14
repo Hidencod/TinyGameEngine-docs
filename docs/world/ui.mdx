@@ -365,6 +365,20 @@ function start() {
 
 `entity.setHTML(markup)` replaces all of it.
 
+A script on the HTML element also gets two hooks. `id` is the `id` of the part clicked or changed, or of the nearest element around it that has one:
+
+```js
+function onHTMLClick(id, target) {
+  if (id === 'play') game.goToScene('Level 1');
+}
+
+function onHTMLChange(id, value, target) {
+  if (id === 'music') game.setVar('Music', value); // 1 or 0 for a checkbox
+}
+```
+
+A game script gets them for every HTML element, with the element first: `onHTMLClick(element, id, target)`.
+
 **Controllers**: a controller and the arrow keys cannot move into an HTML element. On a Steam Deck or a console, use the built-in buttons, toggles, dropdowns and input fields for anything the player must reach.
 
 ## Controller and keyboard {/* #controller */}
@@ -379,10 +393,12 @@ Menus work with a gamepad (and the Steam Deck's controls) or the keyboard, as Un
 | Left stick, D-pad, arrow keys (or WASD) | Moves to the nearest button or slider in that direction. Held, it repeats. |
 | **A**, **Enter** | Clicks the selected button (*On clicked* events and its **On Click ()** list run, as for a tap) switches the selected toggle, or opens the selected dropdown. |
 | Left / right on a slider | Changes its value by a tenth of its range, or by 1 with **Whole numbers** (up / down on a vertical slider). |
+| Along a scrollbar | Moves it a tenth, or one step with **Number of steps**. |
 
 - Nothing shows as selected until the controller or a key is used, and the selection hides again when the mouse moves or a finger touches the screen. Mouse and touch work as before.
 - When a panel closes and the selected button goes with it, the selection moves to the **First selected** of the canvas on top, or, if that one is hidden too, to the top-left button that can be selected. So a menu with several panels needs nothing more; to choose the button a panel opens on, use **Select** (events) or `selectUI()` (scripts) when you show it.
 - New buttons and sliders turn amber when selected, so the player sees where they are on a TV or a Steam Deck. Change **Selected color** (or use a **Selected image**) to fit your game. Buttons made before this have no selected color of their own and use the highlighted one.
+- In a [Scroll View](#scroll-view), the list scrolls to show the selected button when it is out of sight, so a controller can go down a long list. Selecting one with **Select** or `selectUI()` does the same.
 - Only canvases with a **First selected** take part, so a HUD's buttons are never selected by accident. **Navigation: None** leaves out one button.
 - The same stick and keys still reach your game, so when a pause menu is open, stop the player from moving (for example with *Set time scale* to 0; menus keep working while the game is paused).
 
