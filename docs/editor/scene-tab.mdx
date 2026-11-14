@@ -98,6 +98,7 @@ The on-screen controls shown while playing (also in [Project settings](./project
 | --- | --- |
 | **Joystick** | Show the virtual joystick. It drives the Platformer, Top-down and Car behaviors and the `joystickX` / `joystickY` values. |
 | **Joystick side** | Left or Right. The buttons go on the other side. |
+| **Move** | The keys for **Up**, **Down**, **Left** and **Right**: the joystick's keyboard side. W A S D and the arrow keys unless you change them. |
 | **Buttons** | Round on-screen buttons. Each has a **Name** used by events and scripts (e.g. `jump`), a **Label** shown on it (e.g. `A`), a **Color**, the **Keys** and **Gamepad** button that press it, and **On screen** (off = a keyboard / gamepad only button, e.g. `pause` on Esc). **Add button** adds one; 🗑 deletes it. Events can hide a button until it's useful and change its label with *Show*, *Hide* and *Set label* under **Input** — the same names as for UI buttons — see [getting into a boat](../behaviors#boat). |
 
 <Side shot="controls-card" crop>
@@ -120,7 +121,31 @@ A new button gets keys that suit its name — `use` / `interact`: **E** and **X*
 
 | Condition | Action |
 | --- | --- |
+The simplest prompt is `<prompt=jump>` in any UI text, e.g. `Press <prompt=jump> to jump`. It draws the button's key as a key cap (**Space**), its gamepad button in its Xbox colours (a green **A**), or its on-screen label on a touch screen, and changes by itself when the player switches device or rebinds the button. `<prompt=move>` shows **WASD** or the left stick. In expressions, `prompt("jump")` is the same as text (`"Space"`, `"A"`).
+
+For anything else, use the device itself:
+
+| Condition | Action |
+| --- | --- |
 | *On input device changed* · *Input device is gamepad* | *Set* HintText *label to* `"Press A to jump"` |
 | *On input device changed* · *Input device is keyboard* | *Set* HintText *label to* `"Press Space to jump"` |
 
 Run the same actions in *On start of scene* too, so the prompt is right before the first switch.
+
+### Players' own controls (rebinding) {/* #rebinding */}
+
+A settings menu can let players choose their own keys and gamepad buttons, as Unity's Input System rebinding does:
+
+| Event | What it does |
+| --- | --- |
+| **Rebind control** (action) | Waits for the player to press the new key for a button (`jump`) or a Move direction (`moveUp`, `moveDown`, `moveLeft`, `moveRight`). **Device**: *in use* (what the player is using now), *keyboard* or *gamepad*. **Esc** cancels. |
+| **Is waiting for a key** (condition) | While it waits: show "Press a key…". |
+| **On control rebound** ⚡ (condition) | The player chose a new key. |
+| **Stop waiting for a key** (action) | Cancels it. |
+| **Reset controls** (action) | Back to the game's own keys: one button, or all when left empty. |
+
+A typical row in a settings menu: a **Button** whose label is `Jump  <prompt=jump>`, and the event *On clicked* JumpButton → *Rebind control* `jump`. While it waits the prompt shows **…**, then the new key.
+
+- If another button had that key, the two swap, so one key never does two things.
+- A player's choices are kept on their device and apply every time the game starts.
+- In scripts: `await input.rebind('jump')` (true when rebound), `input.rebinding`, `input.cancelRebind()`, `input.resetBindings()`, `input.bindingOf('jump')`, `input.setBinding('jump', { keys: ['KeyK'] })`, `input.prompt('jump')`.

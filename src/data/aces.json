@@ -2847,6 +2847,66 @@
       ]
     },
     {
+      "id": "input.isRebinding",
+      "kind": "condition",
+      "category": "Input",
+      "label": "Is waiting for a key",
+      "hint": "After Rebind control",
+      "display": "Waiting for a key for {button}",
+      "displayNoObject": null,
+      "icon": "⌨️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "input",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "button",
+          "label": "Control (empty: any)",
+          "type": "string",
+          "options": null,
+          "default": "",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "input.onRebound",
+      "kind": "condition",
+      "category": "Input",
+      "label": "On control rebound",
+      "hint": "The player chose a new key",
+      "display": "On {button} rebound",
+      "displayNoObject": null,
+      "icon": "⌨️",
+      "description": "",
+      "isTrigger": true,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "input",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "button",
+          "label": "Control (empty: any)",
+          "type": "string",
+          "options": null,
+          "default": "",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "input.joystickMoving",
       "kind": "condition",
       "category": "Input",
@@ -2966,6 +3026,108 @@
           "type": "key",
           "options": null,
           "default": "Space",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "input.rebind",
+      "kind": "action",
+      "category": "Input",
+      "label": "Rebind control",
+      "hint": "Wait for the player's new key",
+      "display": "Rebind {button} ({device})",
+      "displayNoObject": null,
+      "icon": "⌨️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "input",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "button",
+          "label": "Control (a button, or moveUp / moveDown / moveLeft / moveRight)",
+          "type": "string",
+          "options": null,
+          "default": "jump",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "device",
+          "label": "Device",
+          "type": "choice",
+          "options": [
+            {
+              "value": "in use",
+              "label": "in use"
+            },
+            {
+              "value": "keyboard",
+              "label": "keyboard"
+            },
+            {
+              "value": "gamepad",
+              "label": "gamepad"
+            }
+          ],
+          "default": "in use",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "input.cancelRebind",
+      "kind": "action",
+      "category": "Input",
+      "label": "Stop waiting for a key",
+      "hint": "Cancel Rebind control",
+      "display": "Stop waiting for a key",
+      "displayNoObject": null,
+      "icon": "⌨️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "input",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "input.resetControls",
+      "kind": "action",
+      "category": "Input",
+      "label": "Reset controls",
+      "hint": "Back to the game's own keys",
+      "display": "Reset controls {button}",
+      "displayNoObject": null,
+      "icon": "↩️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "input",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "button",
+          "label": "Control (empty: all)",
+          "type": "string",
+          "options": null,
+          "default": "",
           "optional": false,
           "hint": null,
           "varScope": null

@@ -526,6 +526,13 @@
       "insert": "steamlanguage()"
     },
     {
+      "name": "prompt",
+      "signature": "prompt(control, device?)",
+      "description": "The key or gamepad button of a control button on the device in use: \"Space\", \"A\"; \"move\" gives WASD. In UI text, <prompt=jump> draws it as a key cap or a gamepad button",
+      "category": "Input",
+      "insert": "prompt(\"jump\")"
+    },
+    {
       "name": "inputdevice",
       "signature": "inputdevice()",
       "description": "What the player used last: \"gamepad\", \"keyboard\" (keys or mouse) or \"touch\"",

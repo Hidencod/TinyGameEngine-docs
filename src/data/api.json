@@ -1537,6 +1537,60 @@
           "doc": "True for the one frame the device changes: update button prompts then."
         },
         {
+          "name": "prompt",
+          "kind": "method",
+          "sig": "(action, device?)",
+          "type": "string",
+          "doc": "The button prompt for a control button on the device in use: \"Space\", \"A\", \"WASD\" for \"move\". In UI text, <prompt=jump> draws it as a key cap or a gamepad button."
+        },
+        {
+          "name": "rebind",
+          "kind": "method",
+          "sig": "(action, device?)",
+          "type": "Promise<boolean>",
+          "doc": "Wait for the player to press a new key (or gamepad button) for a control button or \"moveUp\"/\"moveDown\"/\"moveLeft\"/\"moveRight\". Escape cancels. Kept on this device."
+        },
+        {
+          "name": "rebinding",
+          "kind": "property",
+          "type": "string|null",
+          "doc": "The action waiting for a key, or null."
+        },
+        {
+          "name": "rebound",
+          "kind": "property",
+          "type": "string|null",
+          "doc": "The action rebound this frame, or null."
+        },
+        {
+          "name": "cancelRebind",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Stop waiting for a key."
+        },
+        {
+          "name": "bindingOf",
+          "kind": "method",
+          "sig": "(action)",
+          "type": "{keys, pad}",
+          "doc": "The keys and gamepad button an action has now."
+        },
+        {
+          "name": "setBinding",
+          "kind": "method",
+          "sig": "(action, {keys?, pad?})",
+          "type": "void",
+          "doc": "Give an action these keys / gamepad button (kept on this device)."
+        },
+        {
+          "name": "resetBindings",
+          "kind": "method",
+          "sig": "(action?)",
+          "type": "void",
+          "doc": "Back to the game's own controls: one action, or all."
+        },
+        {
           "name": "isDown",
           "kind": "method",
           "sig": "(name)",
