@@ -152,6 +152,26 @@ The **Steam overlay** works as in other Steam games: **Shift+Tab** opens it over
 show in the corner. Pause the game while it is open: the **Steam overlay is open** condition, or
 `game.steam.overlayOpen`. **Open Steam overlay** (or `game.steam.openOverlay("achievements")`) opens it from a button.
 
+### Steam Cloud saves {/* #steam-cloud */}
+
+A game's saves ([save slots](../logic/variables#save-slots), `localStorage`, IndexedDB) stay on one PC unless Steam
+copies them. Steam's **Auto-Cloud** does that with no code in the game: in Steamworks, **App Admin → Steam Cloud**, set
+a byte and file quota (10 MB and 100 files are plenty), then add these **Root Paths** (`*` as the pattern, with
+**Recursive** on). `<save id>` is the folder name the build uses: the game's name and its project ID, as in
+`My-Game-k3f9x2a1b7c0`. Run the game once and look in the folder to copy it exactly.
+
+| OS | Root | Subdirectory |
+| --- | --- | --- |
+| Windows | `WinAppDataRoaming` | `<save id>/EBWebView/Default/Local Storage` |
+| Windows | `WinAppDataRoaming` | `<save id>/EBWebView/Default/IndexedDB` |
+| Linux | `LinuxXdgConfigHome` | `<save id>/Local Storage` |
+| Linux | `LinuxXdgConfigHome` | `<save id>/IndexedDB` |
+
+Copy only these two folders: the rest of the save folder is caches that would fill the quota. Keep the Windows and
+Linux paths apart (no root overrides): the two players store saves in slightly different formats. Publish the
+Steamworks changes, and Steam downloads the saves when the game starts and uploads them when it quits. The project
+ID must stay the same between versions, so keep building from the same project.
+
 ### Windows warnings {/* #windows-warnings */}
 
 The .exe is not code-signed, and every build is a new file Windows has not seen before, so players may meet a warning
@@ -202,7 +222,8 @@ Achievements, leaderboards, stats, rich presence, DLC, the player's name and lan
 `game.steam.onSteamDeck` tells the Deck apart. On the Steam Deck the **Steam button** opens the overlay, and
 **Open Steam overlay** works too. On a Linux PC the overlay does not open: it cannot take the game's mouse and keys, so a player could not close it. `game.steam.overlayOpen`
 stays false. Tested with Steam's Linux runtime (the container the Deck runs games in). If Steam is off,
-`game.steam.error` says why (`libsteam_api.so is not next to the game`, Steam not running…).
+`game.steam.error` says why (`libsteam_api.so is not next to the game`, Steam not running…). To keep saves on every
+PC and the Deck, set up [Steam Cloud](#steam-cloud).
 
 ## While it builds
 
