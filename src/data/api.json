@@ -359,6 +359,20 @@
           "doc": "Grey a button or slider out, or turn it back on (Interactable)."
         },
         {
+          "name": "selectUI",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Choose this button or slider for the controller and arrow keys, e.g. when a menu opens (Unity Select())."
+        },
+        {
+          "name": "isUISelected",
+          "kind": "method",
+          "sig": "()",
+          "type": "boolean",
+          "doc": "Is this button or slider the one the controller or arrow keys have chosen?"
+        },
+        {
           "name": "getUIPosition",
           "kind": "method",
           "sig": "()",

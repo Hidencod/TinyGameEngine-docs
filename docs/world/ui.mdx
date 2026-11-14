@@ -49,6 +49,7 @@ Every UI element lives inside a **Canvas**, which decides where the UI is drawn.
 | --- | --- |
 | **Render mode** | **Screen Space - Overlay**: flat on top of the game. **World Space**: a panel in the scene. |
 | **Sort order** | A higher canvas is drawn on top of a lower one. |
+| **First selected** | The button or slider a controller or the arrow keys start from. None: this canvas's UI works with the mouse and touch only. See [Controller and keyboard](#controller). |
 
 ### Canvas Scaler
 
@@ -153,7 +154,8 @@ For sliders, and for anything with a **Button** component (see [Buttons](#button
 | Field | What it does |
 | --- | --- |
 | **Interactable** | Off greys it out and it takes no input. |
-| **Transition** | How it reacts: **None**, **Color tint** (colors for normal, highlighted, pressed and disabled, with a **Color multiplier** and **Fade duration**) or **Sprite swap** (a different picture for highlighted, pressed and disabled). |
+| **Transition** | How it reacts: **None**, **Color tint** (colors for normal, highlighted, pressed, selected and disabled, with a **Color multiplier** and **Fade duration**) or **Sprite swap** (a different picture for highlighted, pressed, selected and disabled). *Selected* is how it looks when a controller or the arrow keys have chosen it; left alone it is the highlighted look. |
+| **Navigation** | **Automatic**: a controller or the arrow keys can move to it. **None**: they skip it. |
 
 ### Sprite sheets in an Image
 
@@ -192,6 +194,25 @@ function openDoor(speed) {
 Choose *Door → Door script → openDoor()* with the argument `2` and the button opens the door. The same click still triggers *On clicked* events and the script's own `onClick()`.
 
 Old projects are converted when they open: each button becomes an Image with a Button component, and a label it drew itself becomes a child Text.
+
+## Controller and keyboard {/* #controller */}
+
+Menus work with a gamepad (and the Steam Deck's controls) or the keyboard, as Unity's EventSystem does:
+
+1. Select the **Canvas** and set **First selected** to the button the menu starts on (*Play*).
+2. That's it. Every button and slider on that canvas can now be reached.
+
+| Input | What it does |
+| --- | --- |
+| Left stick, D-pad, arrow keys (or WASD) | Moves to the nearest button or slider in that direction. Held, it repeats. |
+| **A**, **Enter** | Clicks the selected button: *On clicked* events and its **On Click ()** list run, as for a tap. |
+| Left / right on a slider | Changes its value by a tenth of its range, or by 1 with **Whole numbers** (up / down on a vertical slider). |
+
+- Nothing shows as selected until the controller or a key is used, and the selection hides again when the mouse moves or a finger touches the screen. Mouse and touch work as before.
+- When a panel closes and the selected button goes with it, the selection moves to the **First selected** of the canvas on top, or, if that one is hidden too, to the top-left button that can be selected. So a menu with several panels needs nothing more; to choose the button a panel opens on, use **Select** (events) or `selectUI()` (scripts) when you show it.
+- Give **Selected color** (or **Selected image**) a look that stands out: the default is as faint as the highlighted one, and on a TV or a Steam Deck the player needs to see where they are.
+- Only canvases with a **First selected** take part, so a HUD's buttons are never selected by accident. **Navigation: None** leaves out one button.
+- The same stick and keys still reach your game, so when a pause menu is open, stop the player from moving (for example with *Set time scale* to 0; menus keep working while the game is paused).
 
 ## Layout groups
 
@@ -297,8 +318,8 @@ Screens that start hidden are still shown in the editor when you select them or 
 
 ## UI in events and expressions
 
-- Conditions: **On clicked** ⚡, **Is held down**, **Compare slider value**, **On value changed** ⚡.
-- Actions: **Show**, **Hide**, **Show / hide**, **Set label**, **Set position**, **Set size**, **Set anchors**, **Set pivot**, **Move to element**, **Put inside**, **Set slider value**, **Add to slider value**, **Set slider maximum / minimum**, **Enable / disable**, **Set image**, **Set font**, **Set background color**, **Set text color**, **Set bar color**.
+- Conditions: **On clicked** ⚡, **Is held down**, **Is selected**, **Compare slider value**, **On value changed** ⚡.
+- Actions: **Show**, **Hide**, **Show / hide**, **Set label**, **Set position**, **Set size**, **Set anchors**, **Set pivot**, **Move to element**, **Put inside**, **Set slider value**, **Add to slider value**, **Set slider maximum / minimum**, **Enable / disable**, **Select**, **Set image**, **Set font**, **Set background color**, **Set text color**, **Set bar color**.
   - **Move to element** puts the object's pivot on the middle of another element, plus an offset: a tooltip next to the slot you pressed, a marker on a map icon. It works from where both are drawn, so any anchors and scaling are fine.
   - **Put inside** moves an element into another (a slot into a panel, an item into a list). **Attach to** and **Detach** also work on UI elements.
 - Expressions: `HealthBar.value`, `HealthBar.min`, `HealthBar.max`, `PlayButton.pressed`, `ScoreText.text`.
@@ -315,6 +336,8 @@ entity.setText('HP');                          // text, or a button's label
 entity.setUIFont('Kenney Pixel');              // a font in Files, by name ('' = the default font)
 entity.setUIValue(entity.getUIValue() - 10);   // a slider's value
 entity.setUIInteractable(false);               // grey a button or slider out
+entity.selectUI();                             // the button a controller or the arrow keys are on
+if (entity.isUISelected()) { /* show its tooltip */ }
 
 // The layout is Unity's Rect Transform. Pixels are reference-resolution pixels, Y counts up.
 const rect = entity.component('ui');

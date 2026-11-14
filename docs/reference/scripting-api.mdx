@@ -107,6 +107,8 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `setUIFont(assetName)` | `void` | Change the font of a UI element's text ('' = the default font). |
 | `setUIColors({ background, text, fill })` | `void` | Change UI colors, e.g. &#123; background: "#ff0000" &#125;. |
 | `setUIInteractable(on)` | `void` | Grey a button or slider out, or turn it back on (Interactable). |
+| `selectUI()` | `void` | Choose this button or slider for the controller and arrow keys, e.g. when a menu opens (Unity Select()). |
+| `isUISelected()` | `boolean` | Is this button or slider the one the controller or arrow keys have chosen? |
 | `getUIPosition()` | `{x, y}` | Where a UI element sits: its anchored position in canvas pixels from its anchor. |
 | `setUIPosition(x, y)` | `void` | Move a UI element to this anchored position (canvas px). Leave an axis out (undefined) to keep it. |
 | `isUI()` | `boolean` | Is this object a UI element (has a Rect Transform)? |

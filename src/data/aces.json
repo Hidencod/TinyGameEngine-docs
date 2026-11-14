@@ -10272,6 +10272,25 @@
       "params": []
     },
     {
+      "id": "ui.isSelected",
+      "kind": "condition",
+      "category": "UI",
+      "label": "Is selected",
+      "hint": "Chosen with a controller or the arrow keys",
+      "display": "{object} is selected",
+      "displayNoObject": null,
+      "icon": "🎮",
+      "description": "True while a controller or the arrow keys have chosen this button or slider (show its tooltip, play a sound).",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
       "id": "ui.compareValue",
       "kind": "condition",
       "category": "UI",
@@ -10891,6 +10910,25 @@
           "varScope": null
         }
       ]
+    },
+    {
+      "id": "ui.select",
+      "kind": "action",
+      "category": "UI",
+      "label": "Select",
+      "hint": "For the controller and arrow keys",
+      "display": "Select {object}",
+      "displayNoObject": null,
+      "icon": "🎮",
+      "description": "Choose the button or slider a controller or the arrow keys are on, e.g. the first button of a panel you just opened.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
     },
     {
       "id": "ui.setImage",

@@ -1,0 +1,65 @@
+---
+title: Steam Deck
+description: What Valve checks before calling a game Steam Deck Verified, and how to get a Tiny Game Engine game there.
+---
+
+# Steam Deck
+
+A game for the Steam Deck is a [Linux build](./build#linux) uploaded to its **Linux + SteamOS** depot
+([Upload to Steam](./steam-upload)). Once the game is on Steam, Valve tests it on a Deck and gives it a rating:
+
+| Rating | Means |
+| --- | --- |
+| **Verified** | Works well with the Deck's own controls and screen. |
+| **Playable** | Works, but the player has to do something extra, such as use the touchscreen for a menu. |
+| **Unsupported** | Does not work on the Deck. |
+
+Valve's list of what it checks is in [Steam Deck compatibility review](https://partner.steamgames.com/doc/steamhardware/compat).
+It covers four areas; here is how each applies to your game.
+
+## Input {/* #input */}
+
+The Deck's buttons, sticks and D-pad reach the game as a gamepad, the same one an Xbox controller is on a PC.
+
+- **Gameplay**: movement (`axis`), looking around (`look`) and the gamepad buttons (`PadA`, `PadB`…, as keys in
+  events and `game.input.isDown('PadA')` in scripts) work with it already. The A, B, X and Y buttons also press on-screen
+  buttons 1 to 4.
+- **Menus**: the player must be able to use every menu without the touchscreen. Give each menu canvas a
+  **First selected** ([Controller and keyboard](../world/ui#controller)): the D-pad or stick then moves between
+  buttons and **A** clicks. A menu that only works by touch makes the game *Playable*, not *Verified*.
+- **Button prompts**: if your game shows which button to press, show gamepad buttons while one is in use, never
+  keyboard keys. `game.input.gamepad` turns true once a gamepad has been used. Valve accepts Xbox-style prompts, and
+  the Deck's A, B, X and Y are where an Xbox controller's are.
+- **Steam Input**: in Steamworks, set the game's default controller layout to a **gamepad** one (Steam Input settings),
+  so the Deck's controls arrive as a gamepad.
+- **Typing**: the UI has no text box, so there is no on-screen keyboard to bring up.
+
+## Display {/* #display */}
+
+- The Deck's screen is **1280 × 800**. In **Build → Linux**, choose that window size. The Canvas Scaler fits the UI
+  to it; a 16:10 screen shows a little more than 16:9 at the edges, so keep the UI anchored to the corners and edges it
+  belongs to.
+- Valve wants all text readable on the 7-inch screen: at least 9 pixels tall at 1280 × 800, and 12 if you can.
+  Check your smallest text in a 1280 × 800 window, above all on canvases set to **Constant pixel size**.
+- On the Deck, Steam shows the game full screen by itself.
+
+## Seamlessness {/* #seamlessness */}
+
+No launcher, no warnings about the device: Steam starts the game straight away, and **Steam button → Exit game**
+closes it. Nothing to do here.
+
+## System support {/* #system */}
+
+- The Linux build runs natively in Steam's Linux runtime, the container the Deck runs native games in.
+- The **Steam button** opens the overlay, and achievements, stats, leaderboards and the player's name work as on
+  Windows ([Steam on Linux](./build#linux-steam)).
+- To carry saves between a PC and the Deck, set up [Steam Cloud](./build#steam-cloud).
+- Use `game.steam.onSteamDeck` for anything only the Deck needs (a different default quality level, say).
+
+## Testing without a Deck {/* #testing */}
+
+1. Build for Windows or Linux with a **1280 × 800** window.
+2. Plug in a gamepad and put the mouse away.
+3. Play from the title screen to the end: every menu, pause screen and dialog must work with the gamepad alone, and
+   the selected button must be easy to see.
+4. Read the smallest text from arm's length.
