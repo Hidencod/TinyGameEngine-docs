@@ -35,6 +35,11 @@
     "kind": "input"
   },
   {
+    "id": "html",
+    "name": "HTML",
+    "kind": "html"
+  },
+  {
     "id": "panel",
     "name": "Panel",
     "kind": "panel"

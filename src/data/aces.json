@@ -10900,6 +10900,307 @@
       ]
     },
     {
+      "id": "ui.onHTMLClick",
+      "kind": "condition",
+      "category": "UI",
+      "label": "On HTML clicked",
+      "hint": "HTML element: a CSS selector such as \"#buy\" or \".item\"; empty for anywhere",
+      "display": "On {object} HTML {selector} clicked",
+      "displayNoObject": null,
+      "icon": "🌐",
+      "description": "Runs when something in an HTML element is clicked. The selector picks what: \"#buy\", \".item\", or empty for anywhere.",
+      "isTrigger": true,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": true,
+      "isWait": false,
+      "params": [
+        {
+          "id": "selector",
+          "label": "Selector",
+          "type": "expression",
+          "options": null,
+          "default": "\"\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.onHTMLChange",
+      "kind": "condition",
+      "category": "UI",
+      "label": "On HTML changed",
+      "hint": "HTML element: a text box, checkbox or list in it changed",
+      "display": "On {object} HTML {selector} changed",
+      "displayNoObject": null,
+      "icon": "🌐",
+      "description": "Runs when a text box, checkbox or list inside an HTML element is changed.",
+      "isTrigger": true,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": true,
+      "isWait": false,
+      "params": [
+        {
+          "id": "selector",
+          "label": "Selector",
+          "type": "expression",
+          "options": null,
+          "default": "\"\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.setHTMLContent",
+      "kind": "action",
+      "category": "UI",
+      "label": "Set HTML content",
+      "hint": "HTML element: as text it shows exactly what it is given (safe for names players type)",
+      "display": "Set {object} HTML {selector} to {content} as {as}",
+      "displayNoObject": null,
+      "icon": "🌐",
+      "description": "Set the content of part of an HTML element. As text is safe for anything a player typed; as HTML it becomes markup.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "selector",
+          "label": "Selector",
+          "type": "expression",
+          "options": null,
+          "default": "\"\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "content",
+          "label": "Content",
+          "type": "expression",
+          "options": null,
+          "default": "\"Hello\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "as",
+          "label": "As",
+          "type": "choice",
+          "options": [
+            {
+              "value": "text",
+              "label": "Text"
+            },
+            {
+              "value": "html",
+              "label": "HTML"
+            }
+          ],
+          "default": "text",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.setHTMLAttribute",
+      "kind": "action",
+      "category": "UI",
+      "label": "Set HTML attribute",
+      "hint": "HTML element: src, href, value, disabled…",
+      "display": "Set {object} HTML {selector} attribute {name} to {value}",
+      "displayNoObject": null,
+      "icon": "🌐",
+      "description": "Set or remove an attribute of part of an HTML element, e.g. an image's src or a button's disabled.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "selector",
+          "label": "Selector",
+          "type": "expression",
+          "options": null,
+          "default": "\"\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "name",
+          "label": "Attribute",
+          "type": "expression",
+          "options": null,
+          "default": "\"title\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "expression",
+          "options": null,
+          "default": "\"\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "mode",
+          "label": "Do",
+          "type": "choice",
+          "options": [
+            {
+              "value": "set",
+              "label": "Set"
+            },
+            {
+              "value": "remove",
+              "label": "Remove"
+            }
+          ],
+          "default": "set",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.setHTMLStyle",
+      "kind": "action",
+      "category": "UI",
+      "label": "Set HTML style",
+      "hint": "HTML element: one CSS property, e.g. \"color\" \"red\"",
+      "display": "Set {object} HTML {selector} style {property} to {value}",
+      "displayNoObject": null,
+      "icon": "🌐",
+      "description": "Set one CSS property on part of an HTML element.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "selector",
+          "label": "Selector",
+          "type": "expression",
+          "options": null,
+          "default": "\"\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "property",
+          "label": "Property",
+          "type": "expression",
+          "options": null,
+          "default": "\"color\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "expression",
+          "options": null,
+          "default": "\"red\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.setHTMLClass",
+      "kind": "action",
+      "category": "UI",
+      "label": "Set HTML class",
+      "hint": "HTML element: add, remove or switch a CSS class",
+      "display": "{mode} class {name} on {object} HTML {selector}",
+      "displayNoObject": null,
+      "icon": "🌐",
+      "description": "Add, remove or switch a CSS class on part of an HTML element.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "selector",
+          "label": "Selector",
+          "type": "expression",
+          "options": null,
+          "default": "\"\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "name",
+          "label": "Class",
+          "type": "expression",
+          "options": null,
+          "default": "\"active\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "mode",
+          "label": "Do",
+          "type": "choice",
+          "options": [
+            {
+              "value": "add",
+              "label": "Add"
+            },
+            {
+              "value": "remove",
+              "label": "Remove"
+            },
+            {
+              "value": "switch",
+              "label": "Switch"
+            }
+          ],
+          "default": "add",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "ui.setOption",
       "kind": "action",
       "category": "UI",

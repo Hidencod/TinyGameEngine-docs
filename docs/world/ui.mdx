@@ -26,6 +26,7 @@ The UI follows Unity's uGUI on purpose, with the same names: **Canvas**, **Canva
 | 🔽 **Dropdown** | A list to pick one option from: quality, language, resolution. See [Dropdowns](#dropdowns). |
 | 📊 **Slider** | A bar, or a value you can drag: health, energy, volume. |
 | ⌨️ **Input field** | A box the player types in: a name, a chat line, a code. See [Input fields](#input-field). |
+| 🌐 **HTML** | Your own HTML and CSS: forms, tables, rich text. See [HTML element](#html). |
 | 🪟 **Panel** | A box that holds other UI elements. |
 | 📱 **Screen (menu)** | A full-screen panel: title screen, pause menu, game over. |
 | 🖼️ **Canvas** | The surface the UI is drawn on. Made for you with the first element. |
@@ -309,6 +310,43 @@ function onSubmit(text) {
 ```
 
 **With a controller**: select the box (see below) and press **A** to type; **B** stops. On the Steam Deck, and on a PC in Steam's Big Picture mode, Steam's on-screen keyboard opens next to the box, as Valve requires for games that ask for text.
+
+## HTML element {/* #html */}
+
+An **HTML element** draws your own HTML and CSS, like Construct's HTML element. Use it for what the built-in UI does not have: a form with many fields, a table, rich text with links, an embedded video. **＋ Add → UI → HTML** makes one with a small card to start from.
+
+| Field (UI card → HTML) | What it does |
+| --- | --- |
+| **HTML** | The markup. |
+| **CSS** | Styles for that markup only. They cannot change the rest of your UI or the editor, and the rest cannot change them. The element's Text color and Font are inherited. |
+
+The element is placed with its Rect Transform like any other, and **Raycast target** decides whether it takes taps. Taps and typing inside it never reach the game, so a key typed in its text box does not move the player.
+
+In the editor the markup is drawn without scripts or `on…` handlers, so opening a project never runs its code. In the game it runs as written.
+
+| Event | When |
+| --- | --- |
+| **On HTML clicked** ⚡ | Something the CSS selector names was clicked, or something inside it: `"#buy"`, `".item"`, `"button"`. Leave it empty for anywhere. |
+| **On HTML changed** ⚡ | A text box, checkbox or list the selector names was changed. |
+| **Set HTML content** (action) | Sets the content of what the selector names. **As text** shows exactly what it is given, so a name a player typed can never become markup. **As HTML** uses it as markup. With an empty selector it replaces the whole element. |
+| **Set HTML attribute** / **Set HTML style** / **Set HTML class** (actions) | Set or remove an attribute (`src`, `disabled`), set one CSS property, or add, remove or switch a class. |
+
+Expressions: `Form.htmlValue("#name")` (a text box's or list's value, 1 or 0 for a checkbox), `Form.htmlText("#score")`, `Form.htmlAttr("#pic", "src")`, and `Form.htmlClickedId()`, the `id` of what was clicked (or of the nearest element around it that has one).
+
+In scripts, `entity.htmlRoot` is the element's shadow root, so the whole DOM API is there:
+
+```js
+// On the Form HTML element
+function start() {
+  entity.htmlRoot.querySelector('#name').addEventListener('input', (e) => {
+    game.setVar('PlayerName', e.target.value);
+  });
+}
+```
+
+`entity.setHTML(markup)` replaces all of it.
+
+**Controllers**: a controller and the arrow keys cannot move into an HTML element. On a Steam Deck or a console, use the built-in buttons, toggles, dropdowns and input fields for anything the player must reach.
 
 ## Controller and keyboard {/* #controller */}
 

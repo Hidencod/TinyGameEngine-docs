@@ -422,6 +422,20 @@
           "doc": "Dropdown: add an option at the end."
         },
         {
+          "name": "htmlRoot",
+          "kind": "method",
+          "sig": "",
+          "type": "ShadowRoot | null",
+          "doc": "HTML element: the shadow root its markup is drawn in, e.g. entity.htmlRoot.querySelector(\"#name\").value or .addEventListener(\"input\", …)."
+        },
+        {
+          "name": "setHTML",
+          "kind": "method",
+          "sig": "(html: string)",
+          "type": "void",
+          "doc": "HTML element: replace all its markup (the CSS stays)."
+        },
+        {
           "name": "getUIPosition",
           "kind": "method",
           "sig": "()",

@@ -119,6 +119,8 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `getUIOptions()` | `string[]` | Dropdown: its options' texts. getUIValue() is the chosen one's index, getText() its text. |
 | `setUIOptions(options: string[])` | `void` | Dropdown: replace its options (a resolution list, save slots). |
 | `addUIOption(text: string)` | `void` | Dropdown: add an option at the end. |
+| `htmlRoot` | `ShadowRoot \| null` | HTML element: the shadow root its markup is drawn in, e.g. entity.htmlRoot.querySelector("#name").value or .addEventListener("input", …). |
+| `setHTML(html: string)` | `void` | HTML element: replace all its markup (the CSS stays). |
 | `getUIPosition()` | `{x, y}` | Where a UI element sits: its anchored position in canvas pixels from its anchor. |
 | `setUIPosition(x, y)` | `void` | Move a UI element to this anchored position (canvas px). Leave an axis out (undefined) to keep it. |
 | `isUI()` | `boolean` | Is this object a UI element (has a Rect Transform)? |
