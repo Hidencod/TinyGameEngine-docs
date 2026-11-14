@@ -23,6 +23,7 @@ The UI follows Unity's uGUI on purpose, with the same names: **Canvas**, **Canva
 | 🔲 **Button** | A tappable button: Start, Pause, Retry… An Image with a **Button** component and a Text inside it for the label. |
 | ☑️ **Toggle** | A checkbox, or radio buttons with a Toggle group. See [Toggles](#toggles). |
 | 🖼️ **Image** | An icon or picture. |
+| 🔽 **Dropdown** | A list to pick one option from: quality, language, resolution. See [Dropdowns](#dropdowns). |
 | 📊 **Slider** | A bar, or a value you can drag: health, energy, volume. |
 | ⌨️ **Input field** | A box the player types in: a name, a chat line, a code. See [Input fields](#input-field). |
 | 🪟 **Panel** | A box that holds other UI elements. |
@@ -238,6 +239,41 @@ For radio buttons, add a **Toggle group** component to an object (often the pane
 
 When the scene starts, a group fixes itself as Unity's does: if several are on, the first keeps it; if none is on and switching off isn't allowed, the first one turns on.
 
+## Dropdowns {/* #dropdowns */}
+
+A **Dropdown** lets the player pick one option from a list: quality, language, resolution, a save slot. Like a button it is a *component*: **＋ Add → UI → Dropdown** makes a white box with a Dropdown component, a **Label** that shows the chosen option and an **Arrow**. A tap (or **A** / **Enter** on the selected dropdown) opens the list under the box, or above it when there is no room below. Tapping an option picks it; tapping anywhere else closes the list, and that tap goes no further.
+
+| Field (Dropdown card) | What it does |
+| --- | --- |
+| **Caption text** | The Text that shows the chosen option: the Label. |
+| **Value** | The option chosen at the start. |
+| **Options** | The list, in order. **＋ Add** adds one; **↑** moves one up; **×** removes it. |
+| **List** | How the open list looks: **Item height**, **Max height** (a longer list scrolls), **Font size**, **List color**, **Text color** and **Highlight color** (the row under the mouse or the controller). The font is the caption's. |
+| **Interaction** | Interactable, Transition and Navigation, as for a button. |
+| **On Value Changed (Int32)** | A list run every time another option is picked. A function with no argument gets the option's number. |
+
+Unlike Unity, the list is drawn by the engine from the **List** settings, not from a Template object you edit.
+
+Options are numbered from 0. `Quality.value` is the chosen number and `Quality.text` its text.
+
+| Event | When |
+| --- | --- |
+| **On value changed** ⚡ | Another option was picked, by the player or by **Set selected option**. |
+| **Compare slider value** | Compares the chosen number (`= 2`). |
+| **Set selected option** (action) | Chooses an option by number. |
+| **Add option** / **Clear options** (actions) | Fill the list while the game runs. |
+
+In scripts: `entity.getUIValue()` / `entity.setUIValue(2)` (choosing one also runs *On value changed*), `entity.getText()`, `entity.getUIOptions()`, `entity.setUIOptions(['Low', 'High'])`, `entity.addUIOption('Ultra')`, and the hook `onValueChanged(index)`:
+
+```js
+// On the Quality dropdown
+function onValueChanged(index) {
+  game.quality.level = entity.getUIOptions()[index];   // a quality level, by name
+}
+```
+
+**With a controller**: **A** opens the list on the chosen option, up / down move, **A** picks, **B** (or **Esc**) closes it without picking.
+
 ## Input fields {/* #input-field */}
 
 An **Input field** is a box the player types in, like Unity's Input Field. **＋ Add → UI → Input field** makes a white box with a grey *Enter text...* placeholder. Click or tap it and type: the caret, selecting, copy and paste and a phone's keyboard all work as in any text box, and while the player types, keys don't reach the game (typing a **W** doesn't walk).
@@ -279,12 +315,12 @@ function onSubmit(text) {
 Menus work with a gamepad (and the Steam Deck's controls) or the keyboard, as Unity's EventSystem does:
 
 1. Select the **Canvas** and set **First selected** to the button the menu starts on (*Play*).
-2. That's it. Every button, toggle, slider and input field on that canvas can now be reached.
+2. That's it. Every button, toggle, dropdown, slider and input field on that canvas can now be reached.
 
 | Input | What it does |
 | --- | --- |
 | Left stick, D-pad, arrow keys (or WASD) | Moves to the nearest button or slider in that direction. Held, it repeats. |
-| **A**, **Enter** | Clicks the selected button (*On clicked* events and its **On Click ()** list run, as for a tap) or switches the selected toggle. |
+| **A**, **Enter** | Clicks the selected button (*On clicked* events and its **On Click ()** list run, as for a tap) switches the selected toggle, or opens the selected dropdown. |
 | Left / right on a slider | Changes its value by a tenth of its range, or by 1 with **Whole numbers** (up / down on a vertical slider). |
 
 - Nothing shows as selected until the controller or a key is used, and the selection hides again when the mouse moves or a finger touches the screen. Mouse and touch work as before.
@@ -398,7 +434,7 @@ Screens that start hidden are still shown in the editor when you select them or 
 ## UI in events and expressions
 
 - Conditions: **On clicked** ⚡, **Is held down**, **Is selected**, **On submitted** ⚡, **On typing finished** ⚡, **Is being typed in**, **Is on**, **Compare slider value**, **On value changed** ⚡.
-- Actions: **Show**, **Hide**, **Show / hide**, **Set label**, **Set position**, **Set size**, **Set anchors**, **Set pivot**, **Move to element**, **Put inside**, **Set slider value**, **Add to slider value**, **Set slider maximum / minimum**, **Enable / disable**, **Select**, **Set toggle**, **Start typing**, **Set image**, **Set font**, **Set background color**, **Set text color**, **Set bar color**.
+- Actions: **Show**, **Hide**, **Show / hide**, **Set label**, **Set position**, **Set size**, **Set anchors**, **Set pivot**, **Move to element**, **Put inside**, **Set slider value**, **Add to slider value**, **Set slider maximum / minimum**, **Enable / disable**, **Select**, **Set toggle**, **Set selected option**, **Add option**, **Clear options**, **Start typing**, **Set image**, **Set font**, **Set background color**, **Set text color**, **Set bar color**.
   - **Move to element** puts the object's pivot on the middle of another element, plus an offset: a tooltip next to the slot you pressed, a marker on a map icon. It works from where both are drawn, so any anchors and scaling are fine.
   - **Put inside** moves an element into another (a slot into a panel, an item into a list). **Attach to** and **Detach** also work on UI elements.
 - Expressions: `HealthBar.value`, `HealthBar.min`, `HealthBar.max`, `PlayButton.pressed`, `ScoreText.text`.
@@ -418,6 +454,7 @@ entity.setUIInteractable(false);               // grey a button or slider out
 entity.selectUI();                             // the button a controller or the arrow keys are on
 if (entity.isUISelected()) { /* show its tooltip */ }
 entity.setToggleOn(!entity.isToggleOn());     // a Toggle (its group follows)
+entity.setUIOptions(['Low', 'Medium', 'High']); // a Dropdown's options; setUIValue(1) picks one
 
 // The layout is Unity's Rect Transform. Pixels are reference-resolution pixels, Y counts up.
 const rect = entity.component('ui');

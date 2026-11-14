@@ -401,6 +401,27 @@
           "doc": "Toggle: switch it as a click would. Its Toggle group turns the others off, and On value changed runs."
         },
         {
+          "name": "getUIOptions",
+          "kind": "method",
+          "sig": "()",
+          "type": "string[]",
+          "doc": "Dropdown: its options' texts. getUIValue() is the chosen one's index, getText() its text."
+        },
+        {
+          "name": "setUIOptions",
+          "kind": "method",
+          "sig": "(options: string[])",
+          "type": "void",
+          "doc": "Dropdown: replace its options (a resolution list, save slots)."
+        },
+        {
+          "name": "addUIOption",
+          "kind": "method",
+          "sig": "(text: string)",
+          "type": "void",
+          "doc": "Dropdown: add an option at the end."
+        },
+        {
           "name": "getUIPosition",
           "kind": "method",
           "sig": "()",
@@ -2483,7 +2504,7 @@
     {
       "name": "onValueChanged",
       "args": "value",
-      "doc": "This slider moved (a number), toggle switched (true / false) or input field was typed in (its text)."
+      "doc": "This slider moved (a number), toggle switched (true / false), dropdown option was picked (its index) or input field was typed in (its text)."
     },
     {
       "name": "onSubmit",

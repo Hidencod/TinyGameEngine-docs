@@ -34,7 +34,7 @@ Define any of these in a script; the engine calls them.
 | `onParticleSystemStopped()` | Its Particle System stopped and the last particle died (Stop Action: Callback). | ✔ |  |
 | `onTap()` | The player tapped this entity. | ✔ |  |
 | `onClick()` | This UI button was clicked. | ✔ |  |
-| `onValueChanged(value)` | This slider moved (a number), toggle switched (true / false) or input field was typed in (its text). | ✔ |  |
+| `onValueChanged(value)` | This slider moved (a number), toggle switched (true / false), dropdown option was picked (its index) or input field was typed in (its text). | ✔ |  |
 | `onSubmit(text)` | Enter was pressed in this Input Field; text is what was typed. | ✔ |  |
 | `onEndEdit(text)` | The player stopped typing in this Input Field (Enter, a tap elsewhere, Esc or B). | ✔ |  |
 | `onPointerDown(event)` | The player pressed this UI element (needs Raycast Target). event: &#123; x, y, entity &#125;. | ✔ |  |
@@ -116,6 +116,9 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `isUIFocused()` | `boolean` | Input Field: is the player typing in it right now? |
 | `isToggleOn()` | `boolean` | Toggle: is it on (ticked)? |
 | `setToggleOn(on: boolean)` | `void` | Toggle: switch it as a click would. Its Toggle group turns the others off, and On value changed runs. |
+| `getUIOptions()` | `string[]` | Dropdown: its options' texts. getUIValue() is the chosen one's index, getText() its text. |
+| `setUIOptions(options: string[])` | `void` | Dropdown: replace its options (a resolution list, save slots). |
+| `addUIOption(text: string)` | `void` | Dropdown: add an option at the end. |
 | `getUIPosition()` | `{x, y}` | Where a UI element sits: its anchored position in canvas pixels from its anchor. |
 | `setUIPosition(x, y)` | `void` | Move a UI element to this anchored position (canvas px). Leave an axis out (undefined) to keep it. |
 | `isUI()` | `boolean` | Is this object a UI element (has a Rect Transform)? |

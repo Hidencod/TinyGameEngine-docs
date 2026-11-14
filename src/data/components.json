@@ -70,6 +70,11 @@
       "title": "Toggle group",
       "desc": ""
     },
+    "dropdown": {
+      "icon": "🔽",
+      "title": "Dropdown",
+      "desc": ""
+    },
     "particles": {
       "icon": "✨",
       "title": "Particles",

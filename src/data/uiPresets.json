@@ -20,6 +20,11 @@
     "kind": "panel"
   },
   {
+    "id": "dropdown",
+    "name": "Dropdown",
+    "kind": "image"
+  },
+  {
     "id": "slider",
     "name": "Slider",
     "kind": "slider"

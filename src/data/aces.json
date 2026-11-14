@@ -10498,11 +10498,11 @@
       "kind": "condition",
       "category": "UI",
       "label": "On value changed",
-      "hint": "Slider dragged, toggle switched or text typed",
+      "hint": "Slider dragged, toggle switched, option picked or text typed",
       "display": "On {object} value changed",
       "displayNoObject": null,
       "icon": "🎚️",
-      "description": "Runs when the player drags a slider to a new value (e.g. a volume setting), switches a toggle, or types in an input field.",
+      "description": "Runs when the player drags a slider to a new value (e.g. a volume setting), switches a toggle, picks a dropdown option, or types in an input field.",
       "isTrigger": true,
       "objectRequired": true,
       "objectOptional": false,
@@ -10898,6 +10898,85 @@
           "varScope": null
         }
       ]
+    },
+    {
+      "id": "ui.setOption",
+      "kind": "action",
+      "category": "UI",
+      "label": "Set selected option",
+      "hint": "Dropdown: choose by number, from 0",
+      "display": "Set {object} option to {index}",
+      "displayNoObject": null,
+      "icon": "🔽",
+      "description": "Choose a dropdown option by its number (from 0). On value changed fires when it is another one.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "index",
+          "label": "Option",
+          "type": "expression",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.addOption",
+      "kind": "action",
+      "category": "UI",
+      "label": "Add option",
+      "hint": "Dropdown: at the end of its list",
+      "display": "Add option {text} to {object}",
+      "displayNoObject": null,
+      "icon": "➕",
+      "description": "Add an option at the end of a dropdown list, e.g. one per save slot.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "text",
+          "label": "Text",
+          "type": "expression",
+          "options": null,
+          "default": "\"Option\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.clearOptions",
+      "kind": "action",
+      "category": "UI",
+      "label": "Clear options",
+      "hint": "Dropdown: empty its list",
+      "display": "Clear {object} options",
+      "displayNoObject": null,
+      "icon": "🧹",
+      "description": "Empty a dropdown list before filling it again.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
     },
     {
       "id": "ui.setOn",
