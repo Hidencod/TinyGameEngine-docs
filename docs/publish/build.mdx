@@ -130,7 +130,8 @@ What reaches Steam:
 - **Achievements** and **leaderboards** from [Files → Services](../world/services). Each card has a **Steam ID**: the
   achievement's API name or the leaderboard's name in Steamworks. Empty = the card's **ID**. Achievements unlocked on
   Steam (on another PC) count in the game too. Leaderboard scores are whole numbers: send race times in milliseconds.
-- **Stats**: the **Set Steam stat** action, or `game.steam.setStat("kills", 12)`. They are sent within a second.
+- **Stats**: the **Set Steam stat** action, or `game.steam.setStat("kills", 12)`. Steam limits how often a game saves, so stats are sent
+  within a minute, achievements within 10 seconds (their pop-up shows then), and everything when the game quits.
 - **Rich presence**: what friends see you doing (**Set rich presence**).
 - The **overlay**: **Steam overlay is open**, **Open Steam overlay**.
 - The player's **Steam name** (`steamname()`), Steam's **language** for the game (`steamlanguage()`), and owned
@@ -198,7 +199,9 @@ The same as [Steam on Windows](#steam), with Valve's Linux library instead of th
 3. To test on a Linux PC, turn on **Steam test**, have Steam open and signed in, and run `My-Game`.
 
 Achievements, leaderboards, stats, rich presence, DLC, the player's name and language work as on Windows, and
-`game.steam.onSteamDeck` tells the Deck apart. If Steam is off,
+`game.steam.onSteamDeck` tells the Deck apart. On the Steam Deck the **Steam button** opens the overlay, and
+**Open Steam overlay** works too. On a Linux PC the overlay does not open: it cannot take the game's mouse and keys, so a player could not close it. `game.steam.overlayOpen`
+stays false. Tested with Steam's Linux runtime (the container the Deck runs games in). If Steam is off,
 `game.steam.error` says why (`libsteam_api.so is not next to the game`, Steam not running…).
 
 ## While it builds
