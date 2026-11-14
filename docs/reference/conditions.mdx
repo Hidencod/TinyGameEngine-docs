@@ -18,7 +18,7 @@ Conditions are the **WHEN / IF** part of an event. All conditions of an event mu
 - Most other conditions can be **inverted** (NOT) from the condition’s menu.
 :::
 
-There are **119 conditions**, grouped by category as in the condition picker.
+There are **121 conditions**, grouped by category as in the condition picker.
 
 [⚙️ System](#system) · [🔢 Variables](#variables) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🎬 Timeline](#timeline) · [🌐 Language](#language) · [🏆 Services](#services) · [♨️ Steam](#steam) · [🔗 Web](#web) · [👥 Multiplayer](#multiplayer) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🖼️ UI](#ui) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera) · [🎚️ Graphics](#graphics)
 
@@ -407,6 +407,29 @@ True when the player swipes in a direction.
 | Parameter | Type | Default | Notes |
 | --- | --- | --- | --- |
 | Direction | Choice | `any` | Options: any, left, right, up, down |
+
+### On input device changed {/* #input-ondevicechanged */}
+
+<span class="tge-ace-display">On input device changed</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+Fires when the player switches between a gamepad, the keyboard and mouse, and touch: update button prompts here.
+
+- **Where:** Found under **Input** in the picker.
+- **ID:** `input.onDeviceChanged` (as saved in project files)
+- **Parameters:** none
+
+### Input device is {/* #input-deviceis */}
+
+<span class="tge-ace-display">Input device is ‹Device›</span>
+
+What the player used last: gamepad, keyboard (keys or the mouse) or touch. Use it to show the right button prompts.
+
+- **Where:** Found under **Input** in the picker.
+- **ID:** `input.deviceIs` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Device | Choice | `gamepad` | Options: gamepad, keyboard, touch |
 
 ### Joystick is moving {/* #input-joystickmoving */}
 

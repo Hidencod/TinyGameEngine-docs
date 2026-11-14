@@ -28,8 +28,9 @@ The Deck's buttons, sticks and D-pad reach the game as a gamepad, the same one a
   **First selected** ([Controller and keyboard](../world/ui#controller)): the D-pad or stick then moves between
   buttons and **A** clicks. A menu that only works by touch makes the game *Playable*, not *Verified*.
 - **Button prompts**: if your game shows which button to press, show gamepad buttons while one is in use, never
-  keyboard keys. `game.input.gamepad` turns true once a gamepad has been used. Valve accepts Xbox-style prompts, and
-  the Deck's A, B, X and Y are where an Xbox controller's are.
+  keyboard keys. *On input device changed* and *Input device is* (`game.input.device` in scripts) follow what the
+  player used last ([Button prompts](../editor/scene-tab#gamepads)). Valve accepts Xbox-style prompts, and the Deck's
+  A, B, X and Y are where an Xbox controller's are.
 - **Steam Input**: in Steamworks, set the game's default controller layout to a **gamepad** one (Steam Input settings),
   so the Deck's controls arrive as a gamepad.
 - **Typing**: the UI has no text box, so there is no on-screen keyboard to bring up.

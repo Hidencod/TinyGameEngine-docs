@@ -282,6 +282,8 @@ Touch controls and keyboard.
 | `axis` | `{x,y}` | Joystick / WASD / arrows / gamepad stick, each in -1..1. y = forward. |
 | `look` | `{x,y}` | Look this frame in degrees: locked mouse, gamepad right stick or a drag. x = right, y = up. |
 | `gamepad` | `boolean` | A gamepad has been used. Its buttons work as keys: "PadA", "PadB", "PadX", "PadY", "PadLB", "PadRB", "PadLT", "PadRT", "PadStart". |
+| `device` | `string` | What the player used last: "gamepad", "keyboard" (keys or mouse) or "touch". Show button prompts for it. |
+| `deviceChanged` | `boolean` | True for the one frame the device changes: update button prompts then. |
 | `isDown(name)` | `boolean` | Button, key or gamepad button held, e.g. input.isDown("jump"), input.isDown("Space"), input.isDown("PadA") |
 | `wasPressed(name)` | `boolean` | Button or key pressed this frame. |
 | `wasReleased(name)` | `boolean` | Button or key released this frame. |

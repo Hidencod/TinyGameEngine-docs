@@ -181,6 +181,8 @@
   "input.onTap": "True when the player taps anywhere on the screen.",
   "input.screenTouched": "True while a finger is on the screen.",
   "input.onSwipe": "True when the player swipes in a direction.",
+  "input.onDeviceChanged": "Fires when the player switches between a gamepad, the keyboard and mouse, and touch: update button prompts here.",
+  "input.deviceIs": "What the player used last: gamepad, keyboard (keys or the mouse) or touch. Use it to show the right button prompts.",
   "input.joystickMoving": "True while the joystick (or WASD / arrows, or a gamepad stick) is pushed.",
   "input.joystickDirection": "True while the joystick is pushed in a direction.",
   "input.keyDown": "True while a keyboard key or gamepad button (PadA, PadB, PadX, PadY, PadLB, PadRB, PadLT, PadRT, PadStart…) is held.",

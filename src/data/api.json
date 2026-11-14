@@ -1462,6 +1462,18 @@
           "doc": "A gamepad has been used. Its buttons work as keys: \"PadA\", \"PadB\", \"PadX\", \"PadY\", \"PadLB\", \"PadRB\", \"PadLT\", \"PadRT\", \"PadStart\"."
         },
         {
+          "name": "device",
+          "kind": "property",
+          "type": "string",
+          "doc": "What the player used last: \"gamepad\", \"keyboard\" (keys or mouse) or \"touch\". Show button prompts for it."
+        },
+        {
+          "name": "deviceChanged",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "True for the one frame the device changes: update button prompts then."
+        },
+        {
           "name": "isDown",
           "kind": "method",
           "sig": "(name)",

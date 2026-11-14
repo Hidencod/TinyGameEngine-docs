@@ -112,4 +112,15 @@ A new button gets keys that suit its name — `use` / `interact`: **E** and **X*
 
 </Side>
 
+### Gamepads and button prompts {/* #gamepads */}
+
 **Gamepads** work in a browser and in exported games: the left stick or d-pad moves, and each button's **Gamepad** setting presses it. Every gamepad button also has its own name for *Key is held* / *On key pressed* and scripts: `PadA`, `PadB`, `PadX`, `PadY`, `PadLB`, `PadRB`, `PadLT`, `PadRT`, `PadStart`. The on-screen controls hide while a gamepad is used and come back on the next touch. The right stick turns a camera with [Mouse look](../behaviors#camera-follow).
+
+**Button prompts** that follow the player's controls: the game knows what was used last, **gamepad**, **keyboard** (keys or the mouse) or **touch**, and it switches back and forth as the player changes. In events, *On input device changed* fires when it switches and *Input device is* checks it; `inputdevice()` is its name in expressions. In scripts, `game.input.device` and `game.input.deviceChanged`.
+
+| Condition | Action |
+| --- | --- |
+| *On input device changed* · *Input device is gamepad* | *Set* HintText *label to* `"Press A to jump"` |
+| *On input device changed* · *Input device is keyboard* | *Set* HintText *label to* `"Press Space to jump"` |
+
+Run the same actions in *On start of scene* too, so the prompt is right before the first switch.

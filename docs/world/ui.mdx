@@ -210,7 +210,7 @@ Menus work with a gamepad (and the Steam Deck's controls) or the keyboard, as Un
 
 - Nothing shows as selected until the controller or a key is used, and the selection hides again when the mouse moves or a finger touches the screen. Mouse and touch work as before.
 - When a panel closes and the selected button goes with it, the selection moves to the **First selected** of the canvas on top, or, if that one is hidden too, to the top-left button that can be selected. So a menu with several panels needs nothing more; to choose the button a panel opens on, use **Select** (events) or `selectUI()` (scripts) when you show it.
-- Give **Selected color** (or **Selected image**) a look that stands out: the default is as faint as the highlighted one, and on a TV or a Steam Deck the player needs to see where they are.
+- New buttons and sliders turn amber when selected, so the player sees where they are on a TV or a Steam Deck. Change **Selected color** (or use a **Selected image**) to fit your game. Buttons made before this have no selected color of their own and use the highlighted one.
 - Only canvases with a **First selected** take part, so a HUD's buttons are never selected by accident. **Navigation: None** leaves out one button.
 - The same stick and keys still reach your game, so when a pause menu is open, stop the player from moving (for example with *Set time scale* to 0; menus keep working while the game is paused).
 

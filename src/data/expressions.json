@@ -526,6 +526,13 @@
       "insert": "steamlanguage()"
     },
     {
+      "name": "inputdevice",
+      "signature": "inputdevice()",
+      "description": "What the player used last: \"gamepad\", \"keyboard\" (keys or mouse) or \"touch\"",
+      "category": "Input",
+      "insert": "inputdevice()"
+    },
+    {
       "name": "rayhitname",
       "signature": "rayhitname()",
       "description": "After a \"Raycast\" condition: the name of the object the ray hit (empty when nothing)",

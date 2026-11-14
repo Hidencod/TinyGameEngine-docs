@@ -2785,6 +2785,68 @@
       ]
     },
     {
+      "id": "input.onDeviceChanged",
+      "kind": "condition",
+      "category": "Input",
+      "label": "On input device changed",
+      "hint": "Gamepad, keyboard or touch",
+      "display": "On input device changed",
+      "displayNoObject": null,
+      "icon": "🎮",
+      "description": "Fires when the player switches between a gamepad, the keyboard and mouse, and touch: update button prompts here.",
+      "isTrigger": true,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "input",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "input.deviceIs",
+      "kind": "condition",
+      "category": "Input",
+      "label": "Input device is",
+      "hint": "What the player used last",
+      "display": "Input device is {device}",
+      "displayNoObject": null,
+      "icon": "🎮",
+      "description": "What the player used last: gamepad, keyboard (keys or the mouse) or touch. Use it to show the right button prompts.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "input",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "device",
+          "label": "Device",
+          "type": "choice",
+          "options": [
+            {
+              "value": "gamepad",
+              "label": "gamepad"
+            },
+            {
+              "value": "keyboard",
+              "label": "keyboard"
+            },
+            {
+              "value": "touch",
+              "label": "touch"
+            }
+          ],
+          "default": "gamepad",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "input.joystickMoving",
       "kind": "condition",
       "category": "Input",
