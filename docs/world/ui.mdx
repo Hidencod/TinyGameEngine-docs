@@ -433,9 +433,9 @@ Tick a field to use it. The group reads them on the sides where **Child controls
 
 A **Scroll rect** turns an element into a scrolling window, like Unity's Scroll Rect: the element is the **viewport** (whatever sticks out of it is cut off) and its **first child** is the **content**, which a drag or the mouse wheel moves. Use it for a long list, an item shop or a log.
 
-1. Add a **Panel** for the viewport and give it a **Scroll rect** (Inspector → Scroll rect → Enabled).
-2. Put a **Panel** inside it as the content. Give the content a **Vertical** or **Grid layout group** and set its **Vertical fit** to **Preferred size** so it grows with what is in it.
-3. Add the rows or items inside the content.
+**Add → UI → Scroll View** makes one ready to fill: the view, a **Content** panel inside it, and a **Scrollbar Vertical** linked to it. Put the rows or items inside **Content**. For a list that grows, give Content a **Vertical** or **Grid layout group** and set its **Vertical fit** to **Preferred size**.
+
+By hand: give any panel a **Scroll rect** (Inspector → Scroll rect → Enabled) and put the content panel inside it as its first child.
 
 | Field | What it does |
 | --- | --- |
@@ -444,10 +444,26 @@ A **Scroll rect** turns an element into a scrolling window, like Unity's Scroll 
 | **Elasticity** | How quickly it springs back (seconds). |
 | **Inertia**, **Deceleration** | Keep gliding after you let go, and how much speed is left after a second. |
 | **Wheel (px)** | How far one notch of the mouse wheel scrolls. |
+| **Horizontal scrollbar**, **Vertical scrollbar** | A [Scrollbar](#scrollbar) that shows where the content is and moves it. |
+| **Visibility** | **Permanent**, or **Auto hide**: the scrollbars are hidden while everything fits. |
 
 A drag that starts on a button inside still scrolls, and a tap still presses the button. If something under the finger has its own drag hooks (see [Drag and drop](#drag-and-drop)), that thing takes the drag instead and the scroll view stays still.
 
-A script can move the content too: it is an ordinary element, so `content.setUIPosition(0, 120)` scrolls it.
+A script can move the content too: it is an ordinary element, so `content.setUIPosition(0, 120)` scrolls it. Or set the scrollbar: `bar.setUIValue(0)` goes to the bottom of a vertical list.
+
+### Scrollbar {/* #scrollbar */}
+
+A **Scrollbar** (Add → UI → Scrollbar) is a track with a handle, like Unity's. The handle's length shows how much of the content is in sight. Drag the handle to move it; a press on the track moves it one handle-length. With a controller, select it and push along the bar to move it by a tenth.
+
+| Field | What it does |
+| --- | --- |
+| **Direction** | Which end the handle starts from. A vertical bar in a scroll view is **Bottom to top**: value 1 is the top of the list. |
+| **Value** | Where the handle is, 0 to 1. |
+| **Size** | How much of the track the handle covers, 0 to 1. A linked scroll view sets it. |
+| **Number of steps** | Stops the handle at that many places (0 = anywhere). 5 stops it at 0, 0.25, 0.5, 0.75 and 1. |
+| **Handle color** | The handle's color. The **Selectable** colors tint the handle. |
+
+Link it in the scroll view's **Scroll rect** (**Vertical scrollbar** or **Horizontal scrollbar**). Unlinked, it is a plain value the player sets. **On value changed** fires whenever it moves, also when the list is dragged; `Bar.value` reads it and **Set slider value** sets it.
 
 ## Drag and drop and pointer events {/* #drag-and-drop */}
 

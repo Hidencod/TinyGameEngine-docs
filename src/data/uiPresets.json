@@ -30,6 +30,16 @@
     "kind": "slider"
   },
   {
+    "id": "scrollbar",
+    "name": "Scrollbar",
+    "kind": "scrollbar"
+  },
+  {
+    "id": "scrollView",
+    "name": "Scroll View",
+    "kind": "panel"
+  },
+  {
     "id": "inputField",
     "name": "Input Field",
     "kind": "input"
