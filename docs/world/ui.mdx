@@ -91,7 +91,7 @@ A UI element is placed by its **Rect Transform**, exactly as in Unity.
 - **Pos X / Pos Y** and **Width / Height**: where the pivot sits relative to the anchor, and the size. With a stretched anchor these become **Left, Right, Top, Bottom**, the distances from the parent's edges.
 - **Pivot**: the point the element turns and scales around, 0 to 1 from its bottom-left.
 - **Rotation** (degrees, counter-clockwise) and **Scale**.
-- **Width fits content / Height fits content**: size the element to its text (Unity's *Content Size Fitter*).
+- **Content size fitter**: size the element to its text. See [Sizing](#sizing).
 - **Sort order**: a higher number is drawn on top of its siblings.
 
 Y counts **up**, as in Unity: a Pos Y of −16 is 16 pixels below the anchor.
@@ -124,6 +124,7 @@ The card shows the fields of the **Type** you picked. You can change the type la
 | **Font** | The font of the text: one you imported, a free one, or **None** for the default font. See [Fonts](#fonts). |
 | **Font size, Bold, Italic, Text color** | Text style. |
 | **Align**, **Vertical align**, **Wrap**, **Line spacing** | Where the text sits and how it wraps. |
+| **Rich text** | Tags such as `<b>` and `<color=red>` style parts of the text. See [Rich text](#rich-text). |
 
 ### Fonts {/* #fonts */}
 
@@ -170,6 +171,22 @@ From events and scripts the same actions as for a Sprite work on an Image: *Show
 ### Pictures load with the scene
 
 Every picture an element uses (its image, mask, a Button's sprite-swap pictures) is loaded and decoded while the scene loads, so a menu never opens with blank boxes. A picture that only an event or script puts on screen (*Set image to…*, `setUIImage('Coin')`) is found by its name or id in your events and scripts and loaded with the scene too. When you change scenes, the new scene appears once its pictures, models and sounds have loaded; use a loading screen scene to show progress meanwhile.
+
+### Rich text {/* #rich-text */}
+
+With **Rich text** on (it is for new texts), tags in the text style parts of it, as in Unity:
+
+| Tag | Does |
+| --- | --- |
+| `<b>…</b>`, `<i>…</i>` | Bold, italic. |
+| `<u>…</u>`, `<s>…</s>` | Underline, strike through. |
+| `<color=#ffd54f>…</color>` or `<color=red>` | Colour (a hex colour or a colour name). |
+| `<size=40>…</size>` | Size in reference px; `<size=150%>` scales, `<size=+4>` adds. |
+| `<mark=#ffff0080>…</mark>` | A highlight behind the text. |
+| `<sup>…</sup>`, `<sub>…</sub>` | Raised or lowered, smaller. |
+| `<br>` | A new line. |
+
+`Score: <color=#ffd54f><b>120</b></color>`. Any other tag shows as written, so a name a player typed can't break the label, and Input fields never use rich text. An event's text works the same: **Set label** to `"Coins: <b>" + Coins + "</b>"`.
 
 ## Buttons {/* #buttons */}
 
@@ -384,14 +401,40 @@ A **Layout group** arranges the children of a panel for you, like Unity's Horizo
 | **Cell size**, **Constraint**, **Count** | (Grid) The size of each cell, and whether to fix the number of columns or rows. |
 | **Child controls size**, **Child force expand** | Whether the group sets each child's width and height, and whether children grow to fill the spare room. |
 
-A child that should not be arranged (a close button in a panel's corner, a badge on an icon) has **Ignore layout** in its Rect Transform. The group leaves it where its own anchors put it, like Unity's Layout Element → Ignore Layout.
+A child that should not be arranged (a close button in a panel's corner, a badge on an icon) has **Ignore layout** in its **Layout element** group. The group leaves it where its own anchors put it. The same group sets a child's min, preferred and flexible size.
+
+### Sizing: Content size fitter, Layout element, Aspect ratio fitter {/* #sizing */}
+
+Unity's three sizing components are groups on the UI card.
+
+**Content size fitter**: **Horizontal fit** and **Vertical fit**. *Preferred size* makes that side as big as the content needs (a label as wide as its text); *Min size* as small as it can be (wrapped text as narrow as its longest word); *Unconstrained* uses the Rect Transform's size.
+
+**Layout element** (on a child of a panel with a layout group):
+
+| Field | What it does |
+| --- | --- |
+| **Ignore layout** | The group leaves it where its own anchors put it (a close button in a corner, a badge on an icon). |
+| **Min width / height** | Never smaller than this. |
+| **Preferred width / height** | The size it asks for. |
+| **Flexible width / height** | Its share of the room left over: 1 and 3 split it a quarter and three quarters. |
+
+Tick a field to use it. The group reads them on the sides where **Child controls size** is on.
+
+**Aspect ratio fitter**: **Aspect ratio** is width ÷ height.
+
+| Aspect mode | What it does |
+| --- | --- |
+| **Width controls height** | The height follows the width. |
+| **Height controls width** | The width follows the height. |
+| **Fit in parent** | As big as fits inside the parent, centred (a picture letterboxed on any screen). |
+| **Envelope parent** | Covers the whole parent, centred, the extra cut off (a background that fills every screen shape). |
 
 ## Scroll View {/* #scroll-view */}
 
 A **Scroll rect** turns an element into a scrolling window, like Unity's Scroll Rect: the element is the **viewport** (whatever sticks out of it is cut off) and its **first child** is the **content**, which a drag or the mouse wheel moves. Use it for a long list, an item shop or a log.
 
 1. Add a **Panel** for the viewport and give it a **Scroll rect** (Inspector → Scroll rect → Enabled).
-2. Put a **Panel** inside it as the content. Give the content a **Vertical** or **Grid layout group** and turn on **Height fits content** so it grows with what is in it.
+2. Put a **Panel** inside it as the content. Give the content a **Vertical** or **Grid layout group** and set its **Vertical fit** to **Preferred size** so it grows with what is in it.
 3. Add the rows or items inside the content.
 
 | Field | What it does |
