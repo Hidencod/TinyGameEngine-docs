@@ -387,6 +387,20 @@
           "doc": "Input Field: is the player typing in it right now?"
         },
         {
+          "name": "isToggleOn",
+          "kind": "method",
+          "sig": "()",
+          "type": "boolean",
+          "doc": "Toggle: is it on (ticked)?"
+        },
+        {
+          "name": "setToggleOn",
+          "kind": "method",
+          "sig": "(on: boolean)",
+          "type": "void",
+          "doc": "Toggle: switch it as a click would. Its Toggle group turns the others off, and On value changed runs."
+        },
+        {
           "name": "getUIPosition",
           "kind": "method",
           "sig": "()",
@@ -2465,6 +2479,11 @@
       "name": "onClick",
       "args": "",
       "doc": "This UI button was clicked."
+    },
+    {
+      "name": "onValueChanged",
+      "args": "value",
+      "doc": "This slider moved (a number), toggle switched (true / false) or input field was typed in (its text)."
     },
     {
       "name": "onSubmit",

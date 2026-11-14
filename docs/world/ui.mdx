@@ -21,6 +21,7 @@ The UI follows Unity's uGUI on purpose, with the same names: **Canvas**, **Canva
 | --- | --- |
 | 🏷️ **Text** | Text on screen: score, lives, messages. |
 | 🔲 **Button** | A tappable button: Start, Pause, Retry… An Image with a **Button** component and a Text inside it for the label. |
+| ☑️ **Toggle** | A checkbox, or radio buttons with a Toggle group. See [Toggles](#toggles). |
 | 🖼️ **Image** | An icon or picture. |
 | 📊 **Slider** | A bar, or a value you can drag: health, energy, volume. |
 | ⌨️ **Input field** | A box the player types in: a name, a chat line, a code. See [Input fields](#input-field). |
@@ -196,6 +197,47 @@ Choose *Door → Door script → openDoor()* with the argument `2` and the butto
 
 Old projects are converted when they open: each button becomes an Image with a Button component, and a label it drew itself becomes a child Text.
 
+## Toggles {/* #toggles */}
+
+A **Toggle** is something that is on or off: a checkbox (*Music*, *Subtitles*, *Invert Y*) or, with a Toggle group, a set of radio buttons (*Easy / Normal / Hard*). As in Unity it is a *component*: **＋ Add → UI → Toggle** makes a row with a Toggle component, holding a white **Background** box with a **Checkmark** inside it, and a **Label** beside it. Tapping anywhere on the row switches it. You can also select a Panel or Image and tap **Add component → Toggle**.
+
+| Field (Toggle card) | What it does |
+| --- | --- |
+| **Is on** | Whether it starts on. |
+| **Graphic** | The element shown while it is on and hidden while it is off: the Checkmark. Any child works (an icon, a filled dot). |
+| **Target graphic** | The element that takes the **Interaction** colors or pictures: the Background box. Empty: the toggle's own element. |
+| **Toggle transition** | **Fade**: the graphic fades in and out. **None**: it snaps. |
+| **Group** | An object with a **Toggle group** (below). Turning this toggle on turns the others in that group off. |
+| **Interaction** | Interactable, Transition and Navigation, as for a button. |
+| **On Value Changed (Boolean)** | A list run every time it switches, like a button's **On Click ()**. **Set active** and **Set visible** can follow the toggle (**Is on**), so a *Show FPS* toggle shows and hides the FPS label with no code; a function with no argument gets `true` or `false`. |
+
+| Event | When |
+| --- | --- |
+| **On value changed** ⚡ | It switched, by a tap, a controller or **Set toggle**. Each toggle a group turns off gets one too. |
+| **Is on** | It is on right now. |
+| **Set toggle** (action) | Turns it **on**, **off**, or **switch**es it, as a tap would (its group follows). |
+
+`Music.value` is 1 while on and 0 while off. **Set label** changes the text of its Label.
+
+In scripts: `entity.isToggleOn()`, `entity.setToggleOn(true)`, and the hook `onValueChanged(value)`, which gets `true` or `false`:
+
+```js
+// On the Music toggle
+function onValueChanged(on) {
+  game.audio.setMasterVolume(on ? 1 : 0);
+}
+```
+
+### Toggle group {/* #toggle-group */}
+
+For radio buttons, add a **Toggle group** component to an object (often the panel the toggles sit in) and set each toggle's **Group** to it. Then at most one of them is on.
+
+| Field | What it does |
+| --- | --- |
+| **Allow switch off** | Off (the default): one is always on, and tapping the one that is on leaves it on. On: tapping it turns it off, so none may be on. |
+
+When the scene starts, a group fixes itself as Unity's does: if several are on, the first keeps it; if none is on and switching off isn't allowed, the first one turns on.
+
 ## Input fields {/* #input-field */}
 
 An **Input field** is a box the player types in, like Unity's Input Field. **＋ Add → UI → Input field** makes a white box with a grey *Enter text...* placeholder. Click or tap it and type: the caret, selecting, copy and paste and a phone's keyboard all work as in any text box, and while the player types, keys don't reach the game (typing a **W** doesn't walk).
@@ -237,12 +279,12 @@ function onSubmit(text) {
 Menus work with a gamepad (and the Steam Deck's controls) or the keyboard, as Unity's EventSystem does:
 
 1. Select the **Canvas** and set **First selected** to the button the menu starts on (*Play*).
-2. That's it. Every button and slider on that canvas can now be reached.
+2. That's it. Every button, toggle, slider and input field on that canvas can now be reached.
 
 | Input | What it does |
 | --- | --- |
 | Left stick, D-pad, arrow keys (or WASD) | Moves to the nearest button or slider in that direction. Held, it repeats. |
-| **A**, **Enter** | Clicks the selected button: *On clicked* events and its **On Click ()** list run, as for a tap. |
+| **A**, **Enter** | Clicks the selected button (*On clicked* events and its **On Click ()** list run, as for a tap) or switches the selected toggle. |
 | Left / right on a slider | Changes its value by a tenth of its range, or by 1 with **Whole numbers** (up / down on a vertical slider). |
 
 - Nothing shows as selected until the controller or a key is used, and the selection hides again when the mouse moves or a finger touches the screen. Mouse and touch work as before.
@@ -355,8 +397,8 @@ Screens that start hidden are still shown in the editor when you select them or 
 
 ## UI in events and expressions
 
-- Conditions: **On clicked** ⚡, **Is held down**, **Is selected**, **On submitted** ⚡, **On typing finished** ⚡, **Is being typed in**, **Compare slider value**, **On value changed** ⚡.
-- Actions: **Show**, **Hide**, **Show / hide**, **Set label**, **Set position**, **Set size**, **Set anchors**, **Set pivot**, **Move to element**, **Put inside**, **Set slider value**, **Add to slider value**, **Set slider maximum / minimum**, **Enable / disable**, **Select**, **Start typing**, **Set image**, **Set font**, **Set background color**, **Set text color**, **Set bar color**.
+- Conditions: **On clicked** ⚡, **Is held down**, **Is selected**, **On submitted** ⚡, **On typing finished** ⚡, **Is being typed in**, **Is on**, **Compare slider value**, **On value changed** ⚡.
+- Actions: **Show**, **Hide**, **Show / hide**, **Set label**, **Set position**, **Set size**, **Set anchors**, **Set pivot**, **Move to element**, **Put inside**, **Set slider value**, **Add to slider value**, **Set slider maximum / minimum**, **Enable / disable**, **Select**, **Set toggle**, **Start typing**, **Set image**, **Set font**, **Set background color**, **Set text color**, **Set bar color**.
   - **Move to element** puts the object's pivot on the middle of another element, plus an offset: a tooltip next to the slot you pressed, a marker on a map icon. It works from where both are drawn, so any anchors and scaling are fine.
   - **Put inside** moves an element into another (a slot into a panel, an item into a list). **Attach to** and **Detach** also work on UI elements.
 - Expressions: `HealthBar.value`, `HealthBar.min`, `HealthBar.max`, `PlayButton.pressed`, `ScoreText.text`.
@@ -375,6 +417,7 @@ entity.setUIValue(entity.getUIValue() - 10);   // a slider's value
 entity.setUIInteractable(false);               // grey a button or slider out
 entity.selectUI();                             // the button a controller or the arrow keys are on
 if (entity.isUISelected()) { /* show its tooltip */ }
+entity.setToggleOn(!entity.isToggleOn());     // a Toggle (its group follows)
 
 // The layout is Unity's Rect Transform. Pixels are reference-resolution pixels, Y counts up.
 const rect = entity.component('ui');

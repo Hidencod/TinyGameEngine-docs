@@ -10410,6 +10410,25 @@
       "params": []
     },
     {
+      "id": "ui.isOn",
+      "kind": "condition",
+      "category": "UI",
+      "label": "Is on",
+      "hint": "Toggle ticked",
+      "display": "{object} is on",
+      "displayNoObject": null,
+      "icon": "☑️",
+      "description": "True while this toggle is on (ticked).",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
       "id": "ui.compareValue",
       "kind": "condition",
       "category": "UI",
@@ -10479,11 +10498,11 @@
       "kind": "condition",
       "category": "UI",
       "label": "On value changed",
-      "hint": "Slider dragged or text typed",
+      "hint": "Slider dragged, toggle switched or text typed",
       "display": "On {object} value changed",
       "displayNoObject": null,
       "icon": "🎚️",
-      "description": "Runs when the player drags a slider to a new value (e.g. a volume setting).",
+      "description": "Runs when the player drags a slider to a new value (e.g. a volume setting), switches a toggle, or types in an input field.",
       "isTrigger": true,
       "objectRequired": true,
       "objectOptional": false,
@@ -10874,6 +10893,49 @@
           "type": "object",
           "options": null,
           "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "ui.setOn",
+      "kind": "action",
+      "category": "UI",
+      "label": "Set toggle",
+      "hint": "Tick or untick; its group follows",
+      "display": "Set {object} {state}",
+      "displayNoObject": null,
+      "icon": "☑️",
+      "description": "Turn a toggle on or off, or switch it, as a tap would. In a Toggle group the others turn off, and On value changed fires.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "state",
+          "label": "State",
+          "type": "choice",
+          "options": [
+            {
+              "value": "on",
+              "label": "on"
+            },
+            {
+              "value": "off",
+              "label": "off"
+            },
+            {
+              "value": "switch",
+              "label": "switch"
+            }
+          ],
+          "default": "on",
           "optional": false,
           "hint": null,
           "varScope": null

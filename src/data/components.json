@@ -60,6 +60,16 @@
       "title": "Button",
       "desc": ""
     },
+    "toggle": {
+      "icon": "☑️",
+      "title": "Toggle",
+      "desc": ""
+    },
+    "toggleGroup": {
+      "icon": "🔘",
+      "title": "Toggle group",
+      "desc": ""
+    },
     "particles": {
       "icon": "✨",
       "title": "Particles",

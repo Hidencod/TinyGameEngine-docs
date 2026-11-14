@@ -15,6 +15,11 @@
     "kind": "image"
   },
   {
+    "id": "toggle",
+    "name": "Toggle",
+    "kind": "panel"
+  },
+  {
     "id": "slider",
     "name": "Slider",
     "kind": "slider"
