@@ -49,6 +49,7 @@ When no virtual camera is enabled, the main camera is left where it is and your 
 | **Noise → Amplitude** | A handheld wobble, in degrees. 0 is steady. **Frequency** sets how fast it wobbles. |
 | **Blend In → Style** | How the view moves over when this one goes live: **Cut**, **Ease In Out**, **Ease In**, **Ease Out** or **Linear**. |
 | **Blend In → Time** | Seconds the blend takes. |
+| **Confiner → Bounding Volume** | An object the camera stays inside (see [Confiner](#confiner)). |
 
 </Side>
 
@@ -83,6 +84,20 @@ Rotation Composer and Position Composer keep the target on a spot on the screen:
 - **Screen X / Screen Y** move the spot from the centre: −0.5 is the left (or bottom) edge, 0.5 the right (or top). Put a runner at X −0.2 so there is more room ahead of them.
 - **Dead Zone Width / Height** make a box around the spot, as a share of the screen (0 to 1). While the target is in the box the camera doesn't move. When it leaves, the camera moves just enough to bring it back to the edge of the box.
 
+## Confiner
+
+The **Confiner** keeps the camera inside an area, like Cinemachine's Confiner. A 2D camera stops at the edges of the level instead of showing what is past them.
+
+1. Add an object that covers the area the camera may show, for example a **Cube** scaled to the size of the level. Untick its **Visible** so it isn't drawn, and remove its **Collider** so nothing bumps into it.
+2. On the virtual camera, set **Confiner → Bounding Volume** to that object.
+
+| Setting | What it does |
+| --- | --- |
+| **Bounding Volume** | The object whose bounds the camera stays inside: its mesh, or for an empty object a box as big as its Scale. |
+| **Confine Screen Edges** | On (the default): the whole view stays inside, so the edge of the screen stops at the edge of the box. For a perspective camera, it is the view at the distance of what it looks at. Off: only the camera's position stays inside (a 3D room the camera must not leave). |
+
+If the view is bigger than the box, the camera stays in the middle of the box.
+
 ## Shakes
 
 - **Noise** on a virtual camera is a steady handheld wobble that lasts as long as the shot.
@@ -103,6 +118,7 @@ const cam = game.find('FollowCam').component('virtualCamera');
 cam.priority = 20;
 cam.follow = game.find('Car').id;                 // follow another object
 cam.offset = [0, 6, 12];                          // every setting changes live
+cam.confiner = game.find('Level2Bounds').id;      // another area for the next room
 game.shakeCamera(0.6, 0.4, bomb.position, 25);    // an impulse from the bomb, 25 m radius
 ```
 

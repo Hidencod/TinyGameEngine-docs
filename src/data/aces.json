@@ -4108,6 +4108,66 @@
       ]
     },
     {
+      "id": "object.onSeen",
+      "kind": "condition",
+      "category": "Physics",
+      "label": "On starts seeing",
+      "hint": "Comes into its Sight",
+      "display": "On {object} starts seeing {target}",
+      "displayNoObject": null,
+      "icon": "👀",
+      "description": "Fires once when the target comes into this object's Sight (in its cone, no wall in between), e.g. a guard that shouts when it spots the player. Needs a Sight component.",
+      "isTrigger": true,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "target",
+          "label": "Target",
+          "type": "object",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.onLostSight",
+      "kind": "condition",
+      "category": "Physics",
+      "label": "On loses sight of",
+      "hint": "Goes out of its Sight",
+      "display": "On {object} loses sight of {target}",
+      "displayNoObject": null,
+      "icon": "🙈",
+      "description": "Fires once when the target goes out of this object's Sight: out of its cone or behind a wall. Not when the target is destroyed. Needs a Sight component.",
+      "isTrigger": true,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "target",
+          "label": "Target",
+          "type": "object",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "object.raycast",
       "kind": "condition",
       "category": "Physics",

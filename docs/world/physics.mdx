@@ -97,6 +97,7 @@ The world’s gravity is set in [Project settings](../editor/project-settings) (
 | **Is on ground** | it stands on something. |
 | **Has line of sight to** | nothing solid is between it and another object. |
 | **Sees** | the other object is in its [Sight](#sight) cone and nothing solid is in between. |
+| ⚡ **On starts seeing** / ⚡ **On loses sight of** | that changes (once each time). |
 | **Raycast** / **Raycast from** | an invisible ray hits something solid (see [Raycasts](#raycasts)). |
 
 Actions: **Set velocity**, **Push (impulse)** (a kick), **Apply force** (a push over time), **Jump**. In scripts: `entity.applyImpulse(0, 5, 0)`, `game.raycast(from, to)` (see [Raycasts](#raycasts)). See the [Conditions](../reference/conditions#physics) and [Actions](../reference/actions#physics) reference.
@@ -132,11 +133,22 @@ The cone points the way the object faces (its **−Z**, like every object here),
 2. Event: **Guard sees Player** → **Set Guard.Alert to 1** (or play a sound, chase…).
 3. Walls and crates with colliders hide the player. Triggers (coins, checkpoints) don't block sight.
 
+**Sees** is true every frame the guard sees the player. To react *once*, use the triggers:
+
+- ⚡ **On Guard starts seeing Player** → play a "!" sound, start chasing.
+- ⚡ **On Guard loses sight of Player** → go back to patrolling after a while.
+
+They don't fire when the player is destroyed.
+
 In scripts:
 
 ```js
 if (guard.canSee(player)) guard.lookAt(player.position);
 turret.canSee(player, { range: 20, angle: 40 });   // other limits than its Sight component
+
+game.watchSight('Player');                          // the triggers for scripts:
+game.on('seen', ({ entity, target }) => entity.setVar('Alert', 1));
+game.on('lostSight', ({ entity, target }) => entity.setVar('Alert', 0));
 ```
 
 Without a Sight component, `canSee` has no range or angle limit: it only checks for walls, like **Has line of sight to**.

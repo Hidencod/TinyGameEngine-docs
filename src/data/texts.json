@@ -247,7 +247,9 @@
   "camera.isLive": "True while this Virtual Camera is the one the game is seen through.",
   "object.playDirector": "Play the timeline of the object's Playable Director, with the director's Wrap Mode. Use it for a sequence that belongs to an object: a chest opening, a door with a camera shot.",
   "object.stopDirector": "Stop the timeline of the object's Playable Director and go back to its start; the camera and subtitles are given back.",
-  "object.canSee": "True when the other object is inside this object's Sight cone (its Range and View Angle, from its Eye) and nothing solid is in between, e.g. a guard that notices the player. Needs a Sight component."
+  "object.canSee": "True when the other object is inside this object's Sight cone (its Range and View Angle, from its Eye) and nothing solid is in between, e.g. a guard that notices the player. Needs a Sight component.",
+  "object.onSeen": "Fires once when the target comes into this object's Sight (in its cone, no wall in between), e.g. a guard that shouts when it spots the player. Needs a Sight component.",
+  "object.onLostSight": "Fires once when the target goes out of this object's Sight: out of its cone or behind a wall. Not when the target is destroyed. Needs a Sight component."
  },
  "behaviors": {
   "platformer": "Walk and jump when your events or scripts tell it to (needs a Physics body)",

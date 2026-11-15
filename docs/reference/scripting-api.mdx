@@ -243,6 +243,7 @@ The running game.
 | `destroy(entity)` | `void` | Destroy an entity. |
 | `pick(screenX, screenY)` | `entity\|null` | Entity at a screen point. |
 | `touchWorld()` | `{x,y,z}` | The spot in the world under the finger / mouse (a surface, else the ground plane). Tap to move: player.moveTo(p.x, p.z). |
+| `watchSight(target)` | `void` | Fire "seen" / "lostSight" events when a Sight object starts / stops seeing objects with this name (or "#tag"). E.g. game.watchSight("Player"); game.on("seen", (e) =&gt; …) |
 | `hasLineOfSight(a, b)` | `boolean` | True when nothing solid is between the two objects, e.g. an enemy can see the player. |
 | `raycast(from, to \| { direction, length, tags?, layers?, ignore?, includeMoving? }, options?)` | `{entity,point,normal,distance}\|null` | Physics ray between two points, or along a direction: game.raycast(p, &#123; direction: &#123;x:0,y:-1,z:0&#125;, length: 5, tags: ["ground"], ignore: player &#125;). Triggers never block it. |
 | `isTouching(a, b)` | `boolean` | Are two entities touching? |
@@ -286,7 +287,7 @@ The running game.
 | `exitFullscreen()` | `Promise<void>` | Leave fullscreen. |
 | `quit()` | `void` | Close the game: the window of a Windows build or the Android app. A play-test in the editor stops. |
 | `lockOrientation(mode?)` | `Promise<void>` | Keep the screen 'landscape' or 'portrait'. 'project' (default) uses the project setting, 'free' lets it rotate. Call from a tap. |
-| `on(event, fn)` | `unsubscribe` | Listen: "sceneStart", "collisionStart", "entityCreated", "waterEnter", ... |
+| `on(event, fn)` | `unsubscribe` | Listen: "sceneStart", "collisionStart", "entityCreated", "waterEnter", "seen", ... |
 | `after(seconds, fn, owner?)` | `cancel` | Run fn once after a delay of game time. In a script, plain after(seconds, fn) belongs to the object of the script already; this one takes the object to belong to, or none. |
 | `every(seconds, fn, owner?)` | `stop` | Run fn every so many seconds of game time until the function it returns is called. In a script, plain every(seconds, fn) belongs to the object of the script already. |
 | `events` | `messages` | Messages between scripts: game.events.on("coinTaken", (n) =&gt; …, entity), game.events.once(…), game.events.emit("coinTaken", 3). Listeners end with the scene; with an owner object they end when it is destroyed and wait while it is disabled. |

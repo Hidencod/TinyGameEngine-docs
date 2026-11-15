@@ -1208,6 +1208,13 @@
           "doc": "The spot in the world under the finger / mouse (a surface, else the ground plane). Tap to move: player.moveTo(p.x, p.z)."
         },
         {
+          "name": "watchSight",
+          "kind": "method",
+          "sig": "(target)",
+          "type": "void",
+          "doc": "Fire \"seen\" / \"lostSight\" events when a Sight object starts / stops seeing objects with this name (or \"#tag\"). E.g. game.watchSight(\"Player\"); game.on(\"seen\", (e) => …)"
+        },
+        {
           "name": "hasLineOfSight",
           "kind": "method",
           "sig": "(a, b)",
@@ -1502,7 +1509,7 @@
           "kind": "method",
           "sig": "(event, fn)",
           "type": "unsubscribe",
-          "doc": "Listen: \"sceneStart\", \"collisionStart\", \"entityCreated\", \"waterEnter\", ..."
+          "doc": "Listen: \"sceneStart\", \"collisionStart\", \"entityCreated\", \"waterEnter\", \"seen\", ..."
         },
         {
           "name": "after",
