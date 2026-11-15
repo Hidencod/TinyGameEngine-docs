@@ -7833,6 +7833,25 @@
       "params": []
     },
     {
+      "id": "object.resetCloth",
+      "kind": "action",
+      "category": "Effects",
+      "label": "Reset cloth",
+      "hint": "Back to hanging still",
+      "display": "Reset {object} cloth",
+      "displayNoObject": null,
+      "icon": "🚩",
+      "description": "Put the object's Cloth back on its plane, hanging still, e.g. when a level starts again or after teleporting it.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
       "id": "object.playSound",
       "kind": "action",
       "category": "Audio",

@@ -1,0 +1,57 @@
+---
+title: Cloth
+description: Flags, capes, curtains, banners and tablecloths that hang, sway and flap in the wind.
+---
+
+# Cloth
+
+<Art name="flag" size={100} />
+
+**Cloth** turns a **Plane** into fabric: it hangs from the edge you pin, sways when its object moves, flaps in a [Wind Zone](./particles#wind-zones) and drapes over the objects you give it. Use it for flags, banners, capes, curtains, sails and tablecloths. It works like Unity's Cloth component.
+
+<Crop name="cloth-scene" caption="A flag in a Wind Zone, a curtain a ball pushes through, a tablecloth over a table and vase, a banner on a moving cart" />
+
+## Add cloth
+
+1. **＋ Add → Plane**.
+2. To make a **standing** flag or curtain, set the plane's **Rotation X** to **90**. Its top edge is then up. A plane lying flat (a tablecloth) stays at 0.
+3. **Add component → Cloth**.
+
+Press ▶ Play. The cloth only moves while the game runs. In the editor it shows as a flat plane.
+
+The plane's **Scale** is the size of the cloth: X is its width and Z its height (or length when it lies flat). Cloth only works on a **Plane** shape. On any other shape the card shows ⚠ and nothing moves.
+
+## Settings
+
+<Side shot="card-cloth" crop>
+
+| Setting | What it does |
+| --- | --- |
+| **Resolution** | Squares along each side (2 to 48). More squares fold more smoothly but cost more. 16 suits most flags; use 10 or less for many small cloths on phones. |
+| **Pinned** | Which points stay fixed to the object: **Top edge** (curtains, banners), **Left edge** (a flag on a pole), **Bottom** / **Right edge**, **Top corners** (a hanging sheet), **All corners** (a hammock or awning), or **None** (a sheet that falls and drapes). |
+| **Stretching Stiffness** | 0 to 1: how much it resists stretching. Keep it at 1 for fabric; lower values make it rubbery. |
+| **Bending Stiffness** | 0 to 1: how much it resists folding. Low drapes like silk, high holds out like canvas. |
+| **Damping** | 0 to 1: how quickly movement dies down. |
+| **Use Gravity** | Pulled down by the scene's gravity. |
+| **External Acceleration** | A steady push on every point, in m/s² (world X, Y, Z). For example, a breeze that never stops without a Wind Zone. |
+| **Random Acceleration** | A random push up to this much per axis each step: flutter. |
+| **Wind Scale** | How strongly [Wind Zones](./particles#wind-zones) blow it. 0 ignores them. Wind pushes hardest on a cloth that faces it; edge-on, it barely moves. |
+| **World Velocity Scale** | 0 to 1: how much the cloth trails behind when its object moves. 0 moves with it as if it were stiff, 1 lags like real fabric (a cape on a running character, a banner on a cart). |
+| **Friction** | 0 to 1: how much a point loses its slide on a collider. High keeps a tablecloth from sliding off. |
+| **Solver Iterations** | 1 to 10: how many times each step the springs are pulled straight. More is stiffer and costs more. |
+| **Colliders** | Objects the cloth stays out of. Use objects with a **sphere**, **capsule** or **box** collider (an **Auto** collider on a sphere, capsule, box or cylinder shape works too). |
+
+</Side>
+
+## Things to know
+
+- The cloth only **reacts**. Bodies don't feel it: a ball pushes a curtain aside, but the curtain doesn't slow the ball.
+- It doesn't collide with itself or with the ground. Give it a box collider object if it should rest on something.
+- Put a cloth on a **child** of a moving object to carry it along: a cape on a character, a flag on a ship. Pin the edge that touches the object.
+- Changing **Resolution** or **Pinned** while the game runs starts that cloth again.
+- Each cloth costs about 0.5 ms a frame at Resolution 16 on a laptop. On phones keep to a few cloths, or lower their resolution.
+
+## Events and scripts
+
+- **Reset cloth** (Effects) puts the cloth back on its plane, hanging still. In scripts, use `entity.resetCloth()`.
+- Scripts can change every setting while the game runs with `component('cloth')`, for example `entity.component('cloth').windScale = 3` for a storm, or `.pin = 'none'` to let a banner fall.

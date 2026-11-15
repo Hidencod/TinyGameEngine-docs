@@ -159,6 +159,11 @@
       "icon": "🌬️",
       "title": "Wind zone",
       "desc": ""
+    },
+    "cloth": {
+      "icon": "🚩",
+      "title": "Cloth",
+      "desc": ""
     }
   }
 }

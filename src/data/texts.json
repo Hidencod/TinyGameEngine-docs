@@ -238,7 +238,8 @@
   "object.setLinePoint": "Move one point of the object's Line renderer, e.g. a laser's end to where it hits. A point past the end makes the line longer.",
   "object.setLinePointCount": "How many points the object's Line renderer has: more copies the last point, fewer drops points from the end.",
   "object.setTrailEmitting": "Start or stop the object's Trail renderer leaving a trail (what is already there fades out).",
-  "object.clearTrail": "Remove the trail the object has left so far, e.g. after teleporting it."
+  "object.clearTrail": "Remove the trail the object has left so far, e.g. after teleporting it.",
+  "object.resetCloth": "Put the object's Cloth back on its plane, hanging still, e.g. when a level starts again or after teleporting it."
  },
  "behaviors": {
   "platformer": "Walk and jump when your events or scripts tell it to (needs a Physics body)",

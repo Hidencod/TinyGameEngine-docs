@@ -799,6 +799,13 @@
           "doc": "Particles currently alive."
         },
         {
+          "name": "resetCloth",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Cloth: every point back on the plane, hanging still. Its settings are component(\"cloth\"), e.g. component(\"cloth\").windScale = 2."
+        },
+        {
           "name": "playSound",
           "kind": "method",
           "sig": "()",
