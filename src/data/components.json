@@ -174,6 +174,11 @@
       "icon": "🎞️",
       "title": "Playable Director",
       "desc": "Plays a Timeline from this object: on its own when the scene starts (Play On Awake), or from events and scripts"
+    },
+    "sight": {
+      "icon": "👀",
+      "title": "Sight",
+      "desc": "What this object can see: how far, how wide and from where (guards, turrets). The Sees condition uses it"
     }
   }
 }

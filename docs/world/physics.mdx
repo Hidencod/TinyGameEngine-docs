@@ -96,6 +96,7 @@ The world’s gravity is set in [Project settings](../editor/project-settings) (
 | **Is touching** | it is touching right now (every frame). |
 | **Is on ground** | it stands on something. |
 | **Has line of sight to** | nothing solid is between it and another object. |
+| **Sees** | the other object is in its [Sight](#sight) cone and nothing solid is in between. |
 | **Raycast** / **Raycast from** | an invisible ray hits something solid (see [Raycasts](#raycasts)). |
 
 Actions: **Set velocity**, **Push (impulse)** (a kick), **Apply force** (a push over time), **Jump**. In scripts: `entity.applyImpulse(0, 5, 0)`, `game.raycast(from, to)` (see [Raycasts](#raycasts)). See the [Conditions](../reference/conditions#physics) and [Actions](../reference/actions#physics) reference.
@@ -106,6 +107,39 @@ Actions: **Set velocity**, **Push (impulse)** (a kick), **Apply force** (a push 
 - **Rolls over / tips** — tick **Don’t tip over**.
 - **Coins block the player** — tick **Trigger only** on the coin’s collider.
 :::
+
+## Sight
+
+Give a guard, a turret or a camera a **Sight** component to say what it can see: how far, how wide, and from where. The **Sees** condition and `entity.canSee()` then check that the target is inside that cone **and** that no wall is in the way.
+
+<Side shot="card-sight" crop>
+
+| Setting | What it does |
+| --- | --- |
+| **Range** | How far it sees, in metres. 0 is no limit. |
+| **View Angle** | How wide the cone is, in degrees, from edge to edge. 360 sees all round. The cone is as tall as it is wide. |
+| **Eye** | Where it looks from, measured from the object's origin in its own directions. Raise it to the head (Y 1.6 on a character). |
+
+</Side>
+
+The cone points the way the object faces (its **−Z**, like every object here), so turning the guard turns its view.
+
+<Phone name="sight-cone" caption="Select the object to see its cone (seen here from the top). Gizmos → Sight cones hides it." />
+
+**Example: a guard that notices the player**
+
+1. Add **Sight** to the Guard. Set Range 12 and View Angle 90.
+2. Event: **Guard sees Player** → **Set Guard.Alert to 1** (or play a sound, chase…).
+3. Walls and crates with colliders hide the player. Triggers (coins, checkpoints) don't block sight.
+
+In scripts:
+
+```js
+if (guard.canSee(player)) guard.lookAt(player.position);
+turret.canSee(player, { range: 20, angle: 40 });   // other limits than its Sight component
+```
+
+Without a Sight component, `canSee` has no range or angle limit: it only checks for walls, like **Has line of sight to**.
 
 ## Raycasts
 

@@ -4078,6 +4078,36 @@
       ]
     },
     {
+      "id": "object.canSee",
+      "kind": "condition",
+      "category": "Physics",
+      "label": "Sees",
+      "hint": "In its Sight cone, no wall between",
+      "display": "{object} sees {target}",
+      "displayNoObject": null,
+      "icon": "👀",
+      "description": "True when the other object is inside this object's Sight cone (its Range and View Angle, from its Eye) and nothing solid is in between, e.g. a guard that notices the player. Needs a Sight component.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "target",
+          "label": "Target",
+          "type": "object",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "object.raycast",
       "kind": "condition",
       "category": "Physics",

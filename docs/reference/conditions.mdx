@@ -18,7 +18,7 @@ Conditions are the **WHEN / IF** part of an event. All conditions of an event mu
 - Most other conditions can be **inverted** (NOT) from the condition’s menu.
 :::
 
-There are **130 conditions**, grouped by category as in the condition picker.
+There are **131 conditions**, grouped by category as in the condition picker.
 
 [⚙️ System](#system) · [🔢 Variables](#variables) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🎬 Timeline](#timeline) · [🌐 Language](#language) · [🏆 Services](#services) · [♨️ Steam](#steam) · [🔗 Web](#web) · [👥 Multiplayer](#multiplayer) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🖼️ UI](#ui) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera) · [🎚️ Graphics](#graphics)
 
@@ -1256,6 +1256,19 @@ True when nothing solid (walls, crates…) is between the object and the target,
 
 - **Where:** Pick an **object** (or a #tag) first, then this condition.
 - **ID:** `object.hasLineOfSight` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Target | Object or #tag |  |  |
+
+### Sees {/* #object-cansee */}
+
+<span class="tge-ace-display">‹Object› sees ‹Target›</span>
+
+True when the other object is inside this object's Sight cone (its Range and View Angle, from its Eye) and nothing solid is in between, e.g. a guard that notices the player. Needs a Sight component.
+
+- **Where:** Pick an **object** (or a #tag) first, then this condition.
+- **ID:** `object.canSee` (as saved in project files)
 
 | Parameter | Type | Default | Notes |
 | --- | --- | --- | --- |

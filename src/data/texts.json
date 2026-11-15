@@ -246,7 +246,8 @@
   "camera.setTargets": "Change what a Virtual Camera follows and looks at. Leave one empty to keep what it has.",
   "camera.isLive": "True while this Virtual Camera is the one the game is seen through.",
   "object.playDirector": "Play the timeline of the object's Playable Director, with the director's Wrap Mode. Use it for a sequence that belongs to an object: a chest opening, a door with a camera shot.",
-  "object.stopDirector": "Stop the timeline of the object's Playable Director and go back to its start; the camera and subtitles are given back."
+  "object.stopDirector": "Stop the timeline of the object's Playable Director and go back to its start; the camera and subtitles are given back.",
+  "object.canSee": "True when the other object is inside this object's Sight cone (its Range and View Angle, from its Eye) and nothing solid is in between, e.g. a guard that notices the player. Needs a Sight component."
  },
  "behaviors": {
   "platformer": "Walk and jump when your events or scripts tell it to (needs a Physics body)",
@@ -283,7 +284,8 @@
   "line": "A ribbon through a list of points: lasers, lightning, ropes, aim lines",
   "forceField": "Pushes, pulls or swirls the particles of Particle Systems that have External Forces on",
   "virtualCamera": "A camera shot (Cinemachine): follows, orbits or rides a curve; the live one moves the main camera",
-  "director": "Plays a Timeline from this object: on its own when the scene starts (Play On Awake), or from events and scripts"
+  "director": "Plays a Timeline from this object: on its own when the scene starts (Play On Awake), or from events and scripts",
+  "sight": "What this object can see: how far, how wide and from where (guards, turrets). The Sees condition uses it"
  },
  "snippets": {
   "joystick": "Walk around with the on-screen joystick (or WASD / arrow keys).",

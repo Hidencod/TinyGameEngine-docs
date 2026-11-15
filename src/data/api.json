@@ -806,6 +806,13 @@
           "doc": "Virtual Camera: become the live one (switched on, Priority raised above the others); the main camera blends over with its Blend In. Its settings: component(\"virtualCamera\"), e.g. .follow = player.id, .priority = 20."
         },
         {
+          "name": "canSee",
+          "kind": "method",
+          "sig": "(target, opts?)",
+          "type": "boolean",
+          "doc": "Can it see the target: inside its Sight cone (Range, View Angle from its eye; or opts { range, angle }) with nothing solid in between. E.g. if (guard.canSee(player)) …"
+        },
+        {
           "name": "director",
           "kind": "property",
           "type": "TimelineAPI | null",
