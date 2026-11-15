@@ -130,7 +130,7 @@ async function streetRacerShots({ page, shot, tge, module }) {
   await page.waitForSelector('.editor.desktop', { timeout: 60000 });
   await page.waitForTimeout(6000);
   await shot('editor');
-  await page.locator('.desk-area .tab[data-tab="logic"]').click();
+  await page.locator('.dk-tab[data-tab="logic"]').click();
   await page.locator('.list-row', { hasText: 'Main events' }).first().click();
   await page.waitForSelector('.es-root', { timeout: 30000 });
   await page.waitForTimeout(1500);
@@ -227,7 +227,7 @@ async function fireflyGroveShots({ page, shot, tge, module }) {
   await page.waitForSelector('.editor.desktop', { timeout: 60000 });
   await page.waitForTimeout(5000);
   await shot('editor');
-  await page.locator('.desk-area .tab[data-tab="logic"]').click();
+  await page.locator('.dk-tab[data-tab="logic"]').click();
   await page.locator('.list-row', { hasText: 'Main events' }).first().click();
   await page.waitForSelector('.es-root', { timeout: 30000 });
   await page.waitForTimeout(1500);
@@ -273,7 +273,7 @@ async function crystalVaultShots({ page, shot, tge, module }) {
   await page.waitForSelector('.editor.desktop', { timeout: 60000 });
   await page.waitForTimeout(5000);
   await shot('editor');
-  await page.locator('.desk-area .tab[data-tab="logic"]').click();
+  await page.locator('.dk-tab[data-tab="logic"]').click();
   await page.locator('.list-row', { hasText: 'Main events' }).first().click();
   await page.waitForSelector('.es-root', { timeout: 30000 });
   await page.waitForTimeout(1500);
@@ -360,7 +360,7 @@ async function holeRushShots({ page, shot, tge, module }) {
   await page.waitForSelector('.editor.desktop', { timeout: 60000 });
   await page.waitForTimeout(6000);
   await shot('editor');
-  await page.locator('.desk-area .tab[data-tab="logic"]').click();
+  await page.locator('.dk-tab[data-tab="logic"]').click();
   await page.locator('.list-row', { hasText: 'Main events' }).first().click();
   await page.waitForSelector('.es-root', { timeout: 30000 });
   await page.waitForTimeout(1500);

@@ -111,11 +111,11 @@ export class Shooter {
 
   /**
    * Save a screenshot. opts.clip: a locator to crop to (with opts.pad CSS px around it),
-   * opts.hl: highlight targets (see highlight()), opts.dim.
+   * opts.hl: highlight targets (see highlight()), opts.dim, opts.keepMouse (a shot in the middle of a drag).
    */
   async shot(name, opts = {}) {
     if (this.only && !this.only.some((o) => name.includes(o))) return;
-    await this.page.mouse.move(-20, -20).catch(() => {});
+    if (!opts.keepMouse) await this.page.mouse.move(-20, -20).catch(() => {});
     if (opts.wait !== 0) await this.settle(opts.wait ?? 350);
     if (!opts.toasts) await this.page.evaluate(() => document.querySelectorAll('.toast').forEach((t) => t.remove()));
     if (opts.hl) await this.highlight(opts.hl, { dim: opts.dim });

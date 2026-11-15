@@ -39,9 +39,10 @@ for (const f of files) {
   const mod = await import(pathToFileURL(join(dir, f)).href);
   const viewport = mod.viewport ?? PHONE;
   const context = await browser.newContext({
-    viewport, deviceScaleFactor: 2, isMobile: true, hasTouch: true,
+    // A scenario with `export const desktop = true` runs as a computer with a mouse (docking, menus).
+    viewport, deviceScaleFactor: 2, isMobile: !mod.desktop, hasTouch: !mod.desktop,
     colorScheme: 'dark', locale: 'en-US', timezoneId: 'America/New_York',
-    userAgent: 'Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0 Mobile Safari/537.36',
+    ...(mod.desktop ? {} : { userAgent: 'Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0 Mobile Safari/537.36' }),
   });
   const page = await context.newPage();
   page.on('pageerror', (e) => console.warn('  [pageerror]', e.message));

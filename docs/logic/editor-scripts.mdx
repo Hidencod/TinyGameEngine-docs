@@ -13,6 +13,7 @@ An **editor script** adds your own tools to the editor, like Unity's **Editor sc
 - **Objects that rebuild while you edit** (Unity's `OnValidate`): a fence that adds posts when you make it longer.
 - **Custom Inspectors**: your own sliders, fields and buttons on a script's card.
 - **Import rules** (Unity's `AssetPostprocessor`): put every new sound in a Sounds folder, give UI pictures a 9-slice border.
+- **Windows** (Unity's `EditorWindow`): your own window of controls, docked anywhere on a computer.
 
 Editor scripts run **only in the editor**. They are never part of the game, a published link or a build.
 
@@ -141,6 +142,23 @@ It works like Unity's `OnInspectorGUI`: each control shows a value and **returns
 | `ui.vector(label, [x, y, z])` | `[x, y, z]` |
 | `ui.button(label)` | true when just pressed |
 | `ui.row(() => { … })` | puts the controls inside side by side |
+
+## Windows {/* #windows */}
+
+```js
+editor.window('Level stats', (ui) => {
+  ui.header('Scene');
+  ui.label('Objects', editor.scene.objects.length);
+  ui.label('Selected', editor.selection.map((e) => e.name).join(', ') || '-');
+  if (ui.button('Add crate')) editor.scene.add('Crate', { shape: 'box' });
+});
+```
+
+A window of your own, drawn with the same controls as a [custom Inspector](#custom-inspector), with no object. Open it from **Window** in the menu bar, or ☰ → **Tools** on a phone.
+
+- On a computer it is a window like the editor's own: drag its tab anywhere (see [Windows and layout](../editor/windows)). On a phone it opens full screen.
+- It is drawn again when the project or the selection changes, and after each control you use.
+- What a control changes is one undo step.
 
 ## Import rules {/* #on-import */}
 
