@@ -93,3 +93,15 @@ Instance variables are values **each copy** of the object has for itself — lik
 In events use *Compare instance variable*, *Set instance variable* etc.; in expressions write `Enemy.health`. See [Variables](../logic/variables).
 
 </Side>
+
+## Several objects at once {/* #multi-object-editing */}
+
+Select several objects (Ctrl / Cmd + click or Shift + click in the Objects list, or **Multi** on a phone) and the Inspector edits them together, like Unity's multi-object editing:
+
+- At the top: how many are selected, a chip for each (tap one to edit only it), **Duplicate all**, **Delete all** and **Clear selection**.
+- **Visible**, **Active**, **Keep across scenes** and **Layer**, then the **Transform**.
+- Every **component** and **behavior** they all have, and the **instance variables** they all share.
+- Where their values differ, the field shows **—**: a checkbox is half-set and a list is blank. Type a value, tick the box or pick an item and it is set on **all** of them. Fields where they agree show the shared value, and changing it changes all.
+- **+ Add component** and **+ Add behavior** add to every selected object that doesn't have it yet; a card's menu resets or removes that component on all of them.
+
+Names and tags stay per object, and curve points, terrain painting and tilemap painting act on the first selected object only: edit those one at a time.
