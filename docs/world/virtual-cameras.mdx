@@ -1,0 +1,114 @@
+---
+title: Virtual cameras
+description: Camera shots that follow, orbit, frame and ride along a curve, with priorities, smooth blends between them, handheld noise and impulse shakes.
+---
+
+# Virtual cameras
+
+<Art name="star-small" size={85} />
+
+A **Virtual Camera** is a camera *shot*: where the camera should be and what it should look at. It draws nothing itself. The game is still seen through the **main camera**, and the virtual camera that is **live** moves it there. When another one goes live, the main camera **blends** over to it. This works like Unity's **Cinemachine**.
+
+Use them for a follow camera, a camera that orbits a boss, a side-on 2D camera with a dead zone, a dolly shot along a track, and for cutting between them in gameplay and in [Timelines](./timeline).
+
+<Crop name="vcam-scene" caption="Three virtual cameras on the same hero: a dolly along a curve, a follow camera, and an orbit around the statue" />
+
+## Add one
+
+1. Select the object to follow (your player).
+2. **＋ Add → Virtual Camera**. It follows the selected object straight away: **Follow** is set to it, **Position Control** is **Follow** and **Rotation Control** is **Rotation Composer**.
+3. Press ▶ Play. The main camera now goes where the virtual camera is.
+
+Keep the scene's normal **Camera** object: it is the one the game is drawn through. Don't put a Camera component on a virtual camera's object.
+
+<Phone name="vcam-editor" caption="Select a virtual camera to see its shot in the corner of the scene view" />
+
+In the editor, select a virtual camera to see its shot in the camera picture in the corner of the scene view. The picture shows where it would be with its targets where they are now, without damping or noise. A Timeline's camera track shows it there too.
+
+## Which one is live
+
+- The **enabled** virtual camera with the highest **Priority** is live.
+- If two have the same Priority, the one switched on **last** wins.
+- Switch shots by changing priorities, or by switching virtual cameras on and off (**Set enabled**). When the live one is switched off, the next one takes over.
+- **Make live camera** switches it on and puts its Priority above every other one.
+- A [Timeline](./timeline#cameras-and-blending) **Camera cuts** clip that names a virtual camera makes it live for the clip, whatever the priorities. When the clip ends, the live one by priority blends back in.
+
+When no virtual camera is enabled, the main camera is left where it is and your own camera code (or **Camera follow**) moves it again.
+
+## Settings
+
+<Side shot="card-virtual-camera" crop>
+
+| Setting | What it does |
+| --- | --- |
+| **Priority** | Higher is live first. |
+| **Follow** | The object Position Control follows (Cinemachine's Tracking Target). |
+| **Look At** | The object Rotation Control aims at. Empty aims at the Follow object. |
+| **Field of View** | The lens, for a perspective main camera. It blends too, so a shot can zoom in. |
+| **Orthographic Size** | Half the height of the view, for an orthographic (2D) main camera. |
+| **Noise → Amplitude** | A handheld wobble, in degrees. 0 is steady. **Frequency** sets how fast it wobbles. |
+| **Blend In → Style** | How the view moves over when this one goes live: **Cut**, **Ease In Out**, **Ease In**, **Ease Out** or **Linear**. |
+| **Blend In → Time** | Seconds the blend takes. |
+
+</Side>
+
+### Position Control
+
+| Mode | Where the camera goes |
+| --- | --- |
+| **None** | Where the virtual camera's object is. Move it yourself, or with a Timeline or a script. |
+| **Follow** | **Follow Offset** away from the Follow object. **Binding Mode**: **World Space** keeps the offset in world directions, **Lock to Target With World Up** turns it with the object, so the camera stays behind a car as it turns. |
+| **Orbital Follow** | On a sphere of **Radius** around the Follow object. **Horizontal Axis** and **Vertical Axis** are the starting angles (0 is behind, on +Z). With **Input** on, the player turns it with the mouse, the right stick or a drag; **Vertical Min** and **Max** stop it going under the ground or over the top. |
+| **Position Composer** | Keeps its own rotation and slides so the Follow object sits on its screen spot, **Camera Distance** away. The 2D side-on camera: with a dead zone the hero can move a little before the camera follows. |
+| **Spline Dolly** | Rides along a [Curve](./curve) object (**Spline**). With **Automatic Dolly** it stays at the point of the curve nearest the Follow object. Without it, **Position** sets where (0 is the start, 1 the end). **Offset** moves it off the curve. |
+| **Hard Lock to Target** | Exactly on the Follow object: a first-person view. |
+
+**Damping** is how many seconds the camera takes to catch up, per axis (X, Y, Z): 0 is at once, 1 lags softly. In Follow mode the axes turn with the binding, so Z is "behind".
+
+### Rotation Control
+
+| Mode | Where the camera looks |
+| --- | --- |
+| **None** | The way the virtual camera's object faces. |
+| **Rotation Composer** | Turns to keep the Look At object on its screen spot. With a **dead zone** it only turns when the object leaves the zone. |
+| **Hard Look At** | Always straight at the Look At object. |
+| **Rotate With Follow Target** | The same rotation as the Follow object: a view from a cockpit or a turret. |
+
+**Target Offset** moves the point aimed at, for example up to the head (Y 1.5). **Damping** is the seconds to catch up.
+
+### Screen spot and dead zone
+
+Rotation Composer and Position Composer keep the target on a spot on the screen:
+
+- **Screen X / Screen Y** move the spot from the centre: −0.5 is the left (or bottom) edge, 0.5 the right (or top). Put a runner at X −0.2 so there is more room ahead of them.
+- **Dead Zone Width / Height** make a box around the spot, as a share of the screen (0 to 1). While the target is in the box the camera doesn't move. When it leaves, the camera moves just enough to bring it back to the edge of the box.
+
+## Shakes
+
+- **Noise** on a virtual camera is a steady handheld wobble that lasts as long as the shot.
+- **Shake camera** (Camera actions) shakes the screen for a moment.
+- **Camera impulse** shakes it *from an object*: full strength there, weaker the farther the camera is, nothing past **Radius**. An explosion far away barely moves the view. A weaker shake never cuts a stronger one short.
+
+## Events and scripts
+
+Camera actions and conditions: **Make live camera**, **Set camera priority**, **Set camera targets** (empty keeps what it has), **Is live camera**, **Camera impulse**.
+
+In scripts:
+
+```js
+game.find('BossCam').makeLiveCamera();            // live now, blending in
+game.find('BossCam').isLiveCamera;                // true while live
+game.liveCamera();                                // the live virtual camera, or null
+const cam = game.find('FollowCam').component('virtualCamera');
+cam.priority = 20;
+cam.follow = game.find('Car').id;                 // follow another object
+cam.offset = [0, 6, 12];                          // every setting changes live
+game.shakeCamera(0.6, 0.4, bomb.position, 25);    // an impulse from the bomb, 25 m radius
+```
+
+## Things to know
+
+- The main camera is moved after everything else in the frame, so it follows objects moved by physics, behaviors and scripts in the same frame.
+- A Timeline **Camera cuts** clip with a normal camera object (not a virtual one) wins over the virtual cameras while it lasts.
+- Blending moves the position, the turn and the lens together. A blend that is interrupted by another switch starts again from where the view is.
+- Several virtual cameras cost almost nothing: each one is a few sums a frame.

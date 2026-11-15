@@ -232,14 +232,19 @@
   "debug.drawSphere": "Debug: draw a wire sphere to see a range or radius, e.g. how far an enemy notices you.",
   "debug.drawCircle": "Debug: draw a ring lying flat on the ground at a position, e.g. an area or a spawn radius.",
   "debug.drawBox": "Debug: draw a wire box around a position to check a size or an area, e.g. a trigger zone.",
-  "camera.shake": "Shake the screen, great for hits and explosions.",
+  "camera.shake": "Shake the screen, great for hits and explosions. For a shake that is weaker farther away, use Camera impulse.",
   "camera.lookAt": "Turn the main camera toward an object.",
   "camera.setPosition": "Move the main camera.",
   "object.setLinePoint": "Move one point of the object's Line renderer, e.g. a laser's end to where it hits. A point past the end makes the line longer.",
   "object.setLinePointCount": "How many points the object's Line renderer has: more copies the last point, fewer drops points from the end.",
   "object.setTrailEmitting": "Start or stop the object's Trail renderer leaving a trail (what is already there fades out).",
   "object.clearTrail": "Remove the trail the object has left so far, e.g. after teleporting it.",
-  "object.resetCloth": "Put the object's Cloth back on its plane, hanging still, e.g. when a level starts again or after teleporting it."
+  "object.resetCloth": "Put the object's Cloth back on its plane, hanging still, e.g. when a level starts again or after teleporting it.",
+  "camera.impulse": "Shake the camera from an object's place, like Cinemachine's Impulse: full strength there, weaker the farther the camera is, nothing past the radius. Good for explosions and heavy landings.",
+  "camera.makeLive": "Make a Virtual Camera the one the game is seen through: it is switched on and its Priority goes above the others, and the view blends over with its Blend In.",
+  "camera.setPriority": "Change a Virtual Camera's Priority. The enabled one with the highest Priority is live.",
+  "camera.setTargets": "Change what a Virtual Camera follows and looks at. Leave one empty to keep what it has.",
+  "camera.isLive": "True while this Virtual Camera is the one the game is seen through."
  },
  "behaviors": {
   "platformer": "Walk and jump when your events or scripts tell it to (needs a Physics body)",
@@ -274,7 +279,8 @@
   "volume": "Puts a post-processing profile (glow, depth of field, vignette…) on the screen: everywhere, or while the camera is inside its box",
   "trail": "A ribbon left behind the object as it moves: sword swings, dashes, projectiles, tire marks",
   "line": "A ribbon through a list of points: lasers, lightning, ropes, aim lines",
-  "forceField": "Pushes, pulls or swirls the particles of Particle Systems that have External Forces on"
+  "forceField": "Pushes, pulls or swirls the particles of Particle Systems that have External Forces on",
+  "virtualCamera": "A camera shot (Cinemachine): follows, orbits or rides a curve; the live one moves the main camera"
  },
  "snippets": {
   "joystick": "Walk around with the on-screen joystick (or WASD / arrow keys).",

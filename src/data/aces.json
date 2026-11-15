@@ -12738,7 +12738,7 @@
       "display": "Shake camera (strength {intensity}, {duration} s)",
       "displayNoObject": null,
       "icon": "📳",
-      "description": "Shake the screen, great for hits and explosions.",
+      "description": "Shake the screen, great for hits and explosions. For a shake that is weaker farther away, use Camera impulse.",
       "isTrigger": false,
       "objectRequired": false,
       "objectOptional": false,
@@ -12768,6 +12768,164 @@
           "varScope": null
         }
       ]
+    },
+    {
+      "id": "camera.impulse",
+      "kind": "action",
+      "category": "Camera",
+      "label": "Camera impulse",
+      "hint": "A shake from a place: weaker farther away",
+      "display": "Camera impulse from {object} (strength {intensity}, {duration} s, radius {radius})",
+      "displayNoObject": null,
+      "icon": "💥",
+      "description": "Shake the camera from an object's place, like Cinemachine's Impulse: full strength there, weaker the farther the camera is, nothing past the radius. Good for explosions and heavy landings.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "camera",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "intensity",
+          "label": "Strength",
+          "type": "number",
+          "options": null,
+          "default": "0.5",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "duration",
+          "label": "Seconds",
+          "type": "number",
+          "options": null,
+          "default": "0.4",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "radius",
+          "label": "Radius",
+          "type": "number",
+          "options": null,
+          "default": "20",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "camera.makeLive",
+      "kind": "action",
+      "category": "Camera",
+      "label": "Make live camera",
+      "hint": "A Virtual Camera takes over the main camera",
+      "display": "Make {object} the live camera",
+      "displayNoObject": null,
+      "icon": "🎬",
+      "description": "Make a Virtual Camera the one the game is seen through: it is switched on and its Priority goes above the others, and the view blends over with its Blend In.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "camera",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "camera.setPriority",
+      "kind": "action",
+      "category": "Camera",
+      "label": "Set camera priority",
+      "hint": "Of a Virtual Camera: the highest is live",
+      "display": "Set {object} camera priority to {priority}",
+      "displayNoObject": null,
+      "icon": "🎬",
+      "description": "Change a Virtual Camera's Priority. The enabled one with the highest Priority is live.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "camera",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "priority",
+          "label": "Priority",
+          "type": "number",
+          "options": null,
+          "default": "20",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "camera.setTargets",
+      "kind": "action",
+      "category": "Camera",
+      "label": "Set camera targets",
+      "hint": "What a Virtual Camera follows and looks at",
+      "display": "{object} camera follows {follow}, looks at {lookAt}",
+      "displayNoObject": null,
+      "icon": "🎬",
+      "description": "Change what a Virtual Camera follows and looks at. Leave one empty to keep what it has.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "camera",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "follow",
+          "label": "Follow",
+          "type": "object",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "lookAt",
+          "label": "Look At",
+          "type": "object",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "camera.isLive",
+      "kind": "condition",
+      "category": "Camera",
+      "label": "Is live camera",
+      "hint": "This Virtual Camera moves the main camera",
+      "display": "{object} is the live camera",
+      "displayNoObject": null,
+      "icon": "🎬",
+      "description": "True while this Virtual Camera is the one the game is seen through.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "camera",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
     },
     {
       "id": "camera.lookAt",

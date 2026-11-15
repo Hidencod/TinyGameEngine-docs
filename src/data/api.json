@@ -799,6 +799,19 @@
           "doc": "Particles currently alive."
         },
         {
+          "name": "makeLiveCamera",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "Virtual Camera: become the live one (switched on, Priority raised above the others); the main camera blends over with its Blend In. Its settings: component(\"virtualCamera\"), e.g. .follow = player.id, .priority = 20."
+        },
+        {
+          "name": "isLiveCamera",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "Virtual Camera: true while it is the one moving the main camera."
+        },
+        {
           "name": "resetCloth",
           "kind": "method",
           "sig": "()",
@@ -1400,9 +1413,16 @@
         {
           "name": "shakeCamera",
           "kind": "method",
-          "sig": "(intensity, duration)",
+          "sig": "(intensity, duration, from?, radius?)",
           "type": "void",
-          "doc": "Shake the camera."
+          "doc": "Shake the camera. With from (a position, e.g. bomb.position) it is an impulse: weaker the farther the camera is, nothing past radius (default 20 m)."
+        },
+        {
+          "name": "liveCamera",
+          "kind": "method",
+          "sig": "()",
+          "type": "RuntimeEntity | null",
+          "doc": "The live Virtual Camera (the one moving the main camera), or null."
         },
         {
           "name": "debug",

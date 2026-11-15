@@ -53,6 +53,8 @@ What **Blend** does:
 - It runs on game time, and it is not tied to the clip's length: a 1.5 s blend in a 1 s clip is simply interrupted when the clip ends.
 - Two clips that name the **same camera** change nothing, so there is nothing to blend. A common slip is to use the game's own camera as the clip's camera: use a second camera object.
 
+A clip can also name a [Virtual Camera](./virtual-cameras). It is live while the clip lasts, whatever the priorities, and the main camera follows it as it follows and aims. When the clip ends, the virtual camera that is live by priority comes back **with its own Blend In** instead of a cut.
+
 In the editor, scrubbing shows the camera under the playhead in the small camera picture in the corner of the scene view. The glide itself is only seen in **Play**.
 
 ## Subtitles

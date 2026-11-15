@@ -16,7 +16,7 @@ Actions are the **DO** part of an event. They run from top to bottom when the ev
 Number and text fields accept expressions, e.g. `Score + 1`, `"Score: " + Score`, `Player.x`, `random(1, 6)`. See [Expressions](./expressions).
 :::
 
-There are **224 actions**, grouped by category as in the action picker.
+There are **228 actions**, grouped by category as in the action picker.
 
 [⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🎬 Timeline](#timeline) · [🌐 Language](#language) · [🏆 Services](#services) · [♨️ Steam](#steam) · [🔗 Web](#web) · [👥 Multiplayer](#multiplayer) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [☄️ Effects](#effects) · [🔊 Audio](#audio) · [🎥 Camera](#camera) · [🎚️ Graphics](#graphics)
 
@@ -2823,7 +2823,7 @@ Carries on the sounds paused by Pause all sounds.
 
 <span class="tge-ace-display">Shake camera (strength ‹Strength›, ‹Seconds› s)</span>
 
-Shake the screen, great for hits and explosions.
+Shake the screen, great for hits and explosions. For a shake that is weaker farther away, use Camera impulse.
 
 - **Where:** Found under **Camera** in the picker.
 - **ID:** `camera.shake` (as saved in project files)
@@ -2832,6 +2832,58 @@ Shake the screen, great for hits and explosions.
 | --- | --- | --- | --- |
 | Strength | Number (expression) | `0.3` |  |
 | Seconds | Number (expression) | `0.3` |  |
+
+### Camera impulse {/* #camera-impulse */}
+
+<span class="tge-ace-display">Camera impulse from ‹Object› (strength ‹Strength›, ‹Seconds› s, radius ‹Radius›)</span>
+
+Shake the camera from an object's place, like Cinemachine's Impulse: full strength there, weaker the farther the camera is, nothing past the radius. Good for explosions and heavy landings.
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `camera.impulse` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Strength | Number (expression) | `0.5` |  |
+| Seconds | Number (expression) | `0.4` |  |
+| Radius | Number (expression) | `20` |  |
+
+### Make live camera {/* #camera-makelive */}
+
+<span class="tge-ace-display">Make ‹Object› the live camera</span>
+
+Make a Virtual Camera the one the game is seen through: it is switched on and its Priority goes above the others, and the view blends over with its Blend In.
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `camera.makeLive` (as saved in project files)
+- **Parameters:** none
+
+### Set camera priority {/* #camera-setpriority */}
+
+<span class="tge-ace-display">Set ‹Object› camera priority to ‹Priority›</span>
+
+Change a Virtual Camera's Priority. The enabled one with the highest Priority is live.
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `camera.setPriority` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Priority | Number (expression) | `20` |  |
+
+### Set camera targets {/* #camera-settargets */}
+
+<span class="tge-ace-display">‹Object› camera follows ‹Follow›, looks at ‹Look At›</span>
+
+Change what a Virtual Camera follows and looks at. Leave one empty to keep what it has.
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `camera.setTargets` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Follow | Object or #tag |  |  |
+| Look At | Object or #tag |  |  |
 
 ### Camera look at {/* #camera-lookat */}
 

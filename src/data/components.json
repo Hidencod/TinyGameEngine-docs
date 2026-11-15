@@ -164,6 +164,11 @@
       "icon": "🚩",
       "title": "Cloth",
       "desc": ""
+    },
+    "virtualCamera": {
+      "icon": "🎬",
+      "title": "Virtual Camera",
+      "desc": "A camera shot (Cinemachine): follows, orbits or rides a curve; the live one moves the main camera"
     }
   }
 }
