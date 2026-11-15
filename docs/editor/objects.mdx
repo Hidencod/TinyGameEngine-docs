@@ -83,7 +83,8 @@ Tap **⋮** on a row, or **long-press** the object in the 3D view.
 | **Move up / down** | Reorders the list (also the drawing order of UI). |
 | **Set parent…** | Attaches it to another object so they move together. |
 | **Unparent** | Detaches it again. |
-| **Make prefab** | Saves it (with its children) as a reusable prefab. |
+| **Make prefab** | Saves it (with its children) as a reusable prefab; the object becomes a linked copy of it. |
+| **Apply all to prefab** / **Revert all** / **Unpack prefab** | On a linked prefab copy: see [Linked copies](#linked-copies). |
 | **Delete** | Deletes it and its children (undo brings them back). |
 
 </Side>
@@ -134,11 +135,44 @@ From a script, `attachTo(parent, "hand_R")` attaches an object to the part with 
 
 A **prefab** is a saved object (with its children, components, behaviors and variables) that you can place again and again, and that events can **create while the game runs** (*Create object* action) — bullets, enemies, coins.
 
-- **Make prefab** from the object menu.
-- Prefabs are kept in the **Files** tab, under the **Prefabs** filter. Tap one and choose **Add to scene**, or drag it into the 3D view to place it where you let go. The same menu renames it, moves it to a folder, or deletes it (copies already placed stay).
+- **Make prefab** from the object menu. The object becomes a [linked copy](#linked-copies) of the new prefab.
+- Prefabs are kept in the **Files** tab, under the **Prefabs** filter. Tap one and choose **Add to scene**, or drag it into the 3D view to place it where you let go. The same menu **opens** it in [prefab mode](#prefab-mode), renames it, moves it to a folder, or deletes it (copies already placed stay, as plain objects).
 - Prefabs also appear in the **＋ Add** menu.
 - **Create object** (and `game.spawn("Name")`) also works with a plain object by its name: one placed in the scene, one that only exists in **another scene**, or one **made while playing and destroyed since**. A prefab is still the cleanest way when you want a template that no scene has to contain.
 
 </Side>
+
+### Linked copies {/* #linked-copies */}
+
+A placed prefab stays **linked** to its prefab, like a prefab instance in Unity: change the prefab and every copy in every scene changes with it. In the Objects list a linked copy's name is **blue**, and its top object has the prefab icon.
+
+What you change on one copy is that copy's own (an **override**): its value stays when the prefab changes. Where a copy matches the prefab, it keeps following it. The top object's **position**, **rotation**, **name** and **parent** are always the copy's own and never count as overrides.
+
+Select a copy and the Inspector shows a **prefab bar** at the top:
+
+| Button | What it does |
+| --- | --- |
+| **📦 Name** | The prefab this object is a copy of. |
+| **Open** | Opens the prefab in [prefab mode](#prefab-mode). |
+| **Root** | On a child of the copy: selects the copy's top object. |
+| **Overrides ▾** | Lists every override of the copy: changed parts, objects added to it, prefab objects removed from it. Pick one to **apply** or **revert** just that, or choose **Apply all** / **Revert all**. Blue when the copy has overrides. |
+| **⋮ → Unpack** | Drops the link: the copy becomes plain objects. |
+
+A card with an override (Transform, a component, a behavior, the instance variables) gets a **blue bar** on its left and a blue **●** button: **Apply to prefab** sends that part to the prefab (and so to every copy), **Revert** takes the prefab's again. A component or behavior added to the copy counts as an override too; reverting it removes it.
+
+- **Apply all** makes the prefab exactly this copy (except where the copy stands). Every other copy takes the change and keeps its own overrides.
+- **Revert all** makes the copy the prefab again: its overrides go, objects added to it are removed, removed ones come back.
+- The object menu (**⋮** on the row) has **Apply all to prefab**, **Revert all** and **Unpack prefab** for a copy's top object. **Make prefab** on a linked copy applies it too.
+- **Duplicate** (and copying a scene) keeps the link. Deleting a prefab unlinks its copies.
+- Making a prefab from **another object** with the same name replaces the prefab's contents; copies placed before lose their link.
+- Copies placed before linked prefabs existed (before v1.0.2's Linked prefabs update) are plain objects. Delete one and place the prefab again to link it.
+
+### Prefab mode {/* #prefab-mode */}
+
+**Open** (on the prefab bar, or in the prefab's menu in **Files**) opens the prefab on its own, like Unity's prefab mode. The Objects tab shows **‹ Scene name** and **📦 Prefab name** instead of the scene button, and the list holds only the prefab's objects.
+
+Every change you make there goes straight into the prefab, and every linked copy follows as you work (keeping its overrides). Undo works inside prefab mode; back in the scene, one **Undo** takes back the whole visit.
+
+Tap **‹ Scene name** to go back. Pressing **Play**, switching scenes, or opening the Scenes, event sheet, Timeline, Tests or Git panel also takes you back first. Objects you add at the top level in prefab mode (not under the prefab's top object) are not part of the prefab.
 
 <Phone name="object-rename" size="small" caption="Rename an object" />
