@@ -99,7 +99,7 @@ The on-screen controls shown while playing (also in [Project settings](./project
 | **Joystick** | Show the virtual joystick. It drives the Platformer, Top-down and Car behaviors and the `joystickX` / `joystickY` values. |
 | **Joystick side** | Left or Right. The buttons go on the other side. |
 | **Move** | The keys for **Up**, **Down**, **Left** and **Right**: the joystick's keyboard side. W A S D and the arrow keys unless you change them. |
-| **Buttons** | Round on-screen buttons. Each has a **Name** used by events and scripts (e.g. `jump`), a **Label** shown on it (e.g. `A`), a **Color**, the **Keys** and **Gamepad** button that press it, and **On screen** (off = a keyboard / gamepad only button, e.g. `pause` on Esc). **Add button** adds one; 🗑 deletes it. Events can hide a button until it's useful and change its label with *Show*, *Hide* and *Set label* under **Input** — the same names as for UI buttons — see [getting into a boat](../behaviors#boat). |
+| **Buttons** | Round on-screen buttons. Each has a **Name** used by events and scripts (e.g. `jump`), a **Label** shown on it (e.g. `A`), a **Color**, the **Keys** and **Gamepad** buttons that press it, and **On screen** (off = a keyboard / gamepad only button, e.g. `pause` on Esc). **Add button** adds one; 🗑 deletes it. Events can hide a button until it's useful and change its label with *Show*, *Hide* and *Set label* under **Input** — the same names as for UI buttons — see [getting into a boat](../behaviors#boat). |
 
 <Side shot="controls-card" crop>
 
@@ -107,7 +107,7 @@ New projects have one button, `jump`, labelled **A**, pressed by **Space**, **J*
 
 **Keys:** tap **＋ Key**, then press the key on your keyboard (or pick one from the list on a phone); ✕ removes one. A button can have several keys, and the same key can press several buttons.
 
-**Gamepad:** the button on a controller that presses it, or None.
+**Gamepad:** tap **＋ Button**, then press the button on a connected controller (or pick one from the list); ✕ removes one. Like keys, a button can have several (e.g. `dash` on both **RB** and **RT**), or none.
 
 A new button gets keys that suit its name — `use` / `interact`: **E** and **X**, `fire` / `shoot`: **F** and **RB**, `run` / `sprint`: **Shift** and **LB**, `pause`: **Esc** and **Start** — or the next free key (J, K, L…). Change them any time.
 
@@ -115,13 +115,22 @@ A new button gets keys that suit its name — `use` / `interact`: **E** and **X*
 
 ### Gamepads and button prompts {/* #gamepads */}
 
-**Gamepads** work in a browser and in exported games: the left stick or d-pad moves, and each button's **Gamepad** setting presses it. Every gamepad button also has its own name for *Key is held* / *On key pressed* and scripts: `PadA`, `PadB`, `PadX`, `PadY`, `PadLB`, `PadRB`, `PadLT`, `PadRT`, `PadStart`. The on-screen controls hide while a gamepad is used and come back on the next touch. The right stick turns a camera with [Mouse look](../behaviors#camera-follow).
+**Gamepads** work in a browser and in exported games: the left stick or d-pad moves, and each button's **Gamepad** buttons press it. Every gamepad button also has its own name for *Key is held* / *On key pressed* and scripts: `PadA`, `PadB`, `PadX`, `PadY`, `PadLB`, `PadRB`, `PadLT`, `PadRT`, `PadStart`, `PadBack`, `PadLS`, `PadRS`. The names are by position, the same on every controller: `PadA` is the bottom face button (✕ on a PlayStation pad, B on a Switch pad). The on-screen controls hide while a gamepad is used and come back on the next touch. The right stick turns a camera with [Mouse look](../behaviors#camera-follow).
 
 **Button prompts** that follow the player's controls: the game knows what was used last, **gamepad**, **keyboard** (keys or the mouse) or **touch**, and it switches back and forth as the player changes. In events, *On input device changed* fires when it switches and *Input device is* checks it; `inputdevice()` is its name in expressions. In scripts, `game.input.device` and `game.input.deviceChanged`.
 
 | Condition | Action |
 | --- | --- |
-The simplest prompt is `<prompt=jump>` in any UI text, e.g. `Press <prompt=jump> to jump`. It draws the button's key as a key cap (**Space**), its gamepad button in its Xbox colours (a green **A**), or its on-screen label on a touch screen, and changes by itself when the player switches device or rebinds the button. `<prompt=move>` shows **WASD** or the left stick. In expressions, `prompt("jump")` is the same as text (`"Space"`, `"A"`).
+The simplest prompt is `<prompt=jump>` in any UI text, e.g. `Press <prompt=jump> to jump`. It draws the button's key as a key cap (**Space**), its gamepad button as it looks on the controller in the player's hands, or its on-screen label on a touch screen, and changes by itself when the player switches device, picks up another controller or rebinds the button. `<prompt=move>` shows **WASD** or the left stick. In expressions, `prompt("jump")` is the same as text (`"Space"`, `"A"`).
+
+| Controller | Bottom, right, left, top | Bumpers, triggers | Start, Back |
+| --- | --- | --- | --- |
+| **Xbox** (and any other) | A B X Y, in green, red, blue, yellow | LB RB, LT RT | Start, Back |
+| **PlayStation** | ✕ ○ □ △ in their colours | L1 R1, L2 R2 | Options, Create |
+| **Switch** | B A Y X | L R, ZL ZR | +, − |
+| **Steam Deck** | A B X Y | L1 R1, L2 R2 | ☰, ⧉ |
+
+The game tells them apart by the controller's name. On a Steam Deck every controller goes through Steam, so there it shows the Deck's own. *Set gamepad prompt style* (under **Input**) picks one for good, e.g. from an options menu, and **auto** goes back; `padstyle()` in expressions and `input.padStyle` / `input.setPadStyle('playstation')` in scripts.
 
 For anything else, use the device itself:
 
@@ -148,4 +157,5 @@ A typical row in a settings menu: a **Button** whose label is `Jump  <prompt=jum
 
 - If another button had that key, the two swap, so one key never does two things.
 - A player's choices are kept on their device and apply every time the game starts.
-- In scripts: `await input.rebind('jump')` (true when rebound), `input.rebinding`, `input.cancelRebind()`, `input.resetBindings()`, `input.bindingOf('jump')`, `input.setBinding('jump', { keys: ['KeyK'] })`, `input.prompt('jump')`.
+- A rebound button gets just the new key or gamepad button, even if it had several.
+- In scripts: `await input.rebind('jump')` (true when rebound), `input.rebinding`, `input.cancelRebind()`, `input.resetBindings()`, `input.bindingOf('jump')` (`{ keys, pads }`), `input.setBinding('jump', { keys: ['KeyK'], pads: ['PadA', 'PadY'] })`, `input.prompt('jump')`.

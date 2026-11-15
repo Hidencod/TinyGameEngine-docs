@@ -1537,6 +1537,25 @@
           "doc": "True for the one frame the device changes: update button prompts then."
         },
         {
+          "name": "padStyle",
+          "kind": "property",
+          "type": "string",
+          "doc": "Whose button names gamepad prompts show: \"xbox\", \"playstation\" (✕ ○ □ △), \"switch\" or \"deck\". From the gamepad in use."
+        },
+        {
+          "name": "setPadStyle",
+          "kind": "method",
+          "sig": "(style)",
+          "type": "void",
+          "doc": "Force a gamepad prompt style, or \"auto\" to follow the gamepad again."
+        },
+        {
+          "name": "padStyleChanged",
+          "kind": "property",
+          "type": "boolean",
+          "doc": "True for the one frame the prompt style changes."
+        },
+        {
           "name": "prompt",
           "kind": "method",
           "sig": "(action, device?)",
@@ -1573,15 +1592,15 @@
           "name": "bindingOf",
           "kind": "method",
           "sig": "(action)",
-          "type": "{keys, pad}",
-          "doc": "The keys and gamepad button an action has now."
+          "type": "{keys, pads, pad}",
+          "doc": "The keys and gamepad buttons an action has now (pad = the first)."
         },
         {
           "name": "setBinding",
           "kind": "method",
-          "sig": "(action, {keys?, pad?})",
+          "sig": "(action, {keys?, pads?})",
           "type": "void",
-          "doc": "Give an action these keys / gamepad button (kept on this device)."
+          "doc": "Give an action these keys / gamepad buttons (kept on this device)."
         },
         {
           "name": "resetBindings",

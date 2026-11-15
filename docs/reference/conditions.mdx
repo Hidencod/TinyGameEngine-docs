@@ -18,7 +18,7 @@ Conditions are the **WHEN / IF** part of an event. All conditions of an event mu
 - Most other conditions can be **inverted** (NOT) from the condition’s menu.
 :::
 
-There are **127 conditions**, grouped by category as in the condition picker.
+There are **129 conditions**, grouped by category as in the condition picker.
 
 [⚙️ System](#system) · [🔢 Variables](#variables) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🎬 Timeline](#timeline) · [🌐 Language](#language) · [🏆 Services](#services) · [♨️ Steam](#steam) · [🔗 Web](#web) · [👥 Multiplayer](#multiplayer) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🖼️ UI](#ui) · [✨ Particles](#particles) · [🔊 Audio](#audio) · [🎥 Camera](#camera) · [🎚️ Graphics](#graphics)
 
@@ -430,6 +430,32 @@ What the player used last: gamepad, keyboard (keys or the mouse) or touch. Use i
 | Parameter | Type | Default | Notes |
 | --- | --- | --- | --- |
 | Device | Choice | `gamepad` | Options: gamepad, keyboard, touch |
+
+### Is waiting for a key {/* #input-isrebinding */}
+
+<span class="tge-ace-display">Waiting for a key for ‹Control (empty: any)›</span>
+
+True while Rebind control waits for the player's new key; leave Control empty for any. Show "Press a key…" while it is.
+
+- **Where:** Found under **Input** in the picker.
+- **ID:** `input.isRebinding` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Control (empty: any) | Text |  |  |
+
+### On control rebound {/* #input-onrebound */}
+
+<span class="tge-ace-display">On ‹Control (empty: any)› rebound</span> <span class="tge-pill trigger">⚡ Trigger</span>
+
+Fires when the player has chosen a new key or gamepad button for a control (leave Control empty for any).
+
+- **Where:** Found under **Input** in the picker.
+- **ID:** `input.onRebound` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Control (empty: any) | Text |  |  |
 
 ### Joystick is moving {/* #input-joystickmoving */}
 

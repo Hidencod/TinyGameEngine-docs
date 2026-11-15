@@ -2855,7 +2855,7 @@
       "display": "Waiting for a key for {button}",
       "displayNoObject": null,
       "icon": "⌨️",
-      "description": "",
+      "description": "True while Rebind control waits for the player's new key; leave Control empty for any. Show \"Press a key…\" while it is.",
       "isTrigger": false,
       "objectRequired": false,
       "objectOptional": false,
@@ -2885,7 +2885,7 @@
       "display": "On {button} rebound",
       "displayNoObject": null,
       "icon": "⌨️",
-      "description": "",
+      "description": "Fires when the player has chosen a new key or gamepad button for a control (leave Control empty for any).",
       "isTrigger": true,
       "objectRequired": false,
       "objectOptional": false,
@@ -3041,7 +3041,7 @@
       "display": "Rebind {button} ({device})",
       "displayNoObject": null,
       "icon": "⌨️",
-      "description": "",
+      "description": "Waits for the player to press the new key or gamepad button for a control button (jump) or a Move direction (moveUp, moveDown, moveLeft, moveRight). Esc cancels; a key another control had swaps to it. Kept on the player's device.",
       "isTrigger": false,
       "objectRequired": false,
       "objectOptional": false,
@@ -3094,7 +3094,7 @@
       "display": "Stop waiting for a key",
       "displayNoObject": null,
       "icon": "⌨️",
-      "description": "",
+      "description": "Stops Rebind control waiting for a key.",
       "isTrigger": false,
       "objectRequired": false,
       "objectOptional": false,
@@ -3113,7 +3113,7 @@
       "display": "Reset controls {button}",
       "displayNoObject": null,
       "icon": "↩️",
-      "description": "",
+      "description": "Back to the game's own keys and gamepad buttons: one control, or all when left empty.",
       "isTrigger": false,
       "objectRequired": false,
       "objectOptional": false,
@@ -3128,6 +3128,57 @@
           "type": "string",
           "options": null,
           "default": "",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "input.setPadStyle",
+      "kind": "action",
+      "category": "Input",
+      "label": "Set gamepad prompt style",
+      "hint": "Xbox, PlayStation, Switch or Deck buttons",
+      "display": "Gamepad prompts as {style}",
+      "displayNoObject": null,
+      "icon": "🎮",
+      "description": "Shows gamepad prompts as Xbox, PlayStation, Switch or Steam Deck buttons whatever controller is used, e.g. from an options menu; auto follows the controller in the player's hands again.",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "input",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "style",
+          "label": "Style",
+          "type": "choice",
+          "options": [
+            {
+              "value": "auto",
+              "label": "auto"
+            },
+            {
+              "value": "xbox",
+              "label": "xbox"
+            },
+            {
+              "value": "playstation",
+              "label": "playstation"
+            },
+            {
+              "value": "switch",
+              "label": "switch"
+            },
+            {
+              "value": "deck",
+              "label": "deck"
+            }
+          ],
+          "default": "auto",
           "optional": false,
           "hint": null,
           "varScope": null

@@ -37,6 +37,8 @@ Define any of these in a script; the engine calls them.
 | `onValueChanged(value)` | This slider moved (a number), toggle switched (true / false), dropdown option was picked (its index) or input field was typed in (its text). | ✔ |  |
 | `onSubmit(text)` | Enter was pressed in this Input Field; text is what was typed. | ✔ |  |
 | `onEndEdit(text)` | The player stopped typing in this Input Field (Enter, a tap elsewhere, Esc or B). | ✔ |  |
+| `onHTMLClick(id, target)` | Something inside this HTML element was clicked. id is the id of the clicked part or the nearest one around it (empty if none); target is the element clicked. | ✔ |  |
+| `onHTMLChange(id, value, target)` | A form part inside this HTML element changed (a text box left, a box ticked, a list picked). value: the text, 1 / 0 for a checkbox, a number for a number or range input. | ✔ |  |
 | `onPointerDown(event)` | The player pressed this UI element (needs Raycast Target). event: &#123; x, y, entity &#125;. | ✔ |  |
 | `onPointerUp(event)` | The player let go of this UI element without dragging it. | ✔ |  |
 | `onPointerEnter(event)` | A mouse moved onto this UI element (touch screens have no hover). | ✔ |  |
@@ -296,6 +298,17 @@ Touch controls and keyboard.
 | `gamepad` | `boolean` | A gamepad has been used. Its buttons work as keys: "PadA", "PadB", "PadX", "PadY", "PadLB", "PadRB", "PadLT", "PadRT", "PadStart". |
 | `device` | `string` | What the player used last: "gamepad", "keyboard" (keys or mouse) or "touch". Show button prompts for it. |
 | `deviceChanged` | `boolean` | True for the one frame the device changes: update button prompts then. |
+| `padStyle` | `string` | Whose button names gamepad prompts show: "xbox", "playstation" (✕ ○ □ △), "switch" or "deck". From the gamepad in use. |
+| `setPadStyle(style)` | `void` | Force a gamepad prompt style, or "auto" to follow the gamepad again. |
+| `padStyleChanged` | `boolean` | True for the one frame the prompt style changes. |
+| `prompt(action, device?)` | `string` | The button prompt for a control button on the device in use: "Space", "A", "WASD" for "move". In UI text, &lt;prompt=jump&gt; draws it as a key cap or a gamepad button. |
+| `rebind(action, device?)` | `Promise<boolean>` | Wait for the player to press a new key (or gamepad button) for a control button or "moveUp"/"moveDown"/"moveLeft"/"moveRight". Escape cancels. Kept on this device. |
+| `rebinding` | `string\|null` | The action waiting for a key, or null. |
+| `rebound` | `string\|null` | The action rebound this frame, or null. |
+| `cancelRebind()` | `void` | Stop waiting for a key. |
+| `bindingOf(action)` | `{keys, pads, pad}` | The keys and gamepad buttons an action has now (pad = the first). |
+| `setBinding(action, {keys?, pads?})` | `void` | Give an action these keys / gamepad buttons (kept on this device). |
+| `resetBindings(action?)` | `void` | Back to the game's own controls: one action, or all. |
 | `isDown(name)` | `boolean` | Button, key or gamepad button held, e.g. input.isDown("jump"), input.isDown("Space"), input.isDown("PadA") |
 | `wasPressed(name)` | `boolean` | Button or key pressed this frame. |
 | `wasReleased(name)` | `boolean` | Button or key released this frame. |

@@ -16,7 +16,7 @@ Actions are the **DO** part of an event. They run from top to bottom when the ev
 Number and text fields accept expressions, e.g. `Score + 1`, `"Score: " + Score`, `Player.x`, `random(1, 6)`. See [Expressions](./expressions).
 :::
 
-There are **219 actions**, grouped by category as in the action picker.
+There are **223 actions**, grouped by category as in the action picker.
 
 [⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🎬 Timeline](#timeline) · [🌐 Language](#language) · [🏆 Services](#services) · [♨️ Steam](#steam) · [🔗 Web](#web) · [👥 Multiplayer](#multiplayer) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [☄️ Effects](#effects) · [🔊 Audio](#audio) · [🎥 Camera](#camera) · [🎚️ Graphics](#graphics)
 
@@ -573,6 +573,56 @@ End the loop this event is in (Repeat, For, For each, While) after the current r
 - **Parameters:** none
 
 ## 🎮 Input {/* #input */}
+
+### Rebind control {/* #input-rebind */}
+
+<span class="tge-ace-display">Rebind ‹Control (a button, or moveUp / moveDown / moveLeft / moveRight)› (‹Device›)</span>
+
+Waits for the player to press the new key or gamepad button for a control button (jump) or a Move direction (moveUp, moveDown, moveLeft, moveRight). Esc cancels; a key another control had swaps to it. Kept on the player's device.
+
+- **Where:** Found under **Input** in the picker.
+- **ID:** `input.rebind` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Control (a button, or moveUp / moveDown / moveLeft / moveRight) | Text | `jump` |  |
+| Device | Choice | `in use` | Options: in use, keyboard, gamepad |
+
+### Stop waiting for a key {/* #input-cancelrebind */}
+
+<span class="tge-ace-display">Stop waiting for a key</span>
+
+Stops Rebind control waiting for a key.
+
+- **Where:** Found under **Input** in the picker.
+- **ID:** `input.cancelRebind` (as saved in project files)
+- **Parameters:** none
+
+### Reset controls {/* #input-resetcontrols */}
+
+<span class="tge-ace-display">Reset controls ‹Control (empty: all)›</span>
+
+Back to the game's own keys and gamepad buttons: one control, or all when left empty.
+
+- **Where:** Found under **Input** in the picker.
+- **ID:** `input.resetControls` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Control (empty: all) | Text |  |  |
+
+### Set gamepad prompt style {/* #input-setpadstyle */}
+
+<span class="tge-ace-display">Gamepad prompts as ‹Style›</span>
+
+Shows gamepad prompts as Xbox, PlayStation, Switch or Steam Deck buttons whatever controller is used, e.g. from an options menu; auto follows the controller in the player's hands again.
+
+- **Where:** Found under **Input** in the picker.
+- **ID:** `input.setPadStyle` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Style | Choice | `auto` | Options: auto, xbox, playstation, switch, deck |
 
 ### Show {/* #input-showbutton */}
 

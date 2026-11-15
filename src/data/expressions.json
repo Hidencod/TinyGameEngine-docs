@@ -533,6 +533,13 @@
       "insert": "prompt(\"jump\")"
     },
     {
+      "name": "padstyle",
+      "signature": "padstyle()",
+      "description": "Whose button names gamepad prompts show: \"xbox\", \"playstation\", \"switch\" or \"deck\" (from the gamepad in use, or Set gamepad prompt style)",
+      "category": "Input",
+      "insert": "padstyle()"
+    },
+    {
       "name": "inputdevice",
       "signature": "inputdevice()",
       "description": "What the player used last: \"gamepad\", \"keyboard\" (keys or mouse) or \"touch\"",
