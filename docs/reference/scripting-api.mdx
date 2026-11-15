@@ -177,6 +177,7 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `isEmittingParticles()` | `boolean` | True while the Particle System makes new particles. |
 | `getParticleCount()` | `number` | Particles currently alive. |
 | `makeLiveCamera()` | `void` | Virtual Camera: become the live one (switched on, Priority raised above the others); the main camera blends over with its Blend In. Its settings: component("virtualCamera"), e.g. .follow = player.id, .priority = 20. |
+| `director` | `TimelineAPI \| null` | Playable Director: the timeline it plays (play, pause, stop, skip, seek, time, isPlaying…); play() uses the Wrap Mode of the director. E.g. door.director.play(). |
 | `isLiveCamera` | `boolean` | Virtual Camera: true while it is the one moving the main camera. |
 | `resetCloth()` | `void` | Cloth: every point back on the plane, hanging still. Its settings are component("cloth"), e.g. component("cloth").windScale = 2. |
 | `playSound()` | `void` | Play this entity's Audio component. |

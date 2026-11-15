@@ -169,6 +169,11 @@
       "icon": "🎬",
       "title": "Virtual Camera",
       "desc": "A camera shot (Cinemachine): follows, orbits or rides a curve; the live one moves the main camera"
+    },
+    "director": {
+      "icon": "🎞️",
+      "title": "Playable Director",
+      "desc": "Plays a Timeline from this object: on its own when the scene starts (Play On Awake), or from events and scripts"
     }
   }
 }

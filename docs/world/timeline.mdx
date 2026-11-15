@@ -5,7 +5,7 @@ description: Make cutscenes and scripted sequences with tracks of keyframes and 
 
 # Timeline (cutscenes)
 
-A **timeline** is a file that holds a sequence along a clock: the door slides open at 2 s, the camera cuts to the hero at 3 s, a line of dialogue appears, a sound plays, and at 8 s a **signal** tells your game the scene is over. You make it in **Files → New → Timeline (cutscene)** and play it from an event or a script.
+A **timeline** is a file that holds a sequence along a clock: the door slides open at 2 s, the camera cuts to the hero at 3 s, a line of dialogue appears, a sound plays, and at 8 s a **signal** tells your game the scene is over. You make it in **Files → New → Timeline (cutscene)** and play it with a [Playable Director](#playable-director) when the scene starts, or from an event or a script.
 
 ## Make one
 
@@ -15,7 +15,7 @@ A **timeline** is a file that holds a sequence along a clock: the door slides op
 4. **Add a key**: **◆** on a property track, or double-tap the track at the time you want. A clip track has **＋** instead.
 5. **Record** (**⏺**): with it on, move, turn or scale an object in the scene view and keys are made for you at the playhead, on new tracks if needed (an object that is moved at 2 s starts where it was at 0 s). The object itself stays where it was; the keys hold the move.
 6. Tap a key or clip to edit it in the list on the right: time, value, ease, which camera, which sound. Drag keys and clips along the track; drag the right end of a clip to stretch it.
-7. To see it in the game, press **Play** and start it with a **Play timeline** block (for example **On start**), see below.
+7. To see it in the game, give an object a [Playable Director](#playable-director) with Play On Awake, or start it with a **Play timeline** block, then press **Play**.
 
 **Length** and **Loop** are at the top. Tracks can be moved up or down and muted from the list on the right.
 
@@ -47,13 +47,14 @@ What **Blend** does:
 
 - It is the number of **seconds the view takes to travel** from what was on screen to the clip's camera. The travel moves the position, the turn and the field of view together, starting and ending slowly. **0** is a hard cut.
 - The start point is whatever was showing the moment the clip began: the game's camera, or the previous clip's camera. So two clips in a row glide from shot to shot, and a clip after a gap glides from the game's camera.
-- Blend belongs to the **clip it is set on** and only applies when that clip starts. **Going back to the game's camera at the end is always a cut.** To glide back, add one more clip with the game's camera at the end and give it a Blend.
+- Blend belongs to the **clip it is set on** and only applies when that clip starts.
+- **Blend Out** is how many seconds the view takes to glide **back to the game's camera** when the clip ends and no other camera clip follows. 0 is a cut.
 - It follows the target camera while it travels, so a closeup camera that is itself moved by a property track is tracked, not aimed at where it started.
 - It works between two **perspective** cameras. If either one is orthographic the change is a cut.
 - It runs on game time, and it is not tied to the clip's length: a 1.5 s blend in a 1 s clip is simply interrupted when the clip ends.
 - Two clips that name the **same camera** change nothing, so there is nothing to blend. A common slip is to use the game's own camera as the clip's camera: use a second camera object.
 
-A clip can also name a [Virtual Camera](./virtual-cameras). It is live while the clip lasts, whatever the priorities, and the main camera follows it as it follows and aims. When the clip ends, the virtual camera that is live by priority comes back **with its own Blend In** instead of a cut.
+A clip can also name a [Virtual Camera](./virtual-cameras). It is live while the clip lasts, whatever the priorities, and the main camera follows it as it follows and aims. When the clip ends, the virtual camera that is live by priority comes back over the clip's **Blend Out**, or with its own Blend In when the clip has none.
 
 In the editor, scrubbing shows the camera under the playhead in the small camera picture in the corner of the scene view. The glide itself is only seen in **Play**.
 
@@ -77,6 +78,28 @@ More to know:
 - While you scrub or preview in the editor the line under the playhead shows at the foot of the scene view, wherever your Text object is. Check the real position in **Play**.
 - To show a caption from an event instead, use **Set text**. The Subtitles track is for lines that must line up with the other tracks.
 
+## Playable Director
+
+A timeline is a file, so it isn't part of any scene. To play it when a scene starts, put a **Playable Director** on an object in that scene, as in Unity.
+
+<Side shot="card-director" crop>
+
+1. Select any object (an empty one is fine), **Add component → Playable Director**.
+2. **Timeline**: pick it, or **New timeline…**. **✎ Edit** opens it in the dock.
+3. Leave **Play On Awake** on.
+
+| Setting | What it does |
+| --- | --- |
+| **Timeline** | The timeline it plays. |
+| **Play On Awake** | Starts when the scene starts, or when the object is spawned. |
+| **Wrap Mode** | At the end: **None** stops and gives the camera and subtitles back, **Hold** stays on the last frame (camera included) until it is stopped, **Loop** starts over. It wins over the timeline's own Loop. |
+
+</Side>
+
+A director only plays its timeline in the scenes that have the director's object. A prefab with a director carries its little sequence with it: a chest that opens, a door with a camera shot.
+
+The **Play director** and **Stop director** actions (Timeline) play or stop the timeline of an object's director, with its Wrap Mode. In scripts: `door.director.play()`; `entity.director` has the same methods as `game.timeline()`.
+
 ## Play it from events
 
 | Block | Does |
@@ -96,6 +119,7 @@ The player is never touched by a timeline: to freeze the hero during a cutscene,
 ```ts
 const intro = game.timeline('Intro');
 intro.play();
+game.find('Door').director.play();   // the timeline of its Playable Director, with its Wrap Mode
 game.on('timelineSignal', (e) => { if (e.signal === 'OpenDoor') door.playAnimation('open'); });
 game.on('timelineFinished', (e) => game.goToScene('Level 1'));
 ```

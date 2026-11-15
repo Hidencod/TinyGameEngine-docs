@@ -31,7 +31,7 @@ In the editor, select a virtual camera to see its shot in the camera picture in 
 - If two have the same Priority, the one switched on **last** wins.
 - Switch shots by changing priorities, or by switching virtual cameras on and off (**Set enabled**). When the live one is switched off, the next one takes over.
 - **Make live camera** switches it on and puts its Priority above every other one.
-- A [Timeline](./timeline#cameras-and-blending) **Camera cuts** clip that names a virtual camera makes it live for the clip, whatever the priorities. When the clip ends, the live one by priority blends back in.
+- A [Timeline](./timeline#cameras-and-blending) **Camera cuts** clip that names a virtual camera makes it live for the clip, whatever the priorities. When the clip ends, the live one by priority blends back in, over the clip's **Blend Out** if it has one, otherwise with its own Blend In.
 
 When no virtual camera is enabled, the main camera is left where it is and your own camera code (or **Camera follow**) moves it again.
 

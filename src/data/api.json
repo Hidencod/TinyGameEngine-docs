@@ -806,6 +806,12 @@
           "doc": "Virtual Camera: become the live one (switched on, Priority raised above the others); the main camera blends over with its Blend In. Its settings: component(\"virtualCamera\"), e.g. .follow = player.id, .priority = 20."
         },
         {
+          "name": "director",
+          "kind": "property",
+          "type": "TimelineAPI | null",
+          "doc": "Playable Director: the timeline it plays (play, pause, stop, skip, seek, time, isPlaying…); play() uses the Wrap Mode of the director. E.g. door.director.play()."
+        },
+        {
           "name": "isLiveCamera",
           "kind": "property",
           "type": "boolean",
