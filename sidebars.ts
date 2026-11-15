@@ -21,7 +21,7 @@ const sidebars: SidebarsConfig = {
     'behaviors',
     {
       type: 'category', label: 'Game logic',
-      items: ['logic/event-sheets', 'logic/event-editor', 'logic/variables', 'logic/data-tables', 'logic/advanced-events', 'logic/scripting'],
+      items: ['logic/event-sheets', 'logic/event-editor', 'logic/variables', 'logic/data-tables', 'logic/advanced-events', 'logic/scripting', 'logic/editor-scripts'],
     },
     {
       type: 'category', label: 'Share your game',

@@ -9,13 +9,14 @@ description: Object scripts, game scripts and libraries, lifecycle functions, th
 
 Most games can be made with **behaviors** and **event sheets** alone. When you want more control, write a small **JavaScript** script. Scripts and event sheets work together: they share variables, and both can find, move, create and destroy objects.
 
-## Three kinds of script
+## Kinds of script
 
 | Kind | Where it runs | Create it |
 | --- | --- | --- |
 | 📜 **Object script** | On every object that has a **Code script** component with it. One copy runs per object, and gets that object as `entity`. | Logic → Code scripts → **+ New → Object script**, or Inspector → ＋ Add component → Code script → *New script…* |
 | 🌍 **Game script** | Once for the whole scene. | Logic → Code scripts → **+ New → Game script** |
 | 📚 **Library** | Nowhere on its own: other scripts `import` what it exports. See [Share code with libraries](#libraries). | Logic → Code scripts → **+ New → Library** |
+| 🛠 **Editor script** | Only in the editor: your own menu commands, Inspector buttons and gizmos. Never in the game. See [Editor scripts](./editor-scripts). | Logic → Code scripts → **+ New → Editor script** |
 
 <Row>
   <Crop name="card-script-attached" caption="A Code script component on an object" width={320} />

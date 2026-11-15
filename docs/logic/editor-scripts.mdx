@@ -1,0 +1,125 @@
+---
+title: Editor scripts
+description: Your own tools for the editor, like Unity's Editor scripts — menu commands, Inspector buttons and gizmos in the scene view. They never go into the game.
+---
+
+# Editor scripts
+
+An **editor script** adds your own tools to the editor, like Unity's **Editor scripts**:
+
+- **Menu commands** in ☰ → **Tools**: plant 50 trees in a circle, line up the selected objects, rename a row of objects 1, 2, 3…
+- **Buttons on the Inspector**: "Rebuild path" on every object with your Patrol script.
+- **Gizmos**: lines in the scene view, such as each guard's patrol circle or a spawner's area.
+
+Editor scripts run **only in the editor**. They are never part of the game, a published link or a build.
+
+<Row>
+  <Phone name="editor-scripts-tools" caption="An editor script's commands in ☰ → Tools" />
+  <Phone name="editor-scripts-inspector" caption="Its button on the Patrol card, and its gizmo: the patrol circle" />
+</Row>
+
+## Make one
+
+1. **Logic** → Code scripts → **+ New → Editor script** (or Files → New script).
+2. It starts with an example command. Change it, and it is in ☰ → **Tools** straight away.
+
+On a computer, the commands are also in the **Tools** menu at the top.
+
+## Menu commands
+
+```js
+editor.menu('Level/Scatter trees', async () => {
+  const n = await editor.promptNumber('How many?', 20);
+  if (n == null) return;                       // cancelled
+  for (let i = 0; i < n; i++) {
+    const a = (i / n) * Math.PI * 2;
+    editor.scene.add('Tree', { shape: 'cylinder', position: [Math.cos(a) * 8, 0.5, Math.sin(a) * 8], color: '#2e7d32' });
+  }
+  editor.toast('Planted ' + n);
+});
+```
+
+- The part before the last `/` groups the command ("Level") and is shown beside it.
+- Everything a command changes is **one undo step**: one **Undo** takes back all 20 trees.
+- If it fails, nothing changes, and the error shows at the bottom with its line.
+- A command that runs longer than **10 seconds** (an endless loop) is stopped. Time spent waiting for your answer to a question doesn't count.
+
+## Buttons on the Inspector
+
+```js
+editor.button('Patrol', 'Bigger patrol', (e) => {
+  e.script('Patrol').radius += 1;
+});
+```
+
+The first value says which objects get the button:
+
+| Target | The button shows… |
+| --- | --- |
+| An object script's name (`'Patrol'`) | on that script's card |
+| A component type (`'light'`, `'particles'`…) | on that component's card |
+| An object name (`'Door'`) or a tag (`'#enemy'`) | under the object's components |
+
+`e` is the object the Inspector shows.
+
+## Gizmos
+
+```js
+editor.gizmos('Patrol', (e, draw, selected) => {
+  draw.color(selected ? '#ffcc00' : '#999999')
+      .circle([0, 0, 0], e.script('Patrol').radius);
+});
+```
+
+The function runs for every object matching the target (same targets as buttons), and again whenever the project or the selection changes.
+
+| Draw | |
+| --- | --- |
+| `draw.color('#ff8800')` | colour for what comes next |
+| `draw.line(from, to)` | a line |
+| `draw.ray(from, direction)` | a line from a point along a direction |
+| `draw.circle(center, radius)` | a flat circle on the ground plane |
+| `draw.sphere(center, radius)` | a wire sphere |
+| `draw.box(center, size)` | a wire box |
+| `draw.path(points, closed?)` | lines through the points |
+| `draw.world()` | from here on, points are world positions |
+
+Points are `[x, y, z]`. They are in the **object's own space**: they move and turn with the object, but its scale doesn't stretch them, so a radius of 5 is 5 m. Turn them off in the scene view's **Gizmos** menu → **Editor script gizmos**.
+
+## What an editor script can use
+
+```js
+editor.scene.objects                 // every object of the open scene
+editor.scene.find('Guard')           // by name or id
+editor.scene.findAll('#enemy')       // by name, or tag with #
+editor.scene.add('Rock', { shape: 'sphere', position: [0, 1, 0], scale: [2, 2, 2], color: '#888', parent: 'Rocks' })
+editor.scene.place('Coin', [3, 1, 0])  // a prefab
+editor.selection                     // the selected objects
+editor.select(list)                  // select others
+editor.scenes, editor.prefabs        // names
+
+e.name, e.position, e.rotation, e.scale   // e.position.x += 1, or e.position = [0, 1, 0]
+e.visible, e.enabled, e.layer, e.tags, e.hasTag('enemy')
+e.parent = other                     // keeps its place in the world
+e.children
+e.component('light').intensity = 2   // any component's settings
+e.addComponent('rigidbody', { mass: 3 }), e.removeComponent('collider'), e.hasComponent('mesh')
+e.script('Patrol').radius            // an object script's fields on this object
+e.getVar('hp'), e.setVar('hp', 10)   // instance variables
+e.duplicate(), e.destroy()
+
+editor.toast('Done')
+await editor.prompt('Name?', 'Tree')         // text, or null
+await editor.promptNumber('How many?', 10)   // a number, or null
+await editor.confirm('Delete all trees?')
+await editor.pick('Shape', ['box', 'sphere'])
+THREE                                // three.js maths (vectors, quaternions…)
+```
+
+The code editor knows all of these: `editor.` lists them and mistakes are underlined.
+
+## Safe to open anyone's project
+
+Editor scripts run apart from the editor page (in a Web Worker). They can only use the `editor` API above. They can't read your other projects, your sign-in or your GitHub link, and they can't hang the editor. Opening a project from someone else is as safe with editor scripts as without.
+
+`console.log` in an editor script goes to the browser's console. Use `editor.toast` to show a message in the editor.
