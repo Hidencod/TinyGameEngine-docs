@@ -14,6 +14,19 @@ editor.button('Patrol', 'Bigger patrol', (e) => { e.script('Patrol').radius += 1
 editor.gizmos('Patrol', (e, draw, selected) => {
   draw.color(selected ? '#ffcc00' : '#999999').circle([0, 0, 0], e.script('Patrol').radius);
 });
+editor.onValidate('Fence', (e) => {
+  const f = e.script('Fence');
+  for (const c of e.children) c.destroy();
+  for (let i = 0; i < f.length; i++) editor.scene.add('Post', { shape: 'box', parent: e, position: [i * f.gap, 0.5, 0], scale: [0.2, 1, 0.2] });
+});
+editor.inspector('Fence', (e, ui) => {
+  const f = e.script('Fence');
+  ui.header('Fence');
+  f.length = ui.slider('Length', f.length, 1, 12, 1);
+  f.gap = ui.number('Gap', f.gap, { min: 0.2 });
+  ui.label('Posts', e.children.length);
+  if (ui.button('Clear')) f.length = 1;
+}, { replace: true });
 `;
 
 export async function run({ page, s, H }) {
@@ -27,6 +40,12 @@ export async function run({ page, s, H }) {
     patrol.code = 'export let radius = 4;\n\nfunction update(dt) {\n}\n';
     g.components.push({ ...f.defaultComponent('script'), scriptId: patrol.id, props: {} });
     p.scenes[0].entities.push(g);
+    const fe = f.createEntity('Fence'); fe.transform.position = [-3, 0, 3];
+    const fence = f.createScript('Fence', 'entity');
+    fence.code = ['export let length = 3;', 'export let gap = 1;', ''].join(String.fromCharCode(10));
+    fe.components.push({ ...f.defaultComponent('script'), scriptId: fence.id, props: {} });
+    p.scenes[0].entities.push(fe);
+    p.scripts.push(fence);
     const ed = f.createScript('LevelTools', 'editor');
     ed.code = code.trim() + '\n';
     p.scripts.push(patrol, ed);
@@ -52,5 +71,16 @@ export async function run({ page, s, H }) {
   await page.locator('.ext-buttons button').first().scrollIntoViewIfNeeded();
   await s.settle(800);
   await s.shot('editor-scripts-inspector');
+  // The Fence: its custom Inspector; the slider rebuilds the posts (onValidate).
+  await H.tab('objects');
+  await page.locator('.tree-row', { hasText: 'Fence' }).first().click();
+  await H.tab('inspector');
+  await s.settle(1200);
+  await page.locator('.ext-inspector input.range').fill('7');
+  await s.settle(1500);
+  const card = page.locator('.inspector .card', { has: page.locator('.ext-inspector') });
+  await card.scrollIntoViewIfNeeded();
+  await s.settle(500);
+  await s.shot('editor-scripts-custom-inspector');
   await page.evaluate(async () => (await import('/src/editor/core/storage.ts')).deleteProject('p_docs_ext'));
 }

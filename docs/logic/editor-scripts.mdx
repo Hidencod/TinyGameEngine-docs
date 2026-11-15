@@ -1,6 +1,6 @@
 ---
 title: Editor scripts
-description: Your own tools for the editor, like Unity's Editor scripts — menu commands, Inspector buttons and gizmos in the scene view. They never go into the game.
+description: Your own tools for the editor, like Unity's Editor scripts — menu commands, Inspector buttons, gizmos, custom Inspectors, objects that rebuild while you edit, and import rules. They never go into the game.
 ---
 
 # Editor scripts
@@ -10,6 +10,9 @@ An **editor script** adds your own tools to the editor, like Unity's **Editor sc
 - **Menu commands** in ☰ → **Tools**: plant 50 trees in a circle, line up the selected objects, rename a row of objects 1, 2, 3…
 - **Buttons on the Inspector**: "Rebuild path" on every object with your Patrol script.
 - **Gizmos**: lines in the scene view, such as each guard's patrol circle or a spawner's area.
+- **Objects that rebuild while you edit** (Unity's `OnValidate`): a fence that adds posts when you make it longer.
+- **Custom Inspectors**: your own sliders, fields and buttons on a script's card.
+- **Import rules** (Unity's `AssetPostprocessor`): put every new sound in a Sounds folder, give UI pictures a 9-slice border.
 
 Editor scripts run **only in the editor**. They are never part of the game, a published link or a build.
 
@@ -86,6 +89,81 @@ The function runs for every object matching the target (same targets as buttons)
 
 Points are `[x, y, z]`. They are in the **object's own space**: they move and turn with the object, but its scale doesn't stretch them, so a radius of 5 is 5 m. Turn them off in the scene view's **Gizmos** menu → **Editor script gizmos**.
 
+## Objects that rebuild while you edit {/* #on-validate */}
+
+```js
+editor.onValidate('Fence', (e) => {
+  const f = e.script('Fence');
+  for (const c of e.children) c.destroy();
+  for (let i = 0; i < f.length; i++) {
+    editor.scene.add('Post', { shape: 'box', parent: e, position: [i * f.gap, 0.5, 0], scale: [0.2, 1, 0.2] });
+  }
+});
+```
+
+It runs right after you change a matching object (same targets as buttons): a field on the Inspector, moving it, renaming it.
+
+- What it changes **joins your edit's undo step**: one Undo takes back the new length and the posts it made.
+- It runs only for the objects you changed, not for every match in the scene.
+- Undo and Redo don't run it; they put back what was there.
+- It must finish within 2 seconds. If it fails, nothing it did is kept, and the error shows with its line.
+
+## Custom Inspectors {/* #custom-inspector */}
+
+<Phone name="editor-scripts-custom-inspector" caption="A custom Inspector on the Fence script: the slider sets the length, onValidate builds the posts" />
+
+```js
+editor.inspector('Fence', (e, ui) => {
+  const f = e.script('Fence');
+  ui.header('Fence');
+  f.length = ui.slider('Length', f.length, 1, 12, 1);
+  f.gap = ui.number('Gap', f.gap, { min: 0.2 });
+  ui.label('Posts', e.children.length);
+  if (ui.button('Clear')) f.length = 1;
+}, { replace: true });
+```
+
+It works like Unity's `OnInspectorGUI`: each control shows a value and **returns it**, and the new value when you have just changed it, so you write it straight back. The function runs again after every change to draw the new state.
+
+- It shows on the card of the object script or component the target names, or under the components for an object name or `#tag`.
+- `{ replace: true }` hides the card's usual fields. Leave it out to add your section under them.
+- Each change is one undo step; dragging a slider is one step, not one per frame.
+
+| Control | Returns |
+| --- | --- |
+| `ui.header(text)`, `ui.label(text, value?)`, `ui.space()` | nothing |
+| `ui.number(label, value, { min, max, step })` | a number |
+| `ui.int(label, value, { min, max })` | a whole number |
+| `ui.slider(label, value, min, max, step?)` | a number |
+| `ui.toggle(label, value)` | true / false |
+| `ui.text(label, value)`, `ui.color(label, '#ff8800')` | text |
+| `ui.select(label, value, ['Low', 'High'])` | the chosen option |
+| `ui.vector(label, [x, y, z])` | `[x, y, z]` |
+| `ui.button(label)` | true when just pressed |
+| `ui.row(() => { … })` | puts the controls inside side by side |
+
+## Import rules {/* #on-import */}
+
+```js
+editor.onImport((file) => {
+  if (file.kind === 'audio') file.folder = 'Sounds';
+  if (file.kind === 'texture' && file.name.startsWith('ui_')) { file.folder = 'UI'; file.sliceBorder = [12, 12, 12, 12]; }
+});
+```
+
+It runs once for each file added to the project, however it was added: Import, the libraries, the sprite editor, the sound maker. What it changes joins the import's undo step.
+
+| `file.` | |
+| --- | --- |
+| `name`, `folder` | change them |
+| `kind` | `'texture'`, `'model'`, `'audio'`, `'font'` or `'video'` |
+| `mime`, `size` | the file type and its size in bytes |
+| `sliceBorder` | pictures: the 9-slice border `[left, right, top, bottom]` in pixels |
+| `sprite` | pictures: the sprite sheet (`frameW`, `frameH`, `frames`, `fps`) |
+| `bpm` | sounds: the tempo |
+
+The project's files are also in `editor.assets`, and `editor.asset('name')` finds one.
+
 ## What an editor script can use
 
 ```js
@@ -97,6 +175,7 @@ editor.scene.place('Coin', [3, 1, 0])  // a prefab
 editor.selection                     // the selected objects
 editor.select(list)                  // select others
 editor.scenes, editor.prefabs        // names
+editor.assets, editor.asset('hit')   // the project's files
 
 e.name, e.position, e.rotation, e.scale   // e.position.x += 1, or e.position = [0, 1, 0]
 e.visible, e.enabled, e.layer, e.tags, e.hasTag('enemy')
