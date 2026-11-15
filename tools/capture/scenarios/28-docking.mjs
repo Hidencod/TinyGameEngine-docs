@@ -1,4 +1,4 @@
-/** Desktop docking: dragging a tab to an area's edge (the drop preview), and a rearranged layout with an editor window. */
+/** Desktop docking: dragging a tab to an area's edge (the drop preview), a rearranged layout with an editor window, a floating window. */
 export const viewport = { width: 1280, height: 760 };
 export const desktop = true;
 
@@ -60,8 +60,15 @@ export async function run({ page, s, H }) {
   await page.locator('.tree-row', { hasText: 'Crate' }).first().click();
   await s.settle(1500);
   await s.shot('docking-layout');
+  // The Inspector floated (right-click its tab → Float).
+  await page.locator('.dk-tab[data-tab="inspector"]').click({ button: 'right' });
+  await s.settle(400);
+  await page.locator('.sheet').getByText('Float', { exact: true }).click();
+  await s.settle(800);
+  await s.shot('docking-float');
   await page.evaluate(async () => {
     localStorage.removeItem('tge:dock');
+    localStorage.removeItem('tge:dock-layouts');
     (await import('/src/editor/core/storage.ts')).deleteProject('p_docs_dock');
   });
 }

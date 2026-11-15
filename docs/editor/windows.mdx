@@ -1,6 +1,6 @@
 ---
 title: Windows and layout
-description: On a computer, every part of the editor is a window you can move, like Unity's docking — drag tabs to rearrange, split areas, resize, maximize, reset.
+description: On a computer, every part of the editor is a window you can move, like Unity's docking — drag tabs to rearrange, split areas, float windows, resize, maximize, save layouts.
 ---
 
 # Windows and layout
@@ -10,6 +10,7 @@ On a computer (the desktop layout), the editor is made of **windows**, each a ta
 - **Objects**, **Files**, **Logic**, **Inspect** and **Scene settings**
 - **Scene**, the 3D view
 - **Game**, while the game plays in the editor
+- **Timeline**, under the 3D view the first time
 - every panel you open: an event sheet, a script, a shader, the Animator, Project settings…
 - the windows of your [editor scripts](../logic/editor-scripts#windows)
 
@@ -29,10 +30,23 @@ A blue box shows where it will go before you let go. Press **Esc** to cancel.
 
 An area whose last tab you drag away closes, and the areas beside it take its room.
 
+## Floating windows
+
+**Right-click a tab → Float**: the window comes out of the layout and floats over it, as an undocked window in Unity.
+
+<Crop name="docking-float" width={900} caption="The Inspector floating over the 3D view" />
+
+- **Drag the bar** at its top to move it, **the corner** at its bottom right to resize it.
+- Drag other tabs onto it: a floating window has tabs and splits like any area.
+- Drag its tab onto an area to dock it there, or **right-click → Dock** to put it back where it was.
+- Clicking a floating window brings it to the front.
+
+The tab's right-click menu also has **Maximize** and, for windows that close, **Close**.
+
 ## Resize, maximize, hide
 
 - **Drag the gap** between two areas to resize them.
-- **Ctrl + Space**: the 3D view's area fills the editor; again to go back.
+- **Ctrl + Space**: the 3D view's area fills the editor; again to go back. Right-click a tab → **Maximize** does it for any area.
 - **N**: hide or show the Inspector's area.
 
 ## Which window gets the keys
@@ -45,8 +59,21 @@ Keys go to the area you last clicked in, as in Unity. With the event sheet focus
 - The Game opens when you press **Play** and closes when you stop. Its **×** stops the game.
 - Objects, Files, Logic, Inspect, Scene settings and Scene can be moved but not closed. **Window** in the menu bar brings any of them to the front.
 
-## Your layout is kept
+## Layouts
 
-The arrangement is saved in this browser and comes back the next time you open the editor, in every project. **Window → Reset layout** goes back to the starting layout: lists on the left, the 3D view in the middle, the Inspector on the right.
+The arrangement is saved in this browser and comes back the next time you open the editor, in every project, floating windows included.
+
+In **Window** in the menu bar, as Unity's Layout menu:
+
+| | |
+|---|---|
+| **Layout: Default** | Lists on the left, the 3D view in the middle, the Inspector on the right |
+| **Layout: Wide** | The 3D view across the top with the Inspector beside it, the lists along the bottom |
+| **Layout: Tall** | The 3D view on the left, the lists over the Inspector on the right |
+| **Save layout…** | Keep the current arrangement under a name; it is listed with the others |
+| **Delete layout…** | Remove a saved one |
+| **Reset layout** | Back to Default |
+
+Open panels, the Game and the Timeline stay open when you switch.
 
 On a phone the editor keeps its own layout: the 3D view on top and the five tabs below. Panels open full screen.
