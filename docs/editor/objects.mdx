@@ -156,7 +156,8 @@ Select a copy and the Inspector shows a **prefab bar** at the top:
 | **Open** | Opens the prefab in [prefab mode](#prefab-mode). |
 | **Root** | On a child of the copy: selects the copy's top object. |
 | **Overrides ▾** | Lists every override of the copy: changed parts, objects added to it, prefab objects removed from it. Pick one to **apply** or **revert** just that, or choose **Apply all** / **Revert all**. Blue when the copy has overrides. |
-| **⋮ → Unpack** | Drops the link: the copy becomes plain objects. |
+| **⋮ → Unpack** | Drops the link to this prefab. Prefab copies inside it stay linked to their own prefabs. **Unpack completely** makes everything plain objects. |
+| **↳ 📦 Name · Open** | Under the bar, on the top object of a [nested copy](#nested-prefabs) or of a variant's base: that prefab, and **Open** for it. |
 
 A card with an override (Transform, a component, a behavior, the instance variables) gets a **blue bar** on its left and a blue **●** button: **Apply to prefab** sends that part to the prefab (and so to every copy), **Revert** takes the prefab's again. A component or behavior added to the copy counts as an override too; reverting it removes it.
 
@@ -165,7 +166,26 @@ A card with an override (Transform, a component, a behavior, the instance variab
 - The object menu (**⋮** on the row) has **Apply all to prefab**, **Revert all** and **Unpack prefab** for a copy's top object. **Make prefab** on a linked copy applies it too.
 - **Duplicate** (and copying a scene) keeps the link. Deleting a prefab unlinks its copies.
 - Making a prefab from **another object** with the same name replaces the prefab's contents; copies placed before lose their link.
+- A prefab can't hold a copy of itself: placing or applying one that would is refused.
 - Copies placed before linked prefabs existed (before v1.0.2's Linked prefabs update) are plain objects. Delete one and place the prefab again to link it.
+
+### Nested prefabs {/* #nested-prefabs */}
+
+A prefab can hold copies of other prefabs: a **Car** with four **Wheel** copies. Put Wheel copies under the car (or place them in Car's [prefab mode](#prefab-mode)), then make or apply the Car prefab: the wheels stay linked to **Wheel**.
+
+- Change **Wheel** and the wheels inside **Car** change, and so does every Car in your scenes.
+- A wheel changed inside the Car prefab (or on one Car copy) keeps that change: it is an override, at that level.
+- The top object of a nested copy has the prefab icon in the Objects list, and the Inspector shows **↳ 📦 Wheel · Open** under the Car's bar.
+- **Make prefab** from a Car copy keeps its wheels as Wheel copies.
+
+### Prefab variants {/* #variants */}
+
+A **variant** is a prefab based on another one, like Unity's Prefab Variant: a **FastEnemy** that is an **Enemy** with more speed. It follows **Enemy** except where it differs.
+
+- In **Files**, tap a prefab → **Create variant** and give it a name. Its card says **Variant of Enemy**.
+- Or rename a placed copy and choose **Make prefab** → **Variant of Enemy** (or **Original prefab** for an unlinked new one).
+- Open the variant in [prefab mode](#prefab-mode) to change it. Its top object shows the **Enemy** prefab bar: what you change is the variant's own override, and **Apply** sends it up to **Enemy** instead.
+- Copies of the variant follow the variant, and so follow **Enemy** too.
 
 ### Prefab mode {/* #prefab-mode */}
 
