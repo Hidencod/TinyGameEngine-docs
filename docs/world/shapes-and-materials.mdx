@@ -16,7 +16,9 @@ Anything you can see has a **Shape & look** component. Add a shape from **Object
 | **Shape** | Cube, Sphere, Plane, Capsule, Cylinder, Cone, Torus (ring), Circle (a flat disc, like a Plane but round), **3D model (file)**, 3D text, or **Along curve** (on an object with a [Curve](./curve): draws the curve as a tube, road or beam). |
 | **Color** | The base color. With a texture, the color tints it (white = the texture as it is). |
 | **Texture** | An image wrapped on the shape: one of yours, a new import, or one of the **Free textures** (ground, stone, wood, tiles). |
-| **Tiling** | (with a texture) How many times it repeats, U × V. Use it for floors: a 10×10 plane with tiling 10, 10. |
+| **Normal map, AO map, …** | More pictures for bumps, creases and glow. See [Texture maps](#texture-maps). |
+| **Tiling** | (with a texture or map) How many times it repeats, U × V. Use it for floors: a 10×10 plane with tiling 10, 10. |
+| **Offset** | (with a texture or map) Slides the picture along U and V; 0.5 moves it half way. |
 | **Style** | How light falls on it (see below). |
 | **Glow color** | Emissive color: the surface shines with it even in the dark. Black = no glow. |
 | **Opacity** | 1 = solid, 0 = invisible. |
@@ -73,6 +75,24 @@ On a **Realistic** material these sliders turn on the extra looks of a physicall
 | **Iridescence** | Rainbow colors that shift with the angle, like a soap bubble or oil on water. |
 
 **Transmission is the costly one.** The game draws the scene a second time to see through the glass, so use it on a few objects (a window, a bottle), not many. For cheap see-through, use **Opacity**.
+
+### Texture maps
+
+Besides the **Texture** (Unity's *Albedo*), a material takes the other maps of Unity's Standard material. They are images too: you get them with downloaded PBR textures (a stone wall usually comes as *albedo*, *normal*, *roughness*, *AO*, *height*). Each one only shows on the styles that use it.
+
+| Map | What it does | Styles |
+| --- | --- | --- |
+| **Normal map** | Bumps and dents without extra shape detail: bricks, scratches, stitching. **Normal scale** makes them deeper (0–3). Use OpenGL-style normal maps (green up); a DirectX one (green down) looks lit from the wrong side, so flip its green channel in a paint program first. | Realistic, Matte, Cartoon, Mirror |
+| **Roughness map** | Which parts are shiny (dark) and which are dull (light). Multiplied by **Roughness**, so set Roughness to 1 to see the map as it is. Read from the green channel. | Realistic |
+| **Metalness map** | Which parts are metal (white). Multiplied by **Metalness**: set it to 1. Read from the blue channel. | Realistic |
+| **AO map** | Ambient occlusion: darkens creases and corners. **AO intensity** sets how much (0–1). Read from the red channel. | all except Custom shader |
+| **Emissive map** | Which parts glow, and in which colors: screens, windows at night, lava cracks. It is multiplied by **Glow color**, which turns white when you pick the map. | Realistic, Matte, Cartoon, Mirror |
+| **Displacement map** | A height map that really moves the surface (white up, black down) by **Displacement scale**. The shape needs enough cuts to bend: raise its cuts in **Shape settings** (a Plane with 100 × 100 for ground). | Realistic, Matte, Cartoon, Mirror |
+
+- All the maps share the **Tiling** and **Offset** of the material.
+- A glTF model's packed *ORM* texture (occlusion, roughness, metalness in red, green and blue) works as it is: pick the same image for the AO, Roughness and Metalness maps.
+- Imported 3D models already bring their own maps; these slots are for shapes and for shared materials in Files.
+- Each map is one more image for the phone to hold. A normal map is the one worth it most; on low-end phones, prefer the Matte style with a texture and a normal map.
 
 ### Video
 
