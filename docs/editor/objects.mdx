@@ -159,7 +159,7 @@ Select a copy and the Inspector shows a **prefab bar** at the top:
 | **⋮ → Unpack** | Drops the link to this prefab. Prefab copies inside it stay linked to their own prefabs. **Unpack completely** makes everything plain objects. |
 | **↳ 📦 Name · Open** | Under the bar, on the top object of a [nested copy](#nested-prefabs) or of a variant's base: that prefab, and **Open** for it. |
 
-A card with an override (Transform, a component, a behavior, the instance variables) gets a **blue bar** on its left and a blue **●** button: **Apply to prefab** sends that part to the prefab (and so to every copy), **Revert** takes the prefab's again. A component or behavior added to the copy counts as an override too; reverting it removes it.
+A card with an override (Transform, a component, a behavior, the instance variables) gets a **blue bar** on its left and a blue **●** button, and inside it the very fields the copy changed are **bold** with a thin blue edge (a Transform axis, a component field, a behavior setting, Visible / Active / Layer): **Apply to prefab** sends that part to the prefab (and so to every copy), **Revert** takes the prefab's again. A component or behavior added to the copy counts as an override too; reverting it removes it.
 
 - **Apply all** makes the prefab exactly this copy (except where the copy stands). Every other copy takes the change and keeps its own overrides.
 - **Revert all** makes the copy the prefab again: its overrides go, objects added to it are removed, removed ones come back.
