@@ -1,4 +1,4 @@
-/** Debugger while playing: a breakpoint in the event sheet, the held game, the live inspector, the profiler. */
+/** Debugger while playing: a breakpoint in the event sheet, the held game, the live inspector, the variables. */
 export async function run({ page, s, H }) {
   await H.home();
   await H.newProject('Roll-a-ball', 'Coin Hunt');
@@ -32,16 +32,12 @@ export async function run({ page, s, H }) {
   await s.shot('debug-inspector');
   await s.shot('debug-hud', { clip: page.locator('.play-hud'), pad: 6 });
 
-  // Variables, then the profiler with the game running.
+  // Variables.
   await page.locator('.play-debug-tab', { hasText: 'Variables' }).click();
   await s.settle(500);
   await s.shot('debug-variables');
   await page.locator('.play-debug-banner button', { hasText: 'Remove' }).click();
   await page.locator('.play-hud button[aria-label="Resume"]').click();
-  await page.locator('.play-debug-tab', { hasText: 'Profiler' }).click();
-  await page.waitForFunction(() => /\d/.test(document.querySelector('.play-debug-prof-head b')?.textContent ?? ''), null, { timeout: 30000 });
-  await s.settle(1500);
-  await s.shot('debug-profiler');
   await page.locator('.play-stop').click();
   await s.settle(800);
 }

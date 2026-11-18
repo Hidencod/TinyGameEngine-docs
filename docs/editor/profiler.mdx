@@ -23,9 +23,26 @@ Where the picked frame's time went:
 
 | Column | What it lists |
 | --- | --- |
-| **Frame** | The parts of the frame (Render, Physics, Behaviors, Animation, Input & UI…), slowest first, with their share of the frame. See [the debugger's profiler](debugging#profiler) for what each part covers. |
+| **Frame** | The parts of the frame, slowest first, with their share of the frame (see below). |
 | **Scripts** | Each code script's time in this frame and how many times its functions ran (`×3`). |
+| **Behaviors** | Time per behavior (Platformer, Car, Follow…) and on how many objects it ran (`×12`). |
 | **Events** | The slowest events of the event sheets. Click one to open it in its sheet. |
+
+The parts of the frame:
+
+| Part | Time spent on |
+| --- | --- |
+| **Render** | drawing the frame |
+| **Physics** | moving bodies and finding collisions |
+| **Collision events** | *On collision* events and `onCollision()` in scripts |
+| **Behaviors** | Platformer, Car, Follow and the other behaviors |
+| **Events** | the event sheet |
+| **Scripts** | code scripts' `update()` and other functions |
+| **Animation** | model animation |
+| **Particles** | particle effects |
+| **Input & UI** | touches, keys and the screen UI |
+
+The browser measures time in steps of 0.1 ms, so very quick parts show as 0.10 ms or 0.
 
 ## Rendering
 

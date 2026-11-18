@@ -9,7 +9,6 @@ While the game plays, the buttons at the bottom of the screen pause it, run it o
 
 <Row>
   <Phone name="debug-inspector" caption="The debugger: objects and the live inspector" />
-  <Phone name="debug-profiler" caption="The profiler" />
 </Row>
 
 ## Pause and step
@@ -18,7 +17,7 @@ While the game plays, the buttons at the bottom of the screen pause it, run it o
 | --- | --- |
 | **⏸ Pause** | Holds the game: nothing moves, timers and sounds stop, but the view is still drawn. Press **▶** to go on. |
 | **⏭ Step** | (While paused) runs exactly one frame (1/60 s) and holds again. |
-| **🔍 Debugger** | Opens the debugger panel: **Objects**, **Variables**, **Watch**, **Events** and **Profiler**. |
+| **🔍 Debugger** | Opens the debugger panel: **Objects**, **Variables**, **Watch** and **Events**, and **📈** opens the [Profiler](profiler). |
 
 <Crop name="debug-hud" caption="Stop, resume, step, console, debugger, colliders" />
 
@@ -134,25 +133,7 @@ It only records while the tab is open, so it costs nothing otherwise. A frame li
 
 ## Profiler
 
-The **Profiler** tab shows how long each frame takes the processor, averaged over the last second, with a bar for each recent frame (red bars took longer than 1/60 s). Below it, where the time goes:
-
-| Row | Time spent on |
-| --- | --- |
-| **Render** | drawing the frame |
-| **Physics** | moving bodies and finding collisions |
-| **Collision events** | *On collision* events and `onCollision()` in scripts |
-| **Behaviors** | Platformer, Car, Follow and the other behaviors |
-| **Events** | the event sheet |
-| **Scripts** | code scripts' `update()` and other functions |
-| **Animation** | model animation |
-| **Particles** | particle effects |
-| **Input & UI** | touches, keys and the screen UI |
-
-Then the slowest **scripts** (with how many times per frame they run) and the slowest **events**. Tap an event to open it in the sheet.
-
-To record every frame and look through them, and to see what the scene holds in memory, use the [Profiler window](profiler).
-
-The profiler measures the processor only. If the frame time is low but the game still runs below 60 fps, the graphics card is the limit: see the **calls** and **tris** next to the fps counter, and [Performance](../help/performance).
+**📈** in the debugger opens the [Profiler window](profiler): every frame recorded, where its time went (scripts, behaviors, events), what it drew and what the scene holds in memory.
 
 :::tip[Errors take you to the line]
 In the debug console (🐞), tap a red script error to open the script at that line, or an event error to open the event sheet at that event.
