@@ -120,6 +120,11 @@
       "title": "Reflection probe",
       "desc": ""
     },
+    "lightProbeVolume": {
+      "icon": "🫧",
+      "title": "Light probe volume",
+      "desc": ""
+    },
     "volume": {
       "icon": "🎚",
       "title": "Post-processing volume",
