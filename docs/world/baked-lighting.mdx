@@ -1,0 +1,57 @@
+---
+title: Baked lighting
+description: Bake soft shadows, sky light and bounced light into light maps for objects that never move, like Unity's Generate Lighting.
+---
+
+# Baked lighting
+
+Realtime lights are cheap until you want soft shadows, light that bounces off a red wall onto the floor, or corners that are darker because the sky can't reach them. **Generate Lighting** works these out once, in the editor, and stores them as a picture per object: its **light map**. The game then only reads the picture, which is fast on phones too. It works like Unity's baked lightmaps.
+
+Baking is for things that **never move**: floors, walls, buildings, rocks, furniture. Anything that moves keeps realtime light.
+
+## Bake a scene
+
+1. Select each object that never moves and turn on **Contribute GI** (under **Shape & look**, below the shadow switches). This is Unity's static flag.
+2. Select the sun (or a lamp) and set its **Mode** to **Baked**.
+3. Open the **Scene** tab → **Lighting** → **Generate Lighting**.
+
+The bar shows how far it got; **Cancel** stops it. When it is done the scene view shows the baked light, and the pictures are in **Files → Lightmaps → *scene name***. Press **Play**: the game looks the same.
+
+Moved something, or changed a light? Press **Generate Lighting** again. **Clear Baked Data** takes the light maps off and the lights light the scene as before.
+
+## Light Mode
+
+| Mode | While the game runs | In the light maps |
+| --- | --- | --- |
+| **Realtime** (the default) | Lights everything, with realtime shadows. | Nothing. |
+| **Mixed** | Lights everything, with realtime shadows. | The light it bounces off surfaces. |
+| **Baked** | Nothing (once the scene is baked). | Its light, its soft shadows and the light it bounces. |
+
+A **Baked** light no longer lights moving objects once the scene is baked, the same as in Unity. For an outdoor scene with a player walking around, a good start is a **Mixed** sun (realtime light and shadows on everything, baked bounce light and sky shadows on the scenery) plus **Baked** lamps for the decoration.
+
+**Baked shadow angle** (sun) and **Baked shadow radius** (lamp, spotlight) make a Baked light's shadows soft: the wider, the softer, like a big lamp or a hazy sun. 0 gives sharp shadows.
+
+The scene's **Ambient light** and **Sky** lights are always baked into the light maps of static objects. They come with shadows: under a table and in the corners of a room it is darker.
+
+## Lighting settings
+
+| Setting | What it does |
+| --- | --- |
+| **Lightmap resolution** | Pixels per metre on every static object (10 = a 1 m box side gets 10 × 10). Higher is sharper and slower to bake. |
+| **Max lightmap size** | The largest picture one object gets. A big object that would need more gets coarser pixels. |
+| **Direct samples** | Shadow rays per light for each pixel. More gives smoother soft shadows. |
+| **Indirect samples** | Rays per pixel for sky light and bounced light. More gives less speckle. |
+| **Bounces** | How many times light bounces off surfaces (0 = none). |
+| **Indirect intensity** | More or less bounced light. |
+| **Filter** | Smooths the speckle that low sample counts leave. |
+
+Each static object also has **Scale in lightmap** (under **Contribute GI**): 2 gives it twice the pixels per metre (a floor close to the camera), 0.5 half (a far-away cliff).
+
+## Good to know
+
+- The light maps are made for the object's shape and scale. Change either and that object shows realtime light again until you press **Generate Lighting**. Moving it keeps the old picture, now in the wrong place, so bake again after moving things.
+- Static objects block and bounce light in the bake; moving objects don't. A static object also needs **Casts shadow** on to cast baked shadows.
+- Unlit and custom-shader materials take no light map. Imported models with skinned (animated) meshes are not baked.
+- Every light map is one more picture for the phone to load. Keep **Lightmap resolution** as low as looks good and lower **Scale in lightmap** on large, plain surfaces.
+- The bake runs on your device in the background. Phones bake too, more slowly.
+- A material's own **Light map** slot (see [Texture maps](shapes-and-materials#texture-maps)) is for pictures baked in another tool. A baked object uses its Generate Lighting map instead.
