@@ -54,6 +54,7 @@ Light maps only cover objects that never move. For the player, enemies and anyth
 
 | Setting | What it does |
 | --- | --- |
+| **Lightmapper** | Where the light is traced. **Progressive GPU** (the default) uses the graphics card and is several times faster: a scene that takes 15 s on the processor takes about 3 s on a laptop's built-in graphics, less on a gaming card. **Progressive CPU** uses the processor's cores. Both give the same light. Where the graphics card can't do it (an old browser, more than 32 lights), the CPU one runs by itself. |
 | **Lightmap resolution** | Pixels per metre on every static object (10 = a 1 m box side gets 10 × 10). Higher is sharper and slower to bake. |
 | **Max lightmap size** | The size of the light map pictures. The static objects share them (Unity's lightmap atlas): as many objects as fit go in one picture, then a second picture starts. A big object that would need more than one picture gets coarser pixels. |
 | **Direct samples** | Shadow rays per light for each pixel. More gives smoother soft shadows. |
@@ -70,5 +71,5 @@ Each static object also has **Scale in lightmap** (under **Contribute GI**): 2 g
 - Static objects block and bounce light in the bake; moving objects don't. A static object also needs **Casts shadow** on to cast baked shadows.
 - Unlit and custom-shader materials take no light map. Imported models with skinned (animated) meshes are not baked.
 - Every light map picture is one more for the phone to load. Keep **Lightmap resolution** as low as looks good and lower **Scale in lightmap** on large, plain surfaces, so fewer pictures are needed.
-- The bake runs on your device in the background. Phones bake too, more slowly.
+- The bake runs on your device in the background. Phones bake too, more slowly. While **Progressive GPU** bakes, animated materials in the scene view stand still, so the graphics card is free for the bake; they move again when it is done.
 - A material's own **Light map** slot (see [Texture maps](shapes-and-materials#texture-maps)) is for pictures baked in another tool. A baked object uses its Generate Lighting map instead.
