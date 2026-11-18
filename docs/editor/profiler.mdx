@@ -1,0 +1,50 @@
+---
+title: Profiler
+description: Record every frame of your game and see where the time goes, what each frame draws and what the scene holds in memory, like Unity's Profiler.
+---
+
+# Profiler
+
+The **Profiler** window records every frame while your game plays in the editor, like Unity's Profiler. Use it when the game stutters or runs below 60 fps and you want to know why.
+
+Open it with **Window → Profiler**. It opens under the game view, so you see the game and its frames together, and starts recording when you press **Play**. The game has to run in the editor (not in its own window): the **▶ Play** button inside the Profiler does that.
+
+## The chart
+
+Each thin bar is one frame, newest on the right, about the last 15 seconds. In **CPU** view a bar's height is how long the frame took the processor, coloured by what the time went to (render, physics, behaviors…). Lines mark **16.7 ms** (60 fps) and **33.3 ms** (30 fps): bars above the first line are frames that missed 60 fps.
+
+Click or drag on the chart to pick a frame. **◀ ▶** (or the arrow keys) step one frame back or forward, **⏭** goes back to following the newest one. The bar above the chart shows the frame's number, time and frame rate.
+
+The frames stay when you press **Stop**, so you can look through a run afterwards. **●** turns recording off and on (on starts a new recording), **⌫** clears it.
+
+## CPU
+
+Where the picked frame's time went:
+
+| Column | What it lists |
+| --- | --- |
+| **Frame** | The parts of the frame (Render, Physics, Behaviors, Animation, Input & UI…), slowest first, with their share of the frame. See [the debugger's profiler](debugging#profiler) for what each part covers. |
+| **Scripts** | Each code script's time in this frame and how many times its functions ran (`×3`). |
+| **Events** | The slowest events of the event sheets. Click one to open it in its sheet. |
+
+## Rendering
+
+What the picked frame drew: **draw calls** (shadows and screen effects included), **triangles**, objects drawn together as one **batch**, the **meshes**, **textures** and **shaders** on the graphics card, and the number of **objects**, **physics bodies** and live **particles**. The chart shows draw calls per frame. On phones, draw calls are usually the first thing to bring down: see [Performance](../help/performance).
+
+**Script memory** is the page's JavaScript memory, shown in Chrome and Edge only. If it keeps climbing during a run, something keeps making objects that are never removed.
+
+## Memory
+
+**Take snapshot** lists what the running scene holds, biggest first:
+
+- **Textures**: each picture with its size in pixels and the memory it takes on the graphics card. Light maps, the sky and light probes are listed too.
+- **Meshes**: models (by file) and shapes (by object), with their triangles.
+- **Sounds**: each sound loaded so far, with its length and the memory it takes decoded (sounds are much bigger played than in the file).
+
+A huge sky picture or a texture far bigger than it shows on screen is the usual find: make it smaller in [Files](assets) or lower **Max lightmap size**.
+
+## Good to know
+
+- Times are rounded to 0.1 ms by the browser, so very fast parts show as 0.10 ms or nothing.
+- Recording costs a little time itself, only while the Profiler is open.
+- The game's own frame is measured. The browser's time on the page and the graphics card's time are not, so a game can show 5 ms frames and still run at 40 fps when the graphics card is the limit: look at **Rendering** then.
