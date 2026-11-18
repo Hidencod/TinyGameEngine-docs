@@ -31,7 +31,7 @@ A **Baked** light no longer lights moving objects directly once the scene is bak
 
 **Baked shadow angle** (sun) and **Baked shadow radius** (lamp, spotlight) make a Baked light's shadows soft: the wider, the softer, like a big lamp or a hazy sun. 0 gives sharp shadows.
 
-The scene's **Ambient light** and **Sky** lights are always baked into the light maps of static objects. They come with shadows: under a table and in the corners of a room it is darker.
+The scene's **Ambient light**, **Sky** lights and the light of the sky picture (**Light with sky**, or a shader sky) are always baked into the light maps of static objects. They come with shadows: under a table and in the corners of a room it is darker. Reflections of the sky stay realtime.
 
 ## Light probes
 
@@ -39,12 +39,13 @@ Light maps only cover objects that never move. For the player, enemies and anyth
 
 | Setting | What it does |
 | --- | --- |
-| **Size** | The box, in metres, centred on the object and lined up with the world axes. |
+| **Size** | The box, in metres, centred on the object and lined up with the world axes. The object's scale stretches it; turning the object does not turn it. |
 | **Probe spacing** | Metres between probes. Closer probes follow shadows and colours more tightly but take longer to bake. **Probes** shows how many you get. |
 
 **Generate Lighting** then stores, at every probe, the light arriving from every direction: Baked lights with their shadows, the sky and the light bounced off the scenery. A moving object inside the box takes its light from the probes around it. A ball rolling next to a red wall turns reddish on that side, and a character walking under a roof gets darker. Select the volume to see its probes as dots (yellow once baked).
 
-- With a baked volume in the scene, moving objects take their sky and ambient light from the probes and not from the flat **Ambient light**, so it comes with shadows. Realtime and Mixed lights still light them directly.
+- With a baked volume in the scene, moving objects take their sky and ambient light from the probes, and not from the flat **Ambient light** or straight from the sky picture, so it comes with shadows. Realtime and Mixed lights still light them directly.
+- Several volumes can cover different areas. An object outside all of them takes the light of the nearest one.
 - Probes that end up inside walls take the light of their neighbours.
 - Probes give soft, low-detail light. A sharp shadow edge falls between probes and blurs. Realtime or Mixed lights give moving objects sharp shadows.
 - Moving the volume after baking does nothing until you bake again.
