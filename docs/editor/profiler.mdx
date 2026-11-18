@@ -7,7 +7,7 @@ description: Record every frame of your game and see where the time goes, what e
 
 The **Profiler** window records every frame while your game plays in the editor, like Unity's Profiler. Use it when the game stutters or runs below 60 fps and you want to know why.
 
-Open it with **Window → Profiler**. It opens under the game view, so you see the game and its frames together, and starts recording when you press **Play**. The game has to run in the editor (not in its own window): the **▶ Play** button inside the Profiler does that.
+Open it with **Window → Profiler**. It opens under the game view, so you see the game and its frames together, and starts recording when you press **Play**. To record the game on a phone, in its own window or as a web build, see [Record a phone](#record-a-phone).
 
 ## The chart
 
@@ -60,8 +60,25 @@ What the picked frame drew: **draw calls** (shadows and screen effects included)
 
 A huge sky picture or a texture far bigger than it shows on screen is the usual find: make it smaller in [Files](assets) or lower **Max lightmap size**.
 
+## Record a phone
+
+A phone is much slower than your computer, so measure the game there. Like Unity's profiler connected to a phone build, the game sends its frames to your editor over the internet; no cable is needed.
+
+1. Press **📱** in the Profiler. It shows a short code (for example `K7Q2X`), and the button shows it too while it waits.
+2. Open the game with that code:
+   - **Published game** ([Publish](../publish/publish-link)): scan the **QR code** with the phone's camera. It opens your game's link with the code added.
+   - **Play in a new window** (Play ▾ → **Play mode → New window**): press **Play**. The window joins by itself.
+   - **Web build** or any other link to the game: add `?tgeprofile=K7Q2X` to its address.
+3. When the game is running, the button shows the device (`Android 14 · Chrome 131 · 1080×2400`) and the chart fills with its frames. **CPU**, **Rendering** and **Memory** (**Take snapshot** asks the phone) work as for a game in the editor. **●** turns recording on the phone off and on.
+
+When the game closes, its frames stay to look through. **✕ Disconnect** ends it; the Profiler then records the editor's game again.
+
+:::note
+A game published before this feature has to be published again (**Publish → Update**, same link) before it can send frames. Android app and Windows builds can't be connected yet.
+:::
+
 ## Good to know
 
 - Times are rounded to 0.1 ms by the browser, so very fast parts show as 0.10 ms or nothing.
-- Recording costs a little time itself, only while the Profiler is open.
+- Recording costs a little time itself, only while the Profiler is open. A connected phone also sends about 3 KB of frames a second.
 - The game's own frame is measured. The browser's time on the page and the graphics card's time are not, so a game can show 5 ms frames and still run at 40 fps when the graphics card is the limit: look at **Rendering** then.
