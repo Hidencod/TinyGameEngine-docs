@@ -49,6 +49,7 @@ Every level sets all of these:
 | **Max pixel ratio**, **Smooth edges (antialias)**, **Shadows**, **Max particles** | As above. |
 | **Shadow picture size** | Sharpness of every light's shadow: 512, 1024 or 2048. Bigger costs more memory and time. |
 | **Shadow cascades (most)** | The most cascades a sun's [Shadow cascades](../world/cameras-and-lights) may use: Off, 2, 3 or 4. Off gives a single shadow picture. |
+| **Shadowmask Mode** | For scenes baked with [Shadowmask](../world/baked-lighting#shadowmask): **Distance Shadowmask** (static objects cast realtime shadows near the camera, the bake beyond) or **Shadowmask** (static shadows only from the bake: cheaper). New projects: Distance Shadowmask on High and Medium, Shadowmask on Low. |
 | **Glow, Depth of field, Ambient occlusion, Edge smoothing, Color finish** | Whether that [screen effect](../world/post-processing#effects) may be drawn. A level can switch effects off but never adds one no volume has. *Color finish* is vignette, color fringe, saturation, contrast and colour grading. |
 | **Mirror picture size** | The biggest reflection picture a mirror may have: Off (a mirror is plain metal), 128, 256, 512 or 1024. |
 | **Glass** | Off: glass objects are plain surfaces, which is much faster. |

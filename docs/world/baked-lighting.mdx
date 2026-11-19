@@ -24,12 +24,30 @@ Moved something, or changed a light? Press **Generate Lighting** again. **Clear 
 | Mode | While the game runs | In the light maps |
 | --- | --- | --- |
 | **Realtime** (the default) | Lights everything, with realtime shadows. | Nothing. |
-| **Mixed** | Lights everything, with realtime shadows. | The light it bounces off surfaces. |
+| **Mixed** | Lights everything, with realtime shadows. | The light it bounces off surfaces, and with **Lighting Mode** Shadowmask its shadows from static objects. |
 | **Baked** | Nothing (once the scene is baked). | Its light, its soft shadows and the light it bounces. |
 
 A **Baked** light no longer lights moving objects directly once the scene is baked, the same as in Unity: they get its light from [light probes](#light-probes). For an outdoor scene with a player walking around, a good start is a **Mixed** sun (realtime light and shadows on everything, baked bounce light and sky shadows on the scenery) plus **Baked** lamps for the decoration.
 
-**Baked shadow angle** (sun) and **Baked shadow radius** (lamp, spotlight) make a Baked light's shadows soft: the wider, the softer, like a big lamp or a hazy sun. 0 gives sharp shadows.
+## Shadowmask
+
+With the scene's **Lighting Mode** on **Shadowmask** (the default, as in Unity), Generate Lighting also bakes where each **Mixed** light is blocked by static objects: the shadowmask. The light itself stays realtime, so moving objects are lit and cast shadows as before, but the scenery's shadows from scenery come from the bake. They are soft, reach as far as the scene goes, and are there even on a device with realtime shadows off.
+
+- Up to 4 Mixed lights with **Casts shadow** get a shadowmask (Unity's limit too). Another one keeps realtime shadows only.
+- A static object's shadowmask picture sits next to its light map in **Files → Lightmaps**.
+- Moving objects take the scenery's shadows from [light probes](#light-probes): bake a **Light probe volume** where they go.
+- Move or turn a Mixed light after baking and its baked shadows switch off (realtime shadows only) until you bake again.
+
+How the bake and realtime shadows share the work is set per quality level in [Project settings](../editor/project-settings), as in Unity:
+
+| Shadowmask Mode | Static objects | Moving objects |
+| --- | --- | --- |
+| **Distance Shadowmask** (High, Medium) | Realtime shadows near the camera, the shadowmask beyond. | Realtime shadows near the camera, probes beyond. |
+| **Shadowmask** (Low) | Shadows only from the shadowmask: they cast no realtime shadows, which saves time on phones. | Realtime shadows of moving objects; the scenery's shadows from probes. |
+
+**Baked Indirect** bakes only the Mixed lights' bounced light, as before.
+
+**Baked shadow angle** (sun) and **Baked shadow radius** (lamp, spotlight) make a Baked light's shadows, and a Mixed light's shadowmask, soft: the wider, the softer, like a big lamp or a hazy sun. 0 gives sharp shadows.
 
 The scene's **Ambient light**, **Sky** lights and the light of the sky picture (**Light with sky**, or a shader sky) are always baked into the light maps of static objects. They come with shadows: under a table and in the corners of a room it is darker. Reflections of the sky stay realtime.
 
@@ -64,6 +82,7 @@ The glow lights the light maps and the light probes, so moving objects near it p
 
 | Setting | What it does |
 | --- | --- |
+| **Lighting Mode** | What is baked of **Mixed** lights: **Shadowmask** (their bounced light and their shadows from static objects, see [Shadowmask](#shadowmask)) or **Baked Indirect** (only their bounced light). |
 | **Lightmapper** | Where the light is traced. **Progressive GPU** (the default) uses the graphics card and is several times faster: a scene that takes 15 s on the processor takes about 3 s on a laptop's built-in graphics, less on a gaming card. **Progressive CPU** uses the processor's cores. Both give the same light. Where the graphics card can't do it (an old browser, more than 32 lights), the CPU one runs by itself. |
 | **Lightmap resolution** | Pixels per metre on every static object (10 = a 1 m box side gets 10 × 10). Higher is sharper and slower to bake. |
 | **Max lightmap size** | The size of the light map pictures. The static objects share them (Unity's lightmap atlas): as many objects as fit go in one picture, then a second picture starts. A big object that would need more than one picture gets coarser pixels. |
