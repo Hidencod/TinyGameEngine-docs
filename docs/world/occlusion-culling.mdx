@@ -1,0 +1,53 @@
+---
+title: Occlusion culling
+description: Bake which objects can be seen from where, so the game camera skips the ones hidden behind walls and buildings, like Unity's Occlusion Culling.
+---
+
+# Occlusion culling
+
+The camera already skips objects outside its view. But inside a building, or in a street between houses, most of what is in front of the camera is still hidden behind a wall, and each of those objects is still drawn. **Occlusion culling** works out ahead of time which objects can be seen from each part of the scene, and the game then leaves out the ones that can't. There are fewer draw calls, which matters most on phones. It works like Unity's Occlusion Culling.
+
+It is for scenes with lots of walls: rooms and corridors, towns, caves, a level split into areas. An open field with nothing in the way gains nothing.
+
+## Bake it
+
+1. Select the big solid things that hide what is behind them (walls, buildings, floors, big rocks) and turn on **Occluder Static** (under **Shape & look**).
+2. Select the things that may be hidden (houses, furniture, props, and the walls themselves too) and turn on **Occludee Static**. Most scenery gets both.
+3. Open the **Scene** tab → **Occlusion Culling** → **Bake**.
+
+The bar shows how far it got; **Cancel** stops it. When it is done the card shows how many objects it can skip, the grid it made and the size of its cells. Press **Play**: the stats line at the top left of the game view says how many objects are **occluded** in each frame, and so does the [Profiler](../editor/profiler) under Rendering.
+
+Moved a wall or a house? Press **Bake** again. **Clear** removes the baked data, and the camera draws everything again.
+
+## Which flag to use
+
+| Object | Occluder Static | Occludee Static |
+| --- | --- | --- |
+| Walls, buildings, floors, big rocks | On | On |
+| Furniture, crates, small props, trees | Off: too small or see-through to hide much | On |
+| Glass, fences, thin railings | Off: you can see through them | On |
+| Anything that moves (player, enemies, doors, physics boxes) | Off | Off |
+
+Only objects that are both shown and switched on when you bake count. An object moved away from where it was baked is always drawn, so a script that moves scenery can't make it disappear. Objects made while the game runs are always drawn.
+
+## Cell size
+
+The bake lays a grid of cells over the static objects (4 m by default) and works out what can be seen from somewhere in each cell. The game looks up the camera's cell every frame.
+
+- **Smaller cells** skip more, as each cell sees less, but the bake takes longer and the data is bigger.
+- **Bigger cells** bake faster, for big outdoor scenes.
+
+A grid has at most 8,000 cells: past that, the bake makes the cells bigger by itself, and the card shows the size it used. Outside the grid (the camera high above the level, say) everything is drawn.
+
+## Good to know
+
+- **Shadows stay.** A skipped object still casts its shadow, so a building behind you still shades the street in front of you.
+- **Batching.** Objects with the same shape and material are usually drawn together in one call. Once a scene has occlusion data, its Occludee Static objects are drawn one by one instead, so each can be skipped.
+- **Errs on the side of drawing.** Each object is checked by the box around it, which is bigger than the object. So an object near the edge of a wall may be drawn when it is just out of sight, but never left out when part of it shows.
+- **Per camera.** The camera component has an **Occlusion Culling** switch (on by default). Turn it off for a camera that flies above the level, or to compare the draw calls with and without.
+- **The scene view** in the editor always draws everything.
+- **Claude** can mark objects and bake through the [Claude link](../editor/claude-link) (`bake_occlusion`).
+
+## How it is made
+
+From every corner and the middle of every cell, the bake draws the scene in all six directions on the graphics card: the occluders as solid shapes, and each occludee as its box in its own color. The colors that make it to the picture are the objects that can be seen from that point. A cell can see what any of its nine points can see. Cells that see the same objects share one list, which keeps the data small. It is stored in the scene, so it goes into every build.
