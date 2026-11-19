@@ -71,7 +71,8 @@ Colours have the same idea: **Color**, **Gradient**, **Random Between Two Colors
 | **Delta Time** | **Unscaled** keeps playing while the game is in slow motion or paused by time scale. |
 | **Scaling Mode** | Whether the object's scale (and its parents') sizes the particles. |
 | **Play On Awake** | Starts with the scene. Off = wait for *Start particles*. |
-| **Max Particles** | Limit for this effect. Lower is faster on old phones. |
+| **Simulate On** | **CPU** (every module) or **GPU**: up to a million particles, worked out on the graphics card. See [GPU particles](#gpu-particles). |
+| **Max Particles** | Limit for this effect: up to 5,000 on the CPU, 1,048,576 on the GPU. Lower is faster on old phones. |
 | **Stop Action** | When a one-shot effect is done: nothing, **Disable** or **Destroy** the object, or **Callback** (fires *On particles stopped*). |
 
 </Side>
@@ -130,6 +131,28 @@ Colours have the same idea: **Color**, **Gradient**, **Random Between Two Colors
 - Scripts: `entity.particleSystem` is Unity's ParticleSystem — every module live (`entity.particleSystem.main.startSpeed = 8`, `entity.particleSystem.noise.enabled = true`), plus `play()`, `stop()`, `emit(count, params)`, `getParticles()` / `setParticles()`. One-off effects: `game.spawnParticles('Explosion', x, y, z)`, with settings changed by module: `game.spawnParticles('Sparkles', x, y, z, { main: { startColor: '#66ccff' } })`.
 
 The project’s **Max particles** setting caps all effects together. See [Performance](../help/performance).
+
+## GPU particles
+
+Set **Simulate On** to **GPU** for effects with tens of thousands of particles or more: snow over a whole level, a waterfall, a galaxy, sparks by the hundred thousand. It is the same Particle System with the same settings, but once a particle is born the graphics card moves it, ages it and draws it, so a million particles can run at full speed on a desktop.
+
+Particles are still born the same way: every **Shape**, **Burst** and start value, and **Emit particles with values**, work as on the CPU. The graphics card then runs these modules:
+
+- **Gravity**, **Velocity over Lifetime** (orbit and radial too), **Limit Velocity over Lifetime** (drag), **Inherit Velocity**, **Force over Lifetime**
+- **External Forces**: up to 4 [force fields](#force-fields) and [wind zones](#wind-zones)
+- **Noise**
+- **Collision** with up to 6 **Planes**
+- **Color**, **Size** and **Rotation** over Lifetime and by Speed
+- **Texture Sheet Animation**, and every **Render Mode** (billboards, stretched, mesh)
+
+A GPU effect skips the modules marked **CPU** in the Inspector: **Triggers**, **Sub Emitters** (a GPU effect can still *be* a sub emitter of a CPU one), **Lights**, **Trails** and **Custom Data**, and **Collision** with the **World**. It also skips **Sort Mode** and **Ring Buffer Mode**. When it is full, no new particles are born until old ones die.
+
+Some things work differently with a GPU effect:
+
+- The project’s **Max particles** setting doesn't count GPU effects: each one has its own **Max Particles**.
+- Scripts can't read or move single particles (`getParticles()` returns an empty list), and **Compare particle count** counts every particle that may still be alive.
+- Up to 65,536 particles can be born in one frame.
+- A device that can't render to float textures (some old phones) runs the effect on the CPU instead, with the CPU's limit of 5,000.
 
 ## Force fields
 
