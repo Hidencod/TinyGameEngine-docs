@@ -243,6 +243,10 @@ async function sunTempleShots({ page, shot, tge, module }) {
   await page.goto(`${TGE}/showcase/dev.html?game=${module}`, { timeout: 120000 });
   await page.waitForFunction(() => window.__tgeReady, null, { timeout: 180000 });
   await page.waitForTimeout(3000);
+  await shot('start');
+  await page.getByText('Start', { exact: true }).first().click({ force: true });
+  await page.waitForFunction(() => window.__tgeGame.getVar('Started') === 1, null, { timeout: 20000 });
+  await page.waitForTimeout(1500);
   await shot('play');
   // The marble is put in each hall by hand: the camera follows and fades the roof.
   const visit = async (name, x, z) => {

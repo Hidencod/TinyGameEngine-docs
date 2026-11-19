@@ -5,7 +5,7 @@ description: A small marble game in a temple at sunset that shows Tiny Game Engi
 
 # Sun Temple
 
-Roll a white marble through a temple at sunset. Each of the three halls has a sun shard at the back. Find all three and bring them to the altar in the courtyard, as fast as you can. Look at the light as you go: soft evening shadows in the courtyard, red light bouncing round the red hall, a cave lit only by its crystals, and a hall lit by its own lava. The marble takes the color of each room.
+Roll a white marble through a temple at sunset. Each of the three halls has a sun shard at the back, under a beam of light. Take all three and bring them to the altar in the middle of the courtyard, as fast as you can. In the right-hand hall the floor has strips of lava: roll round them through the gaps, or you go back to the hall's door. Look at the light as you go: soft evening shadows in the courtyard, red light bouncing round the red hall, a cave lit only by its crystals, and a hall lit by its own lava. The marble takes the color of each room.
 
 It shows [baked lighting](../world/baked-lighting). **All of the light in the temple is baked by Generate Lighting, and the rules are an event sheet: there are no code scripts.**
 
@@ -16,7 +16,9 @@ It shows [baked lighting](../world/baked-lighting). **All of the light in the te
   size="2.4 MB"
 />
 
-**Controls:** the joystick rolls the marble (**WASD** or the **arrow keys** on a computer). Keep off the lava.
+**Controls:** press **Start**, then the joystick rolls the marble (**WASD** or the **arrow keys** on a computer). Keep off the lava.
+
+![The start screen says what to do](/img/showcase/sun-temple-start.webp)
 
 ## Open it in the editor
 
@@ -76,9 +78,10 @@ The camera has **Camera follow** with **Fade in way** on, **Fade tag** `fade` an
 
 ### The rules
 
-- Every tick (until you win): **Move with input** from the joystick, and add `dt` to `Time`.
-- **On collision** with `#shard`: sparkle, **Play sound** `Coin`, destroy it, add 1 to `Shards`.
-- **On collision** with `#lava`: an explosion, **Play sound** `Zap`, **Set position** back to the courtyard, **Set velocity** to 0.
+- **On clicked** `StartButton`: hide the start screen, show the hint line, `Started` = 1.
+- Every tick while `Started` = 1 and until you win: **Move with input** from the joystick, and add `dt` to `Time`.
+- **On collision** with `#shard`: sparkle, **Play sound** `Coin`, destroy it, add 1 to `Shards`. Its beam of light is a child object, so it goes with it.
+- **On collision** with `#lava`: an explosion, **Play sound** `Zap`, **Set position** back to the lava hall's door, **Set velocity** to 0, and `LavaMsg` = 3: for 3 seconds the hint line says how to get past.
 - **On collision** with `AltarZone` (an invisible trigger round the altar) when `Shards ≥ 3`: `Won` = 1, show the flame, **Play sound** `Win`, show the win screen.
 - After the win, every tick: **Set light intensity** of `AltarLight` up to 8 over about a second. It is a realtime light, so it can change while the game runs: a Baked light can't once the scene is baked.
 
