@@ -50,6 +50,16 @@ Light maps only cover objects that never move. For the player, enemies and anyth
 - Probes give soft, low-detail light. A sharp shadow edge falls between probes and blurs. Realtime or Mixed lights give moving objects sharp shadows.
 - Moving the volume after baking does nothing until you bake again.
 
+## Glowing materials
+
+A material with a **Glow color** lights its surroundings in the bake, as Unity's emissive materials do: lava lights the cave walls, a neon sign tints the street, a screen lights the desk in front of it.
+
+1. Give the material a **Glow color** and raise **Glow intensity** (2–10 for light you can see on nearby surfaces).
+2. Turn on **Contribute GI** on the object.
+3. Press **Generate Lighting**.
+
+The glow lights the light maps and the light probes, so moving objects near it pick up its colour too. **Indirect intensity** makes it stronger or weaker, as it does bounced light. An **Emissive map** counts with its average colour. To keep a glow out of the bake, set the material's **Global Illumination** to **None**. Unlit materials don't light the bake.
+
 ## Lighting settings
 
 | Setting | What it does |

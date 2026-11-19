@@ -21,6 +21,8 @@ Anything you can see has a **Shape & look** component. Add a shape from **Object
 | **Offset** | (with a texture or map) Slides the picture along U and V; 0.5 moves it half way. |
 | **Style** | How light falls on it (see below). |
 | **Glow color** | Emissive color: the surface shines with it even in the dark. Black = no glow. |
+| **Glow intensity** | How strong the glow is (Unity's HDR emission intensity). Above 1 is brighter than white: with **Bloom** it shines, and in [baked lighting](baked-lighting#glowing-materials) it lights more. |
+| **Global Illumination** | **Baked**: on a **Contribute GI** object, the glow lights the surfaces and probes around it when you press **Generate Lighting**. **None**: it only glows itself. |
 | **Opacity** | 1 = solid, 0 = invisible. |
 | **Flat shading** | Faceted, low-poly look. |
 | **Casts / Receives shadow** | Whether it throws shadows and shows shadows on itself. |
