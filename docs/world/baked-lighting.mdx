@@ -49,6 +49,10 @@ How the bake and realtime shadows share the work is set per quality level in [Pr
 
 **Baked shadow angle** (sun) and **Baked shadow radius** (lamp, spotlight) make a Baked light's shadows, and a Mixed light's shadowmask, soft: the wider, the softer, like a big lamp or a hazy sun. 0 gives sharp shadows.
 
+### The shader sky's sun
+
+With **Background → Sky (sun and clouds)** and **Sun light** on, the sky's sun is a light too, with its own **Sun light mode** (Realtime, Mixed or Baked, as in the table above). On **Baked** the sun's light and shadows go into the light maps and probes, soft as the sun's disc: a bigger **Sun size** gives softer shadows. It is the same as Unity's sun source light. The sky's own light (**Light with sky**) is baked whatever the mode.
+
 The scene's **Ambient light**, **Sky** lights and the light of the sky picture (**Light with sky**, or a shader sky) are always baked into the light maps of static objects. They come with shadows: under a table and in the corners of a room it is darker. Reflections of the sky stay realtime.
 
 ## Light probes
@@ -57,7 +61,7 @@ Light maps only cover objects that never move. For the player, enemies and anyth
 
 | Setting | What it does |
 | --- | --- |
-| **Size** | The box, in metres, centred on the object and lined up with the world axes. The object's scale stretches it; turning the object does not turn it. |
+| **Size** | The box, in metres, centred on the object. The object's scale stretches it and turning the object turns it. The probes always sit in rows along the world axes, as in Unity's probe volumes: a turned box is filled by the world-aligned box around it, which the scene view draws as a fainter outline. |
 | **Probe spacing** | Metres between probes. Closer probes follow shadows and colours more tightly but take longer to bake. **Probes** shows how many you get. |
 
 **Generate Lighting** then stores, at every probe, the light arriving from every direction: Baked lights with their shadows, the sky and the light bounced off the scenery. A moving object inside the box takes its light from the probes around it. A ball rolling next to a red wall turns reddish on that side, and a character walking under a roof gets darker. Select the volume to see its probes as dots (yellow once baked).
@@ -67,6 +71,10 @@ Light maps only cover objects that never move. For the player, enemies and anyth
 - Probes that end up inside walls take the light of their neighbours.
 - Probes give soft, low-detail light. A sharp shadow edge falls between probes and blurs. Realtime or Mixed lights give moving objects sharp shadows.
 - Moving the volume after baking does nothing until you bake again.
+
+## Prefabs
+
+Baked light belongs to the scene, as in Unity. A baked prefab copy doesn't count its light map as an override: **Apply** never puts light maps into the prefab, and **Revert** or a change to the prefab keeps the copy's bake. A prefab made from a baked object holds no light map, so a fresh copy starts with realtime light until you bake again.
 
 ## Glowing materials
 
