@@ -5646,6 +5646,66 @@
       ]
     },
     {
+      "id": "object.setLightIntensity",
+      "kind": "action",
+      "category": "Graphics",
+      "label": "Set light intensity",
+      "hint": "A Light's brightness (Unity's Light.intensity)",
+      "display": "Set {object} light intensity to {intensity}",
+      "displayNoObject": null,
+      "icon": "💡",
+      "description": "Change a Light's brightness while the game runs (Unity's Light.intensity). Baked lights don't change once the scene is baked: use Realtime or Mixed ones.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "intensity",
+          "label": "Intensity",
+          "type": "number",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.setLightColor",
+      "kind": "action",
+      "category": "Graphics",
+      "label": "Set light color",
+      "hint": "A Light's color (Unity's Light.color)",
+      "display": "Set {object} light color to {color}",
+      "displayNoObject": null,
+      "icon": "🎨",
+      "description": "Change a Light's color while the game runs (Unity's Light.color).",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "color",
+          "label": "Color",
+          "type": "color",
+          "options": null,
+          "default": "#ffffff",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "object.tween",
       "kind": "action",
       "category": "Object",

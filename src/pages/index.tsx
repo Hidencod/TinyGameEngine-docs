@@ -15,6 +15,7 @@ const GAMES = [
   {to: '/docs/showcase/ball-arena', shot: 'ball-arena-play', title: 'Ball Arena', text: 'Multiplayer: a room everyone joins, and balls you see move.'},
   {to: '/docs/showcase/loot-room', shot: 'loot-room-room', title: 'Loot Room', text: 'An inventory, a book of items and a health bar.'},
   {to: '/docs/showcase/firefly-grove', shot: 'firefly-grove-chase', title: 'Firefly Grove', text: 'Adaptive music: layers that follow the danger, and a chase that starts on the bar.'},
+  {to: '/docs/showcase/sun-temple', shot: 'sun-temple-cave', title: 'Sun Temple', text: 'Baked lighting: soft sunset shadows, glowing crystals that light a cave, and light probes.'},
 ];
 
 const SCRIPT = `export let speed = 2;   // set per object in the Inspector

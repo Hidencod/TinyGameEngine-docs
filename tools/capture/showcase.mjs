@@ -35,6 +35,7 @@ const GAMES = [
   { module: 'holeRush', slug: 'hungry-hole', shots: holeRushShots, expect: 'Hungry Hole' },
   { module: 'netBalls', slug: 'ball-arena', shots: ballArenaShots, expect: 'Ball Arena' },
   { module: 'fireflyGrove', slug: 'firefly-grove', shots: fireflyGroveShots, expect: 'Fireflies: 0 / 8' },
+  { module: 'sunTemple', slug: 'sun-temple', shots: sunTempleShots, expect: 'Sun shards: 0 / 3' },
 ];
 
 const filter = process.argv.slice(2).filter((a) => !a.startsWith('--'));
@@ -237,6 +238,45 @@ async function fireflyGroveShots({ page, shot, tge, module }) {
   await shot('events');
 }
 
+async function sunTempleShots({ page, shot, tge, module }) {
+  // The bake runs while the project is built (a few seconds on the graphics card).
+  await page.goto(`${TGE}/showcase/dev.html?game=${module}`, { timeout: 120000 });
+  await page.waitForFunction(() => window.__tgeReady, null, { timeout: 180000 });
+  await page.waitForTimeout(3000);
+  await shot('play');
+  // The marble is put in each hall by hand: the camera follows and fades the roof.
+  const visit = async (name, x, z) => {
+    await page.evaluate(([x, z]) => window.__tgeGame.find('Player').setPosition(x, 0.6, z), [x, z]);
+    await page.waitForTimeout(2500);
+    await shot(name);
+  };
+  await visit('red', 0, -7);
+  await visit('cave', -10, -8);
+  await visit('lava', 10.5, -7);
+  // Every shard, then the altar.
+  await page.evaluate(async () => {
+    const g = window.__tgeGame;
+    const p = g.find('Player');
+    for (const s of g.select('#shard')) {
+      for (let i = 0; i < 8; i++) { p.setPosition(s.position.x, 0.6, s.position.z); await new Promise((r) => setTimeout(r, 50)); }
+    }
+    p.setPosition(0, 0.6, 9);
+  });
+  await page.waitForTimeout(1500);
+  await page.evaluate(() => window.__tgeGame.find('Player').setPosition(0, 0.6, 7.8));
+  await page.waitForFunction(() => window.__tgeGame.getVar('Won') === 1, null, { timeout: 20000 });
+  await page.waitForTimeout(2500);
+  await shot('win');
+  // The project in the editor: the baked scene in the Scene view.
+  await page.goto(TGE + '/', { timeout: 120000 });
+  await page.waitForSelector('.hm', { timeout: 30000 });
+  await importTge(page, tge);
+  await page.locator('.hm-card, .hm-continue', { hasText: 'Sun Temple' }).first().click({ timeout: 60000 });
+  await page.waitForSelector('.editor.desktop', { timeout: 60000 });
+  await page.waitForTimeout(6000);
+  await shot('editor');
+}
+
 async function crystalVaultShots({ page, shot, tge, module }) {
   await page.goto(`${TGE}/showcase/dev.html?game=${module}`, { timeout: 120000 });
   await page.waitForFunction(() => window.__tgeReady, null, { timeout: 120000 });
@@ -397,6 +437,8 @@ async function checkExported(browser, file, game) {
  * import), so one empty project is made first: after that the page lists projects and has the import button.
  */
 async function importTge(page, tge) {
+  // Signed out, the editor starts on its Sign in screen: carry on as a guest.
+  await page.locator('.wl-layer.open .wl-guest').click({ timeout: 5000 }).catch(() => {});
   // A visit with no seen release opens on What's new: go to the projects page first.
   await page.getByRole('button', { name: 'Projects', exact: true }).first().click({ timeout: 3000 }).catch(() => {});
   const importBtn = page.getByRole('button', { name: /Import \.tge/ });

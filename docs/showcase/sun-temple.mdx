@@ -1,0 +1,93 @@
+---
+title: Sun Temple
+description: A small marble game in a temple at sunset that shows Tiny Game Engine's baked lighting — light maps with soft shadows and bounced light, a Shadowmask sun, rooms lit only by glowing crystals and lava, and light probes that tint the moving marble. Play it in your browser, then open the project and see how it works.
+---
+
+# Sun Temple
+
+Roll a white marble through a temple at sunset. Each of the three halls has a sun shard at the back. Find all three and bring them to the altar in the courtyard, as fast as you can. Look at the light as you go: soft evening shadows in the courtyard, red light bouncing round the red hall, a cave lit only by its crystals, and a hall lit by its own lava. The marble takes the color of each room.
+
+It shows [baked lighting](../world/baked-lighting). **All of the light in the temple is baked by Generate Lighting, and the rules are an event sheet: there are no code scripts.**
+
+<PlayEmbed
+  src="https://hidencod.github.io/tge-assets/showcase/sun-temple/"
+  poster="/img/showcase/sun-temple-play.webp"
+  title="Sun Temple"
+  size="2.4 MB"
+/>
+
+**Controls:** the joystick rolls the marble (**WASD** or the **arrow keys** on a computer). Keep off the lava.
+
+## Open it in the editor
+
+1. Download **[sun-temple.tge](https://hidencod.github.io/tge-assets/showcase/sun-temple/sun-temple.tge)** (300 KB).
+2. Open the editor: **[editor.jeevagames.com](https://editor.jeevagames.com)** on a computer, or the Android app.
+3. On the home screen tap **Import .tge** and pick the file, then open **Sun Temple (imported)**.
+4. Press **▶ Play**. To see how the light is made, open the **Scene** tab → **Lighting**: the scene is already baked, and **Generate Lighting** bakes it again after you change something.
+
+![Sun Temple in the editor, with its baked light in the Scene view](/img/showcase/sun-temple-editor.webp)
+
+## How it works
+
+### Static objects and light maps
+
+Every wall, floor, roof, pillar, crystal and strip of lava has **Contribute GI** on (under **Shape & look**). **Generate Lighting** traces the light that reaches each of them and stores it in one light map picture (**Files → Lightmaps/Main**). The game then draws that picture on them, so the soft shadows and the bounced light cost nothing while it runs.
+
+The scene's **Lighting** settings:
+
+| Setting | Value | Why |
+| --- | --- | --- |
+| Lightmap resolution | 4 texels per metre | A small temple: enough for soft shadows, and one picture for everything. The sand ground has a **Scale in lightmap** of 0.5, as it is big and plain. |
+| Indirect samples | 128 | Less noise in the dark halls, where most of the light has bounced. |
+| Bounces | 2 | Light goes through a doorway and round a corner. |
+| Lighting Mode | Shadowmask | See the next part. |
+
+It bakes in about 4 seconds on a laptop's graphics card (Progressive GPU).
+
+### The sun: a Mixed light with a shadowmask
+
+The sun is a low, warm directional light with **Mode: Mixed** and **Baked Shadow Angle** 3°. With the scene's **Lighting Mode** set to **Shadowmask**, its shadows from static objects are baked (long, soft pillar shadows), but it still lights things while the game runs. So the two **Sweepers** turning in the courtyard, which are not static, cast a sharp realtime shadow that joins the baked ones.
+
+![The courtyard: baked pillar shadows and the sweepers' realtime shadows](/img/showcase/sun-temple-play.webp)
+
+### The red hall: baked lights and bounced color
+
+The red hall has a roof, so the sun hardly reaches inside. Four point lights by the walls are **Mode: Baked**: their light and shadows go into the light map, and once the scene is baked they cost nothing while the game runs. The red walls throw red light back onto the pale floor (that's the bounce).
+
+![The red hall](/img/showcase/sun-temple-red.webp)
+
+### The cave and the lava hall: glowing materials light the room
+
+The cave has no lights at all. Its crystals have a cyan **Glow color** with **Glow intensity** 6 and **Global Illumination: Baked**, so the bake treats them as light sources: the floor and the walls around them turn blue. The lava strips do the same in orange (Glow intensity 3).
+
+![The crystal cave, lit only by its crystals](/img/showcase/sun-temple-cave.webp)
+
+![The lava hall](/img/showcase/sun-temple-lava.webp)
+
+### Light probes: the marble and the shards
+
+Light maps are only for static objects. The marble and the shards move, so a **Light probe volume** (an object named *Light probes*) covers the whole temple with a probe every 1.5 m. Generate Lighting bakes the light at each probe, and moving objects take their light from the nearest probes. That is why the white marble turns red, blue or orange as it rolls from room to room. With the Shadowmask, the probes also know where the sun's baked shadows are.
+
+The marble also carries a weak realtime point light (*Marble light*, a child object). It adds to the baked light around it, and you can see it most in the dark cave.
+
+### The camera fades the roofs
+
+The camera has **Camera follow** with **Fade in way** on, **Fade tag** `fade` and **Fade opacity** 0.06. Each hall's roof and front wall have the tag `fade`, so whichever ones are between the camera and the marble turn almost fully see-through, and you look down into the hall. They are still in the bake, which is why it is dark inside.
+
+### The rules
+
+- Every tick (until you win): **Move with input** from the joystick, and add `dt` to `Time`.
+- **On collision** with `#shard`: sparkle, **Play sound** `Coin`, destroy it, add 1 to `Shards`.
+- **On collision** with `#lava`: an explosion, **Play sound** `Zap`, **Set position** back to the courtyard, **Set velocity** to 0.
+- **On collision** with `AltarZone` (an invisible trigger round the altar) when `Shards ≥ 3`: `Won` = 1, show the flame, **Play sound** `Win`, show the win screen.
+- After the win, every tick: **Set light intensity** of `AltarLight` up to 8 over about a second. It is a realtime light, so it can change while the game runs: a Baked light can't once the scene is baked.
+
+![The temple is lit](/img/showcase/sun-temple-win.webp)
+
+## Make it yours
+
+- Move the sun (turn the *Sun* object), then **Generate Lighting**: the baked shadows follow. If you play before baking again, the sun's shadows from the temple are realtime only, because a Shadowmask light that has moved no longer fits its mask.
+- Change a crystal's **Glow color**, or a hall's wall color, and bake again to see the new bounce.
+- Try **Lighting Mode: Baked Indirect**: the sun's shadows are then all realtime, sharp and shorter-reaching.
+- Raise **Lightmap resolution** to 8 for crisper shadows: the bake takes longer and the light map picture grows.
+- Turn the *Light probes* object off and play: the marble is lit the same everywhere.

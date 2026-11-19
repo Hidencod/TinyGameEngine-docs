@@ -3,6 +3,8 @@
   "system.onStart": "Runs once when the scene starts.",
   "object.setVolumeProfile": "Put another post-processing profile on a Post-processing Volume (empty = none).",
   "object.setVolumeWeight": "How much of a Post-processing Volume counts: 0 = none, 1 = all.",
+  "object.setLightIntensity": "Change a Light's brightness while the game runs (Unity's Light.intensity). Baked lights don't change once the scene is baked: use Realtime or Mixed ones.",
+  "object.setLightColor": "Change a Light's color while the game runs (Unity's Light.color).",
   "scene.onEnd": "Runs once when the scene ends (changing or restarting scene).",
   "system.everyTick": "True every frame (about 60 times per second).",
   "system.every": "True once every few seconds.",
