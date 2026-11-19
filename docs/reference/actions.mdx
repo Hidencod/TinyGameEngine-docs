@@ -16,7 +16,7 @@ Actions are the **DO** part of an event. They run from top to bottom when the ev
 Number and text fields accept expressions, e.g. `Score + 1`, `"Score: " + Score`, `Player.x`, `random(1, 6)`. See [Expressions](./expressions).
 :::
 
-There are **232 actions**, grouped by category as in the action picker.
+There are **233 actions**, grouped by category as in the action picker.
 
 [⚙️ System](#system) · [🔢 Variables](#variables) · [ƒ Functions](#functions) · [⏱️ Time](#time) · [🎬 Scene](#scene) · [🔄 Loops](#loops) · [🎮 Input](#input) · [📦 Object](#object) · [🔀 Animator](#animator) · [🎬 Timeline](#timeline) · [🌐 Language](#language) · [🏆 Services](#services) · [♨️ Steam](#steam) · [🔗 Web](#web) · [👥 Multiplayer](#multiplayer) · [🧱 Physics](#physics) · [❤️ Health](#health) · [➰ Curve](#curve) · [🔤 Text](#text) · [🖼️ UI](#ui) · [🧩 Behaviors](#behaviors) · [✨ Particles](#particles) · [☄️ Effects](#effects) · [🔊 Audio](#audio) · [🎥 Camera](#camera) · [🎚️ Graphics](#graphics)
 
@@ -1214,6 +1214,21 @@ Stop the playing model animation.
 | --- | --- | --- | --- |
 | Cell X | Number (expression) | `0` |  |
 | Cell Y | Number (expression) | `0` |  |
+
+### Set component setting {/* #object-setcomponentfield */}
+
+<span class="tge-ace-display">Set ‹Object› ‹Component›.‹Setting› to ‹Value›</span>
+
+Change any setting of a component, the ones the Inspector shows: pick the component, then the setting (nested ones as material.color), e.g. rigidbody gravityScale to -1 to flip gravity, collider isTrigger, light intensity. What the engine can change on a running object changes at once; anything else rebuilds the object at the end of the frame.
+
+- **Where:** Pick an **object** (or a #tag) first, then this action.
+- **ID:** `object.setComponentField` (as saved in project files)
+
+| Parameter | Type | Default | Notes |
+| --- | --- | --- | --- |
+| Component | Choice | `rigidbody` | Options: mesh, camera, light, terrain, water, curve, sprite, tilemap, collider, joint, rigidbody, audio, text, ui, canvas, script, button, toggle, toggleGroup, dropdown, particles, animator, reflectionProbe, lightProbeVolume, navLink, ragdoll, lod, netSync, volume, trail, line, forceField, windZone, cloth, sight, director, virtualCamera |
+| Setting | Component setting | `gravityScale` |  |
+| Value | Expression | `1` |  |
 
 ### Keep across scenes {/* #object-setpersist */}
 

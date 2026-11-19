@@ -154,6 +154,7 @@
   "object.stopSound": "Stop the sound of the object's Audio component.",
   "object.setBehaviorEnabled": "Turn one of the object's behaviors on or off.",
   "object.setBehaviorParam": "Change a behavior setting, e.g. platformer speed.",
+  "object.setComponentField": "Change any setting of a component, the ones the Inspector shows: pick the component, then the setting (nested ones as material.color), e.g. rigidbody gravityScale to -1 to flip gravity, collider isTrigger, light intensity. What the engine can change on a running object changes at once; anything else rebuilds the object at the end of the frame.",
   "object.addTag": "Give the object a tag.",
   "object.removeTag": "Remove a tag from the object.",
   "ui.onClick": "Runs when the player taps a UI button (e.g. Start, Pause, Retry).",

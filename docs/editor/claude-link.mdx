@@ -100,6 +100,16 @@ A test can run up to two minutes of game time. To check the end of a level witho
 
 The game runs frame by frame for this, so the same test gives the same result every time.
 
+### Checking the whole project
+
+After a batch of changes Claude can check everything in one go: every event sheet (as strictly as when events are added), every script (with the code editor's type checker), the saved tests, and the scenes. The scene checks catch mistakes that show no error while the game runs:
+
+- **No light**: lit objects in a scene with no light get only the ambient light, so dark colors look black.
+- **No camera**: nothing of the scene shows when it plays.
+- **Falls forever**: an object with a rigidbody has nothing under it to land on. When something is below it at a different depth (a 2D level's floor at another z), both are named with where they are.
+
+Each problem comes with a short code (`event`, `script`, `test`, `scene-no-light`, `scene-no-camera`, `falls-forever`), so Claude can tell what changed between two checks. Colliders are checked in the scene open in the editor.
+
 ### Undo
 
 Changes Claude makes close together (within a minute, with nothing of yours in between) are **one undo step**, named **Claude: …** in the undo list. One **Undo** takes back a whole request.
@@ -121,7 +131,7 @@ Changes Claude makes close together (within a minute, with nothing of yours in b
 | **Scene and project** | The environment (sky, fog, light) and project settings, including the joystick and on-screen buttons. |
 | **Baked lighting** | Mark objects as static, set lights to Baked or Mixed, add light probe volumes, and run [Generate Lighting](../world/baked-lighting) (or clear it), with its settings. Mark occluders and occludees and bake [occlusion culling](../world/occlusion-culling). |
 | **Tests** | Save [gameplay tests](./tests) (keys and taps on a timeline, checks that must be true), run them and read which checks failed. |
-| **Looking** | A picture of the editor's view (as you see it, side on with the whole level in frame, or close up on the objects it names, with collider outlines when it asks), and play tests. |
+| **Looking** | A picture of the editor's view (as you see it, side on with the whole level in frame, or close up on the objects it names, with collider outlines when it asks), where each collider is in the world, play tests, and a check of the whole project. |
 
 Claude works on the scene open in the editor. When it makes a scene or moves on to another one, the editor opens that scene, so you see each change where it happens.
 

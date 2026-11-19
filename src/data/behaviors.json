@@ -69,6 +69,8 @@
       "fadeOpacity": 0.3,
       "mouseLook": false,
       "lookSpeed": 1,
+      "lockX": false,
+      "lockY": false,
       "useLimits": false,
       "limitMinX": -10,
       "limitMaxX": 10,

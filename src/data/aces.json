@@ -8239,6 +8239,205 @@
       ]
     },
     {
+      "id": "object.setComponentField",
+      "kind": "action",
+      "category": "Object",
+      "label": "Set component setting",
+      "hint": "Any setting the Inspector shows, e.g. rigidbody gravityScale or mesh material.color",
+      "display": "Set {object} {component}.{field} to {value}",
+      "displayNoObject": null,
+      "icon": "🧩",
+      "description": "Change any setting of a component, the ones the Inspector shows: pick the component, then the setting (nested ones as material.color), e.g. rigidbody gravityScale to -1 to flip gravity, collider isTrigger, light intensity. What the engine can change on a running object changes at once; anything else rebuilds the object at the end of the frame.",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "component",
+          "label": "Component",
+          "type": "choice",
+          "options": [
+            {
+              "value": "mesh",
+              "label": "mesh"
+            },
+            {
+              "value": "camera",
+              "label": "camera"
+            },
+            {
+              "value": "light",
+              "label": "light"
+            },
+            {
+              "value": "terrain",
+              "label": "terrain"
+            },
+            {
+              "value": "water",
+              "label": "water"
+            },
+            {
+              "value": "curve",
+              "label": "curve"
+            },
+            {
+              "value": "sprite",
+              "label": "sprite"
+            },
+            {
+              "value": "tilemap",
+              "label": "tilemap"
+            },
+            {
+              "value": "collider",
+              "label": "collider"
+            },
+            {
+              "value": "joint",
+              "label": "joint"
+            },
+            {
+              "value": "rigidbody",
+              "label": "rigidbody"
+            },
+            {
+              "value": "audio",
+              "label": "audio"
+            },
+            {
+              "value": "text",
+              "label": "text"
+            },
+            {
+              "value": "ui",
+              "label": "ui"
+            },
+            {
+              "value": "canvas",
+              "label": "canvas"
+            },
+            {
+              "value": "script",
+              "label": "script"
+            },
+            {
+              "value": "button",
+              "label": "button"
+            },
+            {
+              "value": "toggle",
+              "label": "toggle"
+            },
+            {
+              "value": "toggleGroup",
+              "label": "toggleGroup"
+            },
+            {
+              "value": "dropdown",
+              "label": "dropdown"
+            },
+            {
+              "value": "particles",
+              "label": "particles"
+            },
+            {
+              "value": "animator",
+              "label": "animator"
+            },
+            {
+              "value": "reflectionProbe",
+              "label": "reflectionProbe"
+            },
+            {
+              "value": "lightProbeVolume",
+              "label": "lightProbeVolume"
+            },
+            {
+              "value": "navLink",
+              "label": "navLink"
+            },
+            {
+              "value": "ragdoll",
+              "label": "ragdoll"
+            },
+            {
+              "value": "lod",
+              "label": "lod"
+            },
+            {
+              "value": "netSync",
+              "label": "netSync"
+            },
+            {
+              "value": "volume",
+              "label": "volume"
+            },
+            {
+              "value": "trail",
+              "label": "trail"
+            },
+            {
+              "value": "line",
+              "label": "line"
+            },
+            {
+              "value": "forceField",
+              "label": "forceField"
+            },
+            {
+              "value": "windZone",
+              "label": "windZone"
+            },
+            {
+              "value": "cloth",
+              "label": "cloth"
+            },
+            {
+              "value": "sight",
+              "label": "sight"
+            },
+            {
+              "value": "director",
+              "label": "director"
+            },
+            {
+              "value": "virtualCamera",
+              "label": "virtualCamera"
+            }
+          ],
+          "default": "rigidbody",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "field",
+          "label": "Setting",
+          "type": "componentField",
+          "options": null,
+          "default": "gravityScale",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "expression",
+          "options": null,
+          "default": "1",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "object.setPersist",
       "kind": "action",
       "category": "Object",
