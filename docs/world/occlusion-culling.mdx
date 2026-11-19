@@ -19,6 +19,16 @@ The bar shows how far it got; **Cancel** stops it. When it is done the card show
 
 Moved a wall or a house? Press **Bake** again. **Clear** removes the baked data, and the camera draws everything again.
 
+## See it in the scene view
+
+Turn on **Gizmos → Occlusion culling** in the 3D view (Unity's occlusion Visualization). The view then:
+
+- outlines the baked cells (a large grid shows its bottom layer and outer box),
+- outlines the cell the camera is in,
+- leaves out the objects the game would skip from there.
+
+The camera is the selected object's camera when one is selected, so you can see what the game camera culls while you look at the level from anywhere. With nothing selected, it is the view's own camera: fly around and the hidden objects come and go as the game would draw them.
+
 ## Which flag to use
 
 | Object | Occluder Static | Occludee Static |
@@ -45,7 +55,7 @@ A grid has at most 8,000 cells: past that, the bake makes the cells bigger by it
 - **Batching.** Objects with the same shape and material are usually drawn together in one call. Once a scene has occlusion data, its Occludee Static objects are drawn one by one instead, so each can be skipped.
 - **Errs on the side of drawing.** Each object is checked by the box around it, which is bigger than the object. So an object near the edge of a wall may be drawn when it is just out of sight, but never left out when part of it shows.
 - **Per camera.** The camera component has an **Occlusion Culling** switch (on by default). Turn it off for a camera that flies above the level, or to compare the draw calls with and without.
-- **The scene view** in the editor always draws everything.
+- **The scene view** in the editor draws everything, unless **Gizmos → Occlusion culling** is on (see [above](#see-it-in-the-scene-view)).
 - **Claude** can mark objects and bake through the [Claude link](../editor/claude-link) (`bake_occlusion`).
 
 ## How it is made
