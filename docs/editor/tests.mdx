@@ -82,3 +82,43 @@ Through the [Claude link](./claude-link), Claude can save tests, run them and re
 
 - *Save tests for the coins, the timer and the Play button.*
 - *Run the tests and fix whatever fails.*
+
+## From the command line
+
+`tge-test.mjs` runs a project's tests and checks without the editor on screen: in a build script, on a build server (CI), or for an AI agent that works in a terminal. It needs [Node.js](https://nodejs.org) 22 or newer and Chrome or Edge on the computer. Nothing else to install.
+
+**1. Download it.** Save [tge-test.mjs](https://editor.jeevagames.com/tge-test.mjs) next to your project.
+
+**2. Save the project as a file.** Use **☰ → Backup project (.tge)**. A [project folder](../publish/backup#project-as-a-folder-for-git-and-syncing) (unzipped, or the zip) works too.
+
+**3. Run it.**
+
+```bash
+node tge-test.mjs MyGame.tge
+```
+
+It opens the editor in a browser with no window (a fresh browser profile each time, so your own projects are never touched), runs the [project checks](./claude-link#checking-the-whole-project) (event sheets, scripts, scenes) and every saved test, and prints the results:
+
+```text
+Project "My game"
+PASS Coin pickup (ended in Level 1)
+  ✓ at the end: Score >= 1 → true
+FAIL Play button (ended in Title)
+  ✗ at the end: scenename() = "Level 1" → 2 s: false
+Checks: No problems found.
+FAILED: 1 of 2 tests passed, 0 check errors.
+```
+
+The exit code tells a script how it went: **0** everything passed, **1** a test failed or a check found an error (warnings don't count), **2** the run itself failed (no browser, not a project).
+
+| Option | What it does |
+| --- | --- |
+| `--test <name>` | Run only this test (repeat it for more). |
+| `--no-checks` | Skip the project checks. |
+| `--no-scripts` | Check sheets and scenes but don't type-check scripts. |
+| `--json` | Print the results as JSON. |
+| `--browser <path>` | The Chrome or Edge to use, when it isn't found by itself. |
+| `--show` | Show the browser window while it runs. |
+| `--timeout <s>` | Give up after this many seconds (default 600). |
+
+The tests run in the same editor and game as Play, so a test that passes in the Tests panel passes here.
