@@ -1863,6 +1863,10 @@
               "label": "Shadow picture size (512, 1024, 2048)"
             },
             {
+              "value": "shadowDistance",
+              "label": "Shadow distance (meters)"
+            },
+            {
               "value": "cascades",
               "label": "Shadow cascades (0, 2, 3, 4)"
             },
