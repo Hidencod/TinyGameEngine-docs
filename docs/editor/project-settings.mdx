@@ -48,6 +48,7 @@ Every level sets all of these:
 | --- | --- |
 | **Max pixel ratio**, **Smooth edges (antialias)**, **Shadows**, **Max particles** | As above. |
 | **Shadow picture size** | Sharpness of every light's shadow: 512, 1024 or 2048. Bigger costs more memory and time. |
+| **Shadow distance** | How far from the camera (meters) a sun's shadow reaches without cascades: High 40, Medium 30, Low 20. Shadows fade out there. Shorter is sharper. |
 | **Shadow cascades (most)** | The most cascades a sun's [Shadow cascades](../world/cameras-and-lights) may use: Off, 2, 3 or 4. Off gives a single shadow picture. |
 | **Shadowmask Mode** | For scenes baked with [Shadowmask](../world/baked-lighting#shadowmask): **Distance Shadowmask** (static objects cast realtime shadows near the camera, the bake beyond) or **Shadowmask** (static shadows only from the bake: cheaper). New projects: Distance Shadowmask on High and Medium, Shadowmask on Low. |
 | **Glow, Depth of field, Ambient occlusion, Edge smoothing, Color finish** | Whether that [screen effect](../world/post-processing#effects) may be drawn. A level can switch effects off but never adds one no volume has. *Color finish* is vignette, color fringe, saturation, contrast and colour grading. |
@@ -62,7 +63,7 @@ Every level sets all of these:
 The game starts at **Starts at quality**, or at the level the player chose last time (it is saved on the device). Let players change it with events or a script. A level is named by its **id** (lower case: `low`, `medium`, `high`, or the name you gave a new level turned into letters, like `ultra`); scripts may also use its name or its position in the list:
 
 - Event actions (group **Graphics**): *Set graphics quality*, *Set resolution scale*, *Set shadows*, *Set screen effects*, *Set max particles*, *Set antialiasing (smooth edges)*, *Set graphics option* (any single setting above: switches take 1 for on and 0 for off), and the condition *Graphics quality is*.
-- Scripts: `game.quality.level = "low"` (reads back the id of the level in force), or one setting: `game.quality.pixelRatio = 1`, `.shadows = false`, `.shadowMapSize = 512`, `.cascades = 2`, `.glow = false`, `.depthOfField = false`, `.occlusion = false`, `.edgeSmoothing = true`, `.colorFinish = true`, `.mirrors = 256`, `.glass = false`, `.lensFlares = false`, `.maxParticles = 300`. `.effects = false` switches every effect off at once.
+- Scripts: `game.quality.level = "low"` (reads back the id of the level in force), or one setting: `game.quality.pixelRatio = 1`, `.shadows = false`, `.shadowMapSize = 512`, `.shadowDistance = 25`, `.cascades = 2`, `.glow = false`, `.depthOfField = false`, `.occlusion = false`, `.edgeSmoothing = true`, `.colorFinish = true`, `.mirrors = 256`, `.glass = false`, `.lensFlares = false`, `.maxParticles = 300`. `.effects = false` switches every effect off at once.
 
 Setting a level also resets the single settings to that level. **Smooth edges (antialiasing)** can only change when the game starts, so a new value counts from the next start. Screen effects can be switched off any time, but switched on again only if the game could draw them from the start. Use **Play → fps** and its draw-call line to see what a level saves.
 
