@@ -11,6 +11,7 @@ It's one side-scrolling level that uses the [2D pieces](../world/2d-games) toget
 - [tilemaps](../world/tilemaps) with [auto tiles](../world/tilemaps#auto-tiles), [animated tiles](../world/tilemaps#animated-tiles) (lava and torches), one-way platforms and a ladder,
 - [sprites](../world/sprites) with animations, and a [polygon collider](../world/sprites#collision) for the snow slope,
 - the [Platformer](../behaviors#platformer), [Moving platform](../behaviors#moving-platform), [Wave](../behaviors#sine), [Parallax](../behaviors#parallax) and [Health](../behaviors#health) behaviors.
+- [2D lights](../world/2d-lights): dark caves lit by torches with soft shadows and glowing lava.
 
 **The rules are an event sheet: there are no code scripts.** The pictures are Kenney's *New Platformer Pack* (CC0).
 
@@ -75,6 +76,14 @@ The saw slides along the ground with **Moving platform**. The red key is at the 
 ### The camera and the backdrop
 
 The camera is orthographic (size 5) with **Camera follow**. Its limits are the level's edges, so it never shows past them. Behind the level, two hill pictures and the clouds have the **Parallax** behavior: each moves at its own share of the camera's speed, and **Wrap width** repeats them along the whole level.
+
+### Lights
+
+The caves are lit with [2D lights](../world/2d-lights). Once a scene has a Light 2D, sprites and tilemaps show only the light of 2D lights, so the outside needs light too:
+- **Daylight**: a white Freeform light, intensity 1, whose shape is everything except the caves. Its soft rim (Falloff 2 m) makes the cave mouths and roof fade into the dark.
+- **Cave air**: a dim blue Freeform light over the caves, so the dark parts stay readable.
+- **Torch light**: a warm Spot light on each torch, with **Shadows** and a little **Shadow Softness**; the **Level** tilemap is a **Shadow Caster 2D**, so the pillar and the walls cast shadows.
+- **Lava glow**: an orange Freeform light over each lava pit, its rim lighting the walls above.
 
 ### The rules
 

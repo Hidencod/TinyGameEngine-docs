@@ -175,7 +175,7 @@ ID must stay the same between versions, so keep building from the same project.
 
 ### Windows warnings {/* #windows-warnings */}
 
-The .exe is not code-signed, and every build is a new file Windows has not seen before, so players may meet a warning
+The .exe is not code-signed (you can [sign it](#code-signing)), and every build is a new file Windows has not seen before, so players may meet a warning
 or two the first time. They are normal for small games shared on itch.io or sent to friends:
 
 | Where | What it says | What to do |
@@ -185,6 +185,27 @@ or two the first time. They are normal for small games shared on itch.io or sent
 
 Uploading the .exe in a **.zip** on itch.io works the same way. If an antivirus reports the game as a threat, it is
 mistaking the packed game for something else: tell us at the Help page and we report it to the antivirus maker.
+
+### Sign your game {/* #code-signing */}
+
+A **code-signed** .exe shows your name as its publisher instead of *Unknown publisher*, and SmartScreen stops warning
+once enough players have run files signed with your certificate. You sign the .exe yourself, after building it, with a
+code-signing certificate of your own (the editor never sees it):
+
+1. Get a code-signing certificate from a certificate authority (for example Certum, Sectigo, DigiCert or SSL.com), or
+   use a signing service such as Azure Trusted Signing. Certificates for individuals are sold too.
+2. Build the game (**Single .exe** or **Folder**).
+3. Sign the .exe with Microsoft's `signtool` (it comes with the Windows SDK):
+
+```
+signtool sign /f my-certificate.pfx /p <password> /fd SHA256 /tr http://timestamp.digicert.com /td SHA256 My-Game.exe
+```
+
+With a certificate on a USB key or in a cloud service, follow its maker's steps instead: the command is the same apart
+from how the certificate is chosen. `/tr` adds a timestamp, so the signature stays valid after the certificate expires.
+
+Both outputs can be signed: a **Single .exe** keeps the game inside it (the signature covers it too), and a **Folder**
+build's .exe is signed on its own. Sign after every build: a new build is a new file.
 
 ## Linux and Steam Deck {/* #linux */}
 
