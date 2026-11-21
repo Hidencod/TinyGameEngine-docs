@@ -165,6 +165,25 @@ Tap a piece in the grid to go back to it, and **Done** when all are filled. Each
 
 How it works: a cell belongs to a set when its tile is one of the set's pieces. Each cell looks at its four neighbours (up, right, down, left) that belong to the same set and picks its piece from that. So you can also **Draw** a piece by hand, **Erase** or **Fill**, and the neighbouring pieces update. A tile that is not a piece of any set is never changed. In events and scripts, *Erase tile* / `removeTile` and `setTile` also update the pieces next to the changed cell, so digging a hole in the ground leaves rounded edges.
 
+### Rule tiles
+
+A **rule tile** (Unity's Rule Tile) is an auto tile you write the rules for: any number of pieces, inner corners, slopes, or a random pick from a few tiles so a long floor doesn't repeat.
+
+![A hilly ground painted with one rule tile: every edge and corner piece was picked by its rules](/img/shots/rule-tiles-game.webp)
+
+Tap **＋ Rule tile**, pick its **Default** tile (the one a cell shows when no rule matches) and name it. Then **＋ Rule** adds a rule. Each rule is a 3 × 3 grid round the tile it gives:
+
+- tap a square to cycle what that neighbour must be: nothing (anything goes), a green **arrow** (this rule tile is there), a red **✕** (it isn't: empty, or another tile);
+- tap the tile strip next to the grid to choose the tile the rule gives. Choose several and each cell gets one of them at random; a cell keeps its pick when you paint round it.
+
+The rules are checked **top to bottom** and the first one that matches wins, so put the most particular ones first (a corner, *nothing above and nothing left*, before an edge, *nothing above*). Use ↑ ↓ to reorder, ⧉ to copy a rule and 🗑 to delete it.
+
+![The Ground selected: its rule tile's Default and the rules for the corners and edges](/img/shots/rule-tiles-editor.webp)
+
+Rules look at all eight neighbours, so diagonals count: an inner corner is *this above, this on the left, not this up-left*. Every tile a rule gives belongs to the rule tile, so cells painted with it count as **this** for their neighbours.
+
+In data (scripts, Set component, the AI assistant), a rule tile is an auto tile set with `kind: "rule"`, `tiles` = the Default first, and `rules: [{ match: [up-left, up, up-right, left, right, down-left, down, down-right], tiles: [...] }]`, where 0 = anything, 1 = this, 2 = not this.
+
 ## Animated tiles
 
 Water, torches, lava, blinking lights: a tile can play a short animation. The frames are tiles of the same sheet, so there is nothing new to draw.
