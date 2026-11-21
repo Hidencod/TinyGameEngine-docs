@@ -47,6 +47,8 @@ The bake lays a grid of cells over the static objects (4 m by default) and works
 - **Smaller cells** skip more, as each cell sees less, but the bake takes longer and the data is bigger.
 - **Bigger cells** bake faster, for big outdoor scenes.
 
+The grid also takes in where each camera of the scene starts, when that is up to 50 m from the static objects, so a game that starts on a road outside town is culled from its first frame. A camera that starts further out is left out, and the bake says so with a message; move it closer or leave it, as it is culled as soon as it comes into the grid.
+
 A grid has at most 8,000 cells: past that, the bake makes the cells bigger by itself, and the card shows the size it used. Outside the grid (the camera high above the level, say) everything is drawn.
 
 ## Good to know
