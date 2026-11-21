@@ -71,6 +71,8 @@ The grid covers the static objects and where the camera starts. With the whole m
 
 The 170 forest trees round the town are not occludees. Occludees are drawn one by one so each can be skipped, but trees that are never hidden are better drawn **batched**: a few draw calls for all of them. Their trunk colliders have a **Static** Physics body, which batches like a plain collider.
 
+The houses and street trees are drawn one by one on screen, but their shadows are batched: the 43 houses are 11 models, so each cascade makes at most 11 draw calls for their shadows instead of 43.
+
 The roads and the ground don't cast shadows (**Cast shadows** off): a flat strip's shadow is never seen, and every caster is drawn again in each cascade.
 
 ### GPU particles

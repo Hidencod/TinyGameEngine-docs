@@ -54,7 +54,7 @@ A grid has at most 8,000 cells: past that, the bake makes the cells bigger by it
 ## Good to know
 
 - **Shadows stay.** A skipped object still casts its shadow, so a building behind you still shades the street in front of you.
-- **Batching.** Objects with the same shape and material are usually drawn together in one call. Once a scene has occlusion data, its Occludee Static objects are drawn one by one instead, so each can be skipped.
+- **Batching.** Objects with the same shape and material are usually drawn together in one call. Once a scene has occlusion data, its Occludee Static objects are drawn one by one instead, so each can be skipped. Their shadows are still drawn together: copies of the same shape share one shadow draw call per shadow picture (each cascade of the sun is one), even when baked lighting gave each its own light map.
 - **Errs on the side of drawing.** Each object is checked by the box around it, which is bigger than the object. So an object near the edge of a wall may be drawn when it is just out of sight, but never left out when part of it shows.
 - **Per camera.** The camera component has an **Occlusion Culling** switch (on by default). Turn it off for a camera that flies above the level, or to compare the draw calls with and without.
 - **The scene view** in the editor draws everything, unless **Gizmos → Occlusion culling** is on (see [above](#see-it-in-the-scene-view)).
