@@ -43,6 +43,15 @@ Tap **⋮** on a scene:
 
 Use the actions **Go to scene** and **Restart scene** (System category). *On end of scene* runs just before a scene is left. To play from the scene you are editing instead of the start scene, use **☰ → Run this scene**.
 
+### What is ready when a scene appears
+
+A scene appears once its models, pictures and sounds have loaded (the current scene keeps running meanwhile, or a loading screen scene shows progress). Its shaders are compiled in its first frame, which is behind the loading screen when the game starts:
+- everything in the scene, also objects that are off screen, hidden, or hidden by [occlusion culling](../world/occlusion-culling);
+- every prefab, so a spawned copy draws at once;
+- the particle effects your events and scripts spawn (**Spawn particles** with an effect such as *sparkle*).
+
+So nothing stops the game to compile a shader the first time it comes into view (Unity calls this warming up shaders).
+
 ## Keep an object across scenes
 
 Select an object and switch on **Keep across scenes** (next to Visible and Active), or use the **Keep across scenes** action, or `entity.persist = true` in a script. When the game goes to another scene, that object comes along instead of being made again: with its children, **where it is now** and its variables. A score display, a music player or the hero that travels between levels.
