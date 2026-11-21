@@ -1,0 +1,63 @@
+---
+title: Sprite Shape
+description: "Draw 2D ground along a curve, like Unity's Sprite Shape: rolling hills and round islands with grass on top, a rim on the sides, a picture filling the inside, and a collider that follows the outline."
+---
+
+# Sprite Shape
+
+Tiles are square. For rolling hills, round floating islands or a bendy ledge, draw the ground along a **curve** instead. A **Sprite Shape** (Unity's Sprite Shape) puts pictures on the curve's outline:
+- the **fill** covers the inside of a closed curve, with a colour or a repeated picture;
+- **edge** pictures run along the outline, and which one is used depends on the way each part faces: grass where it faces up, a rock rim on the sides and below;
+- with a **Collider**, the collider follows the outline, so players and balls walk and roll along the hills.
+
+![A hilly island, a floating island and an open ledge drawn with Sprite Shapes; wheels roll down the slopes](/img/shots/sprite-shape-game.webp)
+
+## Add one
+
+**Objects → ＋ Add**, under **Sprites**: **Sprite Shape**. You get a closed curve filled with a colour, and a Collider. Tap **2D** in the 3D view's toolbar, then drag the curve's points to shape the ground: double-tap the line to add a point, select a point and press Delete to remove one (see [Curve](./curve)).
+
+A Sprite Shape uses the **Curve** on the same object, in its X / Y plane (Z is ignored). An object without one shows **＋ Curve** in the Sprite Shape card.
+
+## Fill
+
+**Fill** is **Colour**, **Picture** or **None**. A picture repeats across the shape; **Fill size** is how many metres one picture covers. Only a **closed** curve has an inside to fill (turn on **Closed loop** in the Curve card).
+
+## Edges
+
+![The Island selected: its curve points, fill picture and two edge ranges](/img/shots/sprite-shape-editor.webp)
+
+Each **edge range** is a picture and two angles. The angle is the way a part of the outline faces: **0** = up, **90** = right, **180** = down, **−90** (or 270) = left. A part uses the first range that holds its angle, so:
+
+| Range | Picture |
+| --- | --- |
+| −55 … 55 | grass (the parts facing up and a bit to the sides) |
+| 55 … 305 | earth rim (the sides and the bottom) |
+
+**＋ Edge range** adds one; 🗑 removes one. A part that no range holds has no edge.
+
+- An edge picture is drawn **sideways along the line**: its **top** faces out, its bottom faces in, and it repeats along the line at its own width / height. A strip of grass cut from a tile works well.
+- **Edge height** is how thick the strip is, in metres.
+- **Edge inside** is how much of the strip lies inside the outline: 0 = all outside, 0.5 = centred on the line, 1 = all inside.
+
+An **open** curve (Closed loop off) has no inside: only its edges are drawn, and its outside is **up** when the line runs left to right. That makes a ledge or a vine bridge.
+
+## Look
+
+- **Tint** and **Opacity** colour the pictures.
+- **Order in layer** draws it in front of (higher) or behind (lower) sprites and tilemaps where they overlap.
+- **Filter**: **Smooth** blends the pictures; **Pixel** keeps hard pixels for pixel art.
+- **Material**: **Lit** shows [2D lights](./2d-lights); **Unlit** leaves it as it is.
+- **Detail** is how many points each part of the curve is cut into; more is smoother.
+
+## Collider
+
+Give the object a **Collider** with the shape **Auto** (the menu item does). Its outline is the curve's:
+- **Offset** moves the collider's edge out (+) or in (−) from the line, to match where the grass looks solid;
+- an **open** curve's collider is a band under the line, **Thickness** metres thick;
+- **Depth** is how deep it is along Z.
+
+A Sprite Shape with a **Shadow Caster 2D** blocks [2D lights](./2d-lights#shadows) with the same outline.
+
+## Coming from Unity
+
+Unity's Sprite Shape Profile holds the angle ranges and the fill; here they are on the component itself. Corner sprites and per-point edge picture choices are not there yet. The spline is the object's Curve, so its points, handle types and Closed loop setting are the Curve card's.
