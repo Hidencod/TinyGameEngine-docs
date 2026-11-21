@@ -843,6 +843,14 @@
       "description": "Speed (length of velocity)"
     },
     {
+      "name": "jointAngle",
+      "description": "Hinge Joint: angle in degrees from where it started (slider: metres moved)"
+    },
+    {
+      "name": "jointSpeed",
+      "description": "Hinge or wheel Joint: turning speed in degrees per second (slider: metres per second)"
+    },
+    {
       "name": "count",
       "description": "Number of these objects in the scene"
     },
@@ -997,6 +1005,8 @@
     "vy",
     "vz",
     "speed",
+    "jointAngle",
+    "jointSpeed",
     "worldX",
     "worldY",
     "worldZ",

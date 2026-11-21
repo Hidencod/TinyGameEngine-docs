@@ -3434,6 +3434,14 @@
               "label": "speed"
             },
             {
+              "value": "jointAngle",
+              "label": "jointAngle"
+            },
+            {
+              "value": "jointSpeed",
+              "label": "jointSpeed"
+            },
+            {
               "value": "worldX",
               "label": "worldX"
             },
@@ -6543,10 +6551,69 @@
       "kind": "action",
       "category": "Physics",
       "label": "Break joint",
-      "hint": "Cut its Joint (rope snaps, door torn off)",
+      "hint": "Cut its Joints (rope snaps, door torn off)",
       "display": "Break {object} joint",
       "displayNoObject": null,
       "icon": "✂️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.setJointMotor",
+      "kind": "action",
+      "category": "Physics",
+      "label": "Set joint motor",
+      "hint": "Drive its hinge, slider or wheel Joints",
+      "display": "Drive {object} joint motor at {speed} (force {force})",
+      "displayNoObject": null,
+      "icon": "⚙️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "speed",
+          "label": "Speed (°/s, slider m/s)",
+          "type": "number",
+          "options": null,
+          "default": "90",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "force",
+          "label": "Max force",
+          "type": "number",
+          "options": null,
+          "default": "1000",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.stopJointMotor",
+      "kind": "action",
+      "category": "Physics",
+      "label": "Stop joint motor",
+      "hint": "Let its Joints turn freely",
+      "display": "Stop {object} joint motor",
+      "displayNoObject": null,
+      "icon": "⏹️",
       "description": "",
       "isTrigger": false,
       "objectRequired": true,
@@ -8404,6 +8471,14 @@
             {
               "value": "sight",
               "label": "sight"
+            },
+            {
+              "value": "light2d",
+              "label": "light2d"
+            },
+            {
+              "value": "shadowCaster2d",
+              "label": "shadowCaster2d"
             },
             {
               "value": "director",

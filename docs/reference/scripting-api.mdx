@@ -93,7 +93,11 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `setVelocity(x, y, z)` | `void` | Set physics velocity. |
 | `setSpin(x, y, z)` | `void` | Set how fast it spins, in degrees per second around the world X, Y and Z axes. |
 | `applyImpulse(x, y, z)` | `void` | Instant push, e.g. a jump: applyImpulse(0, 5, 0) |
-| `breakJoint()` | `void` | Cut this object's Joint component (a rope snaps, a door is torn off). |
+| `breakJoint(index?: number)` | `void` | Cut this object's Joint components, or the one at index (0 = the first): a rope snaps, a door is torn off. |
+| `setJointMotor(speed: number, force?: number, index?: number)` | `void` | Drive its hinge, slider or wheel Joints: degrees per second (metres per second for a slider), positive = counter-clockwise; force = the most it pushes. |
+| `stopJointMotor(index?: number)` | `void` | Turn the joint motor off: it turns or slides freely again. |
+| `getJointAngle(index?: number)` | `number` | Hinge: angle in degrees from where it started; slider: metres moved. |
+| `getJointSpeed(index?: number)` | `number` | Hinge / wheel: turning speed in degrees per second; slider: metres per second. |
 | `applyForce(x, y, z)` | `void` | Continuous push (call every frame). |
 | `isOnGround()` | `boolean` | True if a dynamic body rests on something. |
 | `setColor(hex)` | `void` | Change material color, e.g. setColor("#ff0000") |

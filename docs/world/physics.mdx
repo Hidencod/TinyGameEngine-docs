@@ -1,6 +1,6 @@
 ---
 title: Physics
-description: Colliders, physics bodies (dynamic, static, kinematic), triggers, collisions and forces.
+description: Colliders, physics bodies (dynamic, static, kinematic), joints and motors, triggers, collisions and forces.
 ---
 
 # Physics
@@ -86,6 +86,54 @@ In scripts and with Set component: `collider { shape: "polygon", points: [[x, y]
 | **Freeze X / Y / Z** | (Dynamic) The body cannot move along that axis, like Unity's Freeze Position. Freeze **Z** to keep a body in one plane for a [2D game](./2d-games). |
 
 The world’s gravity is set in [Project settings](../editor/project-settings) (Earth: 0, −9.82, 0).
+
+## Joints {/* #joint */}
+
+A **Joint** component ties this object's physics body to another one, or to the world, like Unity's joints: doors on hinges, a lamp on a chain, a rope bridge, a lift on a rail, a car's wheels. Both objects need a Physics body (the connected one may be static).
+
+![A little car on two Wheel joints crossing a rope bridge of planks tied together by Hinge joints](/img/shots/joints-2d-game.webp)
+
+| Kind | Ties them so that… |
+| --- | --- |
+| **Fixed** | they move as one (welded). |
+| **Hinge** | this object turns around **Axis** through the **Anchor**: doors, levers, pendulums, bridge planks, a spinning platform. In 2D keep the axis at Z (0, 0, 1). |
+| **Ball** | it swings every way around the anchor: a wrecking ball, a chain link in 3D. |
+| **Slider** | it only slides along **Axis**: a lift, a piston, a sliding door. |
+| **Spring** | the two anchors are pulled to **Rest length** apart, with **Stiffness** and **Damping**. |
+| **Rope** | the anchors can't get further apart than **Length** (0 = however far apart they start), but can come closer. |
+| **Wheel (2D)** | Unity's Wheel Joint 2D. It goes on the **car body**, with the wheel as **Connected to**: the wheel spins freely around Z and rides a spring along the **Suspension angle**. |
+
+| Field | What it does |
+| --- | --- |
+| **Connected to** | The other object, or **(the world)**: held where it is when the game starts. |
+| **Anchor** | Where on this object the joint is, in its own space (before its scale counts: (0.5, 0, 0) on an object 2 wide is its right end). For a Wheel, where the wheel's centre is on the car. |
+| **Anchor on other** / **World point** | Spring and Rope: the other end, on the connected object or in the world. |
+| **Axis** | Hinge and Slider: what it turns around or slides along, in this object's space. |
+| **Limits**, **Min / Max** | Hinge: the angles it can turn between (degrees). Slider: how far it can slide (metres). |
+| **Suspension angle** | Wheel: the direction the wheel moves up and down along, in the car's X/Y (90 = straight up). |
+| **Frequency**, **Damping ratio** | Wheel: how stiff the suspension is (bounces per second) and how quickly it stops bouncing (0 = keeps bouncing, 1 = no bounce). |
+| **Use motor**, **Motor speed**, **Max motor force** | Hinge, Slider, Wheel: a motor drives it at the speed (degrees per second; Slider: metres per second) with at most this force (N·m to turn, N to slide). Positive turns counter-clockwise around the axis (Wheel: the wheel). A weak motor stalls under a heavy load. |
+| **Connected collide** | Whether the two objects still bump into each other. |
+
+![The Car selected in the 2D view: two Wheel joints, one per wheel, and the line each wheel rides on](/img/shots/joints-2d-editor.webp)
+
+Selected, an object shows its joints in the scene view: the anchor (orange), the other end (cyan), the axis, limits and suspension line (purple).
+
+### Several joints on one object
+
+**+ Add component** → **Joint** can be added more than once. A rope bridge is a row of planks, each with a Hinge to the plank before it (the first one to the world, at the left bank); the last plank has two Hinges, one to its neighbour and one to the world at the right bank. A car body carries one Wheel joint per wheel.
+
+### Joints in events and scripts
+
+| Action | What it does |
+| --- | --- |
+| **Break joint** | Cuts the object's joints: the rope snaps, the door comes off. They stay cut. |
+| **Set joint motor** | Drives its Hinge, Slider and Wheel joints at **Speed** with at most **Max force** (turns the motor on). A speed of 0 holds them still: a brake. |
+| **Stop joint motor** | Lets them turn or slide freely again. |
+
+`Object.jointAngle` is a Hinge's angle from where it started (−180 to 180; Slider: metres moved) and `Object.jointSpeed` how fast it turns (degrees per second). A 2D car driven by the joystick is one event: **Every tick** → **Set joint motor** on the car, speed `-joystickX * 720` (right is clockwise, so negative).
+
+In scripts: `car.setJointMotor(-720, 60)`, `car.stopJointMotor()`, `door.getJointAngle()`, `door.getJointSpeed()`, `rope.breakJoint()`. Each takes an optional joint number last (0 = the first Joint component) to act on one joint only.
 
 ## Collisions in events
 

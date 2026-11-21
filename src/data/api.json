@@ -228,9 +228,37 @@
         {
           "name": "breakJoint",
           "kind": "method",
-          "sig": "()",
+          "sig": "(index?: number)",
           "type": "void",
-          "doc": "Cut this object's Joint component (a rope snaps, a door is torn off)."
+          "doc": "Cut this object's Joint components, or the one at index (0 = the first): a rope snaps, a door is torn off."
+        },
+        {
+          "name": "setJointMotor",
+          "kind": "method",
+          "sig": "(speed: number, force?: number, index?: number)",
+          "type": "void",
+          "doc": "Drive its hinge, slider or wheel Joints: degrees per second (metres per second for a slider), positive = counter-clockwise; force = the most it pushes."
+        },
+        {
+          "name": "stopJointMotor",
+          "kind": "method",
+          "sig": "(index?: number)",
+          "type": "void",
+          "doc": "Turn the joint motor off: it turns or slides freely again."
+        },
+        {
+          "name": "getJointAngle",
+          "kind": "method",
+          "sig": "(index?: number)",
+          "type": "number",
+          "doc": "Hinge: angle in degrees from where it started; slider: metres moved."
+        },
+        {
+          "name": "getJointSpeed",
+          "kind": "method",
+          "sig": "(index?: number)",
+          "type": "number",
+          "doc": "Hinge / wheel: turning speed in degrees per second; slider: metres per second."
         },
         {
           "name": "applyForce",
