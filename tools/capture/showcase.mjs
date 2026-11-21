@@ -36,6 +36,7 @@ const GAMES = [
   { module: 'netBalls', slug: 'ball-arena', shots: ballArenaShots, expect: 'Ball Arena' },
   { module: 'fireflyGrove', slug: 'firefly-grove', shots: fireflyGroveShots, expect: 'Fireflies: 0 / 8' },
   { module: 'sunTemple', slug: 'sun-temple', shots: sunTempleShots, expect: 'Sun shards: 0 / 3' },
+  { module: 'valleyPost', slug: 'valley-post', shots: valleyPostShots, expect: 'Parcels: 0 / 6' },
 ];
 
 const filter = process.argv.slice(2).filter((a) => !a.startsWith('--'));
@@ -278,6 +279,44 @@ async function sunTempleShots({ page, shot, tge, module }) {
   await page.locator('.hm-card, .hm-continue', { hasText: 'Sun Temple' }).first().click({ timeout: 60000 });
   await page.waitForSelector('.editor.desktop', { timeout: 60000 });
   await page.waitForTimeout(6000);
+  await shot('editor');
+}
+
+async function valleyPostShots({ page, shot, tge, module }) {
+  // The town bakes its lighting and occlusion while it is built (about a minute and a half).
+  await page.goto(`${TGE}/showcase/dev.html?game=${module}`, { timeout: 120000 });
+  await page.waitForFunction(() => window.__tgeReady, null, { timeout: 300000 });
+  await page.waitForTimeout(3000);
+  await shot('start');
+  await page.getByText('Start', { exact: true }).first().click({ force: true });
+  await page.waitForFunction(() => window.__tgeGame.getVar('Started') === 1, null, { timeout: 20000 });
+  // Down the top street on the keyboard, past the first mailbox.
+  await page.keyboard.down('KeyW');
+  await page.waitForTimeout(2600);
+  await page.keyboard.up('KeyW');
+  await page.waitForTimeout(1200);
+  await shot('play');
+  // The van put down by hand; the camera follows behind it.
+  const visit = async (name, x, z, yaw) => {
+    await page.evaluate(([x, z, yaw]) => { const p = window.__tgeGame.find('Player'); p.setPosition(x, 0.8, z); p.setRotation(0, yaw, 0); }, [x, z, yaw]);
+    await page.waitForTimeout(2500);
+    await shot(name);
+  };
+  await visit('square', 20, 8, 90);
+  await visit('street', 20, -70, 180);
+  // Every parcel delivered, then the post office.
+  await page.evaluate(() => window.__tgeGame.setVar('Delivered', 6));
+  await page.evaluate(() => { const p = window.__tgeGame.find('Player'); p.setPosition(2, 0.8, 63); p.setRotation(0, 90, 0); });
+  await page.waitForFunction(() => window.__tgeGame.getVar('Won') === 1, null, { timeout: 20000 });
+  await page.waitForTimeout(2500);
+  await shot('win');
+  // The project in the editor.
+  await page.goto(TGE + '/', { timeout: 120000 });
+  await page.waitForSelector('.hm', { timeout: 30000 });
+  await importTge(page, tge);
+  await page.locator('.hm-card, .hm-continue', { hasText: 'Valley Post' }).first().click({ timeout: 60000 });
+  await page.waitForSelector('.editor.desktop', { timeout: 60000 });
+  await page.waitForTimeout(8000);
   await shot('editor');
 }
 

@@ -1,0 +1,111 @@
+---
+title: Valley Post
+description: Drive a post van round a small town in the late afternoon. A big outdoor level that uses cascaded sun shadows, baked lighting with a Distance Shadowmask, occlusion culling and GPU particles together. Play it in your browser, then open the project and see how it works.
+---
+
+# Valley Post
+
+Drive the post van round a small town in the late afternoon. Six houses are waiting for a parcel: each has a red mailbox by the street with a beam of light over it. Drive past every mailbox, then back to the post office, as fast as you can.
+
+It's a big outdoor level (44 houses, about 200 trees, a meadow and a square with a fountain) that uses the graphics features for open worlds together:
+- [cascaded sun shadows](../world/cameras-and-lights#shadow-cascades),
+- [baked lighting](../world/baked-lighting) with a Distance Shadowmask,
+- [occlusion culling](../world/occlusion-culling),
+- [GPU particles](../world/particles#gpu-particles).
+
+**The rules are an event sheet: there are no code scripts.**
+
+<PlayEmbed
+  src="https://hidencod.github.io/tge-assets/showcase/valley-post/"
+  poster="/img/showcase/valley-post-play.webp"
+  title="Valley Post"
+  size="4.7 MB"
+/>
+
+**Controls:** press **Start**, then the joystick drives the van: up is gas, down is brake, left and right steer (**WASD** or the **arrow keys** on a computer).
+
+![The start screen says what to do](/img/showcase/valley-post-start.webp)
+
+## Open it in the editor
+
+1. Download **[valley-post.tge](https://hidencod.github.io/tge-assets/showcase/valley-post/valley-post.tge)** (3.3 MB).
+2. Open the editor: **[editor.jeevagames.com](https://editor.jeevagames.com)** on a computer, or the Android app.
+3. On the home screen tap **Import .tge** and pick the file, then open **Valley Post (imported)**.
+4. Press **▶ Play**. The light and the occlusion data are already baked: **Scene** tab → **Lighting** → **Generate Lighting** bakes the light again, and **Occlusion** → **Bake** the occlusion.
+
+![Valley Post in the editor](/img/showcase/valley-post-editor.webp)
+
+## How it works
+
+### Sun shadows: cascades and a Distance Shadowmask
+
+The sun is a low, warm directional light with **Mode: Mixed** and **Cascades** 3. Its shadow is cut into three shadow pictures of growing size, so it's sharp by the van and still there far down the street.
+
+How far realtime shadows reach is the quality level's **Shadow distance** (**Project settings → Quality**): 90 m on High (3 cascades, 2048 px pictures) and 60 m on Medium (2 cascades).
+
+The houses, roads, square and ground are static (**Contribute GI** on), and the scene's **Lighting Mode** is **Shadowmask**. **Generate Lighting** bakes their light and soft shadows into a light map, and the sun's shadows from static objects into a shadowmask. With **Distance Shadowmask** (the High and Medium levels' Shadowmask Mode):
+- **Near the camera** the shadows are realtime, so the moving van casts one too.
+- **Past the Shadow distance** the baked shadows take over, so the far side of town keeps its shadows.
+
+| Lighting setting | Value | Why |
+| --- | --- | --- |
+| Lightmap resolution | 1.5 texels per metre | A big level: one 2048 px light map for the town. The ground has a **Scale in lightmap** of 0.2, the roads 0.5 and the houses 0.6. |
+| Bounces | 1 | Enough for the light the lawns throw onto the house walls. |
+| Lighting Mode | Shadowmask | Baked shadows past the Shadow distance. |
+
+It bakes in about 7 seconds on a laptop's graphics card.
+
+![Down a street: realtime shadows by the van, baked ones further off](/img/showcase/valley-post-street.webp)
+
+### Light probes for what moves and what is leafy
+
+The van moves, and leafy tree models take a light map badly, so neither is static. A **Light probe volume** (*Light probes*, 240 × 240 m, a probe every 8 m) covers the town. Generate Lighting bakes the light at each probe, and the van and the trees take their light from the probes nearest them.
+
+The forest trees and rocks have **Model style: Matte** (**Shape & look**): flat colors, and cheaper to draw for 170 trees.
+
+### Occlusion culling
+
+The houses are **Occluder Static** (they hide what is behind them) and **Occludee Static** (they can be hidden), and so are the street trees and the post office. **Occlusion → Bake** works out what can be seen from each part of the town. The game then skips the houses and trees behind the ones in front of the camera. The stats line at the top left of the game view (and the [Profiler](../editor/profiler)) shows how many are skipped each frame.
+
+The grid covers the static objects and where the camera starts. With the whole meadow in it, the bake makes its cells 5 m instead of 4 to stay under 8,000 cells, and it takes about a minute.
+
+The 170 forest trees round the town are not occludees. Occludees are drawn one by one so each can be skipped, but trees that are never hidden are better drawn **batched**: a few draw calls for all of them.
+
+### GPU particles
+
+Two effects run on the graphics card (**Particles → Simulate On: GPU**):
+- **The fountain** in the square throws 9,000 drops a second (up to 20,000 at once).
+- **The seeds** drift over the meadow (up to 40,000, in a 200 × 200 m box).
+
+The chimney smoke is a few dozen ordinary CPU particles.
+
+![The square with the fountain](/img/showcase/valley-post-square.webp)
+
+### The van and the camera
+
+The van is the library's delivery van with a box collider and the **Car** behavior (speed 16, Driver: Manual). The camera has **Camera follow** with **Stay behind** and **Avoid walls**, and a **Far** of 400 m so the forest shows from anywhere in town.
+
+### The rules
+
+- **On clicked** `StartButton`: hide the start screen, show the hint line, `Started` = 1.
+- While `Started` = 1 and until you win: the joystick drives the van (**Car** input) and `dt` is added to `Time`.
+- **On collision** with `#drop` (the mailboxes: each is a trigger box that reaches across the street): sparkle, **Play sound** `Coin`, destroy it, add 1 to `Delivered`. Its beam of light is a child object, so it goes with it.
+- **On collision** with `Depot` (an invisible trigger in front of the post office) when `Delivered ≥ 6`: `Won` = 1, stop the van, **Play sound** `Win`, confetti, show the win screen.
+
+![Every parcel delivered](/img/showcase/valley-post-win.webp)
+
+### Saved tests
+
+The project has three [saved gameplay tests](../editor/tests) (**Tests** panel):
+- **Start screen waits:** the van doesn't move before Start.
+- **First mailbox on the way:** Start, then hold gas down the top street; one parcel, and no win when passing the post office empty-handed.
+- **Post office with every parcel wins.**
+
+They also run from the command line: `node tge-test.mjs valley-post.tge` (see [From the command line](../editor/tests#from-the-command-line)).
+
+## Make it yours
+
+- Turn the *Sun* object, then **Generate Lighting**: the baked shadows follow.
+- Set the quality level to **Low** (no cascades, 20 m) while you play, and watch the realtime shadows stop near the van while the baked ones carry on.
+- Turn **Occlusion Culling** off on the camera and compare the draw calls in the stats line.
+- Move a mailbox to another house, and give it the tag `drop`.
