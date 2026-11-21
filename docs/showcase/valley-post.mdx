@@ -83,7 +83,7 @@ The chimney smoke is a few dozen ordinary CPU particles.
 
 ### The van and the camera
 
-The van is the library's delivery van with a box collider and the **Car** behavior (speed 16, Driver: Manual). The camera has **Camera follow** with **Stay behind** and **Avoid walls**, and a **Far** of 400 m so the forest shows from anywhere in town.
+The van is the library's delivery van with a box collider and the **Car** behavior (speed 16, Driver: Manual). The forest trees have a box collider round their trunk, and a ring of invisible walls (*Edge*) just past the forest keeps the van on the ground. The camera has **Camera follow** with **Stay behind** and **Avoid walls**, and a **Far** of 400 m so the forest shows from anywhere in town.
 
 ### The rules
 
@@ -96,10 +96,11 @@ The van is the library's delivery van with a box collider and the **Car** behavi
 
 ### Saved tests
 
-The project has three [saved gameplay tests](../editor/tests) (**Tests** panel):
+The project has four [saved gameplay tests](../editor/tests) (**Tests** panel):
 - **Start screen waits:** the van doesn't move before Start.
 - **First mailbox on the way:** Start, then hold gas down the top street; one parcel, and no win when passing the post office empty-handed.
 - **Post office with every parcel wins.**
+- **The van stays in the valley:** hold gas from the start for 15 seconds, out past the end of the street; the van never falls off the ground.
 
 They also run from the command line: `node tge-test.mjs valley-post.tge` (see [From the command line](../editor/tests#from-the-command-line)).
 
