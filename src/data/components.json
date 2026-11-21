@@ -184,6 +184,16 @@
       "icon": "👀",
       "title": "Sight",
       "desc": "What this object can see: how far, how wide and from where (guards, turrets). The Sees condition uses it"
+    },
+    "light2d": {
+      "icon": "🔆",
+      "title": "Light 2D",
+      "desc": "Lights sprites and tilemaps in 2D: Global for the whole scene, Spot for a circle or cone round the object, with falloff, a glow in the air and shadows"
+    },
+    "shadowCaster2d": {
+      "icon": "🌓",
+      "title": "Shadow Caster 2D",
+      "desc": "Makes the object block 2D lights that have Shadows on; its shape is its collider's shape"
     }
   }
 }

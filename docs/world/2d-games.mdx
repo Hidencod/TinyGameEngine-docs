@@ -57,6 +57,10 @@ Side view also works with a 3D model hero: the model turns to face left or right
 
 Put the **Moving platform** [behavior](../behaviors#moving-platform) on an object with a Collider: it slides between its start and a distance you set, pauses at each end, and carries whatever stands on it. A small tilemap of three one-way platform tiles makes a good one; the 2D Platformer template has one over the wide gap.
 
+## Lights and shadows
+
+A dark cave lit by torches, a night street under lamps: add **Global Light 2D** and **Spot Light 2D** objects and **Shadow Caster 2D** components. See [2D lights](./2d-lights).
+
 ## Build a level
 
 Paint it with a [tilemap](./tilemaps) (use [auto tiles](./tilemaps#auto-tiles) so the edges and corners fit by themselves): grass and earth for the ground, a few wooden tiles for stepping stones, and **gaps** for the player to jump. Put pickups, enemies and the goal on top as sprites. Falling off the bottom is an event: *Player y < −8 → Restart scene* (the template does this).

@@ -1,0 +1,68 @@
+---
+title: 2D lights
+description: Light sprites and tilemaps with Unity-style Light 2D: a Global light for the whole scene, Spot lights round torches and lamps, cones, soft falloff, a glow in the air, and hard shadows from Shadow Caster 2D objects.
+---
+
+# 2D lights
+
+Sprites and tilemaps normally show their pictures as they are. Add a **Light 2D** to a scene and they are lit instead, as with Unity's 2D renderer:
+- a dark cave lit by torches;
+- a night street under lamps;
+- a spotlight sweeping a prison yard.
+
+![A cave room: a dim blue Global light, two torches and a cone from the ceiling, with shadows](/img/shots/2d-lights-game.webp)
+
+## Add a light
+
+**+ Add** → **Lights**:
+- **Global Light 2D** lights everything the same. Use one, dim and a little blue, so the dark parts of a level stay visible.
+- **Spot Light 2D** lights a circle round itself, or a cone. Put one on each torch, lamp or window.
+
+As soon as a scene has a Light 2D, its sprites and tilemaps show **only** the light of its 2D lights: where no light reaches is black. Lights add up, so two torches side by side make a brighter patch.
+
+3D meshes, particles and UI are not affected: 3D meshes keep using the [3D lights](./cameras-and-lights#lights).
+
+## Light 2D settings
+
+| Setting | What it does |
+| --- | --- |
+| **Light Type** | **Global**: the whole scene. **Spot**: round the object (Unity's name for the round light). |
+| **Color**, **Intensity** | The light's colour and how strong it is. Above 1 makes things brighter than their picture. |
+| **Inner Radius** | Full light out to here (metres). |
+| **Outer Radius** | No light from here on. Between the two, the light fades out. |
+| **Inner Angle**, **Outer Angle** | 360 = all round. Lower makes a cone: full light inside the inner angle, fading out to the outer one. The cone points along the object's up: turn the object (rotation **Z**) to aim it, 180 points down. |
+| **Falloff Strength** | How quickly the light fades between the radii: 0 stays bright to the edge, 1 fades fast. |
+| **Shadows**, **Shadow Strength** | Shadow Caster 2D objects block the light (see below). At 1 none of this light gets into the shadow; at 0.5 half does. |
+| **Volumetric Intensity** | The light also shows in the air, over everything: the haze round a torch or the beam of a lamp. 0 = off. |
+
+![The Ceiling light selected: its cone (outer and inner) is drawn in the 2D view](/img/shots/2d-lights-editor.webp)
+
+In the scene view each Spot light shows its outer reach (and its inner one, fainter) as a circle or a cone. The view draws the lights while you edit, so you see the scene as it will look.
+
+## Shadows
+
+1. Add a **Shadow Caster 2D** component to the objects that block light: walls, pillars, crates, the level's tilemap.
+2. Switch on **Shadows** on the lights that should cast them.
+
+A caster's shape is its collider's shape. For a tilemap that is its solid tiles; for a sprite, its collision polygon; for a shape, its box, circle or capsule. It doesn't need a collider, though: without one, the shape is what the collider would be.
+
+**Self Shadows** (off by default): off, the light still reaches the caster itself and only what is behind it is dark, so a wall stays lit on the side facing the torch. On, the caster is in its own shadow too.
+
+Shadows are sharp, like Unity's. The light picture is drawn at half the screen's pixels, which softens the edges a little.
+
+## Unlit sprites and tilemaps
+
+Some things should show as they are whatever the light: a glowing coin, a lit window, a sky backdrop. Set the Sprite's or Tilemap's **Material** to **Unlit** (Unity's *Sprite-Unlit-Default*). Lit is the default.
+
+## In events and scripts
+
+The settings can change while the game runs: a flickering torch, a lamp that switches off, a light that follows the hero.
+- **Events:** **Set component setting** on the light's object (for example *light2d* → *intensity*). Moving the object moves its light.
+- **Scripts:** `entity.component("light2d").intensity = 0.8 + Math.random() * 0.4`. An object's **Enabled** switch turns its light on and off.
+
+## Good to know
+
+- 2D lights work in the X–Y plane, which is how a side-on or top-down 2D game is laid out (see [2D games](./2d-games)).
+- The light is worked out per pixel of the screen. Anything drawn where a shadow falls is darkened, even a sprite standing in front of the wall that casts it. Set things that must stay bright to **Unlit**.
+- Each light with shadows is one more drawing pass a frame. A dozen torches are fine on a phone; hundreds are not.
+- Exported games, the Android app and desktop builds draw 2D lights the same way.
