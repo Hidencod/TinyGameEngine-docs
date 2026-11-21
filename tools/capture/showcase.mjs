@@ -37,6 +37,7 @@ const GAMES = [
   { module: 'fireflyGrove', slug: 'firefly-grove', shots: fireflyGroveShots, expect: 'Fireflies: 0 / 8' },
   { module: 'sunTemple', slug: 'sun-temple', shots: sunTempleShots, expect: 'Sun shards: 0 / 3' },
   { module: 'valleyPost', slug: 'valley-post', shots: valleyPostShots, expect: 'Parcels: 0 / 6' },
+  { module: 'lostKeys', slug: 'lost-keys', shots: lostKeysShots, expect: 'Lost Keys' },
 ];
 
 const filter = process.argv.slice(2).filter((a) => !a.startsWith('--'));
@@ -317,6 +318,50 @@ async function valleyPostShots({ page, shot, tge, module }) {
   await page.locator('.hm-card, .hm-continue', { hasText: 'Valley Post' }).first().click({ timeout: 60000 });
   await page.waitForSelector('.editor.desktop', { timeout: 60000 });
   await page.waitForTimeout(8000);
+  await shot('editor');
+}
+
+async function lostKeysShots({ page, shot, tge, module }) {
+  await page.goto(`${TGE}/showcase/dev.html?game=${module}`, { timeout: 120000 });
+  await page.waitForFunction(() => window.__tgeReady, null, { timeout: 120000 });
+  await page.waitForTimeout(2500);
+  await shot('start');
+  await page.getByText('Start', { exact: true }).first().click({ force: true });
+  await page.waitForFunction(() => window.__tgeGame.getVar('Started') === 1, null, { timeout: 20000 });
+  // Running right on the keyboard, over the first platforms.
+  await page.keyboard.down('KeyD');
+  await page.waitForTimeout(1400);
+  await page.keyboard.up('KeyD');
+  await page.waitForTimeout(600);
+  await shot('play');
+  // The hero put down by hand at each part of the level; the camera follows.
+  const visit = async (name, x, y, wait = 1800) => {
+    await page.evaluate(([x, y]) => { const p = window.__tgeGame.find('Player'); p.setPosition(x, y, 0); p.setVelocity(0, 0, 0); }, [x, y]);
+    await page.waitForTimeout(wait);
+    await shot(name);
+  };
+  await visit('spring', 26.5, 0.3, 550);
+  await page.evaluate(() => window.__tgeGame.setVar('HasBlue', 1));
+  await visit('caves', 42, 0.1);
+  await visit('ladder', 54.5, 0.1);
+  await page.evaluate(() => window.__tgeGame.setVar('HasYellow', 1));
+  await visit('summit', 89.5, 2.1);
+  await page.evaluate(() => window.__tgeGame.setVar('HasRed', 1));
+  await page.evaluate(() => { const p = window.__tgeGame.find('Player'); p.setPosition(107.5, 2.1, 0); });
+  await page.keyboard.down('KeyD');
+  await page.waitForFunction(() => window.__tgeGame.getVar('Won') === 1, null, { timeout: 20000 });
+  await page.keyboard.up('KeyD');
+  await page.waitForTimeout(2000);
+  await shot('win');
+  // The project in the editor, in the 2D view.
+  await page.goto(TGE + '/', { timeout: 120000 });
+  await page.waitForSelector('.hm', { timeout: 30000 });
+  await importTge(page, tge);
+  await page.locator('.hm-card, .hm-continue', { hasText: 'Lost Keys' }).first().click({ timeout: 60000 });
+  await page.waitForSelector('.editor.desktop', { timeout: 60000 });
+  await page.waitForTimeout(5000);
+  await page.locator('button[title*="2D"], button[aria-label*="2D"]').first().click({ timeout: 5000 }).catch(() => console.warn('  (no 2D view button found)'));
+  await page.waitForTimeout(3000);
   await shot('editor');
 }
 

@@ -1,0 +1,109 @@
+---
+title: Lost Keys
+description: A 2D platformer from a meadow, through lava caves, up to a snowy summit. Three coloured keys open three locked walls. Built with tilemaps, auto tiles, animated tiles, one-way platforms, a ladder, a moving lift, a spring, parallax and a polygon collider. Play it in your browser, then open the project and see how it works.
+---
+
+# Lost Keys
+
+Run from a sunny meadow, through stone caves full of lava, up to a snowy summit. Three locked walls block the way: find the **blue**, **yellow** and **red** keys to open them, and reach the red flag at the top.
+
+It's one side-scrolling level that uses the [2D pieces](../world/2d-games) together:
+- [tilemaps](../world/tilemaps) with [auto tiles](../world/tilemaps#auto-tiles), [animated tiles](../world/tilemaps#animated-tiles) (lava and torches), one-way platforms and a ladder,
+- [sprites](../world/sprites) with animations, and a [polygon collider](../world/sprites#collision) for the snow slope,
+- the [Platformer](../behaviors#platformer), [Moving platform](../behaviors#moving-platform), [Wave](../behaviors#sine), [Parallax](../behaviors#parallax) and [Health](../behaviors#health) behaviors.
+
+**The rules are an event sheet: there are no code scripts.** The pictures are Kenney's *New Platformer Pack* (CC0).
+
+<PlayEmbed
+  src="https://hidencod.github.io/tge-assets/showcase/lost-keys/"
+  poster="/img/showcase/lost-keys-play.webp"
+  title="Lost Keys"
+  size="2.3 MB"
+/>
+
+**Controls:** press **Start**. The joystick runs (and climbs on the ladder), the **A** button jumps. On a computer: **A / D** or the **arrow keys** to run, **Space** to jump, **W / S** on the ladder.
+
+![The start screen says what to do](/img/showcase/lost-keys-start.webp)
+
+## Open it in the editor
+
+1. Download **[lost-keys.tge](https://hidencod.github.io/tge-assets/showcase/lost-keys/lost-keys.tge)** (220 KB).
+2. Open the editor: **[editor.jeevagames.com](https://editor.jeevagames.com)** on a computer, or the Android app.
+3. On the home screen tap **Import .tge** and pick the file, then open **Lost Keys (imported)**.
+4. Press **▶ Play**.
+
+![Lost Keys in the editor's 2D view](/img/showcase/lost-keys-editor.webp)
+
+## How it works
+
+### The level: three tilemaps
+
+The level is drawn with one tile sheet (64 px = 1 m) on three tilemaps:
+
+| Tilemap | Order | What it holds |
+| --- | --- | --- |
+| *Level* | 0 | The ground, walls and platforms: **Solid**. Grass, stone and snow are **auto tiles** (block), so each painted cell picks its edge or corner piece. The thin platforms are **One-way**: you jump up through them and land on top. The ladder is **Climb**. |
+| *Decorations* | 2 | Bushes, mushrooms, rocks, fences, signs and torches: no collider, drawn in front. |
+| *Cave wall* | −5 | The dark stone behind the caves: no collider, drawn behind everything. |
+
+The lava's top row and the torches are **animated tiles**: two frames each.
+
+![The caves: lava, torches and the lift](/img/showcase/lost-keys-caves.webp)
+
+### The meadow: a spring and a high ledge
+
+The blue key sits on a ledge too high to jump to. The spring beside it throws the hero up: when the hero lands on it (**On collision** with `#spring` while falling), the event sets the hero's upward speed to 11.2 and plays the spring's *out* animation.
+
+![The spring throws the hero up to the blue key](/img/showcase/lost-keys-spring.webp)
+
+### The caves: a lift, a ladder and a bee
+
+- **The lift** is a small tilemap with the **Moving platform** behavior (6 m, then back). The lava pit is too wide to jump, so you ride it across.
+- **The ladder** leads to the yellow key on top of a pillar. Tiles set to **Climb** let a Platformer hero with climbing on go up and down them. The ladder reaches one tile above the pillar, so you can step off onto it.
+- **The bee** goes up and down with the **Wave** behavior: pass under it when it's high.
+
+![The ladder up to the yellow key](/img/showcase/lost-keys-ladder.webp)
+
+### The summit: a polygon collider and a saw
+
+The snow slope up from the caves is a sprite, not tiles: its **Collision** shape in the sprite editor is a triangle, so the hero walks up it smoothly. The Platformer climbs slopes up to its **Max slope** (50°).
+
+The saw slides along the ground with **Moving platform**. The red key is at the top of three snow steps.
+
+![The summit: snow steps up to the red key](/img/showcase/lost-keys-summit.webp)
+
+### The camera and the backdrop
+
+The camera is orthographic (size 5) with **Camera follow**. Its limits are the level's edges, so it never shows past them. Behind the level, two hill pictures and the clouds have the **Parallax** behavior: each moves at its own share of the camera's speed, and **Wrap width** repeats them along the whole level.
+
+### The rules
+
+- **On clicked** `StartButton`: hide the start screen, `Started` = 1. Until then (and after you win) the hero doesn't take input.
+- **Keys:** touching `#keyblue` sets `HasBlue` = 1. When `HasBlue` = 1 (**Trigger once**), the `#lockblue` blocks sparkle and are destroyed, and the key icon shows at the top right. The same for yellow and red.
+- **Checkpoints:** touching a `#checkpoint` whose `reached` is 0 raises its flag and stores its position in `CheckX` and `CheckY`.
+- **Snails** walk between their own `minX` and `maxX`, turning round on **On arrived**. Land on one from above to defeat it (2 coins); touching it any other way costs a heart. The **Health** behavior's knockback pushes you away, and its 1.5 s invincibility stops a second hit.
+- **The bee and the saw** (`#hazard`) cost a heart.
+- **Lava, or falling below the level**, costs a heart and sets `Respawn` = 1. The `Respawn` event puts the hero back at the last checkpoint.
+- **On death** of the hero: `health` back to 3 (setting it above 0 brings a dead object back) and back to the checkpoint.
+- **The red flag** (`#goal`): `Won` = 1, confetti, and the win screen with the time and the coins.
+- **The hint line** at the bottom says where the next key is.
+
+![At the summit](/img/showcase/lost-keys-win.webp)
+
+### Saved tests
+
+The project has five [saved gameplay tests](../editor/tests) (**Tests** panel):
+- **Start screen waits:** the hero doesn't move before Start.
+- **Coins on the way, the gap costs a heart:** run right from the start into the first gap.
+- **The blue wall stops you without its key.**
+- **Spring up to the blue key opens the wall.**
+- **Red key and the flag win.**
+
+They also run from the command line: `node tge-test.mjs lost-keys.tge` (see [From the command line](../editor/tests#from-the-command-line)).
+
+## Make it yours
+
+- Paint more level in the 2D view: pick a grass, stone or snow auto tile and the edges follow.
+- Give the lift a longer **Move X**, or turn the saw into a lift.
+- Add a fourth key: a key sprite with its own colour tag, a column of locks with theirs, and three events copied from the blue ones.
+- Change the hero's **Jump strength** and **Speed** in its Platformer behavior, and check the jumps still work with **Run tests**.
