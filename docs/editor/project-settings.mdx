@@ -29,6 +29,7 @@ Open with **⚙ Project settings** in the top bar, **☰ → Project settings**,
 | --- | --- |
 | **Level chips** | The quality levels of the project (Low, Medium and High to start with). The open one is the level the fields below show and change (see [Quality levels](#quality-levels)). |
 | **Starts at quality** | The level a game starts at (also marked ★). |
+| **On phones, starts at** | The level a game starts at on phones and tablets (as Unity has a default level per platform). Unless you change it: **Medium**, or **Starts at quality** when that one is lower. |
 | **Max pixel ratio** | How sharp the game is drawn (0.5–3). Lower is faster and blurrier; **1–1.5 is good for cheap phones**. |
 | **Smooth edges (antialias)** | Smoother edges, slower on low-end phones. The editor applies it after reopening the project. |
 | **Shadows** | Turn all shadows on or off. Off is much faster. |
@@ -60,7 +61,7 @@ Every level sets all of these:
 - The level the game starts at also sets the pixel ratio, smooth edges, shadows and particles you see in the editor view.
 - Projects made before the list keep their Low, Medium and High with the values they had.
 
-The game starts at **Starts at quality**, or at the level the player chose last time (it is saved on the device). Let players change it with events or a script. A level is named by its **id** (lower case: `low`, `medium`, `high`, or the name you gave a new level turned into letters, like `ultra`); scripts may also use its name or its position in the list:
+The game starts at **Starts at quality** (**On phones, starts at** on a phone or tablet), or at the level the player chose last time (it is saved on the device). Let players change it with events or a script. A level is named by its **id** (lower case: `low`, `medium`, `high`, or the name you gave a new level turned into letters, like `ultra`); scripts may also use its name or its position in the list:
 
 - Event actions (group **Graphics**): *Set graphics quality*, *Set resolution scale*, *Set shadows*, *Set screen effects*, *Set max particles*, *Set antialiasing (smooth edges)*, *Set graphics option* (any single setting above: switches take 1 for on and 0 for off), and the condition *Graphics quality is*.
 - Scripts: `game.quality.level = "low"` (reads back the id of the level in force), or one setting: `game.quality.pixelRatio = 1`, `.shadows = false`, `.shadowMapSize = 512`, `.shadowDistance = 25`, `.cascades = 2`, `.glow = false`, `.depthOfField = false`, `.occlusion = false`, `.edgeSmoothing = true`, `.colorFinish = true`, `.mirrors = 256`, `.glass = false`, `.lensFlares = false`, `.maxParticles = 300`. `.effects = false` switches every effect off at once.
