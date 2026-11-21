@@ -41,7 +41,7 @@ Tags work like *families*: in events, `#enemy` means every object with that tag,
 | Field | Meaning |
 | --- | --- |
 | **Position** | X (right), Y (up), Z (toward the camera), in meters. Relative to the parent, if it has one. |
-| **Rotation (°)** | Turn around X, Y and Z, in degrees. Y turns left/right. |
+| **Rotation (°)** | Turn around X, Y and Z, in degrees. Y turns left/right round the world's up, X tilts up/down and Z rolls, as in Unity: **X -40, Y 200** is turned 200° round and still tilted down 40° (Y never tips the tilt over). |
 | **Scale** | Size multiplier per axis. `2` = twice as big. |
 
 **↺** resets rotation and scale. Drag a number sideways to change it, or tap it to type. Screen UI elements don’t have a Transform (they use their UI anchor instead).
