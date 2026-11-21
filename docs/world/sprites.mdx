@@ -119,10 +119,13 @@ In the Inspector the **Sprite** card has:
 | **Speed** | 1 = the fps set in the editor, 2 = twice as fast. |
 | **Start frame** | The frame shown first (0 = first). |
 | **Collider depth (m)** | How thick the collision shape is, front to back. |
+| **Render texture** | Shows a camera's live picture instead (see [render textures](./render-textures)). |
+| **Normal map** | A second picture with the surface's bumps, for [2D lights with Normal Maps](./2d-lights#normal-maps). |
+| **Material** | **Lit** (default): [2D lights](./2d-lights) light it when the scene has any. **Unlit**: always as drawn. |
 
 </Side>
 
-Sprites aren't lit: they always show their own colors, whatever the lights are doing.
+3D lights don't light sprites: they show their own colours, unless the scene has [2D lights](./2d-lights).
 
 ## Physics and collisions
 
