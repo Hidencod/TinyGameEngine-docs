@@ -105,6 +105,11 @@
       "title": "Tilemap",
       "desc": ""
     },
+    "spriteShape": {
+      "icon": "〰",
+      "title": "Sprite Shape",
+      "desc": ""
+    },
     "animator": {
       "icon": "🔀",
       "title": "Animator",

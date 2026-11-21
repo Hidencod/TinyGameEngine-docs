@@ -8365,6 +8365,10 @@
               "label": "tilemap"
             },
             {
+              "value": "spriteShape",
+              "label": "spriteShape"
+            },
+            {
               "value": "collider",
               "label": "collider"
             },
