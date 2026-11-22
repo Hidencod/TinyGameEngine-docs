@@ -36,8 +36,8 @@ As soon as a scene has a Light 2D, its sprites and tilemaps show **only** the li
 | **Falloff Strength** | How quickly the light fades between the radii: 0 stays bright to the edge, 1 fades fast. |
 | **Shadows**, **Shadow Strength** | Shadow Caster 2D objects block the light (see below). At 1 none of this light gets into the shadow; at 0.5 half does. |
 | **Shadow Softness** | 0 = sharp shadow edges. Higher makes the light act as if it had a size, so shadow edges blur, more the farther they are from what casts them. |
-| **Normal Maps**, **Distance** | Shade sprites that have a normal map by which way their bumps face (see below). Distance is how high above the sprites the light is: low lights show bumps more. |
-| **Volumetric Intensity** | Spot only. The light also shows in the air, over everything: the haze round a torch or the beam of a lamp. 0 = off. |
+| **Normal Maps**, **Distance** | Shade sprites, tilemaps and Sprite Shapes that have a normal map by which way their bumps face (see below). Distance is how high above them the light is: low lights show bumps more. |
+| **Volumetric Intensity** | The light also shows in the air, over everything: the haze round a torch, the beam of a lamp, a shaft of moonlight (Freeform) or a window's glow (Sprite). 0 = off. Not for Global lights. |
 
 ![The Ceiling light selected: its cone (outer and inner) is drawn in the 2D view](/img/shots/2d-lights-editor.webp)
 
@@ -73,10 +73,15 @@ Freeform and Sprite lights cast shadows from their object's position.
 ![Bricks with a normal map lit from the low left: their edges catch the lamp, the pillars cast soft shadows, a Freeform shaft and a Sprite light window](/img/shots/2d-lights-more-game.webp)
 
 A **normal map** is a second picture that tells, for each pixel, which way the surface faces. With one, a flat sprite of bricks shows its bevels lit on the side facing the lamp and dark on the other side, and the light moves over them as the lamp moves.
-1. Give the Sprite a **Normal map** (its card, under **Render texture**): a picture laid out like the sprite (the same frames), in the usual colours (blue-ish: red = right, green = up, blue = out of the picture). Paint tools and normal-map makers export these.
-2. Switch on **Normal Maps** on the lights that should use them. **Distance** is how high above the sprites the light is.
+1. Give the picture a **Normal map**: a second picture laid out like it, in the usual colours (blue-ish: red = right, green = up, blue = out of the picture). Paint tools and normal-map makers export these.
+   - **Sprite**: **Normal map** in its card, under **Render texture** (the same frames as the sprite).
+   - **Tilemap**: **Normal map** in its card, laid out like the tile sheet (the same tiles in the same places).
+   - **Sprite Shape**: **Fill normal map** for the fill picture, and a **Normal map** in each edge range. The edges bend along the outline, and so do their bumps.
+2. Switch on **Normal Maps** on the lights that should use them. **Distance** is how high above the pictures the light is.
 
-Sprites without a normal map, and lights with Normal Maps off, are lit as before. Global lights don't use normal maps.
+Pictures without a normal map, Unlit ones, and lights with Normal Maps off are lit as before. Global lights don't use normal maps.
+
+![A cave wall and stone pillars (one tilemap) and a grassy Sprite Shape hill, each with a normal map, lit low by a torch; a Freeform moonlight shaft with Volumetric glow](/img/shots/2d-lights-normals-game.webp)
 
 ## Unlit sprites and tilemaps
 
