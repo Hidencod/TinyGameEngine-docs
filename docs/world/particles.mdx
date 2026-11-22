@@ -136,7 +136,9 @@ The project’s **Max particles** setting caps all effects together. See [Perfor
 
 Set **Simulate On** to **GPU** for effects with tens of thousands of particles or more: snow over a whole level, a waterfall, a galaxy, sparks by the hundred thousand. It is the same Particle System with the same settings, but once a particle is born the graphics card moves it, ages it and draws it, so a million particles can run at full speed on a desktop.
 
-Particles are still born the same way: every **Shape**, **Burst** and start value, and **Emit particles with values**, work as on the CPU. The graphics card then runs these modules:
+Particles are born the same way: every **Shape**, **Burst** and start value, and **Emit particles with values**, work as on the CPU. The graphics card makes the new particles itself too, so a burst of 500,000 costs the game no more than a burst of 5. Only these are still made one by one on the CPU (up to 65,536 a frame): a **Mesh** shape, **Emit particles with values**, and particles a sub emitter makes from its parent's.
+
+The graphics card then runs these modules:
 
 - **Gravity**, **Velocity over Lifetime** (orbit and radial too), **Limit Velocity over Lifetime** (drag), **Inherit Velocity**, **Force over Lifetime**
 - **External Forces**: up to 4 [force fields](#force-fields) and [wind zones](#wind-zones)
@@ -151,7 +153,7 @@ Some things work differently with a GPU effect:
 
 - The project’s **Max particles** setting doesn't count GPU effects: each one has its own **Max Particles**.
 - Scripts can't read or move single particles (`getParticles()` returns an empty list), and **Compare particle count** counts every particle that may still be alive.
-- Up to 65,536 particles can be born in one frame.
+- New particles can fill every free slot in one frame (the 65,536-a-frame limit is only for the ones made on the CPU, see above).
 - A device that can't render to float textures (some old phones) runs the effect on the CPU instead, with the CPU's limit of 5,000.
 
 ## Force fields
