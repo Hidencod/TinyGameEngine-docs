@@ -1,0 +1,103 @@
+---
+title: Sprocket Hills
+description: A pixel-art 2D platformer. A little robot, animated with bones, runs over rolling Sprite Shape hills to collect bolts for its friend. Drawn through a Pixel Perfect Camera. Play it in your browser, then open the project and see how it works.
+---
+
+# Sprocket Hills
+
+Bolt, a little robot, runs over rolling hills collecting **bolts** for its friend **Sprocket**, who waits at the far end holding a balloon. Collect 8 of the 10 bolts, then bring them to Sprocket. A pit and a row of spikes stand in the way.
+
+It puts three 2D features together:
+- a [Pixel Perfect Camera](../world/pixel-perfect-camera): 32 pixels per metre, 320 × 180, **Upscale Render Texture** on, so everything (the robot too) is drawn in art pixels and scaled up by a whole number,
+- [2D animation](../world/2d-animation) with layers: the robot is drawn in parts, skinned to ten bones, and an **Animator** plays its Idle, Walk and Jump clips. Its face is a layer with three pictures, swapped by events. Sprocket holds the balloon with an **IK 2D**,
+- [Sprite Shape](../world/sprite-shape): the hills, the floating ledge and the far hills are curves with grass along the top, an earth rim on the sides and earth inside. Their colliders follow the outlines.
+
+**The rules are an event sheet: there are no code scripts.** Every picture (the robot, the grass, the bolts, the spikes, the flags) is drawn by the project's code.
+
+<PlayEmbed
+  src="https://hidencod.github.io/tge-assets/showcase/sprocket-hills/"
+  poster="/img/showcase/sprocket-hills-play.webp"
+  title="Sprocket Hills"
+  size="2.1 MB"
+/>
+
+**Controls:** press **Start**. The joystick runs, the **A** button jumps. On a computer: **A / D** or the **arrow keys** to run, **Space** to jump.
+
+![The start screen says what to do](/img/showcase/sprocket-hills-start.webp)
+
+## Open it in the editor
+
+1. Download **[sprocket-hills.tge](https://hidencod.github.io/tge-assets/showcase/sprocket-hills/sprocket-hills.tge)** (130 KB).
+2. Open the editor: **[editor.jeevagames.com](https://editor.jeevagames.com)** on a computer, or the Android app.
+3. On the home screen tap **Import .tge** and pick the file, then open **Sprocket Hills (imported)**.
+4. Press **▶ Play**.
+
+![The hills in the editor's 2D view, the robot picked](/img/showcase/sprocket-hills-editor.webp)
+
+## How it works
+
+### The camera
+
+The *Camera* is orthographic, with a **Camera follow** behavior on the player (with limits at the level's ends) and a **Pixel Perfect Camera**:
+
+| Setting | Value | Why |
+| --- | --- | --- |
+| **Assets Pixels Per Unit** | 32 | The grass, the earth, the bolts and the flags are drawn at 32 pixels per metre. |
+| **Reference Resolution** | 320 × 180 | The screen shows about 10 × 5.6 m; on a 1280 × 720 screen each art pixel is 4 × 4. |
+| **Upscale Render Texture** | on | The game is drawn at 320 × 180 and scaled up. The robot's picture is larger and smooth, but it lands on the same pixel grid as everything else, even while its limbs turn. |
+
+### The robot
+
+The *Robo* picture is a strip of parts: body, head, three faces, arms and legs. Each part is a **layer** of the sprite's skin with its own mesh, weighted to its own bones, so an arm turns round its shoulder without pulling the body. See [Layers](../world/2d-animation#layers).
+
+- *Player* and *Sprocket* both show *Robo* with a **Sprite Skin** and bone objects under them (**Create Bones**).
+- Three clips, *Robo Idle*, *Robo Walk* and *Robo Jump*, are Timelines that turn the bones. The *Robo* **Animator Controller** goes from Idle to Walk when **Speed** is above 0.3 and to Jump when **Grounded** is off. The Platformer behavior sets both parameters itself.
+- The **Face** layer has three pictures: *Happy*, *Wow* and *Sleepy*. Events swap them with **Set sprite part**: Wow in the air, Happy on the ground. Sprocket starts *Sleepy* (its Sprite Skin's part setting), wakes up (*Wow*) when you have 8 bolts and smiles when you bring them.
+- Sprocket's *Forearm R* bone has an **IK 2D** (Limb solver) aimed at the balloon, so its hand follows the string as the balloon bobs.
+
+![Sprocket holding the balloon: the hand follows the string with IK 2D](/img/showcase/sprocket-hills-sprocket.webp)
+
+![In the air: the Jump clip, and the face layer showing Wow](/img/showcase/sprocket-hills-jump.webp)
+
+### The hills
+
+*Hills west*, *Hills east* and *Ledge* are curves with a **Sprite Shape** and a **Collider**:
+
+| Setting | Value |
+| --- | --- |
+| **Fill** | the *Earth* picture, **Fill scale** 1 (one 32 × 32 tile per metre) |
+| **Edges** | *Grass edge* from −55° to 55° (the parts facing up), *Earth edge* from 55° to 305° (the sides and below) |
+| **Edge height** | 12 / 32 m: the grass picture is 12 pixels tall |
+| **Filter** | Pixel |
+
+The *Ledge* is an open curve: only its grass is drawn, and its collider is a band under the line. *Far hills* is a Sprite Shape filled with one colour, with a **Parallax** behavior so it drifts slower than the camera. The clouds do the same.
+
+### The rules
+
+- **On clicked** `StartButton`: hide the start screen, `Started` = 1. Until then (and after you win) the robot doesn't take input.
+- **Bolts** (`#bolt`) add 1 to `Bolts`.
+- **Flags** (`#checkpoint`): touching one whose `up` is 0 plays its *up* animation (red to green) and stores its position in `CheckX` and `CheckY`.
+- **Spikes** (`#hazard`) cost a heart. The **Health** behavior knocks you back and keeps you safe for 1.5 s.
+- **Falling into the pit** (below y −3) costs a heart and sets `Respawn` = 1. The `Respawn` event puts the robot back at the last flag.
+- **On death**: `health` back to 3 and back to the last flag.
+- **Sprocket** (`#goal`): touching it with `Bolts` ≥ 8 sets `Won` = 1: confetti and the win screen with the time and the bolts.
+
+![Sprocket is happy](/img/showcase/sprocket-hills-win.webp)
+
+### Saved tests
+
+The project has five [saved gameplay tests](../editor/tests) (**Tests** panel):
+- **Start screen waits:** the robot doesn't move before Start.
+- **Running right picks up the first bolts.**
+- **The pit costs a heart and brings you back.**
+- **Sprocket waits for eight bolts:** with 5 bolts, walking into Sprocket doesn't win.
+- **Eight bolts brought to Sprocket win.**
+
+They also run from the command line: `node tge-test.mjs sprocket-hills.tge` (see [From the command line](../editor/tests#from-the-command-line)).
+
+## Make it yours
+
+- Pick a hill and drag its curve points in the 2D view: the grass, the earth and the collider follow.
+- Turn **Upscale Render Texture** off on the camera's Pixel Perfect Camera to see the robot drawn at the screen's full sharpness.
+- Open the *Robo Walk* Timeline and change a leg's keys for a different walk.
+- Give Sprocket another face: pick it and set its Sprite Skin's **Face** part to *Happy*.

@@ -40,6 +40,7 @@ const GAMES = [
   { module: 'valleyPost', slug: 'valley-post', shots: valleyPostShots, expect: 'Parcels: 0 / 6' },
   { module: 'lostKeys', slug: 'lost-keys', shots: lostKeysShots, expect: 'Lost Keys' },
   { module: 'emberCrypt', slug: 'ember-crypt', shots: emberCryptShots, expect: 'Ember Crypt' },
+  { module: 'sprocketHills', slug: 'sprocket-hills', shots: sprocketHillsShots, expect: 'Sprocket Hills' },
 ];
 
 const filter = process.argv.slice(2).filter((a) => !a.startsWith('--'));
@@ -409,6 +410,45 @@ async function emberCryptShots({ page, shot, tge, module }) {
   await page.waitForTimeout(3000);
   // A brazier picked: the Inspector shows its sprite's normal map and its Light 2D.
   await page.getByText('Brazier', { exact: true }).first().click({ timeout: 5000 }).catch(() => console.warn('  (no Brazier in the list)'));
+  await page.waitForTimeout(1500);
+  await shot('editor');
+}
+
+async function sprocketHillsShots({ page, shot, tge, module }) {
+  await page.goto(`${TGE}/showcase/dev.html?game=${module}`, { timeout: 120000 });
+  await page.waitForFunction(() => window.__tgeReady, null, { timeout: 120000 });
+  await page.waitForTimeout(2500);
+  await shot('start');
+  await page.getByText('Start', { exact: true }).first().click({ force: true });
+  await page.waitForFunction(() => window.__tgeGame.getVar('Started') === 1, null, { timeout: 20000 });
+  // Running right on the keyboard up the first hill: the Walk clip turns the robot's bones.
+  await page.keyboard.down('KeyD');
+  await page.waitForTimeout(2300);
+  await shot('play');
+  // A jump up to the ledge: in the air the Face layer shows Wow.
+  await page.keyboard.press('Space');
+  await page.waitForTimeout(450);
+  await shot('jump');
+  await page.keyboard.up('KeyD');
+  // Sprocket at the far end, holding the balloon (Limb IK).
+  await page.evaluate(() => { const g = window.__tgeGame; g.setVar('Bolts', 8); const p = g.find('Player'); p.setPosition(69.5, 1, 0); p.setVelocity(0, 0, 0); });
+  await page.waitForTimeout(2200);
+  await shot('sprocket');
+  await page.keyboard.down('KeyD');
+  await page.waitForFunction(() => window.__tgeGame.getVar('Won') === 1, null, { timeout: 20000 });
+  await page.keyboard.up('KeyD');
+  await page.waitForTimeout(2000);
+  await shot('win');
+  // The project in the editor, in the 2D view, the robot picked: Sprite Skin, Animator.
+  await page.goto(TGE + '/', { timeout: 120000 });
+  await page.waitForSelector('.hm', { timeout: 30000 });
+  await importTge(page, tge);
+  await page.locator('.hm-card, .hm-continue', { hasText: 'Sprocket Hills' }).first().click({ timeout: 60000 });
+  await page.waitForSelector('.editor.desktop', { timeout: 60000 });
+  await page.waitForTimeout(5000);
+  await page.locator('button[title*="2D"], button[aria-label*="2D"]').first().click({ timeout: 5000 }).catch(() => console.warn('  (no 2D view button found)'));
+  await page.waitForTimeout(3000);
+  await page.getByText('Player', { exact: true }).first().click({ timeout: 5000 }).catch(() => console.warn('  (no Player in the list)'));
   await page.waitForTimeout(1500);
   await shot('editor');
 }
