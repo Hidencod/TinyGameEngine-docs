@@ -8,6 +8,7 @@
  *                             npx vite --port 5199 --strictPort
  *   (in TinyGameEngine-docs)  npm run docs:showcase                # all games
  *                             npm run docs:showcase -- street      # games whose slug matches
+ *                             npm run docs:showcase -- --no-shots  # export only (after an engine release)
  *
  * Writes
  *   ../tge-assets/showcase/<slug>/index.html   playable game (GitHub Pages; TGE_ASSETS to override)
@@ -43,6 +44,7 @@ const GAMES = [
 
 const filter = process.argv.slice(2).filter((a) => !a.startsWith('--'));
 const headed = process.argv.includes('--headed');
+const noShots = process.argv.includes('--no-shots');
 
 try { await fetch(TGE); } catch {
   console.error(`The editor dev server is not running at ${TGE}.\nStart it in TinyGameEngine: npx vite --port 5199 --strictPort`);
@@ -99,6 +101,7 @@ for (const game of GAMES.filter((g) => !filter.length || filter.some((f) => g.sl
   await checkExported(browser, join(dir, 'index.html'), game);
 
   // 2. Screenshots.
+  if (noShots) { await context.close(); continue; }
   mkdirSync(SHOTS, { recursive: true });
   const shot = async (name, p = page) => {
     await sharp(await p.screenshot()).webp({ quality: 84, effort: 5 }).toFile(join(SHOTS, `${game.slug}-${name}.webp`));
