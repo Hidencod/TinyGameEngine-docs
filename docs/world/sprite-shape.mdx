@@ -41,6 +41,50 @@ Each **edge range** is a picture and two angles. The angle is the way a part of 
 
 An **open** curve (Closed loop off) has no inside: only its edges are drawn, and its outside is **up** when the line runs left to right. That makes a ledge or a vine bridge.
 
+### More pictures per range
+
+**＋** on a range's angle row adds another picture to it (picture 2, 3…). The first picture is used unless a curve point picks another (see [Points](#points)): flowers on one hilltop, a cracked stone on one wall.
+
+## Corners
+
+![A floating block with a step: rounded grass over the outer corners, the wall's rim meeting the grass at the inner one](/img/shots/sprite-shape-corners.webp)
+
+Where the outline turns sharply, edges meet at an angle. **Corner pictures** cover the join, like Unity's corner sprites. A corner is drawn at a curve point when:
+- the outline turns there by at least **Corner angle** degrees (30 by default);
+- both sides have an edge;
+- one side faces up or down and the other left or right;
+- the Sprite Shape has a picture for that kind of corner.
+
+| Corner | Where |
+| --- | --- |
+| **Outer top left / right** | the top meets a side, and the shape sticks out (the top corners of a block) |
+| **Outer bottom left / right** | the bottom meets a side, sticking out |
+| **Inner top left / right** | a top meets a side going up (the foot of a step or a pit wall) |
+| **Inner bottom left / right** | a bottom meets a side, going in |
+
+Left and right name the way the side faces: an **inner top left** corner is where a floor meets a wall that faces left.
+
+A corner picture is drawn upright over a square **Edge height** across, and the edges on both sides stop at its sides. Draw it like the edge pictures: for an outer top right corner, the grass top of the edge picture rounded over to the right.
+
+:::tip
+Corners need sharp points. Smooth curves bend through their points, so they never turn sharply at one. Use **Catmull-Rom** with **Tension** 0 (straight lines between the points), or **Bezier** with the point's handles set to **Sharp corner**.
+:::
+
+## Points
+
+![The Block's point 5 with its Edge set to None: the lower step has no grass, and its inner corner went with it](/img/shots/sprite-shape-point.webp)
+
+Each curve point has settings for the **segment that starts at it** (from it to the next point). Pick a point in the Scene view (or type its number in **Point**) to change them:
+
+| Setting | What it does |
+| --- | --- |
+| **Edge** | **Auto** picks the range by angle. **None** leaves the segment bare. **Edge 1, 2…** uses that range whichever way the segment faces. |
+| **Picture** | Which of the range's pictures (shown when a range has more than one). |
+| **Corner** | Off: no corner picture at this point. |
+| **Height** | The edge's thickness here, times **Edge height**. It blends to the next point's height along the segment. |
+
+The settings stay with their points when you add, remove or subdivide points.
+
 ## Look
 
 - **Tint** and **Opacity** colour the pictures.
@@ -60,4 +104,4 @@ A Sprite Shape with a **Shadow Caster 2D** blocks [2D lights](./2d-lights#shadow
 
 ## Coming from Unity
 
-Unity's Sprite Shape Profile holds the angle ranges and the fill; here they are on the component itself. Corner sprites and per-point edge picture choices are not there yet. The spline is the object's Curve, so its points, handle types and Closed loop setting are the Curve card's.
+Unity's Sprite Shape Profile holds the angle ranges, their sprite variants, the corners and the fill; here they are on the component itself. Unity's control point settings (Sprite Variant, Corner, Height) are the **Point** section. The spline is the object's Curve, so its points, handle types and Closed loop setting are the Curve card's.
