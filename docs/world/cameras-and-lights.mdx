@@ -1,6 +1,6 @@
 ---
 title: Cameras & lights
-description: The main camera, perspective and orthographic views, following the player, and the four kinds of light.
+description: The main camera, perspective and orthographic views, split screen and picture-in-picture, following the player, and the four kinds of light.
 ---
 
 # Cameras & lights
@@ -20,10 +20,24 @@ The game is shown through the **main camera**. Every new scene has one called *C
 | **Field of view** | (Perspective) How wide it sees, 20–120°. 60 is normal; lower zooms in. |
 | **View size** | (Orthographic) Half the height of the view, in meters. |
 | **Near / Far** | Nothing closer than Near or farther than Far is drawn. |
+| **Viewport Rect** | The part of the screen it draws into: X, Y, W, H from the bottom-left corner, 0 to 1 (Unity's Viewport Rect). 0, 0, 1, 1 is the whole screen. |
+| **Depth** | Cameras on the screen draw from the lowest Depth up: a higher one is drawn over the others. |
+| **Clear Flags** | **Skybox** fills its part of the screen with the sky first. **Depth only** draws over what the cameras before it drew (a weapon or a 3D HUD camera). |
 
 </Side>
 
 <Crop name="card-camera-ortho" caption="Orthographic camera" width={360} />
+
+### Split screen and picture-in-picture {/* #split-screen */}
+
+Only the main camera draws the game, unless another camera has **Draw on screen** on: then it draws into its own **Viewport Rect** as well. That gives:
+
+- **Split screen** for two players: the main camera at X 0, Y 0, W 0.5, H 1 (left half), a second camera at X 0.5, Y 0, W 0.5, H 1 (right half), each following its own player.
+- **A map or a rear-view mirror** in a corner: a camera with a small rect and a higher **Depth** than the main camera, so it is drawn on top. An Orthographic camera looking straight down makes a map.
+
+Screen effects are applied to each camera's part on its own. Buttons and text on the screen (UI) cover the whole screen, whatever the rects. Taps and the mouse are read in the main camera's part.
+
+<Crop name="split-screen" caption="Two players and a map camera on top (Depth 1)" />
 
 ### Make the camera follow the player
 

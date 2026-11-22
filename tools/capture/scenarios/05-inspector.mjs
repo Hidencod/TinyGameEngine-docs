@@ -87,8 +87,8 @@ export async function run({ page, s, H }) {
     await s.settle(400);
     await cardShot('card-collider-' + shape, 'Collider');
   }
-  await H.card('Shape & look').locator('select').first().selectOption('box');
-  await H.card('Collider').locator('select').first().selectOption('auto');
+  await H.card('Shape & look').locator('select:has(option[value="box"])').selectOption('box');
+  await H.card('Collider').locator('select:has(option[value="auto"])').selectOption('auto');
   await s.settle(400);
 
   // Physics body.
@@ -98,7 +98,7 @@ export async function run({ page, s, H }) {
     await s.settle(400);
     await cardShot('card-rigidbody-' + t, 'Physics body');
   }
-  await H.card('Physics body').locator('select').first().selectOption('dynamic');
+  await H.card('Physics body').locator('select:has(option[value="dynamic"])').selectOption('dynamic');
 
   // Sound, Code script, Particles on the cube.
   await addComponent('Sound');
@@ -156,20 +156,20 @@ export async function run({ page, s, H }) {
   await H.select('Camera');
   await H.tab('inspector');
   await cardShot('card-camera', 'Camera');
-  await H.card('Camera').locator('select').first().selectOption('orthographic');
+  await H.card('Camera').locator('select:has(option[value="orthographic"])').selectOption('orthographic');
   await s.settle(400);
   await cardShot('card-camera-ortho', 'Camera');
-  await H.card('Camera').locator('select').first().selectOption('perspective');
+  await H.card('Camera').locator('select:has(option[value="perspective"])').selectOption('perspective');
 
   // Lights.
   await H.select('Sun');
   await H.tab('inspector');
   for (const k of ['directional', 'point', 'spot', 'hemisphere']) {
-    await H.card('Light').locator('select').first().selectOption(k);
+    await H.card('Light').locator(`select:has(option[value="${k}"])`).selectOption(k);
     await s.settle(400);
     await cardShot('card-light-' + k, 'Light');
   }
-  await H.card('Light').locator('select').first().selectOption('directional');
+  await H.card('Light').locator('select:has(option[value="directional"])').selectOption('directional');
 
   // UI elements and canvases: see 12-ui.mjs.
 
