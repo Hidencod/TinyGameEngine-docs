@@ -1,6 +1,6 @@
 ---
 title: Terrain
-description: Hills you shape by dragging — raise, lower, smooth, flatten, paint paths and scatter trees — with physics that follows them.
+description: Hills you shape by dragging — raise, lower, smooth, flatten, paint paths, scatter trees, paint grass and cut holes — with physics that follows them.
 ---
 
 # Terrain
@@ -32,7 +32,9 @@ Select the terrain, open **Inspect** and tap **🖌️ Sculpt**. Then drag on th
 | **Smooth** | Rounds off bumps and sharp edges. |
 | **Flatten** | Levels the ground to the height where the drag started — roads, building plots, a flat arena on a hill. |
 | **🎨 Paint** | Paints a surface onto the ground with a soft edge: a dirt path, a sandy beach, a cobbled road, rock or snow patches, more grass. Pick a surface (**Grass, Rock, Dirt, Snow, Stones, Sand**), each with its own texture, and change its **Tint** for any color (dark grass, red rock…). **Auto** erases paint back to the automatic look. |
-| **🌳 Scatter** | Sprinkles copies of a 3D model over the ground under the brush — a forest, rocks, grass tufts, flowers. See below. |
+| **🌳 Trees** | Sprinkles copies of a 3D model over the ground under the brush — a forest, rocks, bushes. See below. |
+| **🌿 Details** | Paints grass, flowers and small stones that the terrain draws itself, thousands at a time, swaying in the wind (Unity's Paint Details). See below. |
+| **🕳 Holes** | Cuts holes in the ground — cave mouths, pits, a well. See below. |
 
 **Brush size** is the radius in meters; **Strength** is how fast it works. A yellow ring shows where the brush is. Each drag is one step of **Undo**.
 
@@ -54,9 +56,9 @@ Next to the built-in surfaces, **＋ Image** adds a surface made from a picture:
 
 A terrain can have up to **4** image surfaces. Use **seamless** textures (made to repeat without visible edges) — the free ones are. A normal photo shows a seam every time it repeats. Big photos are scaled down to 2048 pixels when you import them, so they stay light on phones.
 
-### Scatter trees, rocks and grass {/* #scatter */}
+### Scatter trees and rocks {/* #scatter */}
 
-With **🌳 Scatter**, pick a **Model** (any 3D model in the project — add one first from **Objects → ＋ Add → Free models library…**) and drag over the terrain. Copies stand on the ground with a random turn and size, and skip slopes too steep to stand on.
+With **🌳 Trees**, pick a **Model** (any 3D model in the project — add one first from **Objects → ＋ Add → Free models library…**) and drag over the terrain. Copies stand on the ground with a random turn and size, and skip slopes too steep to stand on.
 
 | Setting | What it does |
 | --- | --- |
@@ -68,8 +70,43 @@ With **🌳 Scatter**, pick a **Model** (any 3D model in the project — add one
 Scattered copies are ordinary objects inside the terrain (they move with it) and are tagged `#scattered`. The terrain's row in the Objects list folds when you scatter, so they don't flood it — tap its ▸ to see them. Each drag is one Undo step. Put `#scattered` in the camera's **Fade tag** and turn on **Fade in way** ([Camera follow](../behaviors#camera-follow)) so trees that block the view turn see-through.
 
 :::tip
-Every copy is a real object: a few hundred are fine, thousands slow phones down. Grass and flowers look good at a low density spread over a big area.
+Every copy is a real object: a few hundred are fine, thousands slow phones down. For grass and flowers use **🌿 Details** instead.
 :::
+
+### Paint grass and flowers {/* #details */}
+
+**🌿 Details** paints small things that cover the ground in great numbers: grass, flowers, pebbles. They are not objects — the terrain places and draws them itself, a whole patch at a time, so tens of thousands cost about as much as a few objects. Each kind is a **layer**:
+
+| Add | What it draws |
+| --- | --- |
+| **＋ Grass** | Tufts of grass blades, no picture needed. |
+| **＋ Image** | Two crossed cards showing a picture with see-through parts (flowers, ferns, weeds). |
+| **＋ Model** | Copies of a 3D model (stones, mushrooms, small plants). |
+
+<Row>
+  <Phone name="card-terrain-details" caption="The Details tool with a grass layer" />
+  <Phone name="terrain-grass" caption="Grass painted over the hills" />
+</Row>
+
+Tap a layer's button to paint with it and drag over the terrain. Going over a spot again fills it up to the **Target strength**; **Erase** removes it again.
+
+| Setting | What it does |
+| --- | --- |
+| **Picture / Model** | What an Image or Model layer shows. |
+| **Target strength** | How full the brush paints (1 = the full density, 0.3 = sparse). |
+| **Density** | Most copies per square meter where it is painted fully. |
+| **Height / Width** | Each copy gets a random size between Min and Max (meters for grass and images; a scale for models). |
+| **Healthy color / Dry color** | Copies get colors between the two, in patches a few meters across, like real grass. Images and models are tinted by it (white keeps their own colors). |
+| **Sway** | Bends in the wind. |
+| **🧽 Clear / 🗑 Remove** | Clears the layer's painting / removes the layer. |
+| **Detail distance** | How far from the camera details are drawn (default 60 m). Further away they thin out and shrink, so there is no hard edge. |
+| **Wind speed / Wind size / Bending** | The waves that run over the grass: how fast, how wide, how far it bends. A [Wind Zone](particles#wind-zones) makes it blow harder and turns it while playing. |
+
+Details sit on the ground, never in a hole, and follow the hills when you reshape them. They have no collider: players walk through grass. On phones, the quality levels draw fewer of them (**Terrain detail density** in Project settings → Graphics: Medium draws 60 %, Low 35 %); scripts change it with `game.quality.detailDensity`.
+
+### Cut holes {/* #holes */}
+
+**🕳 Holes** cuts the ground away under the brush, square by square: the terrain, its collider and its grass are gone there, so things fall through. Put a cave, a tunnel or a pit made of other objects below it. Turn on **Fill** to close holes again; **🗑 Fill all holes** closes every one. Pathfinding does not walk over holes.
 
 **⛰️ Make hills** replaces the terrain with new random hills up to **Hill height** meters (Undo brings the old ones back); **Flatten all** makes it flat again.
 
@@ -78,7 +115,7 @@ Every copy is a real object: a few hundred are fine, thousands slow phones down.
 | Setting | What it does |
 | --- | --- |
 | **Size** | Width and depth in meters. Making it bigger stretches the same hills. |
-| **Detail** | Squares per side: Low (32), Medium (64) or High (128). More detail = smaller bumps possible, but more work for the phone. Changing it keeps the shape. |
+| **Detail** | Squares per side: Low (32), Medium (64) or High (128). More detail = smaller bumps possible, but more work for the phone. Changing it keeps the shape, the paint, the details and the holes. Holes are cut a square at a time, so High makes finer holes. |
 | **Grass / Rock / Snow** | The colors it paints with. Rock goes on steep slopes. |
 | **Snow above** | Snow covers the ground above this height (0 = no snow). |
 | **Textures** | Automatic surface detail on the ground you haven't painted: grass blades and clumps, rough rock on steep slopes, soft snow. The colors still decide the look. Switch it off for a plain, raw-colored terrain — everything you **paint** (Stones, Sand…, and your own images) still shows its texture, so you can texture just the parts you want. |
