@@ -8485,6 +8485,10 @@
               "label": "shadowCaster2d"
             },
             {
+              "value": "pixelPerfectCamera",
+              "label": "pixelPerfectCamera"
+            },
+            {
               "value": "director",
               "label": "director"
             },

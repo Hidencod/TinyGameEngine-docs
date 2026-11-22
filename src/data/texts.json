@@ -292,7 +292,8 @@
   "director": "Plays a Timeline from this object: on its own when the scene starts (Play On Awake), or from events and scripts",
   "sight": "What this object can see: how far, how wide and from where (guards, turrets). The Sees condition uses it",
   "light2d": "Lights sprites and tilemaps in 2D: Global for the whole scene, Spot for a circle or cone round the object, with falloff, a glow in the air and shadows",
-  "shadowCaster2d": "Makes the object block 2D lights that have Shadows on; its shape is its collider's shape"
+  "shadowCaster2d": "Makes the object block 2D lights that have Shadows on; its shape is its collider's shape",
+  "pixelPerfectCamera": "Keeps pixel art crisp: scales the camera's view by a whole number to fit the screen and snaps it to the art's pixels"
  },
  "snippets": {
   "joystick": "Walk around with the on-screen joystick (or WASD / arrow keys).",

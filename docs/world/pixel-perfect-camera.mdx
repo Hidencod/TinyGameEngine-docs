@@ -1,0 +1,46 @@
+---
+title: Pixel Perfect Camera
+description: Keep pixel art crisp on every screen. The Pixel Perfect Camera (as in Unity) scales the view by a whole number, snaps the camera to the art's pixels, and can draw the game at its art's size and scale it up.
+---
+
+# Pixel Perfect Camera
+
+Pixel art looks right when every art pixel covers the same whole number of screen pixels. A plain orthographic camera shows whatever fits its **Ortho size**, so on most screens one art pixel lands on, say, 4.27 screen pixels: some pixels are drawn 4 wide, some 5, and the edges shimmer as the camera moves.
+
+The **Pixel Perfect Camera** component fixes that, the same way Unity's does.
+
+![Left: a plain camera, pixels 4 or 5 screen pixels wide. Middle: Pixel Perfect Camera, every pixel 4 × 4. Right: Upscale Render Texture, the spinning gem drawn in art pixels too](/img/shots/pixel-perfect-compare.webp)
+
+## Add it
+
+1. Pick the game's camera and set its **Projection** to **Orthographic**.
+2. **Add component → Pixel Perfect Camera**.
+3. Set **Assets Pixels Per Unit** to your sprites' **Pixels per meter** (16 if a 16 px tile is 1 m).
+4. Set **Reference Resolution** to the screen size your game is drawn for, in art pixels (320 × 180 is a common one).
+
+The camera's **Ortho size** no longer counts: the view's size now comes from the screen. On a 1920 × 1080 screen a 320 × 180 game is drawn 6 times as big; on 1366 × 768 it's drawn 4 times as big and shows a little more round the edges.
+
+![A pixel-art level through a Pixel Perfect Camera (320 × 180, 16 pixels per unit)](/img/shots/pixel-perfect-game.webp)
+
+## Settings
+
+| Setting | What it does |
+| --- | --- |
+| **Assets Pixels Per Unit** | How many art pixels make one metre: the sprites' and tile sheets' **Pixels per meter**. |
+| **Reference Resolution** | The screen size the game is made for, in art pixels. The zoom is the biggest whole number at which it fits on the screen. |
+| **Upscale Render Texture** | Draws the game at its art's size, then scales it up with hard pixels. Rotated, scaled and moving sprites stay on the art's pixel grid, like an old console. Off: sprites are drawn at the screen's full sharpness, so a rotated sprite shows finer steps. |
+| **Pixel Snapping** | (With Upscale Render Texture off.) Sprites are drawn at positions rounded to the art's pixels, so a slow-moving sprite steps a whole art pixel at a time instead of sliding between them. Physics and positions are not changed, only where they are drawn. |
+| **Crop Frame X / Y** | Show exactly the reference width / height, with black bars at the sides / top and bottom. With both, the game always shows the same area. |
+| **Stretch Fill** | (With both crops on.) Fill the screen keeping the shape, the zoom no longer a whole number. Best with Upscale Render Texture, so the art pixels stay square blocks. |
+
+The camera is always snapped to the art's pixels (to screen pixels when not upscaling), so the scenery doesn't shimmer as it follows the hero.
+
+![Crop Frame X and Y: exactly 320 × 180 art pixels, with black bars round them](/img/shots/pixel-perfect-crop.webp)
+
+## Good to know
+
+- Screen UI isn't affected: it's laid out over the whole screen as before. World-space UI, labels over objects and taps on objects follow the cropped view.
+- [2D lights](./2d-lights) and screen effects work with every setting.
+- It only works on an orthographic camera. On a perspective camera it does nothing.
+- Pick a reference resolution whose shape matches most screens (16:9, such as 320 × 180, 384 × 216, 480 × 270 or 640 × 360). On a phone held sideways (about 20:9) the game shows a bit more to the sides, unless Crop Frame X is on.
+- Sprites with **Filter** set to **Pixel** keep hard edges when drawn bigger.

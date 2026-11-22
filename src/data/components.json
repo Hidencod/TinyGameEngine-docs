@@ -199,6 +199,11 @@
       "icon": "🌓",
       "title": "Shadow Caster 2D",
       "desc": "Makes the object block 2D lights that have Shadows on; its shape is its collider's shape"
+    },
+    "pixelPerfectCamera": {
+      "icon": "▦",
+      "title": "Pixel Perfect Camera",
+      "desc": ""
     }
   }
 }
