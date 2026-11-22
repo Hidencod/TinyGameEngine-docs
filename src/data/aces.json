@@ -7187,6 +7187,46 @@
       ]
     },
     {
+      "id": "object.setSpritePart",
+      "kind": "action",
+      "category": "Object",
+      "label": "Set sprite part",
+      "hint": "A sprite drawn in layers: show another picture on one layer (a face, a hat)",
+      "display": "{object}: {layer} shows {label}",
+      "displayNoObject": null,
+      "icon": "🎭",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "layer",
+          "label": "Layer",
+          "type": "expression",
+          "options": null,
+          "default": "\"Face\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "label",
+          "label": "Picture",
+          "type": "expression",
+          "options": null,
+          "default": "\"Happy\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "object.setSpriteFrame",
       "kind": "action",
       "category": "Object",

@@ -208,7 +208,7 @@
     "spriteSkin": {
       "icon": "🦴",
       "title": "Sprite Skin",
-      "desc": "Bends a sprite with bones: the skin made in the sprite editor's Skin tab, moved by bone objects (Create Bones makes them)"
+      "desc": "Bends a sprite with bones: the skin made in the sprite editor's Skin tab, moved by bone objects (Create Bones makes them); picks the picture each layer of a layered sprite shows"
     },
     "ik2d": {
       "icon": "🦴",

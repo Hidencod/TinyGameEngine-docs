@@ -650,6 +650,20 @@
           "doc": "Sprite: show one frame (0 = the first) and stop its animation. playAnimation() plays again."
         },
         {
+          "name": "setSpritePart",
+          "kind": "method",
+          "sig": "(layer: string, label: string)",
+          "type": "void",
+          "doc": "Sprite drawn in layers: show another picture on a layer, e.g. setSpritePart(\"Face\", \"Angry\") (Unity's Sprite Resolver)."
+        },
+        {
+          "name": "getSpritePart",
+          "kind": "method",
+          "sig": "(layer: string)",
+          "type": "string",
+          "doc": "Sprite drawn in layers: the label of the picture a layer shows."
+        },
+        {
           "name": "getSpriteFrame",
           "kind": "method",
           "sig": "()",

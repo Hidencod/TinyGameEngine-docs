@@ -1,13 +1,13 @@
 ---
 title: 2D Animation (bones)
-description: Bend a sprite with bones, like Unity's 2D Animation. Draw bones in the sprite editor's Skin tab, add a Sprite Skin, animate the bones with Timelines played by an Animator, and reach for targets with IK 2D.
+description: Bend a sprite with bones, like Unity's 2D Animation. Draw bones in the sprite editor's Skin tab, draw characters in layers with swappable parts, add a Sprite Skin, animate the bones with Timelines played by an Animator, and reach for targets with IK 2D.
 ---
 
 # 2D Animation (bones)
 
 A frame-by-frame sprite needs a new drawing for every pose. With bones you draw the character **once**, put bones inside it, and move the bones: the picture bends with them. This is how Unity's 2D Animation works, and it works the same way here.
 
-![A character skinned to ten bones walking (Animator + Timelines), a second one reaching for a balloon (Limb IK) and a vine reaching for a circling orb (CCD IK)](/img/shots/2d-animation-game.webp)
+![A layered character skinned to ten bones walking (Animator + Timelines), a second one with a sleepy face reaching for a balloon (Limb IK) and a vine reaching for a circling orb (CCD IK)](/img/shots/2d-animation-game.webp)
 
 It takes four steps:
 
@@ -18,7 +18,20 @@ It takes four steps:
 
 ## 1. Skin the sprite
 
-Open the sprite in the sprite editor (the Sprite component's **Edit** button) and go to the **Skin** tab. It has four modes.
+Open the sprite in the sprite editor (the Sprite component's **Edit** button) and go to the **Skin** tab. It has five modes.
+
+### Layers
+
+A character can be one picture, or drawn in **parts**, the way Unity imports a character from a PSD's layers. Draw each part (an arm, a leg, the body, the head) in its **own frame** of the sheet, at its place on the character: every frame is the whole character's size, and the parts line up when they're laid over each other. Then, in **Layers**, go to a part's frame in the strip and press **＋ Layer**.
+
+- Each layer gets **its own mesh and weights**, so an arm never pulls the body or the head along, even where they overlap.
+- Layers draw **back to front** in the order of their chips: **↓** sends the picked layer back, **↑** brings it forward (the far arm behind the body, the near arm in front).
+- Tap a part of the picture to pick its layer. **Rename** and **Delete** act on the picked layer.
+- A layer can hold **several pictures**, like Unity's Sprite Library: go to another frame (another face) and press **＋** next to the layer's pictures. Tap a picture to show it here; **Picture** renames or deletes it. The first one is what objects show unless they pick another (see [Swap parts](#swap-parts)).
+
+![Layers: the Face layer picked, showing its Wow picture; the other layers are faded](/img/shots/2d-animation-layers.webp)
+
+Without layers, the whole frame is one mesh and every frame of the sheet uses it.
 
 ### Bones
 
@@ -32,17 +45,17 @@ Draw the **root bone first** (the hips or the body), then everything that hangs 
 
 ### Geometry
 
-**Auto Geometry** covers every drawn part of the picture with a mesh of small squares (**Fine**, **Normal** or **Coarse**). Parts drawn apart, like two legs with a gap between them, get separate pieces, so one leg never drags the other along.
+**Auto Geometry** covers every drawn part of the picture with a mesh of small squares (**Fine**, **Normal** or **Coarse**). Parts drawn apart, like two legs with a gap between them, get separate pieces, so one leg never drags the other along. With layers, every picture of every layer gets its own mesh; pick a layer's chip to see only its mesh.
 
 :::tip
-Leave a gap wider than two of the mesh's squares between limbs that should move on their own (legs, an arm beside the body). Where parts touch, or come closer than that, the mesh joins them.
+Leave a gap wider than two of the mesh's squares between limbs that should move on their own (legs, an arm beside the body). Where parts touch, or come closer than that, the mesh joins them. Parts that touch or overlap are easiest as [layers](#layers).
 :::
 
 ### Weights
 
 How much each bone moves each part of the mesh. **Auto Weights** gives every point to the bones nearest to it *along the mesh* (round through the hips, not straight across to the other leg). Pick a bone to see its share; nothing picked shows every bone's colour.
 
-To fix a joint by hand, pick a bone and paint: **＋** gives the bone more, **－** takes it away; the slider sets the brush size. Where a joint touches another part (a shoulder touching the head or the body), Auto Weights lets the limb pull that part along: paint the head back to **Head** and the body back to **Body**. Start a limb's bone at the middle of its joint (the shoulder's centre), so the joint turns in place. Once you have painted, adding or moving bones no longer redoes the weights (press **Auto Weights** to start over).
+To fix a joint by hand, pick a bone and paint: **＋** gives the bone more, **－** takes it away; the slider sets the brush size. With layers, the brush paints the picked layer only. Without layers, where a joint touches another part (a shoulder touching the head or the body), Auto Weights lets the limb pull that part along: paint the head back to **Head** and the body back to **Body**. Start a limb's bone at the middle of its joint (the shoulder's centre), so the joint turns in place. Once you have painted, adding or moving bones no longer redoes the weights (press **Auto Weights** to start over).
 
 ![Weights: the right thigh picked, its share shown in its colour](/img/shots/2d-animation-weights.webp)
 
@@ -52,7 +65,7 @@ Drag bones to turn them and see the picture bend. Nothing here is saved: **Reset
 
 ![Preview: the right leg and arm turned, the head tilted](/img/shots/2d-animation-preview.webp)
 
-**Save** keeps the skin with the picture. If you saved bones without a mesh, Auto Geometry and Auto Weights are done for you. Every frame of a sheet uses the same skin.
+**Save** keeps the skin with the picture. If you saved bones without a mesh, Auto Geometry and Auto Weights are done for you.
 
 ## 2. Add a Sprite Skin
 
@@ -64,15 +77,30 @@ Pick the sprite object, **Add component → Sprite Skin**, then press **Create B
 | **Reset Pose** | Puts every bone object back where the bone is drawn. |
 | **Edit Skin** | Opens the sprite editor on the Skin tab. |
 
-The bone names on the component pick their objects. In the Scene view the bones show as orange kites; click one to pick it.
+The bone names on the component pick their objects. In the Scene view the bones show as orange kites; click one to pick it. A sprite drawn in layers shows them without a Sprite Skin too (at rest); it needs the Sprite Skin to bend.
 
 ![A skinned robot picked: the Sprite Skin lists its bones](/img/shots/2d-animation-editor.webp)
 
 Bones turn about **Z** (the 2D view's rotation). They can move and scale too.
 
+### Swap parts
+
+For each layer with several pictures, the Sprite Skin has a picker (Unity's Sprite Resolver): each object shows its own pick, so one drawing makes a whole cast (another face, hat or weapon each).
+
+![The Sprite Skin of the second robot: its Face picker set to another picture](/img/shots/2d-animation-parts.webp)
+
+While the game runs, change it with the **Set sprite part** action (object, layer, picture), or in a script:
+
+```js
+entity.setSpritePart("Face", "Wow");
+if (entity.getSpritePart("Face") === "Sleepy") { /* … */ }
+```
+
+The demo above shows **Wow** while the robot is in the air and **Happy** on the ground: two events, **Is on the ground** (inverted) → Set sprite part Face to Wow, and **Is on the ground** → Happy.
+
 ## 3. Animate the bones
 
-Animate bones with a [Timeline](./timeline): add **Move** tracks for the bones (target: the bone's name, property **Rotation Z**), key them, and loop the Timeline. **Record** in the Timeline makes this quick: turn a bone in the scene and a key is made.
+Animate bones with a [Timeline](./timeline): add **Move** tracks for the bones (target: the bone's name, property **Rotation Z**), key them, and loop the Timeline. **Record** in the Timeline makes this quick: turn a bone in the scene and a key is made. With several copies of the character in the scene, the Timeline's preview and Record move the bones of the copy you picked (the one whose Animator plays the Timeline).
 
 Then let an [Animator](./animator) play the Timelines: a state whose **clip** is a Timeline's name plays that Timeline on **this object's own bones** (found by name under it), so ten copies of the character each move their own bones. States blend while they cross-fade, blend trees mix them, and layers and masks work as they do for 3D models (a mask lists bone names).
 
@@ -105,11 +133,11 @@ Timeline keys are the bone's own rotation, not a change from its pose. A bone dr
 | **Iterations** | (CCD) Passes per frame; more is closer, slower. |
 | **Weight** | 0 = the animated pose, 1 = fully solved. Blend it to start and stop reaching. |
 
-Out of reach, the limb points straight at the target. A character flipped with a negative scale still bends the right way.
+Out of reach, the limb points straight at the target. A character flipped with a negative scale still bends the right way. The Scene view solves IK too, so you see the reach while you place the target; the bones keep their own saved rotation (the game starts from it), and a bone you drag with the gizmo shows its own pose until you let go.
 
 ## Good to know
 
 - The bending is done on the CPU for each skinned sprite, so it works with every material, [2D lights](./2d-lights) and normal maps (the light follows the bent picture). Dozens of skinned characters are fine; hundreds of big meshes are not, so pick **Coarse** for crowds.
 - **Flip X / Flip Y** on the Sprite mirror the bent picture (the bone objects aren't mirrored). To mirror the bones too, give the object a negative X scale.
 - Collision shapes don't bend with the bones: use a simple collider for the body.
-- IK runs in the game, not in the editor.
+- A layered sprite shows its layers whatever frame it plays: its frames are its parts, not an animation.

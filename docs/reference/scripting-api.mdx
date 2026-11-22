@@ -154,6 +154,8 @@ The entity the script is attached to (also `other` in collisions, and results of
 | `hasAnimation(name: string)` | `boolean` | True if the model (or sprite) has this clip. |
 | `setAnimationSpeed(speed: number)` | `void` | 1 = normal, 0.5 = half, 2 = double. |
 | `setSpriteFrame(frame: number)` | `void` | Sprite: show one frame (0 = the first) and stop its animation. playAnimation() plays again. |
+| `setSpritePart(layer: string, label: string)` | `void` | Sprite drawn in layers: show another picture on a layer, e.g. setSpritePart("Face", "Angry") (Unity's Sprite Resolver). |
+| `getSpritePart(layer: string)` | `string` | Sprite drawn in layers: the label of the picture a layer shows. |
 | `getSpriteFrame()` | `number` | Sprite: the frame being shown (0 = the first). |
 | `getSpriteFrameCount()` | `number` | Sprite: how many frames it has. |
 | `setTile(x: number, y: number, tile: number)` | `void` | Tilemap: paint one cell (counted in tiles, y up) with a tile (0 = the first of the sheet). A negative tile erases it. |
