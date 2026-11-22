@@ -35,14 +35,14 @@ Draw the **root bone first** (the hips or the body), then everything that hangs 
 **Auto Geometry** covers every drawn part of the picture with a mesh of small squares (**Fine**, **Normal** or **Coarse**). Parts drawn apart, like two legs with a gap between them, get separate pieces, so one leg never drags the other along.
 
 :::tip
-Leave a gap of a few pixels between limbs that should move on their own (legs, an arm beside the body). Where parts touch, the mesh joins them.
+Leave a gap wider than two of the mesh's squares between limbs that should move on their own (legs, an arm beside the body). Where parts touch, or come closer than that, the mesh joins them.
 :::
 
 ### Weights
 
 How much each bone moves each part of the mesh. **Auto Weights** gives every point to the bones nearest to it *along the mesh* (round through the hips, not straight across to the other leg). Pick a bone to see its share; nothing picked shows every bone's colour.
 
-To fix a joint by hand, pick a bone and paint: **＋** gives the bone more, **－** takes it away; the slider sets the brush size. Once you have painted, adding or moving bones no longer redoes the weights (press **Auto Weights** to start over).
+To fix a joint by hand, pick a bone and paint: **＋** gives the bone more, **－** takes it away; the slider sets the brush size. Where a joint touches another part (a shoulder touching the head or the body), Auto Weights lets the limb pull that part along: paint the head back to **Head** and the body back to **Body**. Start a limb's bone at the middle of its joint (the shoulder's centre), so the joint turns in place. Once you have painted, adding or moving bones no longer redoes the weights (press **Auto Weights** to start over).
 
 ![Weights: the right thigh picked, its share shown in its colour](/img/shots/2d-animation-weights.webp)
 
