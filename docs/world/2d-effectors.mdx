@@ -1,0 +1,95 @@
+---
+title: 2D effectors
+description: Conveyor belts, fans, magnets and water in 2D games. The Area, Point, Surface and Buoyancy Effector 2D components (as in Unity) push the physics bodies that touch their object's collider.
+---
+
+# 2D effectors
+
+An **effector** is a component that pushes the moving physics bodies touching its object's **Collider**: inside it when the collider is a trigger, against it when it is solid. There are four, the same as Unity's:
+
+| Component | Makes | Collider |
+| --- | --- | --- |
+| **Area Effector 2D** | a fan, an updraft, wind in a corridor | trigger |
+| **Point Effector 2D** | a magnet, a black hole, a blast area | trigger |
+| **Surface Effector 2D** | a conveyor belt | solid |
+| **Buoyancy Effector 2D** | water, lava, any fluid things float or sink in | trigger |
+
+![Left to right: a conveyor belt, an updraft holding balls up, a magnet with two iron balls, and a pool where light crates float and a heavy one sinks](/img/shots/effectors-2d.webp)
+
+Only **Dynamic** bodies are pushed. Forces are in newtons, so a heavier body (its Physics body **Mass**) moves less. The effectors push in the X / Y plane (a 2D game's plane); a Point Effector pulls in every direction.
+
+## Add one
+
+1. Pick the object: a box scaled to the area of the updraft, the pool, the belt.
+2. **Add component →** one of the four. If the object has no Collider, one is added with it (a trigger, or a solid one for the Surface Effector).
+3. A trigger zone usually shouldn't be seen: turn **Visible** off, or lower its **Opacity**.
+
+## Area Effector 2D
+
+Pushes everything inside it one way.
+
+| Setting | What it does |
+| --- | --- |
+| **Use Global Angle** | On: the angle is the world's. Off: it turns with the object (rotate the object to aim the fan). |
+| **Force Angle** | Degrees: 0 pushes right (+X), 90 up, 180 left, 270 down. |
+| **Force Magnitude** | Newtons. More than the weight (9.81 for a body of mass 1) lifts it. |
+| **Force Variation** | Up to this much more or less, at random each frame (gusts). |
+| **Drag** / **Angular Drag** | Slow moving and spinning bodies inside it. With Drag, things don't shoot out of an updraft but hover at its top. |
+
+## Point Effector 2D
+
+Pulls towards the object's middle, or pushes away.
+
+| Setting | What it does |
+| --- | --- |
+| **Force Magnitude** | Newtons. **Negative pulls in** (a magnet), positive pushes away (a blast). |
+| **Force Variation** | Up to this much more or less, at random each frame. |
+| **Distance Scale** | Distances are multiplied by this before the Force Mode divides by them. |
+| **Force Mode** | **Constant**: the same everywhere in it. **Inverse Linear**: force ÷ distance. **Inverse Squared**: force ÷ distance², like gravity. (Within 0.25 m of the middle it stops growing.) |
+| **Drag** / **Angular Drag** | Slow bodies inside it, so they settle at the middle instead of swinging through it. |
+
+The area it works in is its collider: a sphere collider scaled to 8 makes a field 4 m round.
+
+## Surface Effector 2D
+
+A conveyor belt: carries what stands on its surface along the object's **X axis** (right, unless the object is turned; a sloped belt carries up or down the slope).
+
+| Setting | What it does |
+| --- | --- |
+| **Speed** | Metres per second. Negative runs the other way. |
+| **Speed Variation** | Up to this much faster or slower, at random each frame. |
+| **Force Scale** | 0 … 1: how quickly things get up to the belt's speed. 1 is at once; 0.1 takes about half a second. |
+| **Use Friction** | Off (the default): the surface has no friction, so only the belt moves things. |
+| **Use Bounce** | Off (the default): nothing bounces off the surface. |
+
+A character with the **Platformer** or **Top-down** behavior gets the belt's speed added to its own: it walks faster with the belt and slower against it, and stands still on it to be carried.
+
+## Buoyancy Effector 2D
+
+A fluid: things float or sink depending on how heavy they are for their size, slow down in it and drift with its flow.
+
+| Setting | What it does |
+| --- | --- |
+| **Density** | How heavy the fluid is. The lift is Density × the area under the surface × gravity: a 1 × 1 m body of mass 1 floats half under at Density 2, sinks at less than 1, and floats higher in a denser fluid. |
+| **Surface Level** | Where the surface is, in the object's own height: 0.5 is the top of a box, 0 its middle. |
+| **Linear Drag** / **Angular Drag** | Slow bodies in the fluid (only the part under the surface counts). |
+| **Flow Angle** | Degrees, as the Area Effector's: the way the current flows. |
+| **Flow Magnitude** | Newtons on a body all under the surface: a river's current. |
+| **Flow Variation** | Up to this much more or less, at random each frame. |
+
+How much of a body is under is measured from its collider's height; the area is its collider's side-on area (width × height for a box, π r² for a ball).
+
+:::tip The Water object
+For 3D water with waves, splashes and swimming, use the [Water](./water) object instead. The Buoyancy Effector 2D is a plain area, for 2D levels.
+:::
+
+## From scripts
+
+Every setting can be changed while the game runs, for example a fan switched on and off:
+
+```ts
+const fan = game.find('Updraft')?.component('areaEffector2d');
+if (fan) fan.forceMagnitude = fanOn ? 14 : 0;
+```
+
+Or with the event action **Set component setting**.
