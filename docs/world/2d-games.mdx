@@ -69,6 +69,10 @@ A dark cave lit by torches, a night street under lamps: add **Global Light 2D** 
 
 For crisp pixel art on every screen, add a **Pixel Perfect Camera** to the camera: it draws each art pixel as a whole number of screen pixels and snaps the camera to them. See [Pixel Perfect Camera](./pixel-perfect-camera).
 
+## Characters with bones
+
+Instead of drawing every pose, draw a character once, put bones in it and animate the bones: a **Sprite Skin** bends the picture, Timelines played by an Animator move the bones, and **IK 2D** makes hands and feet reach for things. See [2D Animation (bones)](./2d-animation).
+
 ## Build a level
 
 Paint it with a [tilemap](./tilemaps) (use [auto tiles](./tilemaps#auto-tiles) so the edges and corners fit by themselves): grass and earth for the ground, a few wooden tiles for stepping stones, and **gaps** for the player to jump. For rolling hills and round islands, draw the ground along a curve with a [Sprite Shape](./sprite-shape). Put pickups, enemies and the goal on top as sprites. Falling off the bottom is an event: *Player y < −8 → Restart scene* (the template does this).

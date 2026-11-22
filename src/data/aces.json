@@ -8485,6 +8485,14 @@
               "label": "shadowCaster2d"
             },
             {
+              "value": "spriteSkin",
+              "label": "spriteSkin"
+            },
+            {
+              "value": "ik2d",
+              "label": "ik2d"
+            },
+            {
               "value": "pixelPerfectCamera",
               "label": "pixelPerfectCamera"
             },

@@ -1,0 +1,115 @@
+---
+title: 2D Animation (bones)
+description: Bend a sprite with bones, like Unity's 2D Animation. Draw bones in the sprite editor's Skin tab, add a Sprite Skin, animate the bones with Timelines played by an Animator, and reach for targets with IK 2D.
+---
+
+# 2D Animation (bones)
+
+A frame-by-frame sprite needs a new drawing for every pose. With bones you draw the character **once**, put bones inside it, and move the bones: the picture bends with them. This is how Unity's 2D Animation works, and it works the same way here.
+
+![A character skinned to ten bones walking (Animator + Timelines), a second one reaching for a balloon (Limb IK) and a vine reaching for a circling orb (CCD IK)](/img/shots/2d-animation-game.webp)
+
+It takes four steps:
+
+1. **Skin the sprite**: bones, a mesh and weights, in the sprite editor's **Skin** tab.
+2. **Add a Sprite Skin** to the sprite object and press **Create Bones**.
+3. **Animate the bones**: Timelines, played by an [Animator](./animator).
+4. Optionally, **IK 2D** to make a hand or foot reach for something.
+
+## 1. Skin the sprite
+
+Open the sprite in the sprite editor (the Sprite component's **Edit** button) and go to the **Skin** tab. It has four modes.
+
+### Bones
+
+- **Create Bone**: drag across the picture to draw a bone from where you press to where you let go. The new bone hangs from the picked bone; press near the picked bone's end to start right there, so a chain (thigh, shin) is drawn in a row.
+- **Edit Bone**: drag a bone's ends to move them (bones joined to an end move with it); tap a bone to pick it; tap the empty picture to pick nothing.
+- **Rename** and **Delete** act on the picked bone. Bone names matter: the bone objects get them, and animations find bones by name.
+
+Draw the **root bone first** (the hips or the body), then everything that hangs from it.
+
+![Ten bones on a robot: body, head, two legs of two bones and two arms of two bones](/img/shots/2d-animation-bones.webp)
+
+### Geometry
+
+**Auto Geometry** covers every drawn part of the picture with a mesh of small squares (**Fine**, **Normal** or **Coarse**). Parts drawn apart, like two legs with a gap between them, get separate pieces, so one leg never drags the other along.
+
+:::tip
+Leave a gap of a few pixels between limbs that should move on their own (legs, an arm beside the body). Where parts touch, the mesh joins them.
+:::
+
+### Weights
+
+How much each bone moves each part of the mesh. **Auto Weights** gives every point to the bones nearest to it *along the mesh* (round through the hips, not straight across to the other leg). Pick a bone to see its share; nothing picked shows every bone's colour.
+
+To fix a joint by hand, pick a bone and paint: **＋** gives the bone more, **－** takes it away; the slider sets the brush size. Once you have painted, adding or moving bones no longer redoes the weights (press **Auto Weights** to start over).
+
+![Weights: the right thigh picked, its share shown in its colour](/img/shots/2d-animation-weights.webp)
+
+### Preview
+
+Drag bones to turn them and see the picture bend. Nothing here is saved: **Reset** puts every bone back.
+
+![Preview: the right leg and arm turned, the head tilted](/img/shots/2d-animation-preview.webp)
+
+**Save** keeps the skin with the picture. If you saved bones without a mesh, Auto Geometry and Auto Weights are done for you. Every frame of a sheet uses the same skin.
+
+## 2. Add a Sprite Skin
+
+Pick the sprite object, **Add component → Sprite Skin**, then press **Create Bones**. Each bone becomes a child object, nested like the bones (the shin inside the thigh inside the body). They're ordinary objects: move and turn them with the gizmo, set them from events or scripts, animate them. The picture follows.
+
+| Button | What it does |
+| --- | --- |
+| **Create Bones** | Makes the bone objects that are missing (after you add bones in the Skin tab, press it again). |
+| **Reset Pose** | Puts every bone object back where the bone is drawn. |
+| **Edit Skin** | Opens the sprite editor on the Skin tab. |
+
+The bone names on the component pick their objects. In the Scene view the bones show as orange kites; click one to pick it.
+
+![A skinned robot picked: the Sprite Skin lists its bones](/img/shots/2d-animation-editor.webp)
+
+Bones turn about **Z** (the 2D view's rotation). They can move and scale too.
+
+## 3. Animate the bones
+
+Animate bones with a [Timeline](./timeline): add **Move** tracks for the bones (target: the bone's name, property **Rotation Z**), key them, and loop the Timeline. **Record** in the Timeline makes this quick: turn a bone in the scene and a key is made.
+
+Then let an [Animator](./animator) play the Timelines: a state whose **clip** is a Timeline's name plays that Timeline on **this object's own bones** (found by name under it), so ten copies of the character each move their own bones. States blend while they cross-fade, blend trees mix them, and layers and masks work as they do for 3D models (a mask lists bone names).
+
+A usual setup for a platformer character:
+
+| State | Clip (Timeline) | Into it when |
+| --- | --- | --- |
+| Idle | Robo Idle (2 s, loops) | Speed less than 0.3 |
+| Walk | Robo Walk (0.8 s, loops), speed × Speed | Speed greater than 0.3 |
+| Jump | Robo Jump (0.25 s, holds) | Grounded is false |
+
+The Platformer and Top-down behaviors set **Speed**, **Grounded** and **VerticalSpeed** on the Animator by themselves: add parameters with those names and they fill in.
+
+A sprite can have both: an Animator state whose clip is one of the sprite's own animations still plays frames (a blinking face), while Timeline clips move the bones.
+
+:::note
+Timeline keys are the bone's own rotation, not a change from its pose. A bone drawn pointing down from a body pointing up rests at −180°; a step forward is about −150°. Record mode takes care of this for you.
+:::
+
+## 4. IK 2D
+
+**IK 2D** turns a chain of bones so the end of the last one reaches a target, after the animation has posed it: a hand holding something, feet on a slope, a tail following a fly. Put it on the **last bone** of the chain (the forearm, the shin). A Sprite Skin bone reaches with its tip.
+
+| Setting | What it does |
+| --- | --- |
+| **Solver** | **Limb**: two bones (this one and its parent), solved exactly, like an arm or a leg. **CCD**: any number of bones, turned one after the other, like a tail or a vine. |
+| **Target** | The object to reach. Move it, animate it or parent it to something. |
+| **Flip** | (Limb) Bend the middle joint the other way (elbow down instead of up). |
+| **Chain Length** | (CCD) How many bones turn: this one and the ones above it. |
+| **Iterations** | (CCD) Passes per frame; more is closer, slower. |
+| **Weight** | 0 = the animated pose, 1 = fully solved. Blend it to start and stop reaching. |
+
+Out of reach, the limb points straight at the target. A character flipped with a negative scale still bends the right way.
+
+## Good to know
+
+- The bending is done on the CPU for each skinned sprite, so it works with every material, [2D lights](./2d-lights) and normal maps (the light follows the bent picture). Dozens of skinned characters are fine; hundreds of big meshes are not, so pick **Coarse** for crowds.
+- **Flip X / Flip Y** on the Sprite mirror the bent picture (the bone objects aren't mirrored). To mirror the bones too, give the object a negative X scale.
+- Collision shapes don't bend with the bones: use a simple collider for the body.
+- IK runs in the game, not in the editor.

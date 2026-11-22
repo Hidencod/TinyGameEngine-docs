@@ -203,7 +203,17 @@
     "pixelPerfectCamera": {
       "icon": "▦",
       "title": "Pixel Perfect Camera",
-      "desc": ""
+      "desc": "Keeps pixel art crisp: scales the camera's view by a whole number to fit the screen and snaps it to the art's pixels"
+    },
+    "spriteSkin": {
+      "icon": "🦴",
+      "title": "Sprite Skin",
+      "desc": "Bends a sprite with bones: the skin made in the sprite editor's Skin tab, moved by bone objects (Create Bones makes them)"
+    },
+    "ik2d": {
+      "icon": "🦴",
+      "title": "IK 2D",
+      "desc": "Bends a chain of 2D bones so the end of the last one reaches a target object (Limb or CCD solver)"
     }
   }
 }
