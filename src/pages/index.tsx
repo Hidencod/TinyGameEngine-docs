@@ -18,6 +18,7 @@ const GAMES = [
   {to: '/docs/showcase/sun-temple', shot: 'sun-temple-cave', title: 'Sun Temple', text: 'Baked lighting: soft sunset shadows, glowing crystals that light a cave, and light probes.'},
   {to: '/docs/showcase/valley-post', shot: 'valley-post-street', title: 'Valley Post', text: 'A town at sunset: cascaded shadows, Distance Shadowmask, occlusion culling and GPU particles.'},
   {to: '/docs/showcase/lost-keys', shot: 'lost-keys-caves', title: 'Lost Keys', text: 'A 2D platformer: tilemaps, auto and animated tiles, a lift, a ladder, a spring and three keys.'},
+  {to: '/docs/showcase/ember-crypt', shot: 'ember-crypt-play', title: 'Ember Crypt', text: 'A dark crypt lit by a lantern: 2D lights with normal maps on bricks, stone and a rubble mound.'},
 ];
 
 const SCRIPT = `export let speed = 2;   // set per object in the Inspector

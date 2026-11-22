@@ -1,0 +1,98 @@
+---
+title: Ember Crypt
+description: A dark 2D platformer lit only by the hero's lantern. Brick walls, stone floors, braziers and a rubble mound all have normal maps, so their bumps catch the light as you move. Light four braziers to open the gate. Play it in your browser, then open the project and see how it works.
+---
+
+# Ember Crypt
+
+The crypt is dark: only your lantern lights it. Walk into the four cold **braziers** to light them. Once all four burn, the gate at the end opens and you can walk out. Lava pits and a saw stand in the way.
+
+It shows off [2D lights](../world/2d-lights) with [normal maps](../world/2d-lights#normal-maps):
+- the lantern is a Spot light on a child of the hero, with **Normal Maps**, soft **Shadows** and a little **Volumetric** glow,
+- the brick back wall, the stone floor, the braziers, the hero and a [Sprite Shape](../world/sprite-shape) rubble mound each have a normal map, so their bevels light up on the side facing the lantern,
+- each brazier carries its own Light 2D, turned up by an event when you light it.
+
+**The rules are an event sheet: there are no code scripts.** The hero, stone tiles and pickups are Kenney's *New Platformer Pack* (CC0). The bricks, braziers and all the normal maps are drawn by the project's code.
+
+<PlayEmbed
+  src="https://hidencod.github.io/tge-assets/showcase/ember-crypt/"
+  poster="/img/showcase/ember-crypt-play.webp"
+  title="Ember Crypt"
+  size="2.6 MB"
+/>
+
+**Controls:** press **Start**. The joystick runs, the **A** button jumps. On a computer: **A / D** or the **arrow keys** to run, **Space** to jump.
+
+![The start screen says what to do](/img/showcase/ember-crypt-start.webp)
+
+## Open it in the editor
+
+1. Download **[ember-crypt.tge](https://hidencod.github.io/tge-assets/showcase/ember-crypt/ember-crypt.tge)** (470 KB).
+2. Open the editor: **[editor.jeevagames.com](https://editor.jeevagames.com)** on a computer, or the Android app.
+3. On the home screen tap **Import .tge** and pick the file, then open **Ember Crypt (imported)**.
+4. Press **▶ Play**.
+
+![A brazier picked in the editor: its sprite has a Normal map](/img/showcase/ember-crypt-editor.webp)
+
+## How it works
+
+### Lights
+
+| Light | Type | What it does |
+| --- | --- | --- |
+| *Darkness* | Global | Dim blue, intensity 0.16: just enough to see the walls' outlines. |
+| *Lantern* | Spot | A child of the hero at chest height, so it moves with the hero. Radius 7.5 m, **Shadows** (softness 0.45), **Normal Maps** (distance 1.1), **Volumetric** 0.1. |
+| *Brazier* (×4) | Spot | On each brazier. Cold: radius 1.4 m, a faint ember glow. Lit: an event sets its **intensity** to 1.8 and its **outer radius** to 9. Normal Maps and Shadows on. |
+| *Lava glow* (×2) | Freeform | An orange shape over each pit; its rim lights the walls above. |
+
+The **Level** tilemap and the rubble mound are **Shadow Caster 2D**s, so the floor block, the ledges and the mound cast shadows from the lantern and the braziers.
+
+![The rubble mound: a Sprite Shape with fill and edge normal maps](/img/showcase/ember-crypt-rubble.webp)
+
+### Normal maps
+
+Every lit picture has one:
+
+| Picture | Where its normal map is set | How it was made |
+| --- | --- | --- |
+| *Crypt wall* (tilemap, 4 brick tiles) | Tilemap **Normal map** | From the bricks' height: raised bricks, worn edges, deep mortar, cracks. |
+| *Level* (stone tiles) | Tilemap **Normal map** | From the tiles' brightness, laid out like the tile sheet. |
+| *Rubble* (Sprite Shape) | **Fill normal map**, and a **Normal map** on each edge range | From brightness. The edges bend along the outline, and so do their bumps. |
+| *Brazier* | Sprite **Normal map** | From the bowl's and stand's round shapes. |
+| *Player* | Sprite **Normal map** | From brightness. |
+
+Walk past a wall and watch the bricks: the edges facing the lantern light up, the far edges go dark, and it changes as you go.
+
+![The ledges up to the last brazier](/img/showcase/ember-crypt-ledges.webp)
+
+### The rules
+
+- **On clicked** `StartButton`: hide the start screen, `Started` = 1. Until then (and after you win) the hero doesn't take input.
+- **Braziers:** touching a `#brazier` whose `lit` is 0 sets `lit` = 1, plays its *burn* animation, and uses **Set component setting** on its `light2d`: `intensity` to 1.8, `outerRadius` to 9. `Lit` goes up by 1, and its position is stored in `CheckX` and `CheckY` (the place you come back to).
+- **The gate:** when `Lit` ≥ 4 (**Trigger once**), the `#gate` blocks sparkle and are destroyed, and the camera shakes.
+- **The saw** (`#hazard`) slides back and forth with **Moving platform** and costs a heart. The **Health** behavior knocks you back and keeps you safe for 1.5 s.
+- **Lava, or falling below the level**, costs a heart and sets `Respawn` = 1. The `Respawn` event puts the hero back at the last brazier lit.
+- **On death** of the hero: `health` back to 3 and back to the last brazier.
+- **Embers** (coins) and a **heart** on the top ledge are optional.
+- **The way out** (`#goal`): `Won` = 1, confetti, and the win screen with the time and the embers.
+- **The hint line** at the bottom says what to do next.
+
+![Out of the crypt](/img/showcase/ember-crypt-win.webp)
+
+### Saved tests
+
+The project has five [saved gameplay tests](../editor/tests) (**Tests** panel):
+- **Start screen waits:** the hero doesn't move before Start.
+- **Walking into a brazier lights it:** run right from the start; `Lit` = 1 and the checkpoint moves to it.
+- **Lava costs a heart and brings you back.**
+- **The gate stays shut until all four burn:** with `Lit` = 3, the hero stops at the gate.
+- **Four braziers open the gate; the way out wins.**
+
+They also run from the command line: `node tge-test.mjs ember-crypt.tge` (see [From the command line](../editor/tests#from-the-command-line)).
+
+## Make it yours
+
+- Pick the *Lantern* (under *Player* in the Objects list) and change its colour, radius or **Distance**: a low Distance makes the bumps stand out more.
+- Switch **Normal Maps** off on the lantern to see the walls go flat.
+- Give your own sprite a normal map: any normal-map maker's output works, laid out like the picture.
+- Add a fifth brazier: copy one, and change the `4` in the gate event and the HUD text to `5`.

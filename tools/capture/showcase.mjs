@@ -38,6 +38,7 @@ const GAMES = [
   { module: 'sunTemple', slug: 'sun-temple', shots: sunTempleShots, expect: 'Sun shards: 0 / 3' },
   { module: 'valleyPost', slug: 'valley-post', shots: valleyPostShots, expect: 'Parcels: 0 / 6' },
   { module: 'lostKeys', slug: 'lost-keys', shots: lostKeysShots, expect: 'Lost Keys' },
+  { module: 'emberCrypt', slug: 'ember-crypt', shots: emberCryptShots, expect: 'Ember Crypt' },
 ];
 
 const filter = process.argv.slice(2).filter((a) => !a.startsWith('--'));
@@ -362,6 +363,50 @@ async function lostKeysShots({ page, shot, tge, module }) {
   await page.waitForTimeout(5000);
   await page.locator('button[title*="2D"], button[aria-label*="2D"]').first().click({ timeout: 5000 }).catch(() => console.warn('  (no 2D view button found)'));
   await page.waitForTimeout(3000);
+  await shot('editor');
+}
+
+async function emberCryptShots({ page, shot, tge, module }) {
+  await page.goto(`${TGE}/showcase/dev.html?game=${module}`, { timeout: 120000 });
+  await page.waitForFunction(() => window.__tgeReady, null, { timeout: 120000 });
+  await page.waitForTimeout(2500);
+  await shot('start');
+  await page.getByText('Start', { exact: true }).first().click({ force: true });
+  await page.waitForFunction(() => window.__tgeGame.getVar('Started') === 1, null, { timeout: 20000 });
+  // Running right on the keyboard into the first brazier: it lights.
+  await page.keyboard.down('KeyD');
+  await page.waitForTimeout(1700);
+  await page.keyboard.up('KeyD');
+  await page.waitForTimeout(1200);
+  await shot('play');
+  // The hero put down by hand at each part of the crypt; the camera follows.
+  const visit = async (name, x, y, wait = 1800) => {
+    await page.evaluate(([x, y]) => { const p = window.__tgeGame.find('Player'); p.setPosition(x, y, 0); p.setVelocity(0, 0, 0); }, [x, y]);
+    await page.waitForTimeout(wait);
+    await shot(name);
+  };
+  await visit('rubble', 31, 1.5);
+  await visit('ledges', 52, 0.1);
+  // All four lit: the gate opens; walk out.
+  await page.evaluate(() => window.__tgeGame.setVar('Lit', 4));
+  await page.evaluate(() => { const p = window.__tgeGame.find('Player'); p.setPosition(61, 0.1, 0); });
+  await page.keyboard.down('KeyD');
+  await page.waitForFunction(() => window.__tgeGame.getVar('Won') === 1, null, { timeout: 20000 });
+  await page.keyboard.up('KeyD');
+  await page.waitForTimeout(2000);
+  await shot('win');
+  // The project in the editor, in the 2D view.
+  await page.goto(TGE + '/', { timeout: 120000 });
+  await page.waitForSelector('.hm', { timeout: 30000 });
+  await importTge(page, tge);
+  await page.locator('.hm-card, .hm-continue', { hasText: 'Ember Crypt' }).first().click({ timeout: 60000 });
+  await page.waitForSelector('.editor.desktop', { timeout: 60000 });
+  await page.waitForTimeout(5000);
+  await page.locator('button[title*="2D"], button[aria-label*="2D"]').first().click({ timeout: 5000 }).catch(() => console.warn('  (no 2D view button found)'));
+  await page.waitForTimeout(3000);
+  // A brazier picked: the Inspector shows its sprite's normal map and its Light 2D.
+  await page.getByText('Brazier', { exact: true }).first().click({ timeout: 5000 }).catch(() => console.warn('  (no Brazier in the list)'));
+  await page.waitForTimeout(1500);
   await shot('editor');
 }
 
