@@ -13584,6 +13584,25 @@
       "params": []
     },
     {
+      "id": "probe.refresh",
+      "kind": "action",
+      "category": "Graphics",
+      "label": "Refresh reflection probe",
+      "hint": "Capture its surroundings again (any Refresh mode)",
+      "display": "Refresh reflection probe {object}",
+      "displayNoObject": null,
+      "icon": "🔮",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
       "id": "camera.setDrawLayer",
       "kind": "action",
       "category": "Camera",

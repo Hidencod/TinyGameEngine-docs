@@ -49,6 +49,13 @@
           "doc": "A camera: true while it draws objects on this layer (its Draw <layer> switch). False on an object without a camera."
         },
         {
+          "name": "refreshProbe",
+          "kind": "method",
+          "sig": "()",
+          "type": "void",
+          "doc": "A reflection probe: capture its surroundings again (next frame), e.g. after lights change or a door opens. Any Refresh mode."
+        },
+        {
           "name": "setDrawLayer",
           "kind": "method",
           "sig": "(layer, draw)",
