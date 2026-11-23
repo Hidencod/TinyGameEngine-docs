@@ -136,7 +136,7 @@ The project’s **Max particles** setting caps all effects together. See [Perfor
 
 Set **Simulate On** to **GPU** for effects with tens of thousands of particles or more: snow over a whole level, a waterfall, a galaxy, sparks by the hundred thousand. It is the same Particle System with the same settings, but once a particle is born the graphics card moves it, ages it and draws it, so a million particles can run at full speed on a desktop.
 
-Particles are born the same way: every **Shape**, **Burst** and start value, and **Emit particles with values**, work as on the CPU. The graphics card makes the new particles itself too, so a burst of 500,000 costs the game no more than a burst of 5. Only these are still made one by one on the CPU (up to 65,536 a frame): a **Mesh** shape, **Emit particles with values**, and particles a sub emitter makes from its parent's.
+Particles are born the same way: every **Shape**, **Burst** and start value, and **Emit particles with values**, work as on the CPU. The graphics card makes the new particles itself too, so a burst of 500,000 costs the game no more than a burst of 5. That includes a **Mesh** shape (of up to 65,536 triangles) and the bursts a GPU sub emitter fires from its parent's particles (8 or more at a time; a few at a time are made on the CPU, which is quicker for so few). Only these are still made one by one on the CPU (up to 65,536 a frame): **Emit particles with values**, a Mesh shape on a GPU sub emitter, and a Mesh shape with more triangles than that.
 
 The graphics card then runs these modules:
 
