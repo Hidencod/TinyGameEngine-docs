@@ -175,6 +175,11 @@
       "title": "Decal projector",
       "desc": ""
     },
+    "spriteMask": {
+      "icon": "🎭",
+      "title": "Sprite mask",
+      "desc": ""
+    },
     "videoPlayer": {
       "icon": "🎞️",
       "title": "Video player",

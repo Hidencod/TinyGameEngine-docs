@@ -1,0 +1,45 @@
+---
+title: Sprite Mask
+description: Show sprites, tilemaps and sprite shapes only inside a shape, or only outside it. Unity's Sprite Mask and Mask Interaction.
+---
+
+# Sprite Mask
+
+A **Sprite Mask** is an invisible shape. Sprites, tilemaps and sprite shapes can be set to show **only inside** the masks (a lantern's circle of light, a keyhole, a porthole, a health bar filling up) or **only outside** them (a hole cut in fog or darkness). It is Unity's Sprite Mask.
+
+![A dark cave: the player carries a lantern, a circle Sprite Mask. The darkness is Visible Outside Mask, so the lantern cuts a hole in it, and a coin that is Visible Inside Mask shows only inside the circle](/img/shots/sprite-mask.webp)
+
+## Add one
+
+**Objects → ＋ Add → Sprite Mask** makes a 2 m circle. Scale the object to size it, or make it a child of the player so it follows them.
+
+Then, on each sprite, tilemap or sprite shape that the mask should affect, set **Mask interaction**:
+
+| Mask interaction | What it does |
+| --- | --- |
+| **None** | Draws as usual: masks do nothing to it. |
+| **Visible Inside Mask** | Draws only where a mask is. |
+| **Visible Outside Mask** | Draws only where no mask is. |
+
+Masks that overlap add up: inside one or the other counts as inside.
+
+## Settings
+
+| Setting | What it does |
+| --- | --- |
+| **Sprite** | A sprite whose picture is the mask's shape: the pixels at least as opaque as **Alpha cutoff**. None: the **Shape**. |
+| **Shape** | Without a sprite: a 1 m **Circle** or **Square**. |
+| **Frame** | Which frame of the sprite. |
+| **Pixels per meter** | How big the sprite's picture is, as on a [Sprite](sprites). 0 = automatic. |
+| **Alpha cutoff** | How opaque a pixel of the sprite must be to be inside the mask (0 to 1). |
+| **Custom range** | Off: the mask works on everything with a Mask interaction. On: only on those whose **Order in layer** is from **Back order** to **Front order**. |
+
+The mask itself draws nothing in the game. In the editor its outline is drawn in orange, and the masking shows in the scene view too, so you can place it.
+
+### Custom range
+
+Use it when two masks must not mix: a porthole that shows the sea (order 10) and a lantern that shows the coins (order 0). Give the porthole Back and Front order 10 and the lantern 0, and each one only opens its own things.
+
+:::tip
+To fade something in a circle, combine a mask with [2D lights](2d-lights): the mask decides where something shows at all, lights decide how bright it is.
+:::

@@ -8604,6 +8604,10 @@
               "label": "forceField"
             },
             {
+              "value": "spriteMask",
+              "label": "spriteMask"
+            },
+            {
               "value": "decalProjector",
               "label": "decalProjector"
             },
