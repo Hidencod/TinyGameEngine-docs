@@ -1,0 +1,76 @@
+---
+title: Video Player
+description: Play a video on a surface, full screen behind or in front of everything, or into a render texture, with its sound from the object. Unity's Video Player.
+---
+
+# Video Player
+
+A **Video Player** plays a video: on a TV in the level, as a cutscene over the whole screen, as a moving background, or into a [render texture](render-textures) for screens that show the same video. It is Unity's Video Player.
+
+![Video Players: a TV showing the video on its surface, a square screen showing it through a render texture with bars above and below, and the same video half see-through behind the scene](/img/shots/video-player.webp)
+
+## Add one
+
+- **Objects → ＋ Add → Video Player** makes an empty object with a Video Player, or
+- **Add component → Video player** on an object that is already there, a box or plane for a screen.
+
+Pick the **Video clip** (an `.mp4` or `.webm` imported in **Files**) and press **Play**. In the editor, a screen shows the video's first frame.
+
+## Settings
+
+| Setting | What it does |
+| --- | --- |
+| **Source** | **Video clip**: a video in the project. **URL**: a web address played instead. The site must allow other sites to play it (CORS), or the picture and sound stay blank. |
+| **Play on awake** | Starts when the object appears. Off: it waits for the **Video** action or `entity.video.play()`. |
+| **Loop** | Starts again at the end. |
+| **Playback speed** | 0.1 to 4 (1 = normal). |
+| **Render mode** | Where the picture goes (below). |
+| **Target texture** | Render Texture mode: the render texture it plays into. |
+| **Alpha** | Camera planes: how see-through the picture is. |
+| **Aspect ratio** | Camera planes and Render Texture: how the picture fits. **Fit Inside** shows all of it, with bars where the shapes differ. **Fit Outside** fills the screen and cuts the sides or the top and bottom. **Fit Vertically / Fit Horizontally** fill the height / the width. **Stretch** fills it all and squashes the picture. **No Scaling** draws it pixel for pixel. |
+| **Audio output** | **None**, **Direct** (the same everywhere) or **3D (from the object)** (louder when you are near it, from its side). |
+| **Volume / Mute** | The video's sound. |
+| **Mixer group** | The [audio mixer](sound#the-audio-mixer) group it plays through. |
+| **Full volume within / Silent past** | 3D sound: full volume within this many meters, fading out to silent past the second. |
+
+### Render modes
+
+| Render mode | Where the picture goes |
+| --- | --- |
+| **Material Override** | The object's own surface: its material shows the video instead of its texture (the material's color still tints it). Use a box or a plane; the **Unlit** style shows the video at its own brightness. |
+| **Camera Far Plane** | The whole screen, behind everything in the scene: a moving background. |
+| **Camera Near Plane** | The whole screen, in front of everything: cutscenes, intros. Turn **Alpha** down to see the game through it. |
+| **Render Texture** | A [render texture](render-textures). Every surface and UI Image that shows that render texture shows the video, so many screens can share one video. |
+| **API Only** | Nowhere: only the sound and the events. |
+
+The camera planes are drawn for the game's camera, not for cameras that draw into render textures.
+
+## Events and scripts
+
+| Event | What it does |
+| --- | --- |
+| **Video** (action) | *Play*, *Pause*, *Restart* or *Stop* (back to the start, not playing). |
+| **Set video** (action) | Sets the **Time** (seconds), **Speed**, **Volume** or **Loop**. |
+| **On video finished** (condition) | The video reached its end. With Loop on, it fires each time round. |
+| **Video is playing** (condition) | The video is playing now. |
+
+In a script, `entity.video` controls the Video Player:
+
+```js
+const tv = game.find('Tv');
+tv.video.play();
+tv.video.time = 12;          // jump to 12 s
+tv.video.speed = 2;
+tv.video.volume = 0.5;
+tv.video.loop = false;
+game.log(tv.video.time, tv.video.length, tv.video.playing);
+game.on('videoFinished', (e) => game.log(e.entity.name + ' finished'));
+```
+
+The game's pause pauses its videos too, and they go on when it goes on.
+
+:::tip
+Phones only let a game start a video with sound after the player has touched the screen. Until then the video plays without sound, and the sound comes in at the first tap or key press. Keep videos short and small (a few seconds at 480p): the whole file is part of the game.
+:::
+
+A material's **Video** ([Shapes and materials](shapes-and-materials#video)) is the simpler way: always muted, always looping, shared by every object that shows it.

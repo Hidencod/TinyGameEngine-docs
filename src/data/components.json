@@ -170,6 +170,16 @@
       "title": "Wind zone",
       "desc": ""
     },
+    "decalProjector": {
+      "icon": "🩹",
+      "title": "Decal projector",
+      "desc": ""
+    },
+    "videoPlayer": {
+      "icon": "🎞️",
+      "title": "Video player",
+      "desc": ""
+    },
     "cloth": {
       "icon": "🚩",
       "title": "Cloth",
@@ -214,6 +224,26 @@
       "icon": "🦴",
       "title": "IK 2D",
       "desc": "Bends a chain of 2D bones so the end of the last one reaches a target object (Limb or CCD solver)"
+    },
+    "areaEffector2d": {
+      "icon": "💨",
+      "title": "Area Effector 2D",
+      "desc": ""
+    },
+    "pointEffector2d": {
+      "icon": "🧲",
+      "title": "Point Effector 2D",
+      "desc": ""
+    },
+    "surfaceEffector2d": {
+      "icon": "➡",
+      "title": "Surface Effector 2D",
+      "desc": ""
+    },
+    "buoyancyEffector2d": {
+      "icon": "🌊",
+      "title": "Buoyancy Effector 2D",
+      "desc": ""
     }
   }
 }

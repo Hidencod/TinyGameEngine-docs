@@ -4030,6 +4030,44 @@
       "params": []
     },
     {
+      "id": "object.onVideoFinished",
+      "kind": "condition",
+      "category": "Object",
+      "label": "On video finished",
+      "hint": "Its Video Player reached the end",
+      "display": "On {object} video finished",
+      "displayNoObject": null,
+      "icon": "🏁",
+      "description": "",
+      "isTrigger": true,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
+      "id": "object.videoPlaying",
+      "kind": "condition",
+      "category": "Object",
+      "label": "Video is playing",
+      "hint": "Its video is playing now",
+      "display": "{object} video is playing",
+      "displayNoObject": null,
+      "icon": "🎞️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": []
+    },
+    {
       "id": "object.onAnimationFinished",
       "kind": "condition",
       "category": "Object",
@@ -5886,7 +5924,7 @@
       "kind": "action",
       "category": "Object",
       "label": "Video",
-      "hint": "Play, pause or restart the video on its surface",
+      "hint": "Play, pause, restart or stop its video",
       "display": "{action} the video on {object}",
       "displayNoObject": null,
       "icon": "🎞️",
@@ -5915,9 +5953,70 @@
             {
               "value": "restart",
               "label": "Restart"
+            },
+            {
+              "value": "stop",
+              "label": "Stop"
             }
           ],
           "default": "play",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.videoSet",
+      "kind": "action",
+      "category": "Object",
+      "label": "Set video",
+      "hint": "Time, speed, volume or loop of its Video Player",
+      "display": "Set {object} video {what} to {value}",
+      "displayNoObject": null,
+      "icon": "🎞️",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "what",
+          "label": "Setting",
+          "type": "choice",
+          "options": [
+            {
+              "value": "time",
+              "label": "Time (seconds)"
+            },
+            {
+              "value": "speed",
+              "label": "Speed"
+            },
+            {
+              "value": "volume",
+              "label": "Volume (0 … 1)"
+            },
+            {
+              "value": "loop",
+              "label": "Loop (1 on, 0 off)"
+            }
+          ],
+          "default": "time",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "number",
+          "options": null,
+          "default": "0",
           "optional": false,
           "hint": null,
           "varScope": null
@@ -8505,6 +8604,14 @@
               "label": "forceField"
             },
             {
+              "value": "decalProjector",
+              "label": "decalProjector"
+            },
+            {
+              "value": "videoPlayer",
+              "label": "videoPlayer"
+            },
+            {
               "value": "windZone",
               "label": "windZone"
             },
@@ -8523,6 +8630,22 @@
             {
               "value": "shadowCaster2d",
               "label": "shadowCaster2d"
+            },
+            {
+              "value": "areaEffector2d",
+              "label": "areaEffector2d"
+            },
+            {
+              "value": "pointEffector2d",
+              "label": "pointEffector2d"
+            },
+            {
+              "value": "surfaceEffector2d",
+              "label": "surfaceEffector2d"
+            },
+            {
+              "value": "buoyancyEffector2d",
+              "label": "buoyancyEffector2d"
             },
             {
               "value": "spriteSkin",

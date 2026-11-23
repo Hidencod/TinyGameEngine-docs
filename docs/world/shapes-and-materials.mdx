@@ -105,6 +105,7 @@ Pick a **Video** (an `.mp4` or `.webm` you imported in Files) and it plays on th
 - The video starts when the game starts, is **muted** and **loops**. Phones only let a game start video by itself when it is muted, and some wait for the first tap.
 - **Play, pause or restart** it while playing with the action **Video** on the object (*Play*, *Pause*, *Restart*), or `entity.video.play()`, `.pause()`, `.restart()` and `entity.video.playing` in a script. Objects showing the same video share it, so pausing one pauses all.
 - It does not work with **Custom shader** materials.
+- For sound, play / pause per object, a full-screen video or a render texture, use a [Video Player](video-player) instead.
 - Keep videos short and small (a few seconds at 480 p is plenty): the whole file is loaded into the game, and a game exported as one HTML file carries it inside.
 - The editor view only redraws when something changes, so the video moves for sure when you press Play.
 
