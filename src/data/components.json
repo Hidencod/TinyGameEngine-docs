@@ -175,6 +175,11 @@
       "title": "Decal projector",
       "desc": ""
     },
+    "characterController": {
+      "icon": "🧍",
+      "title": "Character controller",
+      "desc": ""
+    },
     "spriteMask": {
       "icon": "🎭",
       "title": "Sprite mask",

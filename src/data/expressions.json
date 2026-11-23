@@ -547,6 +547,13 @@
       "insert": "inputdevice()"
     },
     {
+      "name": "assetsprogress",
+      "signature": "assetsprogress(key)",
+      "description": "How many of the assets with this name, label or \"folder/\" are loaded, 0 to 1 (for a loading bar)",
+      "category": "Game",
+      "insert": "assetsprogress("
+    },
+    {
       "name": "rayhitname",
       "signature": "rayhitname()",
       "description": "After a \"Raycast\" condition: the name of the object the ray hit (empty when nothing)",

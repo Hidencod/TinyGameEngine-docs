@@ -754,6 +754,12 @@
           "doc": "Model: how far a morph target is applied, 0 to 1."
         },
         {
+          "name": "characterController",
+          "kind": "property",
+          "type": "{move,simpleMove,isGrounded,velocity,collisionFlags}|null",
+          "doc": "Its Character Controller (the CharacterController of Unity): move(x, y, z) moves by an offset now, sliding along walls and climbing steps and slopes, without gravity (add a falling speed times game.dt yourself), and returns {below, sides, above}; simpleMove(xSpeed, zSpeed) walks at a speed with gravity (once a frame); isGrounded, velocity (how fast it really moved), collisionFlags. Null when it has none."
+        },
+        {
           "name": "video",
           "kind": "property",
           "type": "{play,pause,restart,playing}|null",
@@ -1493,10 +1499,16 @@
           "doc": "Draw shapes over the game to check positions and sizes, like Unity Debug.DrawLine and Gizmos: game.debug.drawSphere(enemy.position, 5, \"#ff0000\"), drawLine(a, b, color, seconds), drawRay(origin, direction), drawCircle(center, radius), drawBox(center, size), drawPoint(position). Seconds default to 0 = one frame, so call it every update()."
         },
         {
+          "name": "assets",
+          "kind": "property",
+          "type": "{load,isLoaded,progress,release,preloadScene,names,unloadUnused}",
+          "doc": "Loading assets while the game runs (Unity Addressables). A key is an asset name, a label (Files, ⋮, Labels) or a folder ending in \"/\". await game.assets.load(\"forest\") loads them (resolves with how many); isLoaded(key), progress(key) 0 to 1; release(key) frees the ones nothing shows now; preloadScene(name) loads the assets of a scene in the background so going there is instant; names(key); unloadUnused() releases every On demand asset nothing shows. Assets set to Load: On demand (Files, ⋮, Load) are only loaded when a scene shows them or a script loads them."
+        },
+        {
           "name": "quality",
           "kind": "property",
-          "type": "{level,pixelRatio,shadows,shadowMapSize,shadowDistance,cascades,shadowmaskMode,glow,depthOfField,occlusion,edgeSmoothing,colorFinish,mirrors,glass,lensFlares,effects,antialias,maxParticles,detailDensity}",
-          "doc": "Graphics quality, like Unity QualitySettings: game.quality.level = \"low\" applies one of the quality levels of the project (Project settings, Graphics: Low, Medium and High to start with, add your own), by its id, its name or its position, and resets the single settings; game.quality.level reads the id of the level in force; the single ones change just that: pixelRatio (1), shadows, shadowMapSize (512, 1024, 2048), shadowDistance (meters sun shadows reach, cascades too, 5 to 200: shorter is sharper), cascades (0, 2, 3, 4), shadowmaskMode (\"distanceShadowmask\" or \"shadowmask\", for scenes baked with Lighting Mode Shadowmask), mirrors (picture size, 0 = plain metal), glass, lensFlares, maxParticles, detailDensity (share 0 to 1 of the painted terrain grass and details drawn), and which screen effects are allowed: glow, depthOfField, occlusion, edgeSmoothing, colorFinish (effects = all of them at once). Saved on the device. antialias counts from the next start. A quality level only forbids effects a scene has, it never adds any."
+          "type": "{level,pixelRatio,shadows,shadowMapSize,shadowDistance,cascades,shadowmaskMode,glow,depthOfField,occlusion,edgeSmoothing,colorFinish,volumetricFog,motionBlur,mirrors,glass,lensFlares,effects,antialias,maxParticles,detailDensity}",
+          "doc": "Graphics quality, like Unity QualitySettings: game.quality.level = \"low\" applies one of the quality levels of the project (Project settings, Graphics: Low, Medium and High to start with, add your own), by its id, its name or its position, and resets the single settings; game.quality.level reads the id of the level in force; the single ones change just that: pixelRatio (1), shadows, shadowMapSize (512, 1024, 2048), shadowDistance (meters sun shadows reach, cascades too, 5 to 200: shorter is sharper), cascades (0, 2, 3, 4), shadowmaskMode (\"distanceShadowmask\" or \"shadowmask\", for scenes baked with Lighting Mode Shadowmask), mirrors (picture size, 0 = plain metal), glass, lensFlares, maxParticles, detailDensity (share 0 to 1 of the painted terrain grass and details drawn), and which screen effects are allowed: glow, depthOfField, occlusion, edgeSmoothing, colorFinish, volumetricFog, motionBlur (effects = all of them at once). Saved on the device. antialias counts from the next start. A quality level only forbids effects a scene has, it never adds any."
         },
         {
           "name": "effects",

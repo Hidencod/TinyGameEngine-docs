@@ -996,6 +996,126 @@
       ]
     },
     {
+      "id": "system.preloadScene",
+      "kind": "action",
+      "category": "Scene",
+      "label": "Preload scene",
+      "hint": "Load the assets of a scene in the background, so going there is instant",
+      "display": "Preload scene {scene}",
+      "displayNoObject": null,
+      "icon": "📦",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "scene",
+          "label": "Scene",
+          "type": "scene",
+          "options": null,
+          "default": null,
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.loadAssets",
+      "kind": "action",
+      "category": "Scene",
+      "label": "Load assets",
+      "hint": "Load the assets with a name, label or folder/ (Addressables)",
+      "display": "Load assets {key}",
+      "displayNoObject": null,
+      "icon": "📦",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "key",
+          "label": "Name, label or folder/",
+          "type": "string",
+          "options": null,
+          "default": "\"\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.releaseAssets",
+      "kind": "action",
+      "category": "Scene",
+      "label": "Release assets",
+      "hint": "Free the memory of assets nothing shows now",
+      "display": "Release assets {key}",
+      "displayNoObject": null,
+      "icon": "📦",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "key",
+          "label": "Name, label or folder/ (empty = every unused On demand asset)",
+          "type": "string",
+          "options": null,
+          "default": "\"\"",
+          "optional": true,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "system.assetsLoaded",
+      "kind": "condition",
+      "category": "Scene",
+      "label": "Assets are loaded",
+      "hint": "Every asset with the name, label or folder/ is loaded",
+      "display": "Assets {key} are loaded",
+      "displayNoObject": null,
+      "icon": "📦",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": false,
+      "objectOptional": false,
+      "target": "system",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "key",
+          "label": "Name, label or folder/",
+          "type": "string",
+          "options": null,
+          "default": "\"\"",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "system.restartScene",
       "kind": "action",
       "category": "Scene",
@@ -1889,6 +2009,14 @@
             {
               "value": "colorFinish",
               "label": "Color finish (1 or 0)"
+            },
+            {
+              "value": "volumetricFog",
+              "label": "Volumetric fog (1 or 0)"
+            },
+            {
+              "value": "motionBlur",
+              "label": "Motion blur (1 or 0)"
             },
             {
               "value": "mirrors",
@@ -4049,6 +4177,49 @@
       "params": []
     },
     {
+      "id": "object.characterTouches",
+      "kind": "condition",
+      "category": "Physics",
+      "label": "Character touches",
+      "hint": "Its Character Controller touched ground, a wall or a ceiling in its last move",
+      "display": "{object} character touches {side}",
+      "displayNoObject": null,
+      "icon": "🧍",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "side",
+          "label": "Side",
+          "type": "choice",
+          "options": [
+            {
+              "value": "below",
+              "label": "Ground (below)"
+            },
+            {
+              "value": "sides",
+              "label": "Wall (sides)"
+            },
+            {
+              "value": "above",
+              "label": "Ceiling (above)"
+            }
+          ],
+          "default": "below",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
       "id": "object.videoPlaying",
       "kind": "condition",
       "category": "Object",
@@ -5960,6 +6131,115 @@
             }
           ],
           "default": "play",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.characterMove",
+      "kind": "action",
+      "category": "Physics",
+      "label": "Character move",
+      "hint": "Move its Character Controller, sliding along walls and climbing steps (no gravity)",
+      "display": "Move {object} character by ({x}, {y}, {z}) {per}",
+      "displayNoObject": null,
+      "icon": "🧍",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "x",
+          "label": "X",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Z",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "per",
+          "label": "Amount",
+          "type": "choice",
+          "options": [
+            {
+              "value": "second",
+              "label": "per second"
+            },
+            {
+              "value": "once",
+              "label": "once"
+            }
+          ],
+          "default": "second",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        }
+      ]
+    },
+    {
+      "id": "object.characterSimpleMove",
+      "kind": "action",
+      "category": "Physics",
+      "label": "Character simple move",
+      "hint": "Walk its Character Controller at a speed, with gravity",
+      "display": "{object} character walks at ({x}, {z}) per second",
+      "displayNoObject": null,
+      "icon": "🧍",
+      "description": "",
+      "isTrigger": false,
+      "objectRequired": true,
+      "objectOptional": false,
+      "target": "object",
+      "loop": null,
+      "noInvert": false,
+      "isWait": false,
+      "params": [
+        {
+          "id": "x",
+          "label": "X speed",
+          "type": "number",
+          "options": null,
+          "default": "0",
+          "optional": false,
+          "hint": null,
+          "varScope": null
+        },
+        {
+          "id": "z",
+          "label": "Z speed",
+          "type": "number",
+          "options": null,
+          "default": "0",
           "optional": false,
           "hint": null,
           "varScope": null
@@ -8606,6 +8886,10 @@
             {
               "value": "spriteMask",
               "label": "spriteMask"
+            },
+            {
+              "value": "characterController",
+              "label": "characterController"
             },
             {
               "value": "decalProjector",
