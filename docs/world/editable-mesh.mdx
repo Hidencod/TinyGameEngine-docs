@@ -55,6 +55,21 @@ Every change is one undo step.
 
 The material, shadows and baked lighting settings below work as on any shape.
 
+## Face settings
+
+In **Face** mode, the picked faces get settings of their own (like ProBuilder's per-face materials, vertex colours and UV settings). They show under the operations once a face is picked, and take the values of the first face picked.
+
+| Setting | What it does |
+| --- | --- |
+| **Face material** | A shared material (saved from any object with **Material → Save this as a material…**) for these faces. **Object material** puts them back on the object's own material. One mesh can use as many materials as you like. |
+| **Select same material** | Picks every face that uses the same material as the picked ones. |
+| **Face color** | A colour painted on the faces, mixed with their material (white = none). **Clear** removes it. |
+| **UV offset** | Moves the texture across the faces (in repeats, along u and v). |
+| **UV rotation** | Turns the texture on the faces (degrees). |
+| **UV tiling** | How many times the texture repeats on the faces, on top of **UV scale** (u and v). **Reset UVs** puts all three back. |
+
+Face settings stay with their faces when you extrude, inset or subdivide them: new faces take the settings of the face they came from. Deleting a shared material puts its faces back on the object's material.
+
 ## Collider
 
 A collider set to **Auto** or **Mesh** follows the editable mesh's real faces, so you can walk up a ramp or through an arch you shaped. On a moving rigidbody (or with **Convex**) it becomes a hull around the faces.
