@@ -93,6 +93,19 @@ In **Face** mode, the picked faces get settings of their own (like ProBuilder's 
 
 Face settings stay with their faces when you extrude, inset or subdivide them: new faces take the settings of the face they came from. Deleting a shared material puts its faces back on the object's material.
 
+## UV Editor
+
+**Window → UV Editor** (or **UV Editor** in Face settings) opens a 2D view of the picked faces' texture coordinates (every face when none are picked), drawn over the face's texture. The bright square is the texture once; the faint copies around it show where it repeats.
+
+- **Drag a corner** to move it on the texture. Corners of the same mesh corner at the same spot move together, so faces that share an edge stay joined. **Shift + click** adds corners to the picks.
+- **Drag inside a face** to move the whole face.
+- Hold **Ctrl** while dragging to move in sixteenths.
+- **Drag empty space** to pan, the **mouse wheel** to zoom; **Frame** puts the texture back in view.
+- **90°**, **Flip U**, **Flip V** and **Fit** (scale to fill the texture square) act on the picked corners, or on all shown faces when fewer than two points are picked.
+- **Reset** gives the faces back their projected UVs.
+
+Once a face's corners are moved here, it keeps its own UVs: moving the mesh's corners no longer slides the texture across it, and the UV offset / rotation / tiling rows no longer apply. A face whose corner count changes (a loop cut or bevel through it) goes back to projected UVs.
+
 ## Collider
 
 A collider set to **Auto** or **Mesh** follows the editable mesh's real faces, so you can walk up a ramp or through an arch you shaped. On a moving rigidbody (or with **Convex**) it becomes a hull around the faces.
