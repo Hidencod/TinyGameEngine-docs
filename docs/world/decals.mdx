@@ -1,15 +1,49 @@
 ---
 title: Decals
-description: Stick a bullet hole, blood splat, scorch mark, crack or footprint onto any surface while the game runs.
+description: Project pictures onto surfaces with a Decal Projector (cracks, puddles, road markings), or stick bullet holes, splats and footprints on while the game runs.
 ---
 
 # Decals
 
 A **decal** is a picture stuck onto a surface: a bullet hole in a wall, blood on the floor, a scorch mark after an explosion, a footprint in the mud. It bends around bumps and corners, and it rides along with the object it was put on.
 
-Decals are made while the game runs, from an event or a script. There is nothing to place in the editor.
+There are two kinds:
+- a **Decal Projector**, placed in the editor like any object: a crack on a wall, a puddle, a road arrow, graffiti, a soft shadow under a character;
+- decals **placed while the game runs**, from an event or a script: bullet holes, splats, footprints.
 
-## From an event
+![Decal Projectors: a scorch over two crates (the sides fade out), a road arrow tiled twice on a ramp, a crack on a ball, a shiny puddle with ripples, overlapping splats and a splat on a block that slides under its projector](/img/shots/decal-projector.webp)
+
+## Decal Projector
+
+Unity's **Decal Projector** (URP). It projects a picture onto the surfaces inside its **box**, along the object's forward (−Z, the way a spotlight shines); the picture's top is the object's +Y. The box starts at the object and reaches **Projection Depth** forward.
+
+**+ Add → Decal Projector** puts one half a metre above the surface in the middle of the view, pointing straight down. Move it, turn it and scale it like any object; the green box shows where it reaches.
+
+| Setting | What it does |
+| --- | --- |
+| **Image** | The picture (from Files), with see-through parts. None: the built-in **Look**. |
+| **Look** | Without an image: *Scorch*, *Splat*, *Crack*, *Bullet hole* or *Footprint*, tinted by the Color. |
+| **Color** | A tint over the picture. |
+| **Opacity** | 0 … 1. |
+| **Normal map** / **Normal scale** | Bumps for the picture (ripples in a puddle, cracks with depth). |
+| **Roughness** | 0 shiny (wet), 1 matte. |
+| **Width** / **Height** | The box's size across, in metres (the object's scale multiplies it). |
+| **Projection Depth** | How far forward the box reaches. Everything in it gets the picture, so keep it short to miss what is below. |
+| **Tiling** / **Offset** | Repeat and shift the picture across the box. |
+| **Angle Fade Start** / **End** | Degrees between a surface and the projector: full picture below Start, none past End. With 70 … 90 a floor decal stays off the walls beside it. |
+| **Draw Distance** / **Start Fade** | Not drawn farther than Draw Distance from the camera; it fades out from Start Fade (a part of the distance, 0.9 = the last tenth). |
+| **Order** | Where decals overlap, a higher order draws on top. |
+
+Good to know:
+- It lands on opaque surfaces: shapes, models, terrain. Not on see-through ones (sprites, water, glass) or animated characters.
+- It moves with nothing: the picture stays where the box is. When a surface moves through the box (a door, a moving platform) the picture is projected again each frame, so it slides over it.
+- Each projector costs one draw. It is projected again only when the projector or a surface in its box moves.
+- From events, **Set component setting** changes any of its settings while playing (fade a puddle out with Opacity).
+
+## Placed while the game runs
+
+
+### From an event
 
 Use **Graphics → Place decal**. In a collision event, the defaults already put it where the hit happened (`hitX`, `hitY`, `hitZ`) facing away from the surface (`hitNormalX`, `hitNormalY`, `hitNormalZ`).
 
@@ -26,7 +60,7 @@ On Bullet collides with Wall  →  Place Bullet hole decal
 | **Color** | A tint. Empty = the look's own color (dark for holes, red for splats). |
 | **Lifetime** | Seconds before it fades out. 0 keeps it for good. Default 20. |
 
-## From a script
+### From a script
 
 ```js
 game.addDecal(hit.point, hit.normal, { image: "bulletHole", size: 0.3 })
