@@ -66,4 +66,4 @@ Released assets leave the game's memory: pictures and models leave the graphics 
 
 ## In builds
 
-In a **Web (folder)** build and in Windows and Linux builds, every asset is its own file, so On demand assets are not even read until they are needed. A **single-file** web build (and a game published with a link) carries every asset inside the file, but On demand assets are still not decoded until they are needed, which saves memory and start-up time.
+A game **published with a link** keeps each On demand asset as a file of its own beside the game, so players only download it when the game needs it (the files count toward the published size limit). In a **Web (folder)** build and in Windows and Linux builds, every asset is its own file, so On demand assets are not even read until they are needed. A **single-file** web build carries every asset inside the file, but On demand assets are still not decoded until they are needed, which saves memory and start-up time.
