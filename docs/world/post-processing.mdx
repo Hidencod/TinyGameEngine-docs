@@ -44,11 +44,22 @@ A **profile** is a file in **Files → Profiles** (also **＋ New → Post-proce
 | **Chromatic aberration** | Red and blue edges drift apart toward the sides, like a cheap lens. | **Intensity** |
 | **Temporal anti-aliasing (TAA)** | The smoothest edges: every frame the camera moves a fraction of a pixel and the frames are blended, so edges are smooth and thin things (leaves, grass, wires, far fences) stop crawling. Things that move leave no trails. Used instead of FXAA when both are on. Unity's TAA. | **Sharpness** (against the slight softness) |
 | **Motion blur** | The picture smears as the camera moves or turns, like a real camera. Unity's Motion Blur in Camera Only mode: objects moving past a still camera are not blurred. | **Intensity** (how long the smear is, as a share of the camera's movement in one frame), **Clamp** (longest smear, as a share of the screen) |
+| **Screen space reflections** | Smooth surfaces mirror what is on screen: a polished floor shows the pillars standing on it, a wet street the lamps. Unity HDRP's Screen Space Reflection. | **Intensity**, **Max distance** (how far a reflection reaches, m), **Object thickness** (how thick surfaces count as behind what is seen, m), **Minimum smoothness** (surfaces smoother than this reflect) |
 | **Anti-aliasing (FXAA)** | Smooths jagged edges cheaply. Use it instead of **Smooth edges (antialias)** in Project settings, which is slow when effects are on. | none |
 
-Ambient occlusion, depth of field and volumetric fog are the heavy ones on phones. The rest cost little. Volumetric fog, TAA and motion blur share one extra draw of the scene's depth.
+Ambient occlusion, depth of field and volumetric fog are the heavy ones on phones. The rest cost little. Volumetric fog, TAA and motion blur share one extra draw of the scene's depth; screen space reflections make one more.
 
 ![Motion blur: the pillars smear sideways as the camera turns](/img/shots/motion-blur.webp)
+
+### Screen space reflections
+
+![A smooth floor mirroring the pillars and the block standing on it](/img/shots/screen-space-reflections.webp)
+
+Only **Realistic** materials reflect: smoothness is 1 − their **Roughness**, so a roughness of 0.1 is a near mirror and 0.5 (with the default **Minimum smoothness**) only just reflects. **Metalness** makes the reflection strong even looking straight down and tints it with the surface colour; other surfaces reflect mostly at a glancing angle, like real floors and water. Roughness and metalness maps are not read: the material's own values count.
+
+Only what is on screen can be reflected. Where a reflection would show something off screen, behind the camera or hidden behind another object, it fades out (the floor near the bottom edge of the picture reflects nothing). For a true mirror use the **Mirror** look on a plane instead. The steps of the reflections are smoothest with **Temporal anti-aliasing** on.
+
+The quality level's **Screen space reflections** switch turns it off (Medium and Low do).
 
 ### Volumetric fog
 
