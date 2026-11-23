@@ -1,0 +1,75 @@
+---
+title: Character Controller
+description: A capsule that scripts and events walk around, sliding along walls and climbing steps and slopes, without being pushed by physics. Unity's CharacterController.
+---
+
+# Character Controller
+
+A **Character Controller** is a capsule you move yourself, from a script or with events. It slides along walls, climbs steps and walks up slopes, and stops at slopes that are too steep. Physics never pushes it around. Use it for player characters and NPCs when you want exact control over how they move. It is Unity's CharacterController.
+
+![A Character Controller's capsule (green) around a character, with its settings in the Inspector](/img/shots/character-controller.webp)
+
+## Add one
+
+Select the object, then **Add component → Character controller**. The capsule is its collider, so the object needs no **Collider** or **Physics body**. If it has one, that one is not used. In the editor the capsule is drawn in green.
+
+The object does not turn with the capsule: turn it (or its model) yourself to face where it walks.
+
+## Settings
+
+| Setting | What it does |
+| --- | --- |
+| **Slope limit** | The steepest slope, in degrees, it walks up. Steeper ground stops it like a wall. |
+| **Step offset** | The highest step, in metres, it climbs onto by walking into it (stairs, kerbs). |
+| **Skin width** | The small gap it keeps from what it touches, so it does not get stuck. About a tenth of the radius is good. |
+| **Min move distance** | Moves shorter than this are skipped. Leave it near 0. |
+| **Center** | The capsule's middle, measured from the object's origin. [0, 1, 0] with Height 2 puts the bottom of the capsule at the origin, so the origin is at the feet. |
+| **Radius** | How wide the capsule is. |
+| **Height** | The capsule's full height, from end to end. |
+
+Slope limit, step offset, skin width and min move distance take effect at once, even while the game runs. Changing the capsule's size rebuilds it.
+
+## Move it from a script
+
+```js
+// On the character (an entity script).
+export let speed = 4;
+export let jumpSpeed = 6;
+let fall = 0;
+
+export function update() {
+  const cc = entity.characterController;
+  const x = game.input.axis.x * speed, z = -game.input.axis.y * speed;
+  if (cc.isGrounded) fall = game.input.wasPressed('Space') ? jumpSpeed : -1;
+  else fall -= 9.81 * game.dt;
+  cc.move(x * game.dt, fall * game.dt, z * game.dt);
+}
+```
+
+| | What it does |
+| --- | --- |
+| `move(x, y, z)` | Moves it by this much (metres, along the world's axes) right now. **No gravity is added**: add a falling speed yourself, as above. Returns the collision flags. |
+| `simpleMove(xSpeed, zSpeed)` | Walks it at this speed (metres per second), with gravity added. Call it once per frame. It returns `isGrounded`. It cannot jump. |
+| `isGrounded` | Standing on ground after the last move. |
+| `velocity` | How fast it actually moved in the last move (it is slower than asked when a wall blocks it). |
+| `collisionFlags` | `below` (ground), `sides` (a wall or a slope too steep), `above` (a ceiling) in the last move. |
+
+## Move it with events
+
+| Block | What it does |
+| --- | --- |
+| **Character move** | Move by X, Y, Z, either **per second** (the usual choice, inside an event that runs every frame) or **once**. No gravity. |
+| **Character simple move** | Walk at an X and Z speed, with gravity. |
+| **Character touches** | Condition: it touched the ground, a wall or a ceiling in its last move. |
+| **Is on ground** | Condition: it is standing on something. |
+
+## Character Controller or a Physics body?
+
+| | Character Controller | Physics body + Platformer / Top-down |
+| --- | --- | --- |
+| Moved by | Your script or events | Forces and the behavior |
+| Gravity | Yours to add (or Simple move) | Automatic |
+| Pushed by boxes, explosions | No | Yes |
+| Steps and slopes | Step offset, Slope limit | The behavior's settings |
+
+The ready-made movers (Platformer and Top-down) with **Controller: Kinematic** use the same capsule movement, but with their own controls and gravity.

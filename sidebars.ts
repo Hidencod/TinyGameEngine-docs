@@ -16,7 +16,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category', label: 'Building your world',
-      items: ['world/shapes-and-materials', 'world/editable-mesh', 'world/shaders', 'world/models', 'world/animator', 'world/timeline', 'world/render-textures', 'world/video-player', 'world/layers', 'world/localization', 'world/services', 'world/purchases', 'world/web-requests', 'world/multiplayer', 'world/navmesh', 'world/lighting', 'world/baked-lighting', 'world/occlusion-culling', 'world/post-processing', 'world/terrain', 'world/water', 'world/curve', 'world/decals', 'world/sprites', 'world/tilemaps', 'world/sprite-shape', 'world/sprite-mask', 'world/2d-games', 'world/2d-lights', 'world/pixel-perfect-camera', 'world/2d-animation', 'world/2d-effectors', 'world/cameras-and-lights', 'world/virtual-cameras', 'world/physics', 'world/sound', 'world/particles', 'world/cloth', 'world/ui'],
+      items: ['world/shapes-and-materials', 'world/editable-mesh', 'world/shaders', 'world/models', 'world/animator', 'world/timeline', 'world/render-textures', 'world/video-player', 'world/layers', 'world/localization', 'world/services', 'world/purchases', 'world/web-requests', 'world/multiplayer', 'world/navmesh', 'world/lighting', 'world/baked-lighting', 'world/occlusion-culling', 'world/post-processing', 'world/terrain', 'world/water', 'world/curve', 'world/decals', 'world/sprites', 'world/tilemaps', 'world/sprite-shape', 'world/sprite-mask', 'world/2d-games', 'world/2d-lights', 'world/pixel-perfect-camera', 'world/2d-animation', 'world/2d-effectors', 'world/cameras-and-lights', 'world/virtual-cameras', 'world/physics', 'world/character-controller', 'world/sound', 'world/particles', 'world/cloth', 'world/ui'],
     },
     'behaviors',
     {
