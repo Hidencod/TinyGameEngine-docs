@@ -102,6 +102,8 @@ Face settings stay with their faces when you extrude, inset or subdivide them: n
 - Hold **Ctrl** while dragging to move in sixteenths.
 - **Drag empty space** to pan, the **mouse wheel** to zoom; **Frame** puts the texture back in view.
 - **90°**, **Flip U**, **Flip V** and **Fit** (scale to fill the texture square) act on the picked corners, or on all shown faces when fewer than two points are picked.
+- **Unwrap** (Blender's Smart UV Project): lays the faces out flat for you. Touching faces that face roughly the same way (within 66°) become one piece, each piece is turned to take the least room, and all pieces are packed into the texture square at one size, so the texture looks equally sharp everywhere. Start here, then drag pieces where you want them.
+- **Project from view**: the faces get the texture as the scene view sees them, like a slide projector at the camera. Good for a decal-like picture on a front.
 - **Reset** gives the faces back their projected UVs.
 
 Once a face's corners are moved here, it keeps its own UVs: moving the mesh's corners no longer slides the texture across it, and the UV offset / rotation / tiling rows no longer apply. A face whose corner count changes (a loop cut or bevel through it) goes back to projected UVs.
