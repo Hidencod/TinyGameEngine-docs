@@ -1,6 +1,6 @@
 ---
 title: Terrain
-description: Hills you shape by dragging — raise, lower, smooth, flatten, paint paths, scatter trees, paint grass and cut holes — with physics that follows them.
+description: Hills you shape by dragging — raise, lower, smooth, flatten, paint paths, paint trees, paint grass and cut holes — with physics that follows them.
 ---
 
 # Terrain
@@ -32,7 +32,7 @@ Select the terrain, open **Inspect** and tap **🖌️ Sculpt**. Then drag on th
 | **Smooth** | Rounds off bumps and sharp edges. |
 | **Flatten** | Levels the ground to the height where the drag started — roads, building plots, a flat arena on a hill. |
 | **🎨 Paint** | Paints a surface onto the ground with a soft edge: a dirt path, a sandy beach, a cobbled road, rock or snow patches, more grass. Pick a surface (**Grass, Rock, Dirt, Snow, Stones, Sand**), each with its own texture, and change its **Tint** for any color (dark grass, red rock…). **Auto** erases paint back to the automatic look. |
-| **🌳 Trees** | Sprinkles copies of a 3D model over the ground under the brush — a forest, rocks, bushes. See below. |
+| **🌳 Trees** | Paints trees: 3D models near the camera, flat pictures far away, thousands at a time (Unity's Paint Trees). See below. |
 | **🌿 Details** | Paints grass, flowers and small stones that the terrain draws itself, thousands at a time, swaying in the wind (Unity's Paint Details). See below. |
 | **🕳 Holes** | Cuts holes in the ground — cave mouths, pits, a well. See below. |
 
@@ -56,21 +56,33 @@ Next to the built-in surfaces, **＋ Image** adds a surface made from a picture:
 
 A terrain can have up to **4** image surfaces. Use **seamless** textures (made to repeat without visible edges) — the free ones are. A normal photo shows a seam every time it repeats. Big photos are scaled down to 2048 pixels when you import them, so they stay light on phones.
 
-### Scatter trees and rocks {/* #scatter */}
+### Paint trees {/* #trees */}
 
-With **🌳 Trees**, pick a **Model** (any 3D model in the project — add one first from **Objects → ＋ Add → Free models library…**) and drag over the terrain. Copies stand on the ground with a random turn and size, and skip slopes too steep to stand on.
+**🌳 Trees** paints forests (Unity's Paint Trees). The terrain draws its trees itself, a patch at a time, so thousands cost about as much as a few objects. Near the camera a tree is its 3D model; farther away it becomes a flat picture of itself that turns to face the camera (a **billboard**), and past the **Tree distance** it is not drawn.
+
+![A hilly terrain with 3000 painted trees: models near the camera, billboards on the far hills](/img/shots/terrain-trees.webp)
+
+Each kind of tree is a **prototype**. **＋ Tree** adds one: pick a 3D model (add one first from **Objects → ＋ Add → Free models library…**). Tap a kind's button to paint with it, then drag over the terrain. Trees stand on the ground with a random turn and size, follow the hills when you reshape them, and skip holes and slopes too steep to stand on.
 
 | Setting | What it does |
 | --- | --- |
-| **Density** | How many per 100 m². Going over the same spot again only fills gaps — it never piles them up. |
-| **Size from / to** | Each copy gets a random size in this range. |
-| **Solid** | Copies get a Collider and block the player and [pathfinding](../behaviors#follow) — on for trees and rocks, off for grass and flowers. |
-| **Remove** | The brush removes scattered copies instead of adding them. **🗑 Remove all scattered** clears them all. |
+| **Model** | The kind's 3D model. |
+| **Collider** | Trees of this kind get a trunk (an upright cylinder) that blocks the player, balls and cars, stops rays and [pathfinding](../behaviors#follow). Off for bushes you walk through. |
+| **Trunk radius / Trunk height** | The trunk's size in meters for a tree at scale 1; each tree's scale grows it. |
+| **Erase** | The brush removes trees instead. **This kind only** removes only the chosen kind. |
+| **Density** | Trees per 100 m². Painting over a spot again only fills gaps: it never piles them up. |
+| **Height** | Each tree gets a random scale between Min and Max (1 = the model's own size). |
+| **Lock width to height** | The tree keeps its shape. Turn it off to give it its own random **Width**. |
+| **Random rotation** | Each tree is turned a random way round its trunk. |
+| **Mass place** | Places **Trees** trees of every kind at random over the whole terrain, keeping the ones already there. |
+| **🧽 Clear this kind / 🗑 Remove** | Clears the kind's trees / removes the kind and its trees. **🗑 Clear all trees** clears every tree. |
+| **Tree distance** | How far from the camera trees are drawn (default 400 m). They shrink away before it, so there is no hard edge. |
+| **Billboard start** | Farther than this (default 50 m), trees are drawn as billboards. |
 
-Scattered copies are ordinary objects inside the terrain (they move with it) and are tagged `#scattered`. The terrain's row in the Objects list folds when you scatter, so they don't flood it — tap its ▸ to see them. Each drag is one Undo step. Put `#scattered` in the camera's **Fade tag** and turn on **Fade in way** ([Camera follow](../behaviors#camera-follow)) so trees that block the view turn see-through.
+Each drag is one Undo step. Trees cast and take shadows, billboards too. A billboard is made from the model the first time it is drawn, eight views round it, so it shows the right side of the tree and is lit like the model.
 
 :::tip
-Every copy is a real object: a few hundred are fine, thousands slow phones down. For grass and flowers use **🌿 Details** instead.
+Trees are not objects: events and scripts can't pick them, and they don't fade with **Fade in way**. For a few trees you want to script, place model objects instead. For grass and flowers use **🌿 Details**.
 :::
 
 ### Paint grass and flowers {/* #details */}
