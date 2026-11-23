@@ -2019,6 +2019,10 @@
               "label": "Motion blur (1 or 0)"
             },
             {
+              "value": "screenReflections",
+              "label": "Screen space reflections (1 or 0)"
+            },
+            {
               "value": "mirrors",
               "label": "Mirror picture size (0 = off, 128 to 1024)"
             },
