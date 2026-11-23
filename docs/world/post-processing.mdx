@@ -42,9 +42,13 @@ A **profile** is a file in **Files → Profiles** (also **＋ New → Post-proce
 | **Depth of field** | Blurs what is far from the focus distance. Draws the scene a second time, so it costs speed. | **Focus object** (keeps that object sharp: the focus follows how far it is from the camera), **Focus distance** (m, used when no object is set), **Aperture** (how fast it blurs), **Max blur** |
 | **Vignette** | Darker corners. | **Intensity** |
 | **Chromatic aberration** | Red and blue edges drift apart toward the sides, like a cheap lens. | **Intensity** |
+| **Temporal anti-aliasing (TAA)** | The smoothest edges: every frame the camera moves a fraction of a pixel and the frames are blended, so edges are smooth and thin things (leaves, grass, wires, far fences) stop crawling. Things that move leave no trails. Used instead of FXAA when both are on. Unity's TAA. | **Sharpness** (against the slight softness) |
+| **Motion blur** | The picture smears as the camera moves or turns, like a real camera. Unity's Motion Blur in Camera Only mode: objects moving past a still camera are not blurred. | **Intensity** (how long the smear is, as a share of the camera's movement in one frame), **Clamp** (longest smear, as a share of the screen) |
 | **Anti-aliasing (FXAA)** | Smooths jagged edges cheaply. Use it instead of **Smooth edges (antialias)** in Project settings, which is slow when effects are on. | none |
 
-Ambient occlusion, depth of field and volumetric fog are the heavy ones on phones. The rest cost little.
+Ambient occlusion, depth of field and volumetric fog are the heavy ones on phones. The rest cost little. Volumetric fog, TAA and motion blur share one extra draw of the scene's depth.
+
+![Motion blur: the pillars smear sideways as the camera turns](/img/shots/motion-blur.webp)
 
 ### Volumetric fog
 
@@ -63,7 +67,7 @@ Each pixel looks through the fog up to what it shows (or **Max distance** agains
 | **Light intensity** | How bright the lights make the fog. |
 | **Ambient** | How much the ambient light alone lights the fog. Lower it for dark fog where only the light shafts and lamps show. |
 
-It also draws in the editor's 3D view. The quality level's **Volumetric fog** switch turns it off (Medium and Low do).
+It also draws in the editor's 3D view. The quality level's **Volumetric fog** switch turns it off (Medium and Low do). TAA goes with the level's **Edge smoothing** switch, motion blur with its **Motion blur** switch (Low turns it off).
 
 ## Where it applies: the volume
 
