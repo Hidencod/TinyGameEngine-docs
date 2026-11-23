@@ -58,7 +58,7 @@ With the mouse over the 3D view:
 | Faces | **Flip** | Turns the faces to show the other side. |
 | Edges | **Extrude** | Open border edges only: a new face hangs off each edge, **Extrude (m)** out. |
 | Edges | **Loop cut** | New edge loops (**Loop cuts** of them) across the ring of four-sided faces through the first picked edge, splitting each into strips. The new loops are picked. |
-| Edges | **Bevel** | Each picked edge becomes a slanted face **Bevel (m)** wide, rounding off a hard corner. Works on edges whose ends are corners of three faces (like a box's), one edge per corner; others are skipped. |
+| Edges | **Bevel** | Each picked edge becomes a strip **Bevel (m)** wide, taking off the hard edge. **Bevel segments** 1 gives a flat slant; more give a rounded edge. Edges that meet are fine: pick every edge of a box (**Ctrl+A**) for a rounded box, with smooth corner patches where three bevels meet. Edges on an open border are skipped. |
 | Edges | **Split** | A new corner in the middle of each edge. |
 | Edges | **Bridge** | Two open border edges: a face across the gap between them. |
 | Vertices | **Merge** | Joins the picked corners into one at their middle. |
