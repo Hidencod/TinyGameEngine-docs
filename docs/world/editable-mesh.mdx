@@ -45,6 +45,7 @@ With the mouse over the 3D view:
 | **Alt + click** | Pick a whole loop: in Vertex and Edge mode the edge loop through the edge you click near (it runs on through corners where four four-sided faces meet); in Face mode the ring of faces across the edge you click near. **Shift + Alt + click** adds it. |
 | **Ctrl + R** | Loop cut through the edge under the mouse: **Loop cuts** new loops around the ring of four-sided faces it crosses. |
 | **Ctrl + B** | Bevel the picked edges by **Bevel (m)**. |
+| **M** | Merge the picked corners (where **Merge at** says), or collapse the picked edges or faces. |
 | **A · Alt+A · Ctrl+I** | Pick everything · nothing · the rest. |
 | **X** or **Delete** | Delete the picks. |
 
@@ -55,13 +56,16 @@ With the mouse over the 3D view:
 | Faces | **Extrude** | Pushes the faces out along their direction by **Extrude (m)**, with walls joining them to the rest. Faces that touch stay joined. |
 | Faces | **Inset** | A smaller copy of each face inside it, **Inset (m)** in from its sides, joined by a ring of faces. Inset, then extrude, makes a window or a raised panel. |
 | Faces | **Subdivide** | Splits each face from the middle of its sides (a square becomes four). |
+| Faces | **Bridge** | Two faces with as many corners, apart: both go and a tube of faces joins their outlines. Inset the top and bottom of a block, then bridge the two inner faces, for a hole right through it. |
+| Faces | **Merge** | Collapses each group of touching faces into one corner at its middle (Blender's Collapse): a box's top becomes the tip of a pyramid. |
 | Faces | **Flip** | Turns the faces to show the other side. |
 | Edges | **Extrude** | Open border edges only: a new face hangs off each edge, **Extrude (m)** out. |
 | Edges | **Loop cut** | New edge loops (**Loop cuts** of them) across the ring of four-sided faces through the first picked edge, splitting each into strips. The new loops are picked. |
 | Edges | **Bevel** | Each picked edge becomes a strip **Bevel (m)** wide, taking off the hard edge. **Bevel segments** 1 gives a flat slant; more give a rounded edge. Edges that meet are fine: pick every edge of a box (**Ctrl+A**) for a rounded box, with smooth corner patches where three bevels meet. Edges on an open border are skipped. |
 | Edges | **Split** | A new corner in the middle of each edge. |
-| Edges | **Bridge** | Two open border edges: a face across the gap between them. |
-| Vertices | **Merge** | Joins the picked corners into one at their middle. |
+| Edges | **Bridge** | Two loops or chains of open border edges with as many edges each (two holes, two open ends): a band of faces joins them, lined up so it doesn't twist. Two edges that share a corner get a triangle across them. |
+| Edges | **Merge** | Collapses each chain of picked edges into one corner at its middle. |
+| Vertices | **Merge** | Joins the picked corners into one: at their middle, at the first picked or at the last picked (**Merge at**). |
 | Vertices | **Weld** | Joins every pair of corners closer than 1 cm (after moving corners onto each other). |
 | Any | **Delete** (or the **Delete** key) | Removes what is picked, and the faces that use it. |
 | Any | **Select all** | Picks everything of the current kind. |
