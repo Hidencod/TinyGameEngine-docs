@@ -27,6 +27,24 @@ Corners hidden behind the mesh are drawn faintly, and taps only pick what you ca
 
 Every change is one undo step.
 
+### Keyboard (like Blender's edit mode)
+
+With the mouse over the 3D view:
+
+| Keys | What they do |
+| --- | --- |
+| **Tab** | Edit mesh / Done (on a selected editable mesh). |
+| **1 · 2 · 3** | Pick vertices · edges · faces. |
+| **G · R · S** | Move · rotate · scale the picks with the mouse, no handle needed. |
+| then **X · Y · Z** | Lock to that axis (**Shift + X / Y / Z**: to the plane without it). The same key again lets go. |
+| then type a number | An exact amount: metres, degrees or times (**-** flips it). |
+| hold **Ctrl** · **Shift** | Snap (0.25 m, 15°, 0.25×) · move a tenth as far, for fine work. |
+| **Click** or **Enter** · **Esc** or **right-click** | Keep · put it back as it was. |
+| **E** | Extrude the picked faces (or open border edges) and pull the copy out along the faces' normal; type a number for an exact length. **X / Y / Z** pulls it another way. |
+| **I** | Inset the picked faces (by **Inset (m)**). |
+| **A · Alt+A · Ctrl+I** | Pick everything · nothing · the rest. |
+| **X** or **Delete** | Delete the picks. |
+
 ## Operations
 
 | Picking | Button | What it does |
