@@ -46,6 +46,7 @@ With the mouse over the 3D view:
 | **Ctrl + R** | Loop cut through the edge under the mouse: **Loop cuts** new loops around the ring of four-sided faces it crosses. |
 | **Ctrl + B** | Bevel the picked edges by **Bevel (m)**. |
 | **M** | Merge the picked corners (where **Merge at** says), or collapse the picked edges or faces. |
+| **K** | Knife: see [Knife](#knife) below. **Enter** cuts, **Backspace** takes the last point back, **Esc** stops. |
 | **A · Alt+A · Ctrl+I** | Pick everything · nothing · the rest. |
 | **X** or **Delete** | Delete the picks. |
 
@@ -71,6 +72,16 @@ With the mouse over the 3D view:
 | Any | **Select all** | Picks everything of the current kind. |
 | Any | **Conform normals** | Turns faces that show the wrong side to match their neighbours. |
 | Any | **Center pivot** | Moves the object's origin to the middle of the mesh (the mesh stays where it was). |
+
+## Knife
+
+The **Knife** button (or **K**) cuts your own lines across the mesh, like Blender's knife.
+
+1. Click points on the mesh. A point snaps to a corner or an edge near the mouse; elsewhere it sits on the face under it. You can turn the view between clicks.
+2. Press **Enter** (or **Cut** on the bar at the bottom of the 3D view) to cut. Between two points the cut follows the surface where it meets a flat cut from your view, so it carries on round corners onto the next faces.
+3. Click the first point again (or **Close**) to close the shape. A closed shape inside one face makes a new face there, joined to the face around it.
+
+The new edges are picked afterwards, ready to move, bevel or extrude. Points inside a face are fine as bends, but a line has to start and end on a corner or an edge: a part that ends inside a face is left out.
 
 ## Settings
 
