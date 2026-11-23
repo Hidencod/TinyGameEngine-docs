@@ -46,7 +46,7 @@ With the mouse over the 3D view:
 | **Ctrl + R** | Loop cut through the edge under the mouse: **Loop cuts** new loops around the ring of four-sided faces it crosses. |
 | **Ctrl + B** | Bevel the picked edges by **Bevel (m)**. |
 | **M** | Merge the picked corners (where **Merge at** says), or collapse the picked edges or faces. |
-| **K** | Knife: see [Knife](#knife) below. **Enter** cuts, **Backspace** takes the last point back, **Esc** stops. |
+| **K** | Knife: see [Knife](#knife) below. **Enter** cuts, **Backspace** takes the last point back, **Esc** stops, **Z** cut through, **C** 45° steps, **Ctrl** edge middles. |
 | **A · Alt+A · Ctrl+I** | Pick everything · nothing · the rest. |
 | **X** or **Delete** | Delete the picks. |
 
@@ -80,6 +80,17 @@ The **Knife** button (or **K**) cuts your own lines across the mesh, like Blende
 1. Click points on the mesh. A point snaps to a corner or an edge near the mouse; elsewhere it sits on the face under it. You can turn the view between clicks.
 2. Press **Enter** (or **Cut** on the bar at the bottom of the 3D view) to cut. Between two points the cut follows the surface where it meets a flat cut from your view, so it carries on round corners onto the next faces.
 3. Click the first point again (or **Close**) to close the shape. A closed shape inside one face makes a new face there, joined to the face around it.
+
+While you place points, the orange lines show where the cut will go.
+
+The bar at the bottom of the 3D view (and the keys) also have:
+
+| Button | Key | What it does |
+| --- | --- | --- |
+| **Cut through** | **Z** | Cuts every face under the line, the hidden ones behind too, not only the surface you see: a slice right through the model. |
+| **Middles** | hold **Ctrl** | Points snap to the middle of the edge under the mouse (Ctrl does the opposite while Middles is on). The point turns green. |
+| **45°** | **C** | The line from the last point goes straight across, up and down or at 45° on screen. |
+| **Undo point** | **Backspace** | Takes the last point back. |
 
 The new edges are picked afterwards, ready to move, bevel or extrude. Points inside a face are fine as bends, but a line has to start and end on a corner or an edge: a part that ends inside a face is left out.
 
