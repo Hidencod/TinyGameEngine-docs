@@ -1,0 +1,60 @@
+---
+title: Editable mesh
+description: Shape a mesh in the 3D view by picking its vertices, edges or faces and moving, extruding or insetting them. Unity's ProBuilder.
+---
+
+# Editable mesh
+
+An **editable mesh** is a shape you change right in the 3D view: pick its corners (vertices), edges or faces, then move, turn or scale them with the transform handles, or extrude, inset and subdivide them. Use it to block out levels, rooms, ramps and props without leaving the editor. It is Unity's ProBuilder.
+
+![An editable mesh in the 3D view: two faces picked in orange with the move handles on them, and the Inspector's Edit mesh controls](/img/shots/editable-mesh.webp)
+
+## Make one
+
+Add any shape (a cube, cylinder, plane …), then on its **Shape & look** card set **Shape → Editable mesh**. The shape stays as it was, now made of faces you can edit: a cube is 8 corners and 6 squares, a cylinder keeps its round ends as single faces.
+
+## Edit it
+
+1. Press **Edit mesh**. The object's edges show over it.
+2. Under **Select**, choose what taps pick: **Vertex**, **Edge** or **Face**.
+3. Tap to pick one. **Shift + click** (or **Select several** on a phone) adds more or takes one away. A tap on nothing clears the picks.
+4. The transform handles sit on the picks: the **Move**, **Rotate** and **Scale** tools work on them as they do on objects. **Snap** moves in steps of 0.25 m and turns in steps of 15°.
+5. Press **Done** to go back to editing objects.
+
+Corners hidden behind the mesh are drawn faintly, and taps only pick what you can see.
+
+**Shift + drag** on a face's move arrow extrudes the faces first and then moves the new ones out, as in ProBuilder.
+
+Every change is one undo step.
+
+## Operations
+
+| Picking | Button | What it does |
+| --- | --- | --- |
+| Faces | **Extrude** | Pushes the faces out along their direction by **Extrude (m)**, with walls joining them to the rest. Faces that touch stay joined. |
+| Faces | **Inset** | A smaller copy of each face inside it, **Inset (m)** in from its sides, joined by a ring of faces. Inset, then extrude, makes a window or a raised panel. |
+| Faces | **Subdivide** | Splits each face from the middle of its sides (a square becomes four). |
+| Faces | **Flip** | Turns the faces to show the other side. |
+| Edges | **Extrude** | Open border edges only: a new face hangs off each edge, **Extrude (m)** out. |
+| Edges | **Split** | A new corner in the middle of each edge. |
+| Edges | **Bridge** | Two open border edges: a face across the gap between them. |
+| Vertices | **Merge** | Joins the picked corners into one at their middle. |
+| Vertices | **Weld** | Joins every pair of corners closer than 1 cm (after moving corners onto each other). |
+| Any | **Delete** (or the **Delete** key) | Removes what is picked, and the faces that use it. |
+| Any | **Select all** | Picks everything of the current kind. |
+| Any | **Conform normals** | Turns faces that show the wrong side to match their neighbours. |
+| Any | **Center pivot** | Moves the object's origin to the middle of the mesh (the mesh stays where it was). |
+
+## Settings
+
+| Setting | What it does |
+| --- | --- |
+| **Vertices · edges · faces** | How many the mesh has (and, in brackets, how many are picked). |
+| **Smooth** | Smooth shading: faces meeting at a soft angle (under 60°) blend into each other. Off: every face is flat. |
+| **UV scale** | How many times the texture repeats per metre. Textures are laid on each face from the side it faces, so they line up across faces and keep their size when you stretch the mesh. |
+
+The material, shadows and baked lighting settings below work as on any shape.
+
+## Collider
+
+A collider set to **Auto** or **Mesh** follows the editable mesh's real faces, so you can walk up a ramp or through an arch you shaped. On a moving rigidbody (or with **Convex**) it becomes a hull around the faces.
