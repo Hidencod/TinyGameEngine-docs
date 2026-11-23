@@ -36,11 +36,11 @@ Objects whose position is inside the box now use the probe. Where boxes overlap,
 3. Make an empty object next to the sphere (not inside it), a little above the floor, and add **Reflection probe**. Set **Size** so the blue box covers the whole room **and the sphere**.
 4. Press **Play**. The sphere now mirrors the coloured walls.
 
-If it only shows the sky: the sphere is outside the blue box, or you are looking at the scene view. The probe's picture is taken in the running game, so **look in Play**. Without a probe a metal ball reflects the scene's sky (a soft default sky when the scene has none).
+If it only shows the sky: the sphere is outside the blue box. Without a probe a metal ball reflects the scene's sky (a soft default sky when the scene has none).
 
 ## Good to know
 
-- The picture is taken in the running game, not in the editor, so the scene view still shows the sky reflections.
+- The scene view shows probe reflections too: the picture is taken again a moment after you change something (without the grid, outlines and handles). In the game it follows **Refresh Mode**.
 - Moving objects change probe as they cross a box edge. Objects made while the game runs join the probe they are in.
 - Objects of the same look in the same room still share one material, so static batching keeps working.
 - It affects the standard shaded materials. Custom shaders, water and terrain are left alone.
