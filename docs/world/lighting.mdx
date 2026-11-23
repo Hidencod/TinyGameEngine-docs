@@ -21,6 +21,7 @@ Objects whose position is inside the box now use the probe. Where boxes overlap,
 | **Size** | The box, in metres, centred on the object and along the world axes. |
 | **Box Projection** | Reflections line up with the box's walls: a shiny floor shows each wall where it really stands, and things in the room sit at the right place in the reflection. Make the box match the room's walls. Off, the picture acts as if it were infinitely far away, which suits open spaces. |
 | **Importance** | Where boxes overlap, the higher number wins (default 1). |
+| **Blend Distance** | Metres: objects closer than this to the box's walls mix in the next box they are in (or the sky), turning fully into it at the wall, so walking from room to room has no sudden switch. Boxes must overlap for one to blend into the other. 0 = a hard switch at the wall. New probes start at 1. |
 | **Resolution** | Size of each side of the picture (32 … 512). Sharper reflections cost memory and a little time when it is taken. |
 | **Intensity** | Strength of the reflections and light from the probe. |
 | **Refresh Mode** | **On start**: the picture is taken a moment after the scene starts (and again every **Refresh (s)** if above 0). **Every frame**: taken every frame, so moving things show in reflections; it costs six extra views and a blur per frame, so use one small, low-resolution probe. **Via scripting**: taken when the scene starts, then only when the **Refresh reflection probe** action or `obj.refreshProbe()` asks. |
