@@ -1,0 +1,69 @@
+---
+title: On-demand assets
+description: Load groups of assets by label while the game runs, and release them again to free memory. Unity's Addressables.
+---
+
+# On-demand assets
+
+A big game should not load every model, picture and sound when it starts. **On-demand assets** let you choose when they load: tag them with **labels**, mark them to load **On demand**, then load a group by its label when the player gets near it and release it when the group is no longer needed. It is Unity's Addressables, made simpler.
+
+By default the engine already does the usual part for you. A scene appears once the models, pictures and sounds it uses have loaded (see [Scenes](./scenes#changing-scene-while-playing)). On-demand assets add control on top of that.
+
+## Labels and Load
+
+In **Files**, open an asset's **⋮** menu:
+
+![An asset's menu in Files with Labels (forest, level 2) and Load (On demand)](/img/shots/on-demand-assets.webp)
+
+| Entry | What it does |
+| --- | --- |
+| **Labels** | Names for groups the asset belongs to, separated by commas: `forest, level 2`. One label can group any number of assets of any kind. Case does not matter. |
+| **Load** | **With scene** (the default): sounds, and pictures and fonts that events or scripts name, load when the game starts. **On demand**: the asset loads only when a scene shows it, or when you load it. |
+
+An asset that an object in the scene uses always loads with that scene, even when it is set to On demand: the scene needs it to look right.
+
+## Keys
+
+Everything below takes a **key**, which can be any of these:
+
+- an asset's **name** (`"Leaf"` or `"Leaf.png"`)
+- a **label** (`"forest"`)
+- a **folder** with a slash at the end (`"levels/forest/"`), which takes in the folders inside it too
+
+A beat's layers come with the beat.
+
+## In events
+
+| Block | What it does |
+| --- | --- |
+| **Load assets** | Starts loading the assets of a key. The event goes on at once; the assets arrive in the background. |
+| **Assets are loaded** | Condition: every asset of the key is loaded. |
+| **Release assets** | Frees the memory of the key's assets that nothing in the game shows now. Leave the key empty to release every On demand asset nothing shows (Unity's Unload Unused Assets). |
+| **Preload scene** | Loads the assets of another scene in the background, so **Go to scene** is instant later. |
+| `assetsprogress("forest")` | 0 to 1: the share of the key's assets that are loaded. Use it for a loading bar. |
+
+## In scripts
+
+```js
+// Near the forest gate: load the forest in the background.
+await game.assets.load('forest');
+game.assets.isLoaded('forest');     // true
+game.assets.progress('level 2');    // 0 … 1
+
+// The player left it: free the memory.
+game.assets.release('forest');      // how many were released
+
+// Load the next level while this one plays.
+game.assets.preloadScene('Level 2');
+
+game.assets.names('forest');        // ['Leaf', 'Tree', …]
+game.assets.unloadUnused();         // every On demand asset nothing shows
+```
+
+## What release does
+
+Released assets leave the game's memory: pictures and models leave the graphics card, sounds are no longer kept decoded. Anything an object in the game shows now is **never** released, so releasing too much is safe: an asset that is needed again later simply loads again (and shows a moment late).
+
+## In builds
+
+In a **Web (folder)** build and in Windows and Linux builds, every asset is its own file, so On demand assets are not even read until they are needed. A **single-file** web build (and a game published with a link) carries every asset inside the file, but On demand assets are still not decoded until they are needed, which saves memory and start-up time.

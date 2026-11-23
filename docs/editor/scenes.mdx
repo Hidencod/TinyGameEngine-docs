@@ -52,6 +52,8 @@ A scene appears once its models, pictures and sounds have loaded (the current sc
 
 So nothing stops the game to compile a shader the first time it comes into view (Unity calls this warming up shaders).
 
+To load another scene's assets earlier (while the player is still in this one), or to load and free groups of assets yourself, see [On-demand assets](./on-demand-assets).
+
 ## Keep an object across scenes
 
 Select an object and switch on **Keep across scenes** (next to Visible and Active), or use the **Keep across scenes** action, or `entity.persist = true` in a script. When the game goes to another scene, that object comes along instead of being made again: with its children, **where it is now** and its variables. A score display, a music player or the hero that travels between levels.
