@@ -36,6 +36,7 @@ A **profile** is a file in **Files → Profiles** (also **＋ New → Post-proce
 | Effect | What it does | Settings |
 | --- | --- | --- |
 | **Ambient occlusion** | Soft shadow in corners and creases. Draws the scene a second time, so it costs speed. | **Radius**, **Intensity** |
+| **Volumetric fog** | Fog that fills the air and lights up where light passes through it: shafts of sunlight between pillars and trees (the sun's shadows cut through the fog), glows around lamps, haze that hides the distance. Unity HDRP's Volumetric Fog. More [below](#volumetric-fog). | **Density**, **Color**, **Max distance**, **Base height**, **Height falloff**, **Anisotropy**, **Light intensity**, **Ambient** |
 | **Bloom** | Bright things glow softly: lamps, fire, neon. Materials with a bright **Emissive** colour are what glow. | **Intensity**, **Threshold** (how bright before it glows), **Diffusion** (how far it spreads) |
 | **Color grading** | The overall colour of the picture. | **Saturation** (1 = as drawn, 0 = grey, 2 = vivid), **Contrast** |
 | **Depth of field** | Blurs what is far from the focus distance. Draws the scene a second time, so it costs speed. | **Focus object** (keeps that object sharp: the focus follows how far it is from the camera), **Focus distance** (m, used when no object is set), **Aperture** (how fast it blurs), **Max blur** |
@@ -43,7 +44,26 @@ A **profile** is a file in **Files → Profiles** (also **＋ New → Post-proce
 | **Chromatic aberration** | Red and blue edges drift apart toward the sides, like a cheap lens. | **Intensity** |
 | **Anti-aliasing (FXAA)** | Smooths jagged edges cheaply. Use it instead of **Smooth edges (antialias)** in Project settings, which is slow when effects are on. | none |
 
-Ambient occlusion and depth of field are the heavy ones on phones. The rest cost little.
+Ambient occlusion, depth of field and volumetric fog are the heavy ones on phones. The rest cost little.
+
+### Volumetric fog
+
+![Volumetric fog in the editor view: a lamp's warm glow in the haze, and the far pillars fading into it](/img/shots/volumetric-fog.webp)
+
+Each pixel looks through the fog up to what it shows (or **Max distance** against the sky). Light scatters toward the camera from the sun, from the 8 point and spot lights nearest the camera, and from the ambient light. Where the sun's shadow falls, the fog stays dark, so the light shows as shafts. The sun needs **Cast shadows** on for the shafts.
+
+| Setting | What it does |
+| --- | --- |
+| **Density** | How thick the fog is at the base height (per metre). 0.01 is a light haze, 0.05 a misty morning, 0.2 thick fog. |
+| **Color** | The colour the fog scatters light in. White fog takes the colour of the lights. |
+| **Max distance** | How far from the camera the fog reaches (m). The sky sits behind this much fog. |
+| **Base height** | Below this height (Y) the fog is at full density. |
+| **Height falloff** | How fast it thins above the base height: 0 = the same everywhere, 0.5 = gone a few metres up (fog lying in a valley). |
+| **Anisotropy** | How much of the light keeps going forward: at 0.6 (like real air) the fog is brightest looking toward the sun and the shafts stand out. 0 = the same from every side; below 0 it lights up looking away from the light. |
+| **Light intensity** | How bright the lights make the fog. |
+| **Ambient** | How much the ambient light alone lights the fog. Lower it for dark fog where only the light shafts and lamps show. |
+
+It also draws in the editor's 3D view. The quality level's **Volumetric fog** switch turns it off (Medium and Low do).
 
 ## Where it applies: the volume
 
