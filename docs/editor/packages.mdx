@@ -7,6 +7,20 @@ description: Take prefabs, scenes, scripts, event sheets, files and materials fr
 
 A **package** carries parts of one project into another: an enemy prefab with its model and sounds, a menu scene, a set of scripts, an event sheet. It is one `.tgepkg` file. Keep it as a library of your own parts, or send it to someone else. It works like Unity's **Export Package** and **Import Package**.
 
+## The Packages window
+
+**File → Packages…** (on a phone, **☰** menu → **Packages**) lists ready-made packages you can add to your project. It works like Unity's **Package Manager**.
+
+![The Packages window](/img/editor/packages-window.webp)
+
+- **Registry** lists the packages anyone can install, with what each holds and how big it is. **Search** finds them by name, description or the names of their prefabs. **Official** packages are made by Tiny Game Engine from its templates and showcases.
+- **Install** downloads the package and opens the import list (see [Import a package](#import-a-package)), so you see what comes in first.
+- When the registry has a newer version of a package in your project, its button says **Update to** with the new version. The update works like importing a newer package file: changed items are replaced and placed prefab copies follow.
+- **In this project** lists the packages the project has, with their versions. **Remove** takes out everything a package brought in. If you changed one of those items, your changes go too. **Undo** brings it all back.
+- **Import from file…** and **Export…** are the same as in the File menu.
+
+Packages imported from a file are listed under **In this project** too, so they can be removed the same way.
+
 ## Export a package
 
 1. On a computer, open **File → Export package…**. On a phone, open the **☰** menu → **Export package…**.
