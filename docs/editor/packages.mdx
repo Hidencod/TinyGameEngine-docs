@@ -21,6 +21,30 @@ A **package** carries parts of one project into another: an enemy prefab with it
 
 Packages imported from a file are listed under **In this project** too, so they can be removed the same way.
 
+## Publish a package
+
+Anyone signed in can put a package in the registry for others to install.
+
+1. Open **File → Export package…** (on a phone, **☰** menu → **Export package…**).
+2. Fill in **Name**, **Version** and **Description**, and an **Author** name to show in the registry.
+3. Tick what goes in, as for [exporting](#export-a-package).
+4. Press **Publish**. You are asked to sign in first if you aren't.
+
+- The name belongs to the account that published it first. Nobody else can publish a package with that name.
+- A published version never changes. To change your package, publish it again with a higher version number. If the version is already published, the editor counts it up for you, from `1.0.0` to `1.0.1`, so you can press **Publish** again.
+- Your packages are marked **Yours** in the Packages window. **Unpublish** takes the package and all its versions out of the registry. Projects that installed it keep what they have.
+- A free account can publish 5 packages, a Pro account 50, each up to 20 MB.
+
+### Report a package
+
+The flag button on a package someone else made reports it, with a reason. A package reported by three different people is taken out of the list until it is checked.
+
+### Editor scripts
+
+[Editor scripts](../logic/editor-scripts) run inside the editor and can change your project. The Packages window shows how many a package has, and in the import list they come **unticked**, marked **Editor script**. Tick one only if you trust whoever made the package.
+
+![An editor script in the import list comes in unticked](/img/editor/packages-editor-script.webp)
+
 ## Export a package
 
 1. On a computer, open **File → Export package…**. On a phone, open the **☰** menu → **Export package…**.
