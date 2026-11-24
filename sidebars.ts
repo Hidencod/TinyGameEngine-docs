@@ -11,7 +11,7 @@ const sidebars: SidebarsConfig = {
       type: 'category', label: 'The editor',
       items: [
         'editor/overview', 'editor/windows', 'editor/viewport', 'editor/objects', 'editor/inspector', 'editor/assets',
-        'editor/scene-tab', 'editor/scenes', 'editor/on-demand-assets', 'editor/project-settings', 'editor/play-mode', 'editor/debugging', 'editor/profiler', 'editor/tests', 'editor/claude-link', 'editor/shortcuts',
+        'editor/scene-tab', 'editor/scenes', 'editor/on-demand-assets', 'editor/packages', 'editor/project-settings', 'editor/play-mode', 'editor/debugging', 'editor/profiler', 'editor/tests', 'editor/claude-link', 'editor/shortcuts',
       ],
     },
     {

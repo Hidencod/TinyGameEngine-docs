@@ -1,0 +1,62 @@
+---
+title: Packages
+description: Take prefabs, scenes, scripts, event sheets, files and materials from one project into another as a .tgepkg package, with everything they use. Like Unity's .unitypackage.
+---
+
+# Packages
+
+A **package** carries parts of one project into another: an enemy prefab with its model and sounds, a menu scene, a set of scripts, an event sheet. It is one `.tgepkg` file. Keep it as a library of your own parts, or send it to someone else. It works like Unity's **Export Package** and **Import Package**.
+
+## Export a package
+
+1. On a computer, open **File → Export package…**. On a phone, open the **☰** menu → **Export package…**.
+2. Give the package a **Name** and a **Version**, and a **Description** if you like.
+3. Tick what goes in: scenes, prefabs, scripts, event sheets, files, materials, shaders, animators, timelines, data tables, post-processing profiles and render textures. **All** ticks a whole list.
+4. Press **Export**. The `.tgepkg` file is saved.
+
+![Exporting an event sheet: the prefabs and sounds it uses are ticked too](/img/editor/packages-export.webp)
+
+### Include dependencies
+
+With **Include dependencies** on, everything the ticked items use goes in too. Those items are ticked and greyed, with the mark **used**:
+
+- a prefab brings its model, its materials and the textures they use;
+- a material brings its shader;
+- a scene brings its event sheet, its prefabs and its files;
+- an event sheet brings the prefabs it spawns, the sounds it plays, the data tables it reads and the global variables it uses;
+- a script brings the data tables, prefabs and timelines it names.
+
+Turn it off to export only the items you ticked.
+
+## Import a package
+
+1. Open the project to add the parts to.
+2. On a computer, open **File → Import package…**. On a phone, open the **☰** menu → **Import package…**. Then pick the `.tgepkg` file.
+3. A list shows what is in the package, and what importing will do with each item:
+
+| Mark | Meaning |
+| --- | --- |
+| **New** | Not in this project yet: it is added. |
+| **Update** | It came from this package before and the package has a newer version of it: it is replaced. |
+| **Same** | Already here as it is in the package: it is left alone. |
+
+4. Untick anything you don't want, then press **Import**. **Undo** takes the whole import back.
+
+![Importing: everything is new to this project](/img/editor/packages-import.webp)
+
+### Updates
+
+Each item keeps its identity when it moves between projects, as in Unity. Say you export an enemy, import it into a game, then change the enemy and export the package again. Importing the new package marks the enemy **Update** and replaces it. Objects placed from the prefab follow, and nothing is added twice.
+
+An item you renamed after importing it keeps your name when an update replaces it.
+
+### Names already taken
+
+A new item whose name is already used in its list comes in with a number: `Main events` becomes `Main events 2`. The arrow in the list shows the new name. Events that find things by name, such as **Spawn object** with **Zombie**, still find this project's own item of that name. Rename one of the two if the package's events should use theirs.
+
+## Good to know
+
+- Files linked from the internet (library models) stay links. Every other file goes inside the package.
+- A package made with a newer version of the editor asks you to update the app. Older packages are brought up to date as they are imported.
+- The project's settings are not part of a package: on-screen controls, input keys, quality, the start scene. Set them in the new project.
+- To copy a whole project, use **Backup project (.tge)** instead (see [Backup](../publish/backup)).
