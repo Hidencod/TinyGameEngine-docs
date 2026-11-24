@@ -475,8 +475,8 @@ async function graveGuardShots({ page, shot, tge, module }) {
       else { arrows(0, 0); key('Space', true); setTimeout(() => key('Space', false), 60); }
     }, 100);
   });
-  // Two of the dead close to the keeper, in the fight.
-  await page.waitForFunction(() => { const g = window.__tgeGame; const h = g.findEntity('Hero').position; return g.findEntities('Skeleton').filter((e) => e.getVar('Dead') == 0 && Math.hypot(e.position.x - h.x, e.position.z - h.z) < 3).length >= 2; }, null, { timeout: 30000 });
+  // The dead close to the keeper, in the fight.
+  await page.waitForFunction(() => { const g = window.__tgeGame; const h = g.findEntity('Hero').position; return g.findEntities('Skeleton').filter((e) => e.getVar('Dead') == 0 && Math.hypot(e.position.x - h.x, e.position.z - h.z) < 2.5).length >= 1; }, null, { timeout: 60000 });
   await shot('play');
   await page.waitForFunction(() => window.__tgeGame.getVar('Kills') >= 1, null, { timeout: 30000 });
   await page.waitForTimeout(500);
