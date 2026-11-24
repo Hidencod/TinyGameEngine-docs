@@ -20,6 +20,7 @@ const GAMES = [
   {to: '/docs/showcase/lost-keys', shot: 'lost-keys-caves', title: 'Lost Keys', text: 'A 2D platformer: tilemaps, auto and animated tiles, a lift, a ladder, a spring and three keys.'},
   {to: '/docs/showcase/ember-crypt', shot: 'ember-crypt-play', title: 'Ember Crypt', text: 'A dark crypt lit by a lantern: 2D lights with normal maps on bricks, stone and a rubble mound.'},
   {to: '/docs/showcase/sprocket-hills', shot: 'sprocket-hills-play', title: 'Sprocket Hills', text: 'Pixel art through a Pixel Perfect Camera: a robot animated with bones runs over Sprite Shape hills.'},
+  {to: '/docs/showcase/grave-guard', shot: 'grave-guard-play', title: 'Grave Guard', text: 'A sword fight in a graveyard at night: skeletons chase round the graves and fall as ragdolls.'},
 ];
 
 const SCRIPT = `export let speed = 2;   // set per object in the Inspector

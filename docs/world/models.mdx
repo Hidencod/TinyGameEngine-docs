@@ -111,6 +111,8 @@ A rigged character can go limp with physics, like a death animation that falls a
 - Turning it off brings the character back to its animation (and its physics body back) from where it lies.
 - Joints are kept inside a range (how far a bone may swing and twist from the pose it had), so a knee or a neck does not fold any way it likes. Limbs far apart on the skeleton (a hand and the chest) bump each other, but a bone and the ones right next to it never do, and neither do pairs that already overlap in the starting pose. Characters with clean bones for the body, arms and legs look best.
 
+The [Grave Guard](../showcase/grave-guard) showcase throws each defeated enemy back as a ragdoll.
+
 ### Ragdoll component
 
 Add a **Ragdoll** component to the object to tune it (without one every bone gets the defaults).

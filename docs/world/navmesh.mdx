@@ -21,6 +21,8 @@ The **navmesh** can. Turn it on and the game works out, from your static collide
 
 The mesh is made **the first time a character needs a path** (a moment of work on a big level) and is kept until the scene ends. A mesh is made per character size, measured from the character's model, so a tall guard and a small dog get their own. Only **static** colliders count: moving bodies are not walls, and a wall that appears later is not seen until you call `game.navmesh.rebuild()`.
 
+In the [Grave Guard](../showcase/grave-guard) showcase, skeletons and zombies chase the player round headstones this way.
+
 ## What it understands
 
 - **Slopes and stairs**: ground within the slope limit, joined by steps up to the step height.

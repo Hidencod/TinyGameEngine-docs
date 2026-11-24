@@ -41,6 +41,7 @@ const GAMES = [
   { module: 'lostKeys', slug: 'lost-keys', shots: lostKeysShots, expect: 'Lost Keys' },
   { module: 'emberCrypt', slug: 'ember-crypt', shots: emberCryptShots, expect: 'Ember Crypt' },
   { module: 'sprocketHills', slug: 'sprocket-hills', shots: sprocketHillsShots, expect: 'Sprocket Hills' },
+  { module: 'graveGuard', slug: 'grave-guard', shots: graveGuardShots, expect: 'Grave Guard' },
 ];
 
 const filter = process.argv.slice(2).filter((a) => !a.startsWith('--'));
@@ -451,6 +452,72 @@ async function sprocketHillsShots({ page, shot, tge, module }) {
   await page.getByText('Player', { exact: true }).first().click({ timeout: 5000 }).catch(() => console.warn('  (no Player in the list)'));
   await page.waitForTimeout(1500);
   await shot('editor');
+}
+
+async function graveGuardShots({ page, shot, tge, module }) {
+  await page.goto(`${TGE}/showcase/dev.html?game=${module}`, { timeout: 120000 });
+  await page.waitForFunction(() => window.__tgeReady, null, { timeout: 120000 });
+  await page.waitForTimeout(2500);
+  await shot('start');
+  await page.getByText('Fight', { exact: true }).first().click({ force: true });
+  await page.waitForFunction(() => window.__tgeGame.getVar('Started') === 1, null, { timeout: 20000 });
+  // Real keys: a small bot walks to the nearest enemy with the arrows and swings with Space.
+  await page.evaluate(() => {
+    const g = window.__tgeGame; const held = new Set();
+    const key = (c, d) => { if (d === held.has(c)) return; d ? held.add(c) : held.delete(c); window.dispatchEvent(new KeyboardEvent(d ? 'keydown' : 'keyup', { code: c, key: c === 'Space' ? ' ' : c, bubbles: true })); };
+    const arrows = (dx, dz) => { key('ArrowRight', dx > 0.3); key('ArrowLeft', dx < -0.3); key('ArrowDown', dz > 0.3); key('ArrowUp', dz < -0.3); };
+    window.__bot = setInterval(() => {
+      const h = g.findEntity('Hero'); if (!h || g.getVar('Over') === 1) { arrows(0, 0); return; }
+      const en = [...g.findEntities('Skeleton'), ...g.findEntities('Zombie')].filter((e) => !e.destroyed && e.getVar('Dead') == 0);
+      let best = null, bd = 1e9; for (const e of en) { const d = Math.hypot(e.position.x - h.position.x, e.position.z - h.position.z); if (d < bd) { bd = d; best = e; } }
+      if (!best) { arrows(0, 0); return; }
+      if (bd > 1.2) arrows(best.position.x - h.position.x, best.position.z - h.position.z);
+      else { arrows(0, 0); key('Space', true); setTimeout(() => key('Space', false), 60); }
+    }, 100);
+  });
+  // Two of the dead close to the keeper, in the fight.
+  await page.waitForFunction(() => { const g = window.__tgeGame; const h = g.findEntity('Hero').position; return g.findEntities('Skeleton').filter((e) => e.getVar('Dead') == 0 && Math.hypot(e.position.x - h.x, e.position.z - h.z) < 3).length >= 2; }, null, { timeout: 30000 });
+  await shot('play');
+  await page.waitForFunction(() => window.__tgeGame.getVar('Kills') >= 1, null, { timeout: 30000 });
+  await page.waitForTimeout(500);
+  await shot('ragdoll');
+  // The keeper can't lose for the win picture.
+  await page.evaluate(() => { window.__tgeGame.findEntity('Hero').setVar('health', 99); });
+  await page.waitForFunction(() => window.__tgeGame.getVar('Over') === 1, null, { timeout: 180000 });
+  await page.evaluate(() => clearInterval(window.__bot));
+  await page.waitForTimeout(1500);
+  await shot('win');
+  // The project in the editor, with its event sheet.
+  await page.goto(TGE + '/', { timeout: 120000 });
+  // The home page sometimes re-renders under the first click: try the import again from a fresh page.
+  for (let i = 0; ; i++) {
+    try {
+      await page.goto(TGE + '/', { timeout: 120000 });
+      await page.waitForSelector('.hm', { timeout: 30000 });
+      await page.waitForTimeout(3000);
+      await importTge(page, tge);
+      break;
+    } catch (e) { if (i >= 2) throw e; console.warn('  (import retry)'); }
+  }
+  await page.locator('.hm-card, .hm-continue', { hasText: 'Grave Guard' }).first().click({ timeout: 60000 });
+  await page.waitForSelector('.editor.desktop', { timeout: 60000 });
+  await page.waitForTimeout(6000);
+  // The keeper picked and framed (F): his behaviors in the Inspector.
+  await page.getByText('Search objects', { exact: false }).first().click({ timeout: 3000 }).catch(() => {});
+  await page.locator('input[placeholder*="Search objects"]').fill('Hero').catch(() => {});
+  await page.waitForTimeout(800);
+  await page.getByText('Hero', { exact: true }).first().click({ timeout: 5000 }).catch(() => console.warn('  (no Hero in the list)'));
+  await page.mouse.move(610, 400);
+  await page.keyboard.press('f');
+  await page.waitForTimeout(2500);
+  await shot('editor');
+  await page.locator('.dk-tab[data-tab="logic"]').click();
+  await page.locator('.list-row', { hasText: 'Main events' }).first().click();
+  await page.waitForSelector('.es-root', { timeout: 30000 });
+  await page.waitForTimeout(1500);
+  await page.locator('.es-root').getByText('The dead: close to the keeper', { exact: false }).first().evaluate((el) => el.scrollIntoView({ block: 'start' }));
+  await page.waitForTimeout(800);
+  await shot('events');
 }
 
 async function crystalVaultShots({ page, shot, tge, module }) {

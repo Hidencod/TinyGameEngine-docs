@@ -1,0 +1,108 @@
+---
+title: Grave Guard
+description: A third-person sword fight in a graveyard at night, made with Tiny Game Engine. Rigged characters with their own clips, melee hits with timing, health bars, navmesh chasing, ragdolls and waves spawned from prefabs. Play it in your browser, then open the project and see how it works.
+---
+
+# Grave Guard
+
+It's midnight, and skeletons and zombies are climbing out of their graves. You are the graveyard keeper. Fight off three waves with your sword. The dead walk round the headstones to reach you and swing when they get close. Their swing takes a moment to land, so step back when one raises an arm. Each wave is bigger, and zombies take more hits. Between waves you get two health back.
+
+It shows rigged [3D models](../world/models) with their own animations, melee fighting, the **Health** behavior, chasing round obstacles on a [navmesh](../world/navmesh), [ragdolls](../world/models#ragdoll), and prefabs spawned while the game runs. **The rules are an event sheet: there are no code scripts.**
+
+<PlayEmbed
+  src="https://hidencod.github.io/tge-assets/showcase/grave-guard/"
+  poster="/img/showcase/grave-guard-play.webp"
+  title="Grave Guard"
+  size="2.7 MB"
+/>
+
+**Controls:** press **Fight**. The joystick moves the keeper (**WASD** or the **arrow keys** on a computer). The **Hit** button swings the sword (**Space** or **J**).
+
+![The start screen says what to do](/img/showcase/grave-guard-start.webp)
+
+## Open it in the editor
+
+1. Download **[grave-guard.tge](https://hidencod.github.io/tge-assets/showcase/grave-guard/grave-guard.tge)** (1.3 MB).
+2. Open the editor: **[editor.jeevagames.com](https://editor.jeevagames.com)** on a computer, or the Android app.
+3. On the home screen tap **Import .tge** and pick the file, then open **Grave Guard (imported)**.
+4. Press **▶ Play**.
+
+![The keeper picked in the editor](/img/showcase/grave-guard-editor.webp)
+
+## How it works
+
+### The characters
+
+The keeper, the skeleton and the zombie are free models from the library (Kenney's Graveyard Kit). Each has its own clips: idle, walk, sprint, attack-melee-right, attack-melee-left, die and more. Each character has:
+
+- a **dynamic** Rigidbody with **Freeze rotation** on, so it doesn't tip over;
+- a **capsule** collider round its body.
+
+The keeper moves with the **Top-down** behavior. **Turn to direction** and **Camera relative** are on, and **Animate** plays idle and walk on its own. The camera has **Camera follow**, looking down at him from behind.
+
+### The sword
+
+Pressing **Hit** starts a swing:
+
+1. The sword event plays **attack-melee-right** once (loop off). Top-down goes back to idle or walk when the clip ends.
+2. A global variable **Swing** counts the seconds.
+3. At 0.2 s the blow lands. Every enemy within 1.3 m of the **Hit point** is damaged by 1. The Hit point is an empty child about a metre in front of the keeper, so only enemies in front of him are hit.
+4. At 0.45 s the swing is over, and the next one can start.
+
+The swing also turns the keeper to the nearest living enemy within 2.4 m: **Pick nearest** picks it, then **Look at** turns him. So you don't have to aim, even with a joystick on a phone.
+
+### The dead
+
+The **Skeleton** and **Zombie** are prefabs tagged **enemy**. The events use `#enemy`, so one set of events runs both kinds.
+
+Each has two behaviors:
+
+- **Follow**, with the keeper as the target and **Pathfinding** on. The scene's navmesh is on, and the headstones, crypt and altar are static colliders, so the dead walk round them.
+- **Health**, with **Show bar** on, **Knockback** and **Destroy on death** off.
+
+The dead swing the same way the keeper does. Each enemy has its own **Swing** and **Cool** variables:
+
+1. Within 1.5 m of the keeper, with Cool at 0, an enemy starts a swing and plays one of its two attack clips.
+2. 0.45 s later, it damages the keeper by 1, but only if he is still within 1.6 m.
+3. Then Cool waits 1.4 s before its next swing.
+
+So stepping back as the arm goes up dodges the hit.
+
+![Swords out: the health bars over the dead, and the keeper's health at the top](/img/showcase/grave-guard-play.webp)
+
+### Ragdolls
+
+When an enemy's health reaches 0, **On death** fires:
+
+1. **Dead** is set to 1. Every swing event checks it, so a dead enemy stops fighting.
+2. Its Follow behavior is turned off.
+3. The **Ragdoll** action turns it into a limp body. The push goes away from the keeper, so it falls back from the blow that killed it.
+4. Four seconds later it turns to smoke and is gone.
+
+The keeper goes limp the same way when he loses.
+
+![Defeated: a skeleton thrown back as a ragdoll](/img/showcase/grave-guard-ragdoll.webp)
+
+### Waves
+
+When no enemies are left, the next wave begins:
+
+- A banner shows the wave number, and the keeper gets 2 health back.
+- **ToSpawn** is set to 1 + wave × 2: 3, then 5, then 7.
+- Every second, **Pick random** chooses one of the eight **Grave spot** empties, and **Spawn object** makes an enemy there.
+- In each wave, more of the dead are zombies.
+
+After the third wave, the **WinScreen** shows. If the keeper's health runs out, the **LoseScreen** shows instead. Both have a button that runs **Restart scene**. The **On start** event sets every global variable back to 0, because global variables keep their values when the scene restarts.
+
+![The enemy events in the event sheet](/img/showcase/grave-guard-events.webp)
+
+### Night lighting
+
+The graveyard is lit by:
+
+- a dim blue **Moon** (the scene's directional light) and a night sky;
+- four fire baskets, each with **fire** particles and an orange point light. Every 0.1 s an event sets each light's intensity to a random number, so the fire flickers;
+- a small warm light on the keeper, so you can always see him;
+- fog, which hides the edge of the world past the pine trees.
+
+![Dawn: the win screen](/img/showcase/grave-guard-win.webp)
